@@ -63,5 +63,10 @@ if ( ! class_exists( '\SilverWp\PluginAbstract' ) ) {
 
             return $this->plugin_name;
         }
+
+        public function addDirectory($name, $path) {
+            $vp = VP_FileSystem::instance();
+            $vp->add_directories( $name, $path );
+        }
     }
 }

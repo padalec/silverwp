@@ -61,13 +61,14 @@ abstract class ElementAbstract extends ShortCodeAbstract implements ElementInter
     }
 
     /**
-     * Get element name
+     * Get element name alias to getTagBase()
      *
+     * @see getTagBase()
      * @return string
      * @access public
      */
     public function getName() {
-        return $this->name;
+        return $this->getTagBase();
     }
 
     /**

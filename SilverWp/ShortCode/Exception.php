@@ -17,11 +17,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
  /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/plugins/schedule/vendor/SilverWp/ShortCode/Exception.php $
-  Last committed: $Revision: 2624 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-04-24 16:46:53 +0200 (Pt, 24 kwi 2015) $
-  ID: $Id: Exception.php 2624 2015-04-24 14:46:53Z padalec $
+  Repository path: $HeadURL: $
+  Last committed: $Revision: $
+  Last changed by: $Author: $
+  Last changed date: $Date: $
+  ID: $Id: $
  */
 namespace SilverWp\ShortCode;
 
@@ -34,7 +34,7 @@ if ( ! class_exists( 'SilverWp\ShortCode\Exception' ) ) {
      * @subpackage ShortCode
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Revision: 2624 $
+     * @version $Revision:$
      */
     class Exception extends \SilverWp\Exception {
     

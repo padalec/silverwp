@@ -107,7 +107,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
             require_once 'function/functions.php';
             require_once SILVERWP_LIBS_PATH . 'vafpress/bootstrap.php';
             $this->vpFix();
-            require_once SILVERWP_LIBS_PATH . 'wp-posts-to-posts/posts-to-posts.php';
         }
 
         /**
