@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eca9e24b3fe4aafec6ba093e8cf2a670",
+    "hash": "75769757982f6789e03c9cda025d0e75",
     "packages": [
         {
             "name": "aristath/kirki",
@@ -43,13 +43,150 @@
             "description": "Extending the WordPress customizer",
             "homepage": "http://kirki.org",
             "time": "2015-04-06 15:38:43"
+        },
+        {
+            "name": "composer/installers",
+            "version": "v1.0.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+                "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+                "shasum": ""
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "MODX Evo",
+                "OXID",
+                "SMF",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "grav",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2015-02-18 17:17:01"
+        },
+        {
+            "name": "redux-framework/redux-framework",
+            "version": "3.5.5.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reduxframework/redux-framework.git",
+                "reference": "e447b1c0f3edfa06cdc66e83b74c278f139f272f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reduxframework/redux-framework/zipball/e447b1c0f3edfa06cdc66e83b74c278f139f272f",
+                "reference": "e447b1c0f3edfa06cdc66e83b74c278f139f272f",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.2.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Team Redux"
+                }
+            ],
+            "description": "Redux is a simple, truly extensible options framework for WordPress themes and plugins.",
+            "homepage": "http://reduxframework.com",
+            "keywords": [
+                "Settings",
+                "customizer",
+                "framework",
+                "options",
+                "plugin",
+                "redux",
+                "wordpress"
+            ],
+            "time": "2014-08-07 19:17:53"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "aristath/kirki": 0
+        "aristath/kirki": 0,
+        "redux-framework/redux-framework": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

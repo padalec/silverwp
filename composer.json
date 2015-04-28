@@ -25,7 +25,9 @@
   },
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "@stable"
+    "aristath/kirki": "@stable",
+    "redux-framework/redux-framework": "@stable",
+    "composer/installers": "~1.0"
   },
   "autoload": {
     "psr-4": {
