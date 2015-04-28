@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "eca9e24b3fe4aafec6ba093e8cf2a670",
+    "packages": [
+        {
+            "name": "aristath/kirki",
+            "version": "0.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aristath/kirki.git",
+                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aristath/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv2 or later"
+            ],
+            "authors": [
+                {
+                    "name": "aristath",
+                    "email": "aristath@gmail.com",
+                    "homepage": "http://aristeides.com"
+                },
+                {
+                    "name": "fovoc",
+                    "email": "kalliris.d@gmail.com",
+                    "homepage": "https://github.com/fovoc"
+                }
+            ],
+            "description": "Extending the WordPress customizer",
+            "homepage": "http://kirki.org",
+            "time": "2015-04-06 15:38:43"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "aristath/kirki": 0
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.3"
+    },
+    "platform-dev": []
+}

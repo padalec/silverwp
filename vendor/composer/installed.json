@@ -1,0 +1,42 @@
+[
+    {
+        "name": "aristath/kirki",
+        "version": "0.8.4",
+        "version_normalized": "0.8.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/aristath/kirki.git",
+            "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/aristath/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+            "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2015-04-06 15:38:43",
+        "type": "library",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPLv2 or later"
+        ],
+        "authors": [
+            {
+                "name": "aristath",
+                "email": "aristath@gmail.com",
+                "homepage": "http://aristeides.com"
+            },
+            {
+                "name": "fovoc",
+                "email": "kalliris.d@gmail.com",
+                "homepage": "https://github.com/fovoc"
+            }
+        ],
+        "description": "Extending the WordPress customizer",
+        "homepage": "http://kirki.org"
+    }
+]
