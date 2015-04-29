@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     $vendorDir . '/vafour/vafpress-framework/bootstrap.php',
+    $vendorDir . '/evanto/auto-updates/class-pixelentity-theme-update.php',
 );

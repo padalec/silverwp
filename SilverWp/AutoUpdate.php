@@ -97,7 +97,6 @@ if ( ! class_exists( '\SilverWp\AutoUpdate' ) ) {
          */
         private function includes() {
             if ( ! empty( $this->user_name ) && ! empty( $this->api_key ) ) {
-                require_once( LIBS_PATH . 'auto-updates/class-pixelentity-theme-update.php' );
                 \PixelentityThemeUpdate::init( $this->user_name, $this->api_key, $this->author );
             }
         }

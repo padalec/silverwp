@@ -31,7 +31,10 @@
     "aristath/kirki": "*"
   },
   "autoload": {
-    "files": ["vendor/vafour/vafpress-framework/bootstrap.php"],
+    "files": [
+      "vendor/vafour/vafpress-framework/bootstrap.php",
+      "vendor/evanto/auto-updates/class-pixelentity-theme-update.php"
+    ],
     "psr-4": {
       "SilverWp\\": "SilverWp"
     }
