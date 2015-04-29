@@ -11,7 +11,7 @@
     }
   ],
   "packages": {
-    "vendor/reduxframework/kirki": {
+    "aristath/kirki": {
       "dev-master": {
         "name": "aristath/kirki",
         "type": "library",
@@ -23,11 +23,12 @@
       }
     }
   },
+  "repositories": [
+    { "type": "vcs", "url": "https://github.com/reduxframework/kirki" }
+  ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "@stable",
-    "redux-framework/redux-framework": "@stable",
-    "composer/installers": "~1.0"
+    "aristath/kirki": "*"
   },
   "autoload": {
     "psr-4": {

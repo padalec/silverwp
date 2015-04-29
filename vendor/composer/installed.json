@@ -5,12 +5,12 @@
         "version_normalized": "0.8.4.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/aristath/kirki.git",
+            "url": "https://github.com/reduxframework/kirki.git",
             "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/aristath/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+            "url": "https://api.github.com/repos/reduxframework/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
             "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2",
             "shasum": ""
         },
@@ -19,8 +19,7 @@
         },
         "time": "2015-04-06 15:38:43",
         "type": "library",
-        "installation-source": "source",
-        "notification-url": "https://packagist.org/downloads/",
+        "installation-source": "dist",
         "license": [
             "GPLv2 or later"
         ],
@@ -37,6 +36,10 @@
             }
         ],
         "description": "Extending the WordPress customizer",
-        "homepage": "http://kirki.org"
+        "homepage": "http://kirki.org",
+        "support": {
+            "source": "https://github.com/reduxframework/kirki/tree/0.8.4",
+            "issues": "https://github.com/reduxframework/kirki/issues"
+        }
     }
 ]
