@@ -9,7 +9,7 @@
 
 namespace SilverWp;
 
-if ( ! class_exists( '\SilverwWp\Translate' ) ) {
+if ( ! class_exists( '\SilverWp\Translate' ) ) {
     /**
      * Translate class
      *
@@ -28,7 +28,8 @@ if ( ! class_exists( '\SilverwWp\Translate' ) ) {
          * @access public
          */
         public static function init() {
-            load_theme_textdomain( THEME_TEXT_DOMAIN, SILVERWP_PLUGIN_DIR . '/../../languages' );
+
+            load_theme_textdomain( THEME_TEXT_DOMAIN, '/../languages' );
         }
 
         /**

@@ -105,7 +105,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
                 throw new Exception( include( 'function/php_version_warning_message.php' ) );
             }
             require_once 'function/functions.php';
-            require_once SILVERWP_LIBS_PATH . 'vafpress/bootstrap.php';
             $this->vpFix();
         }
 

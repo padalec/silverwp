@@ -30,3 +30,5 @@
   ID: $Id: $
  */
 require_once 'vendor/autoload.php';
+
+\SilverWp\SilverWp::getInstance()->isPlugin( new \SilverWp\Plugin() );
