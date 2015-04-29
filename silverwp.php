@@ -29,4 +29,11 @@
   Last changed date: $Date: $
   ID: $Id: $
  */
+// Exit if accessed directly
+if( !defined( 'ABSPATH' ) ) {
+    die;
+}
+
 require_once 'vendor/autoload.php';
+
+\SilverWp\SilverWp::getInstance()->isPlugin( new \SilverWp\Plugin() );

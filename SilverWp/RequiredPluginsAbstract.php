@@ -26,8 +26,6 @@
 namespace SilverWp;
 
 if ( ! class_exists( 'SilverWp\RequiredPluginsAbstract' ) ) {
-    require_once SILVERWP_LIBS_PATH . 'TGM-Plugin-Activation/class-tgm-plugin-activation.php';
-
     /**
      * Required plugins install
      *
@@ -119,8 +117,6 @@ if ( ! class_exists( 'SilverWp\RequiredPluginsAbstract' ) ) {
          * @access protected
          */
         protected function __construct() {
-            $this->default_path = SILVERWP_LIBS_PATH . 'TGM-Plugin-Activation/plugins/';
-
             $this->strings = array(
                 'page_title'                      => Translate::translate( 'Install Required Plugins' ),
                 'menu_title'                      => Translate::translate( 'Install Plugins' ),

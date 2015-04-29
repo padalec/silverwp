@@ -64,8 +64,16 @@ if ( ! class_exists( '\SilverWp\PluginAbstract' ) ) {
             return $this->plugin_name;
         }
 
+        /**
+         * Add directory
+         *
+         * @param string $name directory namespace
+         * @param string $path directory full path
+         *
+         * @access public
+         */
         public function addDirectory($name, $path) {
-            $vp = VP_FileSystem::instance();
+            $vp = \VP_FileSystem::instance();
             $vp->add_directories( $name, $path );
         }
     }
