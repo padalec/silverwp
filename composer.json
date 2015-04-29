@@ -1,4 +1,35 @@
 {
+  "name": "padalec/silverwp",
+  "type": "library",
+  "description": "WordPress framework to help developers create plugins and themes",
+  "homepage": "http://silversite.pl",
+  "license": "GPLv2 or later",
+  "authors": [
+    {
+      "name": "Michal Kalkowski",
+      "homepage": "http://silversite.pl"
+    }
+  ],
+  "packages": {
+    "aristath/kirki": {
+      "dev-master": {
+        "name": "aristath/kirki",
+        "type": "library",
+        "version": "0.8.4",
+        "dist": {
+          "url": "https://github.com/reduxframework/kirki/archive/master.zip",
+          "type": "zip"
+        }
+      }
+    }
+  },
+  "repositories": [
+    { "type": "vcs", "url": "https://github.com/reduxframework/kirki" }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "aristath/kirki": "*"
+  },
   "autoload": {
     "psr-4": {
       "SilverWp\\": "SilverWp"
