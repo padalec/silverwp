@@ -13,10 +13,10 @@
  *
  * @wordpress-plugin
  * Plugin Name:       SilverWp
- * Description:       Schedule for gim, fitness club and dance school.
+ * Description:       SilverWp is a framework to help developers create themes or plugins
  * Version:           0.1
- * Author:            Dynamite Studio
- * Author URI:        http://dynamite-studio.pl/
+ * Author:            SilverSite.pl
+ * Author URI:        http://silversite.pl/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       silverwp

@@ -2,12 +2,12 @@
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
- * SilverWp is free software; you can redistribute it and/or
+ * RequiredPluginInstaller is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * SilverWp is distributed in the hope that it will be useful,
+ * RequiredPluginInstaller is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,15 +23,15 @@
   Last changed date: $Date: $
   ID: $Id: $
  */
-namespace SilverWp;
+namespace RequiredPluginInstaller;
 
-if ( ! class_exists( 'SilverWp\RequiredPluginsAbstract' ) ) {
+if ( ! class_exists( 'RequiredPluginInstaller\RequiredPluginsAbstract' ) ) {
 
     /**
      * Required plugins install
      *
      * @category WordPress
-     * @package SilverWp
+     * @package RequiredPluginInstaller
      * @subpackage Schedule
      * @author Michal Kalkowski <michal.kalkowski at dynamite-studio.pl>
      * @copyright Dynamite-Studio.pl 2015
@@ -209,8 +209,8 @@ if ( ! class_exists( 'SilverWp\RequiredPluginsAbstract' ) ) {
          */
         public function isActivePlugin($plugin_name) {
             require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            $plugin_path = WP_CONTENT_DIR . '/plugins/';
-            $is_active = is_plugin_active( $plugin_path . $plugin_name . '.php' );
+            $plugin_path = $plugin_name . '/' . $plugin_name . '.php';
+            $is_active = is_plugin_active( $plugin_path );
             return $is_active;
         }
     }
