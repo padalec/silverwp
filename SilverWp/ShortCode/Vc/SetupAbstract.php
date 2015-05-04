@@ -36,7 +36,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\SetupAbstract' ) ) {
      * @package SilverWp
      * @subpackage ShortCode\Vc\Setup
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright (c) silversite.pl 2015
      * @version $Id: ShortCodes.php 2308 2015-02-02 13:35:21Z padalec $
      */
     abstract class SetupAbstract extends SingletonAbstract {
@@ -120,6 +120,17 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\SetupAbstract' ) ) {
             foreach ( self::$update_settings as $short_code => $settings ) {
                 vc_map_update( $short_code, $settings );
             }
+        }
+
+        /**
+         * Registe view template path
+         *
+         * @param string $path full path to short code view templates dir
+         *
+         * @access public
+         */
+        public function setViewPath( $path ) {
+            vc_set_shortcodes_templates_dir( $path );
         }
     }
 
