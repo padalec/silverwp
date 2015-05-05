@@ -16,13 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/Form/Element/Slider.php $
- Last committed: $Revision: 2337 $
- Last changed by: $Author: padalec $
- Last changed date: $Date: 2015-02-04 14:53:23 +0100 (Śr, 04 lut 2015) $
- ID: $Id: Slider.php 2337 2015-02-04 13:53:23Z padalec $
-*/
+
 namespace SilverWp\ShortCode\Vc\Control;
 
 if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Slider' ) ) {
@@ -48,7 +42,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Slider' ) ) {
         public function adminEnqueueStyle() {
             wp_enqueue_style(
                 'jQueryUi',
-                ASSETS_URI . 'css/jqueryui/themes/smoothness/jquery-ui-1.9.2.custom.min.css'
+                $this->getAssetsUri() . 'css/jqueryui/themes/smoothness/jquery-ui-1.9.2.custom.min.css'
             );
         }
 
@@ -59,7 +53,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Slider' ) ) {
          * @access string
          */
         protected function getJsScript() {
-            return ASSETS_URI . 'js/admin.js';
+            return $this->getAssetsUri() . 'js/admin.js';
         }
 
         /**

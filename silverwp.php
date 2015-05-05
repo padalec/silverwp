@@ -22,18 +22,14 @@
  * Text Domain:       silverwp
  * Domain Path:       /languages
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
 require_once 'vendor/autoload.php';
-
-\SilverWp\SilverWp::getInstance()->isPlugin( new \SilverWp\Plugin() );
+try {
+    \SilverWp\SilverWp::getInstance()->isPlugin( new \SilverWp\Plugin() );
+} catch ( \SilverWp\Exception $ex ) {
+    $ex->catchException();
+}

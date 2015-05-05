@@ -70,4 +70,20 @@ class Exception extends \Exception {
 
         return $content;
     }
+
+    /**
+     * Catch exception and display error message
+     *
+     * @access public
+     */
+    public function catchException() {
+        if ( is_admin() ) {
+            echo $this->displayAdminNotice();
+        } else {
+            echo $this->getMessage();
+            if ( WP_DEBUG ) {
+                \SilverWp\Debug::dump( $ex->getTrace() );
+            }
+        }
+    }
 }

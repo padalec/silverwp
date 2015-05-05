@@ -25,6 +25,10 @@
  */
 namespace SilverWp\Helper\Control;
 
+use SilverWp\FileSystem;
+use SilverWp\SilverWp;
+use SilverWp\Translate;
+
 if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
 
     /**
@@ -48,8 +52,27 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
          */
         public function __construct( $name ) {
             parent::__construct( $name );
-            $items = silverwp_get_sidebar();
-            $this->setOptions( $items );
+
+            $assets_uri = $this->getAssetsUri();
+
+            $sidebar_positions = array(
+                array(
+                    'value' => 0,
+                    'label' => Translate::translate( 'None' ),
+                    'img'   => $assets_uri . 'img/admin/sidebar/icon_0_sidebar_off.png',
+                ),
+                array(
+                    'value' => 1,
+                    'label' => Translate::translate( 'Left sidebar' ),
+                    'img'   => $assets_uri . 'assets/img/admin/sidebar/icon_1_sidebar_off.png',
+                ),
+                array(
+                    'value' => 2,
+                    'label' => Translate::translate( 'Right sidebar' ),
+                    'img'   => $assets_uri . 'img/admin/sidebar/icon_2_sidebar_off.png',
+                ),
+            );
+            $this->setOptions( $sidebar_positions );
         }
     }
 }

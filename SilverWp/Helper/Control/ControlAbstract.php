@@ -16,15 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\Helper\Control;
 
+use SilverWp\FileSystem;
 use SilverWp\Translate;
 
 if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
@@ -77,6 +71,10 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
             }
 
             $this->setting[ 'type' ] = $this->type;
+
+            if (method_exists($this, 'enqueueAssets') && is_admin()) {
+                add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAssets' ) );
+            }
         }
 
         /**
@@ -203,9 +201,6 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
         /**
          * Set control Dependency
          *
-         * @param \SilverWp\Helper\Control\ControlInterface $parent_control
-         * @param string $callback_function
-         *
          * @return $this
          * @throws \SilverWp\Helper\Control\Exception
          * @access public
@@ -285,6 +280,19 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
             $this->setting[ 'value' ] = $value;
 
             return $this;
+        }
+
+        /**
+         * Get assets folder URI
+         *
+         * @return string
+         * @access protected
+         */
+        protected function getAssetsUri() {
+            $file_system = FileSystem::getInstance();
+            $assets_uri  = $file_system->getDirectories( 'assets_uri' );
+
+            return $assets_uri;
         }
     }
 }

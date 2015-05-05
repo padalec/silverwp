@@ -16,16 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
+
 namespace SilverWp\ShortCode\Vc;
 
 use SilverWp\CoreInterface;
+use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
 use SilverWp\ShortCode\Vc\View\ViewAbstract;
 use SilverWp\SingletonAbstract;
@@ -51,6 +46,14 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
          * @access protected
          */
         protected $settings = array();
+
+        /**
+         * Controls objects handler
+         *
+         * @var array
+         * @access protected
+         */
+        protected $controls = array();
 
         /**
          *
@@ -98,8 +101,22 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
          */
         public function addControl( ControlInterface $control ) {
             $this->settings[ 'params' ][ ] = $control->getSettings();
+            $this->controls[ ]             = $control;
 
             return $this;
+        }
+
+        /**
+         *
+         * Get all registered controls
+         *
+         * @return array
+         * @access public
+         */
+        public function getControls() {
+            $controls = isset( $this->settings[ 'params' ] ) ? $this->settings[ 'params' ] : array();
+
+            return $controls;
         }
 
         /**
@@ -310,7 +327,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
          * @access protected
          */
         protected function render( array $attributes, $content = '' ) {
-            if ( class_exists( $this->settings[ 'php_class_name' ] ) &&
+            if ( isset( $this->settings[ 'php_class_name' ] ) && class_exists( $this->settings[ 'php_class_name' ] ) &&
                  SingletonAbstract::isImplemented(
                      $this->settings[ 'php_class_name' ],
                      '\SilverWp\ShortCode\Vc\View\ViewInterface'
@@ -380,6 +397,60 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
             $image_url = wp_get_attachment_url( $imageId );
 
             return $image_url;
+        }
+
+        /**
+         * Get settings array
+         *
+         * @return array
+         * @access public
+         */
+        public function getSettings() {
+            return $this->settings;
+        }
+
+        /**
+         * Set short code description
+         *
+         * @param string $description
+         *
+         * @return $this
+         * @access public
+         */
+        public function setDescription( $description ) {
+            $this->settings[ 'description' ] = $description;
+
+            return $this;
+        }
+
+        /**
+         * Set short code is container
+         *
+         * @param bool $is_container
+         *
+         * @access public
+         * @return $this
+         */
+        public function setIsContainer( $is_container ) {
+            $this->settings[ 'is_container' ] = (bool) $is_container;
+
+            return $this;
+        }
+
+        /**
+         * Prepare short code attributes for view
+         *
+         * @return array
+         * @access public
+         */
+        protected function prepareAttributes() {
+            $controls = $this->controls;
+            $elements = array();
+            foreach ( $controls as $name => $element ) {
+                $elements[ $element->getName() ] = $element->getDefault();
+            }
+
+            return $elements;
         }
     }
 }

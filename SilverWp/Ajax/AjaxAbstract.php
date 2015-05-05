@@ -28,7 +28,9 @@
 namespace SilverWp\Ajax;
 
 use SilverWp\Ajax\Exception;
+use SilverWp\FileSystem;
 use SilverWp\Helper\Filter;
+use SilverWp\SilverWp;
 use SilverWp\SingletonAbstract;
 use SilverWp\Translate;
 use SilverWp\View;
@@ -122,16 +124,33 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
      */
     public function scriptsRegister() {
         \wp_register_script(
-            $this->ajax_handler, \ASSETS_URI . 'js/' . $this->ajax_js_file, array(
-            'jquery',
-            'roots_scripts'
-        ), \SILVER_WP_THEME_VER, true
+            $this->ajax_handler
+            , $this->getAssetsUri() . 'js/' . $this->ajax_js_file
+            , array(
+                'jquery',
+            )
+            , SILVERWP_VER
+            , true
         );
     }
 
     /**
      *
-     * enqueue ajax scripts
+     * Get assets URI
+     *
+     * @return string
+     * @access protected
+     */
+    protected function getAssetsUri() {
+        $file_system = FileSystem::getInstance();
+        $assets_uri  = $file_system->getDirectories( 'assets_uri' );
+
+        return $assets_uri;
+    }
+
+    /**
+     *
+     * Enqueue ajax scripts
      *
      * @return void
      * @access public
@@ -163,7 +182,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 
     /**
      *
-     * get name of nonce field
+     * Get name of nonce field
      *
      * @return string
      * @access public
@@ -186,9 +205,14 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 
     /**
      *
-     * get pramas from JS request
+     * Get params from JS request
      *
      * @access protected
+     *
+     * @param string $name
+     * @param int    $filter_options
+     * @param null   $default
+     *
      * @return mixed filtered request data
      */
     protected function getRequestData( $name, $filter_options = FILTER_DEFAULT, $default = null ) {
@@ -269,7 +293,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
     }
 
     /**
-     * Ajax respone in HTML format
+     * Ajax response in HTML format
      *
      * @param array  $data data
      * @param string $view_file view file name
@@ -282,7 +306,9 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
             $view_file = $this->name;
         }
         try {
-            View::getInstance()->load( 'Ajax/' . $view_file, $data );
+            $view = View::getInstance()->load( 'Ajax/' . $view_file, $data );
+            //some servers don't display content with out echo
+            echo $view;
             //fix display 0
             //return $view;
         } catch ( Exception $ex ) {

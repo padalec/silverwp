@@ -33,16 +33,22 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
         }
 
         /**
-         * translate text
-         *
-         * @param string $message_id
+         * Translate text
          *
          * @return string
          * @static
          * @access public
          */
-        public static function translate( $message_id ) {
-            return translate( $message_id, THEME_TEXT_DOMAIN );
+        public static function translate() {
+            $args_count = func_num_args();
+            $args       = func_get_args();
+            $message_id = array_shift( $args );
+            if ($args_count > 1) {
+                $message = vsprintf( translate( $message_id, THEME_TEXT_DOMAIN ), $args );
+            } else {
+                $message = translate( $message_id, THEME_TEXT_DOMAIN );
+            }
+            return $message;
         }
 
         /**
