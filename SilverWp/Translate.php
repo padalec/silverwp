@@ -1,12 +1,21 @@
 <?php
 /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Translate.php $
-  Last committed: $Revision: 2404 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-02-10 09:58:32 +0100 (Wt, 10 lut 2015) $
-  ID: $Id: Translate.php 2404 2015-02-10 08:58:32Z padalec $
+ * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
+ *
+ * SilverWp is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * SilverWp is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 namespace SilverWp;
 
 if ( ! class_exists( '\SilverWp\Translate' ) ) {
@@ -14,12 +23,26 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
      * Translate class
      *
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @version $Id: Translate.php 2404 2015-02-10 08:58:32Z padalec $
+     * @version $Revision:$
      * @category WordPress
      * @package SilverWp
      */
     class Translate {
 
+        /**
+         * Path to languages files
+         *
+         * @var string
+         */
+        public static $language_path =  '/../languages';
+
+        /**
+         *
+         * Language text domain
+         *
+         * @var string
+         */
+        public static $text_domain = SILVERWP_THEME_TEXT_DOMAIN;
         /**
          *
          * Register theme text domain and language path
@@ -29,7 +52,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          */
         public static function init() {
 
-            load_theme_textdomain( THEME_TEXT_DOMAIN, '/../languages' );
+            load_theme_textdomain( self::$text_domain, self::$language_path);
         }
 
         /**
@@ -44,9 +67,9 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
             $args       = func_get_args();
             $message_id = array_shift( $args );
             if ($args_count > 1) {
-                $message = vsprintf( translate( $message_id, THEME_TEXT_DOMAIN ), $args );
+                $message = vsprintf( translate( $message_id, self::$text_domain ), $args );
             } else {
-                $message = translate( $message_id, THEME_TEXT_DOMAIN );
+                $message = translate( $message_id, self::$text_domain );
             }
             return $message;
         }
@@ -61,7 +84,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @access public
          */
         public static function escHtmlE( $message_id ) {
-            esc_html_e( $message_id, THEME_TEXT_DOMAIN );
+            esc_html_e( $message_id, self::$text_domain );
         }
 
         /**
@@ -76,7 +99,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @access public
          */
         public static function escHtml( $message_id ) {
-            return esc_html__( $message_id, THEME_TEXT_DOMAIN );
+            return esc_html__( $message_id, self::$text_domain );
         }
 
         /**
@@ -89,7 +112,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @access public
          */
         public static function e( $message_id ) {
-            _e( $message_id, THEME_TEXT_DOMAIN );
+            _e( $message_id, self::$text_domain );
         }
 
         /**
@@ -101,7 +124,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @static
          */
         public static function escAttr( $message_id ) {
-            return esc_attr__( $message_id, THEME_TEXT_DOMAIN );
+            return esc_attr__( $message_id, self::$text_domain );
         }
 
         /**
@@ -113,7 +136,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @static
          */
         public static function escAttrE( $message_id ) {
-            esc_attr_e( $message_id, THEME_TEXT_DOMAIN );
+            esc_attr_e( $message_id, self::$text_domain );
         }
 
         /**
@@ -127,7 +150,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @return string
          */
         public static function n( $single, $plural, $number ) {
-            return _n( $single, $plural, $number, THEME_TEXT_DOMAIN );
+            return _n( $single, $plural, $number, self::$text_domain );
         }
 
         /**
@@ -167,7 +190,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @return array array($singular, $plural)
          */
         public static function nNoop( $singular, $plural ) {
-            return _n_noop( $singular, $plural, THEME_TEXT_DOMAIN );
+            return _n_noop( $singular, $plural, self::$text_domain );
         }
 
         /**
@@ -181,7 +204,7 @@ if ( ! class_exists( '\SilverWp\Translate' ) ) {
          * @access public
          */
         public static function x($text, $context) {
-            return _x( $text, $context, THEME_TEXT_DOMAIN );
+            return _x( $text, $context, self::$text_domain );
         }
     }
 }

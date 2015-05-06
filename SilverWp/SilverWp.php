@@ -64,8 +64,8 @@ if ( ! class_exists( 'SilverWp' ) ) {
             defined( 'SILVERWP_DIR' ) ||
             define( 'SILVERWP_DIR', plugin_dir_path( __FILE__ ) );
 
-            defined( 'THEME_TEXT_DOMAIN' ) ||
-            define( 'THEME_TEXT_DOMAIN', 'silverwp' );
+            defined( 'SILVERWP_THEME_TEXT_DOMAIN' ) ||
+            define( 'SILVERWP_THEME_TEXT_DOMAIN', 'silverwp' );
 
             defined( 'SILVERWP_OPTION_PREFIX' ) ||
             define( 'SILVERWP_OPTION_PREFIX', '_silverwp_option' );

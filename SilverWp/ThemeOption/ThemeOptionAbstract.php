@@ -27,6 +27,7 @@
 namespace SilverWp\ThemeOption;
 
 use SilverWp\Debug;
+use SilverWp\FileSystem;
 use SilverWp\SingletonAbstract;
 use SilverWp\ThemeOption\Menu\MenuAbstract;
 use SilverWp\ThemeOption\ThemeOptionInterface;
@@ -151,10 +152,22 @@ abstract class ThemeOptionAbstract extends SingletonAbstract implements ThemeOpt
      * add custom css file
      */
     public function addCss() {
-        wp_register_style( 'theme_options', ASSETS_URI . 'css/theme_options.css', array( 'vp-option' ), SILVER_WP_THEME_VER );
+        $assets_uri = $this->getAssetsUri();
+        wp_register_style( 'theme_options', $assets_uri . 'css/theme_options.css', array( 'vp-option' ), SILVERWP_VER );
         wp_enqueue_style( 'theme_options' );
     }
 
+    /**
+     *
+     * Get URI to assets folder
+     *
+     * @return string
+     * @access public
+     */
+    public function getAssetsUri() {
+        $file_system = FileSystem::getInstance();
+        return $file_system->getDirectories('assets_uri');
+    }
 
     /**
      *
@@ -166,7 +179,7 @@ abstract class ThemeOptionAbstract extends SingletonAbstract implements ThemeOpt
         $option = array(
             'is_dev_mode'           => self::DEV_MODE,
             'option_key'            => THEME_OPTION_PREFIX,
-            'page_slug'             => THEME_TEXT_DOMAIN . '-' . $this->menu_slug,
+            'page_slug'             => SILVERWP_THEME_TEXT_DOMAIN . '-' . $this->menu_slug,
             'template'              => $this->getTemplate(),
             //'menu_page'             => $this->getMenuPage(),
             'use_auto_group_naming' => $this->use_auto_group_naming,
