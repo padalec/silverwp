@@ -27,6 +27,9 @@
 
 namespace SilverWp\Helper;
 
+use SilverWp\FileSystem;
+use SilverWp\SilverWp;
+
 /**
  * Google Web Fonts Helper
  *
@@ -54,17 +57,16 @@ class Gwf extends \VP_Site_GoogleWebFont
     private $fonts = null;
     /**
      *
-     * @var type
+     * @var object
      * @static
      */
     private static $instance = null;
 
     /**
      *
-     * class constructor
+     * Class constructor
      *
      * @access protected
-     * @return void
      */
     protected function __construct()
     {
@@ -94,7 +96,10 @@ class Gwf extends \VP_Site_GoogleWebFont
      */
     protected function getFontFile()
     {
-        return \LIBS_PATH . 'ssvafpress/data/' . $this->font_file;
+        $file_system = FileSystem::getInstance();
+
+        $data_source_path = $file_system->getDirectories( 'data' );
+        return $data_source_path . '/' . $this->font_file;
     }
     /**
      *

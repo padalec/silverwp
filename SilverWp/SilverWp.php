@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp;
 
 if ( ! class_exists( 'SilverWp' ) ) {
@@ -38,7 +31,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
      * @version $Revision:$
      */
     class SilverWp extends SingletonAbstract {
-
         /**
          * Framework version
          *
@@ -56,7 +48,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
         protected function __construct() {
             $this->constant();
             $this->includeCore();
-            Translate::init();
         }
 
         /**
@@ -73,8 +64,8 @@ if ( ! class_exists( 'SilverWp' ) ) {
             defined( 'SILVERWP_DIR' ) ||
             define( 'SILVERWP_DIR', plugin_dir_path( __FILE__ ) );
 
-            defined( 'THEME_TEXT_DOMAIN' ) ||
-            define( 'THEME_TEXT_DOMAIN', 'silverwp' );
+            defined( 'SILVERWP_THEME_TEXT_DOMAIN' ) ||
+            define( 'SILVERWP_THEME_TEXT_DOMAIN', 'silverwp' );
 
             defined( 'SILVERWP_OPTION_PREFIX' ) ||
             define( 'SILVERWP_OPTION_PREFIX', '_silverwp_option' );
@@ -85,13 +76,11 @@ if ( ! class_exists( 'SilverWp' ) ) {
             defined( 'THEME_OPTION_PREFIX' ) ||
             define( 'THEME_OPTION_PREFIX', '_silverwp_option' );
 
-
-            defined( 'SILVERWP_LIBS_PATH' ) ||
-            define( 'SILVERWP_LIBS_PATH', SILVERWP_DIR . 'libs/' );
-
             defined( 'SILVERWP_META_BOX_DEV' ) ||
             define( 'SILVERWP_META_BOX_DEV', false );
 
+            defined( 'SILVERWP_LIBS_PATH' ) ||
+            define( 'SILVERWP_LIBS_PATH', SILVERWP_DIR . 'libs/' );
         }
 
         /**
@@ -145,15 +134,7 @@ if ( ! class_exists( 'SilverWp' ) ) {
             $vp->add_directories( 'views', SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR . 'views' );
             $vp->add_directories( 'views', ABSPATH . 'Views' );
             $vp->add_directories( 'views', VP_VIEWS_DIR );
-            $data_dir = SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR . 'data';
-            $vp->add_directories( 'data', $data_dir );
-
-            $files = glob( $data_dir . DIRECTORY_SEPARATOR . '*.php' );
-            if ( $files ) {
-                foreach ( $files as $data_source ) {
-                    require_once( $data_source );
-                }
-            }
         }
+
     }
 }

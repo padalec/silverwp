@@ -25,6 +25,7 @@
  */
 namespace SilverWp\ShortCode;
 
+use SilverWp\FileSystem;
 use SilverWp\Translate;
 
 if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
@@ -127,6 +128,20 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
          */
         private function register() {
             \add_shortcode( $this->tag_base, array( $this, 'content' ) );
+        }
+
+        /**
+         *
+         * Get assets uri
+         *
+         * @return string
+         * @access protected
+         */
+        protected function getAssetsUri() {
+            $file_system = FileSystem::getInstance();
+            $assets_uri = $file_system->getDirectories( 'assets_uri' );
+
+            return $assets_uri;
         }
     }
 }

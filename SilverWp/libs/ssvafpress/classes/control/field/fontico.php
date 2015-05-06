@@ -18,40 +18,41 @@
  * @subpackage Filed
  * @copyright (c) 2009 - 2014, SilverSite.pl
  */
-
 class VP_Control_Field_fontico extends VP_Control_Field_Fontawesome {
     public function __construct() {
         parent::__construct();
         $this->add_scripts();
-         
+
     }
-    
+
     public function render( $is_compact = false ) {
         $this->_setup_data();
         $this->add_data( 'is_compact', $is_compact );
+
         return VP_View::instance()->load( 'control/fontawesome', $this->get_data() );
     }
 
     public static function withArray( $arr = array(), $class_name = null ) {
-        if( is_null( $class_name ) ) {
+        if ( is_null( $class_name ) ) {
             $instance = new self();
-        }else{
+        } else {
             $instance = new $class_name;
         }
-        
+
         $instance->_basic_make( $arr );
 
         return $instance;
     }
-    
+
     /**
      * add js script for display font select
      */
-    public function add_scripts(){
-        wp_enqueue_style( 'fontico', SILVERWP_THEME_URL . '/lib/SilverWp/libs/vafpress/public/css/vendor/select2.css' );
-        wp_register_script( 'fontico', SILVERWP_THEME_URL . '/lib/SilverWp/libs/vafpress/public/js/vendor/select2.min.js', array(), false, true );
+    public function add_scripts() {
+        \SilverWp\FileSystem::getInstance();
+
+        wp_enqueue_style( 'fontico', VP_PUBLIC_URL . '/css/vendor/select2.css' );
+        wp_register_script( 'fontico', VP_PUBLIC_URL . '/js/vendor/select2.min.js', array(), false, true );
         wp_enqueue_script( 'fontico' );
-        
     }
 }
 

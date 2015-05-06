@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\ShortCode\Vc\Control;
 
 if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
@@ -55,7 +48,7 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
                 $script_url = $this->getJsScript();
             }
 
-            if ( ! add_shortcode_param( $this->type, array( $this, 'createControl' ), $script_url ) ) {
+            if ( ! vc_add_shortcode_param( $this->type, array( $this, 'createControl' ), $script_url ) ) {
                 throw new Exception( Translate::translate( 'Can\'t create element ' . $this->type ) );
             }
         }

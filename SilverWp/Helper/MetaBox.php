@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -17,17 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Helper/MetaBox.php $
-  Last committed: $Revision: 2415 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-02-11 14:49:13 +0100 (Śr, 11 lut 2015) $
-  ID: $Id: MetaBox.php 2415 2015-02-11 13:49:13Z padalec $
- */
 namespace SilverWp\Helper;
 
-use SilverWp\Helper\RecursiveArray;
+use SilverWp\FileSystem;
 
 /**
  * MetaBox helper
@@ -139,7 +130,9 @@ class MetaBox {
      */
     public static function getFontelloIcons( $name = 'icon', $path = null, $transient_name = 'silverwp_fontello' ) {
         if ( \is_null( $path ) ) {
-            $path = ASSETS_PATH . 'css/fontello.css';
+            $file_system = FileSystem::getInstance();
+            $assets_path = $file_system->getDirectories( 'assets_path' );
+            $path        = $assets_path . 'css/fontello.css';
         }
 
         if ( ( $icons = \get_transient( $transient_name ) ) == false ) {

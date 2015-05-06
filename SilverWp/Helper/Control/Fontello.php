@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\Helper\Control;
 
 use SilverWp\Helper\MetaBox;
@@ -43,7 +36,7 @@ if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
      * @version $Revision:$
      */
-    class Fontello extends MultiControlAbstract {
+    class Fontello extends MultiControlAbstract implements EnqueueAssetsInterface {
         protected $type = 'fontico';
 
         /**
@@ -57,11 +50,23 @@ if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
         public function __construct( $name ) {
             parent::__construct( $name );
             //add fontello icons
-            $path  = ASSETS_PATH . 'css/fontello.css';
-            $items = MetaBox::getFontelloIcons( 'icon', $path, 'silverwp_fontello_icons' );
+            $assets_uri = $this->getAssetsUri();
+            $items = MetaBox::getFontelloIcons( 'icon', $assets_uri, 'silverwp_fontello_icons' );
             $this->setOptions( $items );
         }
 
+        /**
+         *
+         * Add additional css or js files
+         *
+         * @return void
+         * @access public
+         */
+        public function enqueueAssets() {
+            $assets_uri = $this->getAssetsUri();
+            wp_register_style( 'fontello_icons', $assets_uri . 'css/fontello.css' );
+            wp_enqueue_style( 'fontello_icons' );
+        }
         /**
          * The default value of the chooser,
          * refers to an item choice value or smart tags: {{first}} / {{last}}.

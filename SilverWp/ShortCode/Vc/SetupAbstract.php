@@ -16,13 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/ShortCodes.php $
- Last committed: $Revision: 2308 $
- Last changed by: $Author: padalec $
- Last changed date: $Date: 2015-02-02 14:35:21 +0100 (Pn, 02 lut 2015) $
- ID: $Id: ShortCodes.php 2308 2015-02-02 13:35:21Z padalec $
-*/
+
 namespace SilverWp\ShortCode\Vc;
 
 use SilverWp\SingletonAbstract;
@@ -36,7 +30,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\SetupAbstract' ) ) {
      * @package SilverWp
      * @subpackage ShortCode\Vc\Setup
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright (c) silversite.pl 2015
      * @version $Id: ShortCodes.php 2308 2015-02-02 13:35:21Z padalec $
      */
     abstract class SetupAbstract extends SingletonAbstract {
@@ -120,6 +114,18 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\SetupAbstract' ) ) {
             foreach ( self::$update_settings as $short_code => $settings ) {
                 vc_map_update( $short_code, $settings );
             }
+        }
+
+        /**
+         * Registe view template path
+         *
+         * @param string $path full path to short code view templates dir
+         *
+         * @access public
+         * @static
+         */
+        public function setViewPath( $path ) {
+            vc_set_shortcodes_templates_dir( $path );
         }
     }
 
