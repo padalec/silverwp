@@ -1,238 +1,838 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silverwp\n"
-"POT-Creation-Date: 2014-09-16 19:43+0100\n"
-"PO-Revision-Date: 2014-12-01 11:47+0100\n"
-"Last-Translator: Patrick M. <kl-webmedia@web.de>\n"
+"POT-Creation-Date: 2015-05-06 13:48+0100\n"
+"PO-Revision-Date: 2015-05-06 13:48+0100\n"
+"Last-Translator: Michał Kalkowski <michal@dynamite-studio.pl>\n"
 "Language-Team: silverwp\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_n;__params;escHtmlE;"
-"escHtml;e;escAttr;escAttrE;n;params;nNoop\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_n;__params;escHtml;e;"
+"escAttr;n;params;nNoop;translate\n"
 "X-Poedit-Basepath: ./\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPathExcluded-0: ../vendor\n"
 
-#: ../404.php:2 ../lib/titles.php:34
-msgid "Page not found"
-msgstr "Seite nicht gefunden"
-
-#: ../404.php:5
-msgid "It looks like this was the result of either:"
-msgstr "Es sieht so aus als wäre das das Ergebnis von:"
-
-#: ../404.php:7
-msgid "a mistyped address"
-msgstr "eine falsche Adresse"
-
-#: ../404.php:8
-msgid "an out-of-date link"
-msgstr "ein alter Link"
-
-#: ../base.php:9
-msgid ""
-"You are using an <strong>outdated</strong> browser. Please <a href=\"http://"
-"browsehappy.com/\">upgrade your browser</a> to improve your experience."
+#: ../SilverWp/Ajax/AjaxAbstract.php:94
+msgid "Variable name is requaied and can't be empty."
 msgstr ""
-"Sie benutzen einen alten Browser! Bitte verwenden Sie einen neueren Browser "
-"oder downloaden Sie ein Upgrade  <a href=\"http://browsehappy.com/\">hier</a>"
 
-#: ../index.php:3
-msgid "No results found."
+#: ../SilverWp/AutoUpdate.php:135
+#, php-format
+msgid "Go Back to %s Theme Panel"
+msgstr ""
+
+#: ../SilverWp/AutoUpdate.php:157
+#, php-format
+msgid ""
+"Once you have entered and saved your Username and API Key WordPress will "
+"check for\n"
+"                            updates every 12 Hours and notify you here, if "
+"one is available <br/><br/> Your\n"
+"                            current %s Version Number is <strong> %s </"
+"strong>"
+msgstr ""
+
+#: ../SilverWp/Customizer/Control/GwfStyle.php:48
+msgid "normal"
+msgstr "normal"
+
+#: ../SilverWp/Customizer/Control/GwfStyle.php:49
+msgid "italic"
+msgstr ""
+
+#: ../SilverWp/Customizer/Control/GwfStyle.php:50
+msgid "oblique"
+msgstr ""
+
+#: ../SilverWp/Customizer/Control/GwfStyle.php:51
+msgid "initial"
+msgstr ""
+
+#: ../SilverWp/Customizer/Control/GwfStyle.php:52
+msgid "inherit"
+msgstr ""
+
+#: ../SilverWp/Customizer/Panel/Colors.php:72
+msgid "Colors"
+msgstr ""
+
+#: ../SilverWp/Customizer/Panel/Fonts.php:73
+msgid "Fonts"
+msgstr "Schriften"
+
+#: ../SilverWp/Customizer/Panel/Layout.php:66
+msgid "Layout"
+msgstr "Layout"
+
+#: ../SilverWp/Customizer/Panel/PanelAbstract.php:98
+msgid ""
+"If You want add panel to your section first define panel_id class property."
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Content.php:63
+msgid "Content"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Content.php:65
+msgid "All theme texts except headings and menu"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Content.php:79
+#: ../SilverWp/Customizer/Section/Headings.php:79
+#: ../SilverWp/Customizer/Section/Menu.php:79
+msgid "Google-Font font family"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Content.php:101
+msgid "Google-Font subsets"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Content.php:102
+#: ../SilverWp/Customizer/Section/Menu.php:96
+msgid "The subsets used from Google's API."
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Content.php:108
+#: ../SilverWp/Customizer/Section/Menu.php:106
+msgid "Size"
+msgstr "Größe"
+
+#: ../SilverWp/Customizer/Section/Content.php:116
+#: ../SilverWp/Customizer/Section/Menu.php:114
+msgid "Line-height"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:58
+msgid "Favicon"
+msgstr "Favicon"
+
+#: ../SilverWp/Customizer/Section/Favicon.php:76
+#: ../SilverWp/Helper/Control/SocialAccounts.php:69
+msgid "Icon"
+msgstr "Icon"
+
+#: ../SilverWp/Customizer/Section/Favicon.php:79
+msgid "image should have 16×16px"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:83
+msgid "Apple iPhone Icon Upload"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:85
+msgid "favicon for Apple iPhone (57px x 57px)"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:90
+msgid "Apple iPhone Retina Icon Upload"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:96
+msgid "favicon for Apple iPhone Retina Version (114px x 114px)"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:101
+msgid "Favicon light version"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:104
+#: ../SilverWp/Customizer/Section/Favicon.php:110
+#: ../SilverWp/Customizer/Section/Logo.php:119
+#: ../SilverWp/Customizer/Section/Logo.php:126
+msgid "on brand-color background container"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:108
+msgid "Retina version @2x"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:115
+msgid "Margin top for light version"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Favicon.php:121
+#: ../SilverWp/Customizer/Section/Logo.php:112
+#: ../SilverWp/Customizer/Section/Logo.php:136
+msgid "set the margin size in \"px\""
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Footer.php:58
+#: ../SilverWp/Customizer/Section/LayoutFooter.php:59
+msgid "Footer"
+msgstr "Footer"
+
+#: ../SilverWp/Customizer/Section/Footer.php:75
+#: ../SilverWp/Customizer/Section/Header.php:80
+#: ../SilverWp/Customizer/Section/Header.php:98
+#: ../SilverWp/Customizer/Section/Header.php:134
+msgid "Background color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Footer.php:80
+msgid "Widget heading color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Footer.php:85
+#: ../SilverWp/Customizer/Section/Header.php:140
+msgid "Text and link color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Footer.php:90
+#: ../SilverWp/Customizer/Section/General.php:92
+msgid "Link color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Footer.php:95
+#: ../SilverWp/Customizer/Section/General.php:98
+msgid "Link hover color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/General.php:57
+msgid "General"
+msgstr "Allgemein"
+
+#: ../SilverWp/Customizer/Section/General.php:74
+#, fuzzy
+msgid "Brand primary"
+msgstr "erster"
+
+#: ../SilverWp/Customizer/Section/General.php:80
+msgid "Body background"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/General.php:86
+msgid "Body text"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/General.php:104
+msgid "Blog template background color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:58
+#: ../SilverWp/Customizer/Section/LayoutHeader.php:62
+msgid "Header"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:75
+msgid "Top bar"
+msgstr "Topleiste"
+
+#: ../SilverWp/Customizer/Section/Header.php:86
+msgid "Text color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:93
+msgid "Nav bar"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:104
+msgid "Navigation menu link hover color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:110
+msgid "Navigation drop-down menu background color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:116
+msgid "Navigation drop-down menu link color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:122
+msgid "Navigation dropdown menu link hover color"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Header.php:129
+msgid "Page header"
+msgstr "Seiten Kopf"
+
+#: ../SilverWp/Customizer/Section/Headings.php:63
+msgid "Headings"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:84
+msgid "Size H1"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:92
+msgid "Line-height H1"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:97
+msgid "Size H2"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:105
+msgid "Line-height H2"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:110
+msgid "Size H3"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:118
+msgid "Line-height H3"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:123
+msgid "Size H4"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:131
+msgid "Line-height H4"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:137
+msgid "Size H5"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:145
+msgid "Line-height H5"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:150
+msgid "Size H6"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:158
+msgid "Line-height H6"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:163
+#: ../SilverWp/Customizer/Section/Menu.php:84
+msgid "Weight"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:168
+msgid "Google-Font style"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:173
+msgid "Google-Font Transform"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Headings.php:178
+msgid "Google-Font Subset"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutFooter.php:76
+msgid "Background Image"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutFooter.php:82
+msgid "Copyright enabled?"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutFooter.php:88
+msgid "Copyright text"
+msgstr "Copyright Text"
+
+#: ../SilverWp/Customizer/Section/LayoutFooter.php:89
+msgid "Copyright dynamite-studio.pl"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutHeader.php:80
+msgid "Search Icon"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutHeader.php:86
+msgid "WPML languages Flags"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutMenu.php:62
+msgid "Menu"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutMenu.php:79
+msgid "Menu - Align Right"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/LayoutMenu.php:80
+msgid "Align Main Menu to right. For some types of header only"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:61
+msgid "Logo"
+msgstr "Logo"
+
+#: ../SilverWp/Customizer/Section/Logo.php:79
+msgid "Text"
+msgstr "Text"
+
+#: ../SilverWp/Customizer/Section/Logo.php:86
+msgid "Logo link"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:92
+msgid "Logo standard version"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:94
+#: ../SilverWp/Customizer/Section/Logo.php:101
+msgid "on white background"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:99
+msgid "Logo retina version @2x"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:106
+msgid "Logo margin top for standard version"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:117
+msgid "Logo light version"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:124
+msgid "Logo light retina version @2x"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Logo.php:131
+msgid "Logo margin top for logo light version"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Menu.php:63
+msgid "Main navigation menu"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Menu.php:95
+msgid "Google Font Subsets"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/Menu.php:101
+msgid "Transform"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/TopBar.php:62
+msgid "Top Bar"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/TopBar.php:80
+msgid "Turn on top bar"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/TopBar.php:86
+msgid "Welcome text"
+msgstr "Willkommens Text"
+
+#: ../SilverWp/Customizer/Section/TopBar.php:88
+msgid "First sentence displayed in Top Bar"
+msgstr "Erster Satz erscheint in der Topleiste"
+
+#: ../SilverWp/Customizer/Section/TopBar.php:94
+msgid "Show company address"
+msgstr "Zeige Firmenadresse"
+
+#: ../SilverWp/Customizer/Section/TopBar.php:101
+msgid "Show company phone"
+msgstr ""
+
+#: ../SilverWp/Customizer/Section/TopBar.php:108
+msgid "Show mobile number"
+msgstr "Zeige Handynummer "
+
+#: ../SilverWp/Customizer/Section/TopBar.php:115
+msgid "Show email address"
+msgstr "Zeige E-Mail Adresse"
+
+#: ../SilverWp/Customizer/Section/TopBar.php:122
+msgid "Show WPML language switcher"
+msgstr "Zeige WPML Seitenübersetzer"
+
+#: ../SilverWp/Customizer/Section/TopBar.php:129
+msgid "Show social icons"
+msgstr "Zeige Social Icons"
+
+#: ../SilverWp/FileSystem.php:114
+#, php-format
+msgid "Key %s does not exists in registered directories"
+msgstr ""
+
+#: ../SilverWp/Helper/Breadcrumb.php:217
+msgid "Archive by category"
+msgstr "archiviere zwischen Kategorien"
+
+#: ../SilverWp/Helper/Breadcrumb.php:220
+#: ../SilverWp/PostType/PostTypeAbstract.php:258
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:156
+msgid "Search"
+msgstr "Suche"
+
+#: ../SilverWp/Helper/Breadcrumb.php:294
+msgid "Posts tagged"
+msgstr "Beträge getagged"
+
+#: ../SilverWp/Helper/Breadcrumb.php:298
+msgid "Articles posted by"
+msgstr "Artikel geschrieben von"
+
+#: ../SilverWp/Helper/Breadcrumb.php:301
+msgid "Error 404"
+msgstr "Error 404"
+
+#: ../SilverWp/Helper/Breadcrumb.php:310
+msgid "Page"
+msgstr "Seite"
+
+#: ../SilverWp/Helper/Control/ControlAbstract.php:70
+msgid "Class property $type is required and can't be empty."
+msgstr ""
+
+#: ../SilverWp/Helper/Control/ControlAbstract.php:215
+msgid ""
+"First arguments should by instance of \\SilverWp\\Helper\\Control"
+"\\ControlInterface"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/Features.php:55
+#: ../SilverWp/Helper/Control/Gallery.php:56
+msgid "Gallery"
+msgstr "Galerie"
+
+#: ../SilverWp/Helper/Control/Features.php:58
+#: ../SilverWp/Helper/Control/Video.php:65
+msgid "Name"
+msgstr "Name"
+
+#: ../SilverWp/Helper/Control/Features.php:63
+msgid "Description"
+msgstr "Beschreibung"
+
+#: ../SilverWp/Helper/Control/Gallery.php:59
+msgid "Image"
+msgstr "Bild"
+
+#: ../SilverWp/Helper/Control/SidebarPosition.php:61
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:587
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:603
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:621
+msgid "None"
+msgstr "keine"
+
+#: ../SilverWp/Helper/Control/SidebarPosition.php:66
+msgid "Left sidebar"
+msgstr "Lewy sidebar"
+
+#: ../SilverWp/Helper/Control/SidebarPosition.php:71
+msgid "Right sidebar"
+msgstr "rechte Sidebar"
+
+#: ../SilverWp/Helper/Control/SocialAccounts.php:58
+msgid "Social Accounts"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/Video.php:57
+msgid "Video"
+msgstr "Video"
+
+#: ../SilverWp/Helper/Control/Video.php:60
+msgid "URL"
+msgstr "URL"
+
+#: ../SilverWp/Helper/NavMenu.php:137
+msgid "Footer menu"
+msgstr ""
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:268
+msgid "$id variable is required and can't be emapty."
+msgstr ""
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:272
+msgid "$title variable is required and can't be emapty."
+msgstr ""
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:376
+msgid "Settings"
+msgstr "Optionen"
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:699
+msgid "Title"
+msgstr "Titel"
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:702
+msgid "Thumbnail"
+msgstr ""
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:705
+msgid "Author"
+msgstr "Autor"
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:708
+msgid "Date"
+msgstr "Datum"
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:711
+msgid "Categories"
+msgstr "Kategorien"
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:714
+msgid "Tags"
+msgstr "Tags"
+
+#: ../SilverWp/PluginAbstract.php:61
+msgid "Class property $plugin_name is required and can't be empty"
+msgstr ""
+
+#: ../SilverWp/PostRelationship/Relationship.php:82
+msgid ""
+"The param $post_type isn't instance of \\SilverWp\\PostType"
+"\\PostTypeInterface"
+msgstr ""
+
+#: ../SilverWp/PostRelationship/Relationship.php:129
+msgid ""
+"Post 2 post plugin isn't activate. To create post type relationship plugin "
+"post 2 post is required."
+msgstr ""
+
+#: ../SilverWp/PostType/PostTypeAbstract.php:251
+#: ../SilverWp/PostType/PostTypeAbstract.php:499
+msgid "Item"
+msgstr "Item"
+
+#: ../SilverWp/PostType/PostTypeAbstract.php:252
+#: ../SilverWp/PostType/PostTypeAbstract.php:253
+#: ../SilverWp/PostType/PostTypeAbstract.php:256
+msgid "Add New Item"
+msgstr "Füge Item hinzu"
+
+#: ../SilverWp/PostType/PostTypeAbstract.php:254
+msgid "Edit Item"
+msgstr "Item editieren"
+
+#: ../SilverWp/PostType/PostTypeAbstract.php:255
+msgid "All Items"
+msgstr "Alle Items"
+
+#: ../SilverWp/PostType/PostTypeAbstract.php:257
+msgid "View Item"
+msgstr "Zobacz pozycję"
+
+#: ../SilverWp/PostType/PostTypeAbstract.php:259
+msgid "No items found"
 msgstr "Keine Ergebnisse gefunden"
 
-#: ../index.php:14
-msgid "Older posts"
-msgstr "Älterer Beitrag"
+#: ../SilverWp/PostType/PostTypeAbstract.php:260
+msgid "No items found in trash"
+msgstr "Keine Ergebnisse im Papierkorb gefunden"
 
-#: ../index.php:15
-msgid "Newer posts"
-msgstr "Neuer Beitrag"
-
-#: ../lib/activation.php:28 ../lib/activation.php:29
-msgid "Theme Activation"
-msgstr "Theme Aktivierung"
-
-#: ../lib/activation.php:50
-#, php-format
-msgid "%s Theme Activation"
-msgstr "%s Theme Aktivierung"
-
-#: ../lib/activation.php:52
-msgid ""
-"These settings are optional and should usually be used only on a fresh "
-"installation"
+#: ../SilverWp/PostType/PostTypeAbstract.php:375
+msgid "Post Type $name is required and can't be empty."
 msgstr ""
-"Diese Optionen sind optional und sollten nur bei einer neuen Installation "
-"verwendet werden."
 
-#: ../lib/activation.php:59 ../lib/activation.php:62
-msgid "Create static front page?"
-msgstr "Eine statische Frontpage erstellen?"
+#: ../SilverWp/PostType/PostTypeAbstract.php:510
+msgid "Item Pending"
+msgstr "Item ausstehend"
 
-#: ../lib/activation.php:64 ../lib/activation.php:76 ../lib/activation.php:88
-#: ../lib/activation.php:100 ../lib/SilverWp/Helper/Form/Group.php:35
-#: ../lib/SilverWp/ShortCode/Template.php:206
-msgid "Yes"
-msgstr "Ja"
-
-#: ../lib/activation.php:65 ../lib/activation.php:77 ../lib/activation.php:89
-#: ../lib/activation.php:101 ../lib/SilverWp/Helper/Form/Group.php:35
-#: ../lib/SilverWp/ShortCode/Template.php:206
-msgid "No"
-msgstr "Nein"
-
-#: ../lib/activation.php:67
-msgid "Create a page called Home and set it to be the static front page"
-msgstr "Erstelle eine Home Seite und setze diese als statische Frontpage"
-
-#: ../lib/activation.php:71
-msgid "Change permalink structure?"
-msgstr "Permalink-Struktur ändern?"
-
-#: ../lib/activation.php:74
-msgid "Update permalink structure?"
-msgstr "Permalink-Struktur updaten?"
-
-#: ../lib/activation.php:79
-msgid "Change permalink structure to /&#37;postname&#37;/"
-msgstr "Permalink-Struktur zu /&#37;postname&#37;/ ändern?"
-
-#: ../lib/activation.php:83 ../lib/activation.php:86
-msgid "Create navigation menu?"
-msgstr "Navigation Menu erstellen?"
-
-#: ../lib/activation.php:91
-msgid "Create the Primary Navigation menu and set the location"
-msgstr "Erstelle das primäre Navigations-Menu und bestimme den Standort"
-
-#: ../lib/activation.php:95 ../lib/activation.php:98
-msgid "Add pages to menu?"
-msgstr "Seiten zum Menu hinzufügen?"
-
-#: ../lib/activation.php:103
-msgid "Add all current published pages to the Primary Navigation"
-msgstr "Füge alle laufenden Seiten zum primären Navigations-Menu hinzu"
-
-#: ../lib/init.php:11
-msgid "Primary Navigation"
-msgstr "Primäres Navigations-Menu"
-
-#: ../lib/titles.php:10
-msgid "Latest Posts"
-msgstr "letzter Beitrag"
-
-#: ../lib/titles.php:20
-#, php-format
-msgid "Daily Archives: %s"
-msgstr "Tägliche Archive %s"
-
-#: ../lib/titles.php:22
-#, php-format
-msgid "Monthly Archives: %s"
-msgstr "Monatliche Archive %s"
-
-#: ../lib/titles.php:24
-#, php-format
-msgid "Yearly Archives: %s"
-msgstr "Jährliche Archive %s"
-
-#: ../lib/titles.php:27
-#, php-format
-msgid "Author Archives: %s"
-msgstr "Autoren Archive %s"
-
-#: ../lib/titles.php:32
-#, php-format
-msgid "Search Results for %s"
-msgstr "Suchergebnisse für %s"
-
-#: ../lib/SilverWp/Setup.php:330
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:196
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:92
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:122
+#: ../SilverWp/RequiredPluginsAbstract.php:122
 msgid "Install Required Plugins"
 msgstr "installiere benötigte Plugins"
 
-#: ../lib/SilverWp/Setup.php:331
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:197
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:93
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:123
+#: ../SilverWp/RequiredPluginsAbstract.php:123
 msgid "Install Plugins"
 msgstr "installiere Plugins"
 
-#: ../lib/SilverWp/Setup.php:332
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:198
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:94
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:124
+#: ../SilverWp/RequiredPluginsAbstract.php:124
 #, php-format
 msgid "Installing Plugin: %s"
 msgstr "installiere Plugins: %s"
 
-#: ../lib/SilverWp/Setup.php:333
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:95
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:126
+#: ../SilverWp/RequiredPluginsAbstract.php:126
 msgid "Something went wrong with the plugin API."
 msgstr "Es lief etwas falsch mit dem API Plugin"
 
-#: ../lib/SilverWp/Setup.php:344
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:210
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:106
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:155
+#: ../SilverWp/RequiredPluginsAbstract.php:155
 msgid "Return to Required Plugins Installer"
 msgstr "Zurück zu Plugin Installer"
 
-#: ../lib/SilverWp/Setup.php:345
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:212
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1965
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:107
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:156
+#: ../SilverWp/RequiredPluginsAbstract.php:156
 msgid "Plugin activated successfully."
 msgstr "Plugin erfolgreich aktiviert"
 
-#: ../lib/SilverWp/Setup.php:346
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/example.php:108
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:157
+#: ../SilverWp/RequiredPluginsAbstract.php:157
 #, php-format
 msgid "All plugins installed and activated successfully. %s"
 msgstr "Alles Plugins installiert und erfolgreich aktiviert. %s"
 
-#: ../lib/SilverWp/Sidebar.php:59
-msgid "Function register_sidebra is required"
-msgstr "Funktion  register_sidebra wird benötigt"
+#: ../SilverWp/ShortCode/ShortCodeAbstract.php:68
+msgid "Property $tag_base is required and can't be empty"
+msgstr ""
 
-#: ../lib/SilverWp/Sidebar.php:66
-msgid "Sidebar Footer"
-msgstr "Sidebar Footer"
+#: ../SilverWp/ShortCode/Vc/Control/Animation.php:55
+msgid "Css animation"
+msgstr ""
 
-#: ../lib/SilverWp/Sidebar.php:76
-msgid "Sidebar Blog"
-msgstr "Sidebar Blog"
+#: ../SilverWp/ShortCode/Vc/Control/Animation.php:60
+msgid ""
+"Select type of animation if you want this element to be animated when it\n"
+"                    enters into the browsers viewport. Note: Works only in "
+"modern browsers."
+msgstr ""
 
-#: ../lib/SilverWp/Sidebar.php:86
-msgid "Sidebar Page"
-msgstr "Sidebar Page"
+#: ../SilverWp/ShortCode/Vc/Control/ExtraCss.php:55
+msgid "Extra class name"
+msgstr ""
 
-#: ../lib/SilverWp/Template.php:65
+#: ../SilverWp/ShortCode/Vc/Control/ExtraCss.php:58
+msgid ""
+"If you wish to style particular content element differently,\n"
+"                    then use this field to add a class name and then refer "
+"to it in your css file."
+msgstr ""
+
+#: ../SilverWp/ShortCode/Vc/Control/NewControlAbstract.php:52
+msgid "Can't create element "
+msgstr ""
+
+#: ../SilverWp/ShortCode/Vc/ShortCodeUpdateAbstract.php:57
+msgid "Class variable $tag_base is required and can't be empty."
+msgstr ""
+
+#: ../SilverWp/ShortCode/Vp/GeneratorAbstract.php:135
+msgid "Class attribute $name is required and can't be empty."
+msgstr ""
+
+#: ../SilverWp/Sidebar/Primary.php:47
+msgid "Primary"
+msgstr "erster"
+
+#: ../SilverWp/Sidebar/Primary.php:52
+msgid "Place for right site in Page view"
+msgstr "Platziere auf der rechten Seite in Seitenansicht"
+
+#: ../SilverWp/Sidebar/SidebarAbstract.php:169
+msgid "$id variable is required and can't be empty."
+msgstr ""
+
+#: ../SilverWp/Sidebar/Widget/WidgetAbstract.php:210
+msgid "Field "
+msgstr ""
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:157
+msgid "Popular"
+msgstr "beliebte"
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:158
+msgid "Add New"
+msgstr "füge neu hinzu"
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:159
+msgid "New name"
+msgstr "Neuer Name"
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:160
+msgid "Edit"
+msgstr "editiere"
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:161
+msgid "Add or remove"
+msgstr "füge hinzu oder entferne"
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:248
+msgid "$post_type is required and can't be empty."
+msgstr ""
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:274
+msgid "Parametr args in $this->taxonomies is required!"
+msgstr ""
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:340
+msgid "Show All "
+msgstr ""
+
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:417
 #, php-format
-msgid "Variable %s doesn't exists."
-msgstr "Variable %s existiert nicht."
+msgid "Variable %s::post_id is required and can't be empty"
+msgstr ""
 
-#: ../lib/SilverWp/UpdateNotifier.php:75
-#: ../lib/SilverWp/UpdateNotifier.php:104
+#: ../SilverWp/ThemeOption/Menu/MenuAbstract.php:154
+#, php-format
+msgid ""
+"Argument passed to %s::addControl() isn't instance of SilverWp\\Helper"
+"\\Control\\ControlInterface or SilverWp\\ThemeOption\\Menu\\SectionInterface"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:56
+msgid "Theme update"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:61
+msgid "Update your Theme from the WordPress Dashboard"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:62
+msgid ""
+"If you want to get update notifications for your themes and if you want to "
+"be able to update your theme from your WordPress backend you need to enter "
+"your Themeforest account name as well as your Themeforest Secret API Key "
+"below:"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:66
+msgid "Your Themeforest User Name"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:67
+msgid "Enter the Name of the User you used to purchase this theme"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:71
+msgid "Your Themeforest API Key"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Menu/ThemeUpdate.php:72
+msgid ""
+"Enter the API Key of your Account here. <a href=\"\">You can find your API "
+"Key here</a>"
+msgstr ""
+
+#: ../SilverWp/ThemeOption/Option.php:49
+msgid "SilverWp Theme Options"
+msgstr "SilverWp Theme Optionen"
+
+#: ../SilverWp/ThemeOption/Option.php:50
+msgid "Theme Options"
+msgstr "Theme Optionen"
+
+#: ../SilverWp/ThemeOption/Option.php:51
+msgid "SilverWp Theme Options Panel"
+msgstr "SilverWp Theme Options Panel"
+
+#: ../SilverWp/ThemeOption/ThemeOptionAbstract.php:277
+#, php-format
+msgid "Class %s isn't instance of SilverWp\\ThemeOption\\Menu\\MenuAbstract"
+msgstr ""
+
+#: ../SilverWp/UpdateNotifier.php:84 ../SilverWp/UpdateNotifier.php:146
 msgid "Theme Updates"
 msgstr "Theme Updates"
 
-#: ../lib/SilverWp/UpdateNotifier.php:76
+#: ../SilverWp/UpdateNotifier.php:103
 msgid "New Updates"
 msgstr "Neue Updates"
 
-#: ../lib/SilverWp/UpdateNotifier.php:105
+#: ../SilverWp/UpdateNotifier.php:151
 #, fuzzy, php-format
 msgid "There is a new version of the %s theme available"
 msgstr "Es gibt eine neue Version von"
 
-#: ../lib/SilverWp/UpdateNotifier.php:110
+#: ../SilverWp/UpdateNotifier.php:163
 msgid "Update Download and Instructions"
 msgstr "Update Download  und Instruktionen"
 
-#: ../lib/SilverWp/UpdateNotifier.php:111
+#: ../SilverWp/UpdateNotifier.php:166
 #, php-format
 msgid ""
 "<strong>Please note:</strong> make a <strong> backup</strong> of the Theme "
@@ -243,7 +843,7 @@ msgstr ""
 "Theme in dem WordPress Installations Ordner<strong> /wp-content/themes/%s/</"
 "strong>"
 
-#: ../lib/SilverWp/UpdateNotifier.php:112
+#: ../SilverWp/UpdateNotifier.php:169
 msgid ""
 "To update the Theme, login to your account, head over to your "
 "<strong>downloads</strong> section and re-download the theme like you did "
@@ -252,7 +852,7 @@ msgstr ""
 "Für ein Update des Themes müssen Sie sich in Ihren Account einloggen und bei "
 "<strong>downloads</strong> erneut herunterladen."
 
-#: ../lib/SilverWp/UpdateNotifier.php:113
+#: ../SilverWp/UpdateNotifier.php:173
 #, php-format
 msgid ""
 "Extract the zip's contents, look for the extracted theme folder, and after "
@@ -265,7 +865,7 @@ msgstr ""
 "themes/%s/</strong>, können Side die alten Dateien überschreiben. (Deshalb "
 "ist es wichtig eine Sicherung der Änderungen von Theme Dateien zu machen)"
 
-#: ../lib/SilverWp/UpdateNotifier.php:114
+#: ../SilverWp/UpdateNotifier.php:178
 msgid ""
 "If you didn't make any changes to the theme files, you are free to overwrite "
 "them with the new ones without the risk of losing theme settings, pages, "
@@ -274,2398 +874,1630 @@ msgstr ""
 "Wenn Sie keine Änderungen der Dateien vorgenommen haben, können Sie diese "
 "überschreiben, ohne etwas zu verlieren."
 
-#: ../lib/SilverWp/UpdateNotifier.php:119
+#: ../SilverWp/UpdateNotifier.php:185
 msgid "Changelog"
 msgstr "Changelog"
 
-#: ../lib/SilverWp/Video.php:63
-msgid "Not connected to video service"
-msgstr "Keine Verbindung zum Video Service"
-
-#: ../lib/SilverWp/Ajax/AjaxAbstract.php:64
-#, fuzzy
-msgid "Variabel _name is requaied and can't be empty."
-msgstr "Klasse _name wird benötigt und kann nicht leer sein."
-
-#: ../lib/SilverWp/Ajax/PostLike.php:353 ../lib/SilverWp/Ajax/PostLike.php:361
-msgid "Unlike"
-msgstr "Gefällt mir nicht"
-
-#: ../lib/SilverWp/Ajax/PostLike.php:356 ../lib/SilverWp/Ajax/PostLike.php:361
-msgid "Like"
-msgstr "Gefällt mir"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:170
-msgid "home"
-msgstr "Startseite"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:190
-msgid "Archive by category"
-msgstr "archiviere zwischen Kategorien"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:193
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:227
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:94
-msgid "Search"
-msgstr "Suche"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:267
-msgid "Posts tagged"
-msgstr "Beträge getagged"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:271
-msgid "Articles posted by"
-msgstr "Artikel geschrieben von"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:274
-msgid "Error 404"
-msgstr "Error 404"
-
-#: ../lib/SilverWp/Helper/Breadcrumb.php:282
-msgid "Page"
-msgstr "Seite"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:102
-#: ../lib/SilverWp/MetaBox/Features.php:32
-#: ../lib/SilverWp/MetaBox/Portfolio.php:35
-#: ../lib/SilverWp/PostType/Features.php:50
-#: ../lib/SilverWp/PostType/Features.php:51
-#: ../lib/SilverWp/PostType/Features.php:52
-#: ../lib/SilverWp/ShortCode/Template.php:353
-#: ../templates/content-single-portfolio.php:63
-msgid "Features"
-msgstr "Features"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:108
-#: ../lib/SilverWp/MetaBox/Features.php:38
-msgid "Feature name"
-msgstr "Feature Name"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:128
-msgid "Gallery"
-msgstr "Galerie"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:134
-#: ../lib/SilverWp/Theme/Option.php:548
-msgid "Image"
-msgstr "Bild"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:183
-msgid "Social media URL"
-msgstr "Social Media URL"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:226
-msgid "Link"
-msgstr "Link"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:228
-#: ../lib/SilverWp/Helper/Form/ThemeOptions.php:76
-#: ../lib/SilverWp/MetaBox/CompanyAdvantage.php:29
-#: ../lib/SilverWp/ShortCode/Template.php:69
-msgid "Url"
-msgstr "Url"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:233
-msgid "Quote"
-msgstr "Zitat"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:235
-#: ../templates/content-single-portfolio.php:50
-msgid "Author"
-msgstr "Autor"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:236
-#: ../lib/SilverWp/Helper/Form/Group.php:273
-#: ../lib/SilverWp/Helper/Form/ThemeOptions.php:75
-#: ../lib/SilverWp/MetaBox/Testimonial.php:34
-msgid "Text"
-msgstr "Text"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:240
-#: ../lib/SilverWp/MetaBox/Video.php:50
-msgid "YouTube or Vimeo film URL"
-msgstr "YouTube oder Vimeo Video URL"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:254
-#: ../lib/SilverWp/PostType/Video.php:48
-#: ../lib/SilverWp/ShortCode/Template.php:314
-msgid "Video"
-msgstr "Video"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:274
-#: ../lib/SilverWp/ShortCode/Template.php:335
-msgid "URL"
-msgstr "URL"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:275
-#: ../lib/SilverWp/Helper/Form/ThemeOptions.php:77
-#: ../lib/SilverWp/MetaBox/ColourfulBar.php:32
-#: ../lib/SilverWp/ShortCode/Template.php:360
-#: ../lib/SilverWp/ShortCode/Template.php:466
-msgid "Background colour"
-msgstr "Hintergrundfarbe"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:276
-#: ../lib/SilverWp/Helper/Form/ThemeOptions.php:78
-#: ../lib/SilverWp/ShortCode/Template.php:337
-msgid "Icon after text"
-msgstr "Icon nach Text"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:277
-#: ../lib/SilverWp/Helper/Form/ThemeOptions.php:79
-#: ../lib/SilverWp/ShortCode/Template.php:338
-msgid "Icon before text"
-msgstr "Icon vor Text"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:294
-msgid "content - left / image - right"
-msgstr "Content - links / Bild - rechts"
-
-#: ../lib/SilverWp/Helper/Form/Group.php:298
-msgid "image - left / content - right"
-msgstr "Bild - links / Content - rechts"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:12
-#, fuzzy
-msgid "Gray light"
-msgstr "Hellgrau"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:16
-#: ../lib/SilverWp/MetaBox/Video.php:39
-msgid "Gray"
-msgstr "Grau"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:20
-msgid "Dark blue"
-msgstr "Dunkelblau"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:24
-msgid "Black"
-msgstr "Schwarz"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:28
-msgid "Yellow"
-msgstr "Gelb"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:32
-msgid "Dark green"
-msgstr "Dunkelgrün"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:36
-msgid "Brown"
-msgstr "Braun"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:40
-msgid "Orange"
-msgstr "Orange"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:44
-msgid "Blue"
-msgstr "Blau"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:48
-msgid "Purple"
-msgstr "Lila"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:52
-msgid "Pink"
-msgstr "Pink"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:56
-msgid "Green"
-msgstr "Grün"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:60
-msgid "Red"
-msgstr "Rot"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:72
-#, fuzzy
-msgid "Brand primary"
-msgstr "erster"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:76
-#: ../lib/SilverWp/MetaBox/Video.php:35
-msgid "Transparent"
-msgstr "transparent"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:80
-#, fuzzy
-msgid "Dark"
-msgstr "Dunkelblau"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/colors.php:84
-msgid "Light"
-msgstr "hell"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:51
-msgid "small"
-msgstr "klein"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:55
-msgid "normal"
-msgstr "normal"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:59
-msgid "large"
-msgstr "groß"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:94
-#: ../lib/SilverWp/Theme/Option.php:274
-msgid "roadmap"
-msgstr "roadmap"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:98
-#: ../lib/SilverWp/Theme/Option.php:278
-msgid "satellite"
-msgstr "satellite"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:102
-#: ../lib/SilverWp/Theme/Option.php:282
-msgid "hybrid"
-msgstr "hybrid"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:106
-#: ../lib/SilverWp/Theme/Option.php:286
-msgid "terrain"
-msgstr "terrain"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:122
-#, fuzzy
-msgid "Style 1"
-msgstr "Stil"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:126
-#, fuzzy
-msgid "Style 2"
-msgstr "Stil"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:130
-#, fuzzy
-msgid "Style 3"
-msgstr "Stil"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:147
-msgid "Full date, with hour"
-msgstr "Datum mit Uhrzeit"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/sources.php:151
-msgid "Date without hour"
-msgstr "Datum ohne Uhrzeit"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/style.php:13
-msgid "static / scrollable"
-msgstr "statisch / verschiebbar"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/style.php:17
-msgid "fixed"
-msgstr "fixiert"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/style.php:100
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:484
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:498
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:512
-msgid "None"
-msgstr "keine"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/style.php:105
-msgid "Left sidebar"
-msgstr "Lewy sidebar"
-
-#: ../lib/SilverWp/libs/ssvafpress/data/style.php:110
-msgid "Right sidebar"
-msgstr "rechte Sidebar"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:199
-msgid "Something went wrong."
-msgstr "Etwas ist schief gelaufen."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:211
-msgid "Return to the dashboard"
-msgstr "Zurück zum Dashboard"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:213
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1652
-msgid "The following plugin was activated successfully:"
-msgstr "Die folgenden plugins wurden erfolgreich aktiviert:"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:214
-#, php-format
-msgid "All plugins installed and activated successfully. %1$s"
-msgstr "Alles Plugins wurden installiert und erfolgreich aktiviert. %1$s"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:215
-msgid "Dismiss this notice"
-msgstr "Verwerfe die Notiz"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:556
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2182
-msgid "Return to the Dashboard"
-msgstr "Zurück zum Dashboard"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1186
-msgid "Private Repository"
-msgstr "private Quelle"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1189
-msgid "Pre-Packaged"
-msgstr "vorgepackt"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1194
-msgid "WordPress Repository"
-msgstr "WordPress Quelle"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1197
-msgid "Required"
-msgstr "benötigt"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1197
-msgid "Recommended"
-msgstr "empfohlen"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1200
-msgid "Not Installed"
-msgstr "nicht installiert"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1202
-msgid "Installed But Not Activated"
-msgstr "Installiert aber icht aktiviert"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1304
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1412
-msgid "Install"
-msgstr "installiere"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1326
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1413
-msgid "Activate"
-msgstr "aktiviere"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1375
-#, php-format
-msgid ""
-"No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
-"Dashboard\">Return to the Dashboard</a>"
+#: ../SilverWp/libs/ssvafpress/views/bindingbutton.php:5
+msgid "Load Preview"
 msgstr ""
-"Keine Plugins installiert oder aktiviert. <a href=\"%1$s\" title=\"Zurück "
-"zum Dashboard\">Zurück zum Dashboard</a>"
 
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1391
-msgid "Plugin"
-msgstr "Plugin"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1392
-msgid "Source"
-msgstr "Quelle"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1393
-#: ../lib/SilverWp/ShortCode/Template.php:479
-msgid "Type"
-msgstr "Typ"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1394
-msgid "Status"
-msgstr "Status"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1522
-msgid "No plugins are available to be installed at this time."
-msgstr "Zur Zeit sind keine Plugins sind zur Installation verfügbar."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1630
-msgid "No plugins are available to be activated at this time."
-msgstr "Zur Zeit sind keine Plugins sind zur Aktivierung verfügbar."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1948
-msgid "Install package not available."
-msgstr "Installationspaket nicht verfügbar."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1949
-#, php-format
-msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
-msgstr "Download Installationspaket von <span class=\"code\">%s</span>&#8230;"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1950
-msgid "Unpacking the package&#8230;"
-msgstr "Entpacke das Paket&#8230;"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1951
-msgid "Installing the plugin&#8230;"
-msgstr "Installiere das Plugin&#8230;"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1952
-msgid "Plugin install failed."
-msgstr "Plugin-Installation gescheitert"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1953
-msgid "Plugin installed successfully."
-msgstr "Plugin erfolgreich installiert."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:1964
-msgid "Plugin activation failed."
-msgstr "Plugin Aktivierung fehlgeschlagen"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2078
-msgid ""
-"The installation and activation process is starting. This process may take a "
-"while on some hosts, so please be patient."
-msgstr ""
-"Der Installations - und Aktivierungsprozess startet. Dieser Prozess kann "
-"eine Weile dauern, bitte seien Sie geduldig."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2079
-#, php-format
-msgid "%1$s installed and activated successfully."
-msgstr "%1$s erfolgreich installiert und aktiviert."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2079
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2088
-msgid "Show Details"
-msgstr "Zeige Details"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2079
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2088
-msgid "Hide Details"
-msgstr "Verstecke Details"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2080
-msgid "All installations and activations have been completed."
-msgstr "Alles Installation und Aktivierungen sind beendet."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2081
-#, php-format
-msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
-msgstr "Installiere und Aktiviere Plugin %1$s (%2$d/%3$d)"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2085
-msgid ""
-"The installation process is starting. This process may take a while on some "
-"hosts, so please be patient."
-msgstr ""
-"Der Installationsprozess startet. Dies könnte eine Weile dauern, bitte "
-"bleiben Sie geduldig."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2086
-#, php-format
-msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
-msgstr ""
-"Ein Fehler ist während der Installation aufgetreten %1$s: <strong>%2$s</"
-"strong>."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2087
-#, php-format
-msgid "The installation of %1$s failed."
-msgstr "Die Installation von %1$s ist fehlgeschlagen"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2088
-#, php-format
-msgid "%1$s installed successfully."
-msgstr "%1$s erfolgreich installiert"
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2089
-msgid "All installations have been completed."
-msgstr "Alle Installationen sind beendet."
-
-#: ../lib/SilverWp/libs/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2090
-#, php-format
-msgid "Installing Plugin %1$s (%2$d/%3$d)"
-msgstr "Installiere Plugin %1$s (%2$d/%3$d)"
-
-#: ../lib/SilverWp/libs/vafpress/bootstrap.php:88
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:364
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:389
-msgid "Successful"
-msgstr "Erfolgreich"
-
-#: ../lib/SilverWp/libs/vafpress/bootstrap.php:99
-msgid "Unauthorized function"
-msgstr "Unautorizierte Funktion"
-
-#: ../lib/SilverWp/libs/vafpress/classes/metabox.php:35
-msgid "[Development Mode] "
-msgstr "[Entwickler Modus]"
-
-#: ../lib/SilverWp/libs/vafpress/classes/metabox.php:566
-#: ../lib/SilverWp/libs/vafpress/classes/metabox/alchemy.php:493
-msgid "Remove"
-msgstr "Entfernen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/metabox.php:588
-#: ../lib/SilverWp/libs/vafpress/classes/metabox/alchemy.php:515
-msgid "Add More"
-msgstr "Mehr hinzufügen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:47
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:48
-msgid "Vafpress Options"
-msgstr "Vafpress Optionen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:61
-msgid "Option Key is required"
-msgstr "Options-Schlüssel wird benötigt"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:63
-msgid "Template Array/File is required"
-msgstr "Template Datei wird benötigt"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:65
-msgid "Page Slug is required"
-msgstr "Seitenzeile wird benötigt"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:167
-msgid ""
-"Development Mode is Active, options' values won't be saved into database."
-msgstr ""
-"Entwickler Modus ist aktiv, Optionen werden nicht in der Datenbank "
-"gespeichert."
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:306
-msgid "Can not be empty"
-msgstr "Kann nicht leer sein"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:331
-msgid "Invalid data"
-msgstr "invalide Daten"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:394
-msgid "Unverified Access"
-msgstr "unverifizierter Zugriff"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:460
-msgid "Invalid template supplied"
-msgstr "Invalides Template geliefert"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:473
-msgid "Utility"
-msgstr "Nutzen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:479
-#: ../lib/SilverWp/libs/vafpress/views/option/restore.php:13
-msgid "Restore Default"
-msgstr "Standard wiederherstellen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option.php:488
-msgid "Export/Import"
-msgstr "Exportieren/Importieren"
-
-#: ../lib/SilverWp/libs/vafpress/classes/shortcodegenerator.php:264
-msgid "Insert"
-msgstr "einsetzen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/shortcodegenerator.php:265
-msgid "Cancel"
-msgstr "schließen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option/control/set.php:359
-msgid "Saving successful"
-msgstr "erfolgreich gespeichert"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option/control/set.php:370
-msgid "Saving failed"
-msgstr "speichern fehlgeschlagen"
-
-#: ../lib/SilverWp/libs/vafpress/classes/option/control/set.php:376
-msgid "No changes made"
-msgstr "keine Änderungen gemacht"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:13
-msgid "Value needs to be Alphabet"
-msgstr "Werte müssen alphabetisch sein"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:14
-msgid "Value needs to be Alphanumeric"
-msgstr "Werte müssen alphanummerisch sein"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:15
-msgid "Value needs to be Numeric"
-msgstr "Werte müssen nummerisch sein"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:16
-msgid "Value needs to be Valid Email"
-msgstr "Wert muss eine korrekte E-Mail sein"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:17
-msgid "Value needs to be Valid URL"
-msgstr "Wert muss eine korrekte URL sein"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:18
-msgid "Length needs to be less than {0} characters"
-msgstr "Die Länge muss weniger als  {0} Zeichen betragen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:19
-msgid "Length needs to be more than {0} characters"
-msgstr "Die Länge muss mehr als  {0} Zeichen betragen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:20
-msgid "Select no more than {0} items"
-msgstr "Wähle nicht mehr als  {0} Zeichen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:21
-msgid "Select at least {0} items"
-msgstr "Wähle mindestens  {0} Zeichen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:22
-msgid "This is required"
-msgstr "Das wird benötigt"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:29
-msgid "Import succeed, option page will be refreshed.."
-msgstr "Import war erfolgreich, Optionen werden wiederhergestellt"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:30
-msgid "Import failed"
-msgstr "Import fehlgeschlagen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:31
-msgid "Export succeed, copy the JSON formatted options"
-msgstr "Export war erfolgreich, kopiere die JSON formatierte Optionen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:32
-msgid "Export failed"
-msgstr "Export fehlgeschlagen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:33
-msgid "Restoration succeed, option page will be refreshed.."
-msgstr "Wiederherstellung war erfolgreich.."
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:34
-msgid "Options identical to default"
-msgstr "Optionen identisch mit Standard-"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:35
-msgid "Restoration failed"
-msgstr "Wiederherstellung fehlgeschlagen"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:43
-msgid "Select option(s)"
-msgstr "Wähle Option"
-
-#: ../lib/SilverWp/libs/vafpress/config/messages.php:45
-msgid "Select an Icon"
-msgstr "Wähle ein Icon"
-
-#: ../lib/SilverWp/libs/vafpress/views/control/upload.php:5
+#: ../SilverWp/libs/ssvafpress/views/control/media.php:5
 msgid "Choose File"
 msgstr "wähle Datei"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/impexp.php:4
-#: ../lib/SilverWp/libs/vafpress/views/option/impexp.php:14
-msgid "Import"
-msgstr "importieren"
+#~ msgid "All"
+#~ msgstr "Alles"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/impexp.php:7
-msgid "Import Options"
-msgstr "importiere Optionen"
+#~ msgid "Successful"
+#~ msgstr "Erfolgreich"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/impexp.php:27
-#: ../lib/SilverWp/libs/vafpress/views/option/impexp.php:37
-msgid "Export"
-msgstr "exportieren"
+#~ msgid "Unauthorized function"
+#~ msgstr "Unautorizierte Funktion"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/impexp.php:30
-msgid "Export Options"
-msgstr "exportiere Optionen"
+#~ msgid "[Development Mode] "
+#~ msgstr "[Entwickler Modus]"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/restore.php:4
-msgid "Restore Default Options"
-msgstr "Stelle die Standardoptionen wieder her"
+#~ msgid "Remove"
+#~ msgstr "Entfernen"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/restore.php:7
-msgid "Restore options to initial default values."
-msgstr "stelle Standardoptionen wieder her"
+#~ msgid "Add More"
+#~ msgstr "Mehr hinzufügen"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/restore.php:14
-msgid ""
-"** Please make sure you have already make a backup data of your current "
-"settings. Once you click this button, your current settings will be gone."
-msgstr ""
-"** Bitte stellen Sie sicher, Sie haben bereits eine Backup-Daten der "
-"aktuellen Einstellungen. Sobald Sie diese Schaltfläche klicken, werden die "
-"aktuellen Einstellungen verschwunden sein."
+#~ msgid "Vafpress Options"
+#~ msgstr "Vafpress Optionen"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/set.php:69
-#: ../lib/SilverWp/libs/vafpress/views/option/set.php:84
-msgid "Save Changes"
-msgstr "speichere Änderungen"
+#~ msgid "Option Key is required"
+#~ msgstr "Options-Schlüssel wird benötigt"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/set.php:70
-#: ../lib/SilverWp/libs/vafpress/views/option/set.php:85
-msgid "Saving Now"
-msgstr "jetzt speichern"
+#~ msgid "Template Array/File is required"
+#~ msgstr "Template Datei wird benötigt"
 
-#: ../lib/SilverWp/libs/vafpress/views/option/set.php:93
-#, php-format
-msgid ""
-"This option panel is built using <a href=\"http://vafpress.com/vafpress-"
-"framework\">Vafpress Framework %s</a> powered by <a href=\"http://vafpress."
-"com\">Vafpress</a>"
-msgstr ""
-"Diese Option Panel mit integrierten <a href=\"http://vafpress.com/vafpress-"
-"framework\">Vafpress Framework %s</a> powered by <a href=\"http://vafpress."
-"com\">Vafpress</a>"
+#~ msgid "Page Slug is required"
+#~ msgstr "Seitenzeile wird benötigt"
 
-#: ../lib/SilverWp/MetaBox/Blog.php:31
+#~ msgid ""
+#~ "Development Mode is Active, options' values won't be saved into database."
+#~ msgstr ""
+#~ "Entwickler Modus ist aktiv, Optionen werden nicht in der Datenbank "
+#~ "gespeichert."
+
+#~ msgid "Can not be empty"
+#~ msgstr "Kann nicht leer sein"
+
+#~ msgid "Invalid data"
+#~ msgstr "invalide Daten"
+
+#~ msgid "Unverified Access"
+#~ msgstr "unverifizierter Zugriff"
+
+#~ msgid "Invalid template supplied"
+#~ msgstr "Invalides Template geliefert"
+
+#~ msgid "Utility"
+#~ msgstr "Nutzen"
+
+#~ msgid "Restore Default"
+#~ msgstr "Standard wiederherstellen"
+
+#~ msgid "Export/Import"
+#~ msgstr "Exportieren/Importieren"
+
+#~ msgid "Saving successful"
+#~ msgstr "erfolgreich gespeichert"
+
+#~ msgid "Saving failed"
+#~ msgstr "speichern fehlgeschlagen"
+
+#~ msgid "No changes made"
+#~ msgstr "keine Änderungen gemacht"
+
+#~ msgid "Insert"
+#~ msgstr "einsetzen"
+
+#~ msgid "Cancel"
+#~ msgstr "schließen"
+
+#~ msgid "Value needs to be Alphabet"
+#~ msgstr "Werte müssen alphabetisch sein"
+
+#~ msgid "Value needs to be Alphanumeric"
+#~ msgstr "Werte müssen alphanummerisch sein"
+
+#~ msgid "Value needs to be Numeric"
+#~ msgstr "Werte müssen nummerisch sein"
+
+#~ msgid "Value needs to be Valid Email"
+#~ msgstr "Wert muss eine korrekte E-Mail sein"
+
+#~ msgid "Value needs to be Valid URL"
+#~ msgstr "Wert muss eine korrekte URL sein"
+
+#~ msgid "Length needs to be less than {0} characters"
+#~ msgstr "Die Länge muss weniger als  {0} Zeichen betragen"
+
+#~ msgid "Length needs to be more than {0} characters"
+#~ msgstr "Die Länge muss mehr als  {0} Zeichen betragen"
+
+#~ msgid "Select no more than {0} items"
+#~ msgstr "Wähle nicht mehr als  {0} Zeichen"
+
+#~ msgid "Select at least {0} items"
+#~ msgstr "Wähle mindestens  {0} Zeichen"
+
+#~ msgid "This is required"
+#~ msgstr "Das wird benötigt"
+
+#~ msgid "Import succeed, option page will be refreshed.."
+#~ msgstr "Import war erfolgreich, Optionen werden wiederhergestellt"
+
+#~ msgid "Import failed"
+#~ msgstr "Import fehlgeschlagen"
+
+#~ msgid "Export succeed, copy the JSON formatted options"
+#~ msgstr "Export war erfolgreich, kopiere die JSON formatierte Optionen"
+
+#~ msgid "Export failed"
+#~ msgstr "Export fehlgeschlagen"
+
+#~ msgid "Restoration succeed, option page will be refreshed.."
+#~ msgstr "Wiederherstellung war erfolgreich.."
+
+#~ msgid "Options identical to default"
+#~ msgstr "Optionen identisch mit Standard-"
+
+#~ msgid "Restoration failed"
+#~ msgstr "Wiederherstellung fehlgeschlagen"
+
+#~ msgid "Select option(s)"
+#~ msgstr "Wähle Option"
+
+#~ msgid "Select an Icon"
+#~ msgstr "Wähle ein Icon"
+
+#~ msgid "Import"
+#~ msgstr "importieren"
+
+#~ msgid "Import Options"
+#~ msgstr "importiere Optionen"
+
+#~ msgid "Export"
+#~ msgstr "exportieren"
+
+#~ msgid "Export Options"
+#~ msgstr "exportiere Optionen"
+
+#~ msgid "Restore Default Options"
+#~ msgstr "Stelle die Standardoptionen wieder her"
+
+#~ msgid "Restore options to initial default values."
+#~ msgstr "stelle Standardoptionen wieder her"
+
+#~ msgid ""
+#~ "** Please make sure you have already make a backup data of your current "
+#~ "settings. Once you click this button, your current settings will be gone."
+#~ msgstr ""
+#~ "** Bitte stellen Sie sicher, Sie haben bereits eine Backup-Daten der "
+#~ "aktuellen Einstellungen. Sobald Sie diese Schaltfläche klicken, werden "
+#~ "die aktuellen Einstellungen verschwunden sein."
+
+#~ msgid "Save Changes"
+#~ msgstr "speichere Änderungen"
+
+#~ msgid "Saving Now"
+#~ msgstr "jetzt speichern"
+
+#~ msgid ""
+#~ "This option panel is built using <a href=\"http://vafpress.com/vafpress-"
+#~ "framework\">Vafpress Framework %s</a> powered by <a href=\"http://"
+#~ "vafpress.com\">Vafpress</a>"
+#~ msgstr ""
+#~ "Diese Option Panel mit integrierten <a href=\"http://vafpress.com/"
+#~ "vafpress-framework\">Vafpress Framework %s</a> powered by <a href="
+#~ "\"http://vafpress.com\">Vafpress</a>"
+
+#~ msgid "Page not found"
+#~ msgstr "Seite nicht gefunden"
+
+#~ msgid "It looks like this was the result of either:"
+#~ msgstr "Es sieht so aus als wäre das das Ergebnis von:"
+
+#~ msgid "a mistyped address"
+#~ msgstr "eine falsche Adresse"
+
+#~ msgid "an out-of-date link"
+#~ msgstr "ein alter Link"
+
+#~ msgid ""
+#~ "You are using an <strong>outdated</strong> browser. Please <a href="
+#~ "\"http://browsehappy.com/\">upgrade your browser</a> to improve your "
+#~ "experience."
+#~ msgstr ""
+#~ "Sie benutzen einen alten Browser! Bitte verwenden Sie einen neueren "
+#~ "Browser oder downloaden Sie ein Upgrade  <a href=\"http://browsehappy.com/"
+#~ "\">hier</a>"
+
+#~ msgid "No results found."
+#~ msgstr "Keine Ergebnisse gefunden"
+
+#~ msgid "Older posts"
+#~ msgstr "Älterer Beitrag"
+
+#~ msgid "Newer posts"
+#~ msgstr "Neuer Beitrag"
+
+#~ msgid "Theme Activation"
+#~ msgstr "Theme Aktivierung"
+
+#~ msgid "%s Theme Activation"
+#~ msgstr "%s Theme Aktivierung"
+
+#~ msgid ""
+#~ "These settings are optional and should usually be used only on a fresh "
+#~ "installation"
+#~ msgstr ""
+#~ "Diese Optionen sind optional und sollten nur bei einer neuen Installation "
+#~ "verwendet werden."
+
+#~ msgid "Create static front page?"
+#~ msgstr "Eine statische Frontpage erstellen?"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nein"
+
+#~ msgid "Create a page called Home and set it to be the static front page"
+#~ msgstr "Erstelle eine Home Seite und setze diese als statische Frontpage"
+
+#~ msgid "Change permalink structure?"
+#~ msgstr "Permalink-Struktur ändern?"
+
+#~ msgid "Update permalink structure?"
+#~ msgstr "Permalink-Struktur updaten?"
+
+#~ msgid "Change permalink structure to /&#37;postname&#37;/"
+#~ msgstr "Permalink-Struktur zu /&#37;postname&#37;/ ändern?"
+
+#~ msgid "Create navigation menu?"
+#~ msgstr "Navigation Menu erstellen?"
+
+#~ msgid "Create the Primary Navigation menu and set the location"
+#~ msgstr "Erstelle das primäre Navigations-Menu und bestimme den Standort"
+
+#~ msgid "Add pages to menu?"
+#~ msgstr "Seiten zum Menu hinzufügen?"
+
+#~ msgid "Add all current published pages to the Primary Navigation"
+#~ msgstr "Füge alle laufenden Seiten zum primären Navigations-Menu hinzu"
+
+#~ msgid "Primary Navigation"
+#~ msgstr "Primäres Navigations-Menu"
+
+#~ msgid "Latest Posts"
+#~ msgstr "letzter Beitrag"
+
+#~ msgid "Daily Archives: %s"
+#~ msgstr "Tägliche Archive %s"
+
+#~ msgid "Monthly Archives: %s"
+#~ msgstr "Monatliche Archive %s"
+
+#~ msgid "Yearly Archives: %s"
+#~ msgstr "Jährliche Archive %s"
+
+#~ msgid "Author Archives: %s"
+#~ msgstr "Autoren Archive %s"
+
+#~ msgid "Search Results for %s"
+#~ msgstr "Suchergebnisse für %s"
+
+#~ msgid "Function register_sidebra is required"
+#~ msgstr "Funktion  register_sidebra wird benötigt"
+
+#~ msgid "Sidebar Footer"
+#~ msgstr "Sidebar Footer"
+
+#~ msgid "Sidebar Blog"
+#~ msgstr "Sidebar Blog"
+
+#~ msgid "Sidebar Page"
+#~ msgstr "Sidebar Page"
+
+#~ msgid "Variable %s doesn't exists."
+#~ msgstr "Variable %s existiert nicht."
+
+#~ msgid "Not connected to video service"
+#~ msgstr "Keine Verbindung zum Video Service"
+
 #, fuzzy
-msgid "Blog sidebar"
-msgstr "rechte Sidebar"
+#~ msgid "Variabel _name is requaied and can't be empty."
+#~ msgstr "Klasse _name wird benötigt und kann nicht leer sein."
 
-#: ../lib/SilverWp/MetaBox/Blog.php:33
-msgid "Kinds of Posts"
-msgstr "Arten von Posts"
+#~ msgid "Unlike"
+#~ msgstr "Gefällt mir nicht"
 
-#: ../lib/SilverWp/MetaBox/Blog.php:34
-msgid ""
-"If you select ONE of groups below (Link, Quote, Gallery, Video), you will "
-"create a specific kind of Post."
-msgstr ""
-"Wenn Sie eine der folgenden Gruppen (Link, Zitat, Galerie, Video) auswählen, "
-"wird eine bestimmte Art von Beitrag zu erstellen."
+#~ msgid "Like"
+#~ msgstr "Gefällt mir"
 
-#: ../lib/SilverWp/MetaBox/Client.php:28
-#: ../lib/SilverWp/MetaBox/Portfolio.php:37
-msgid "Website URL"
-msgstr "Website URL"
+#~ msgid "home"
+#~ msgstr "Startseite"
 
-#: ../lib/SilverWp/MetaBox/ColourfulBar.php:31
+#~ msgid "Features"
+#~ msgstr "Features"
+
+#~ msgid "Feature name"
+#~ msgstr "Feature Name"
+
+#~ msgid "Social media URL"
+#~ msgstr "Social Media URL"
+
+#~ msgid "Link"
+#~ msgstr "Link"
+
+#~ msgid "Url"
+#~ msgstr "Url"
+
+#~ msgid "Quote"
+#~ msgstr "Zitat"
+
+#~ msgid "YouTube or Vimeo film URL"
+#~ msgstr "YouTube oder Vimeo Video URL"
+
+#~ msgid "Background colour"
+#~ msgstr "Hintergrundfarbe"
+
+#~ msgid "Icon after text"
+#~ msgstr "Icon nach Text"
+
+#~ msgid "Icon before text"
+#~ msgstr "Icon vor Text"
+
+#~ msgid "content - left / image - right"
+#~ msgstr "Content - links / Bild - rechts"
+
+#~ msgid "image - left / content - right"
+#~ msgstr "Bild - links / Content - rechts"
+
 #, fuzzy
-msgid "Main information"
-msgstr "Firmen Informationen"
+#~ msgid "Gray light"
+#~ msgstr "Hellgrau"
 
-#: ../lib/SilverWp/MetaBox/ColourfulBar.php:33
-#: ../lib/SilverWp/MetaBox/Page.php:36
-#: ../lib/SilverWp/MetaBox/Presentation.php:29
-msgid "Background image"
-msgstr "Hintergrund Bild"
+#~ msgid "Gray"
+#~ msgstr "Grau"
 
-#: ../lib/SilverWp/MetaBox/ColourfulBar.php:34
-#: ../lib/SilverWp/MetaBox/Features.php:47
-#: ../lib/SilverWp/MetaBox/Slider.php:33 ../lib/SilverWp/MetaBox/Video.php:51
-msgid "Buttons"
-msgstr "Buttons"
+#~ msgid "Dark blue"
+#~ msgstr "Dunkelblau"
 
-#: ../lib/SilverWp/MetaBox/ColourfulBarSidebar.php:37
+#~ msgid "Black"
+#~ msgstr "Schwarz"
+
+#~ msgid "Yellow"
+#~ msgstr "Gelb"
+
+#~ msgid "Dark green"
+#~ msgstr "Dunkelgrün"
+
+#~ msgid "Brown"
+#~ msgstr "Braun"
+
+#~ msgid "Orange"
+#~ msgstr "Orange"
+
+#~ msgid "Blue"
+#~ msgstr "Blau"
+
+#~ msgid "Purple"
+#~ msgstr "Lila"
+
+#~ msgid "Pink"
+#~ msgstr "Pink"
+
+#~ msgid "Green"
+#~ msgstr "Grün"
+
+#~ msgid "Red"
+#~ msgstr "Rot"
+
+#~ msgid "Transparent"
+#~ msgstr "transparent"
+
 #, fuzzy
-msgid "Short Code"
-msgstr "Shortcode"
+#~ msgid "Dark"
+#~ msgstr "Dunkelblau"
 
-#: ../lib/SilverWp/MetaBox/CompanyAdvantage.php:28
-#: ../lib/SilverWp/MetaBox/CompanyStats.php:36
-#: ../lib/SilverWp/MetaBox/Service.php:32
-msgid "Icon (Beauty Line Icons)"
-msgstr "Icon (Beauty Line Icons)"
+#~ msgid "Light"
+#~ msgstr "hell"
 
-#: ../lib/SilverWp/MetaBox/CompanyStats.php:32
-msgid "Number"
-msgstr "Nummer"
+#~ msgid "small"
+#~ msgstr "klein"
 
-#: ../lib/SilverWp/MetaBox/CompanyStats.php:33
-msgid "Sign before number"
-msgstr "Zeichen vor Nummer"
+#~ msgid "large"
+#~ msgstr "groß"
 
-#: ../lib/SilverWp/MetaBox/CompanyStats.php:34
-msgid "Sign after number"
-msgstr "Zeichen nach Nummer"
+#~ msgid "roadmap"
+#~ msgstr "roadmap"
 
-#: ../lib/SilverWp/MetaBox/CompanyStats.php:35
-msgid "Size"
-msgstr "Größe"
+#~ msgid "satellite"
+#~ msgstr "satellite"
 
-#: ../lib/SilverWp/MetaBox/Features.php:29
-#: ../lib/SilverWp/ShortCode/Template.php:299
-#: ../lib/SilverWp/Theme/Option.php:469
-msgid "Layout"
-msgstr "Layout"
+#~ msgid "hybrid"
+#~ msgstr "hybrid"
 
-#: ../lib/SilverWp/MetaBox/Features.php:39
-#: ../lib/SilverWp/ShortCode/Template.php:68
-#: ../lib/SilverWp/ShortCode/Template.php:88
-msgid "Icon"
-msgstr "Icon"
+#~ msgid "terrain"
+#~ msgstr "terrain"
 
-#: ../lib/SilverWp/MetaBox/Features.php:40
-msgid "Description"
-msgstr "Beschreibung"
-
-#: ../lib/SilverWp/MetaBox/MetaBoxAbstract.php:151
-#: ../lib/SilverWp/Sidebar/SidebarAbstract.php:96
-msgid "$_id variable is required and can't be emapty."
-msgstr "$ _id Variable ist erforderlich und kann nicht leer sein."
-
-#: ../lib/SilverWp/MetaBox/MetaBoxAbstract.php:155
-msgid "$_title variable is required and can't be emapty."
-msgstr "$ _title Variable ist erforderlich und kann nicht leer sein."
-
-#: ../lib/SilverWp/MetaBox/MetaBoxAbstract.php:186
-msgid "Template for meta box structure isn't defined."
-msgstr "Vorlage für Meta-Box-Struktur ist nicht definiert."
-
-#: ../lib/SilverWp/MetaBox/MetaBoxAbstract.php:230
-msgid "Settings"
-msgstr "Optionen"
-
-#: ../lib/SilverWp/MetaBox/Page.php:29
 #, fuzzy
-msgid "Page sidebar"
-msgstr "Lewy sidebar"
+#~ msgid "Style 1"
+#~ msgstr "Stil"
 
-#: ../lib/SilverWp/MetaBox/Page.php:32
-msgid "Page header"
-msgstr "Seiten Kopf"
-
-#: ../lib/SilverWp/MetaBox/Page.php:41
-msgid "Texts and Shortcodes"
-msgstr "Texte und Shortcodes"
-
-#: ../lib/SilverWp/MetaBox/Page.php:43
-msgid ""
-"The following fields allow for setting content and shortcodes above and "
-"below the container. Thanks to this elment you can use full width of the "
-"screen."
-msgstr ""
-"Die folgenden Felder können für die Einstellungs Inhalte und Shortcodes über "
-"und unter dem Container benutzt werden. Dank dieser Elment können Sie die "
-"volle Breite des Bildschirms nutzen."
-
-#: ../lib/SilverWp/MetaBox/Page.php:44
-msgid "Above the content"
-msgstr "Über Content"
-
-#: ../lib/SilverWp/MetaBox/Page.php:45
-msgid "Below the content"
-msgstr "Unter Content"
-
-#: ../lib/SilverWp/MetaBox/PieCharts.php:32
-msgid "Percent"
-msgstr "Prozent"
-
-#: ../lib/SilverWp/MetaBox/PieCharts.php:33
-#: ../lib/SilverWp/MetaBox/PricePlan.php:35
-#: ../lib/SilverWp/ShortCode/Template.php:89
-#: ../lib/SilverWp/ShortCode/Template.php:428
-#: ../lib/SilverWp/Theme/Option.php:547
-msgid "Colour"
-msgstr "Farbe"
-
-#: ../lib/SilverWp/MetaBox/Portfolio.php:32
 #, fuzzy
-msgid "Short description"
-msgstr "Box Beschreibung"
+#~ msgid "Style 2"
+#~ msgstr "Stil"
 
-#: ../lib/SilverWp/MetaBox/Portfolio.php:33
 #, fuzzy
-msgid "Title #2"
-msgstr "Titel #2:"
+#~ msgid "Style 3"
+#~ msgstr "Stil"
 
-#: ../lib/SilverWp/MetaBox/Portfolio.php:38
-msgid "Client name"
-msgstr "Clientenname"
+#~ msgid "Full date, with hour"
+#~ msgstr "Datum mit Uhrzeit"
 
-#: ../lib/SilverWp/MetaBox/Portfolio.php:39
+#~ msgid "Date without hour"
+#~ msgstr "Datum ohne Uhrzeit"
+
+#~ msgid "static / scrollable"
+#~ msgstr "statisch / verschiebbar"
+
+#~ msgid "fixed"
+#~ msgstr "fixiert"
+
+#~ msgid "Something went wrong."
+#~ msgstr "Etwas ist schief gelaufen."
+
+#~ msgid "Return to the dashboard"
+#~ msgstr "Zurück zum Dashboard"
+
+#~ msgid "The following plugin was activated successfully:"
+#~ msgstr "Die folgenden plugins wurden erfolgreich aktiviert:"
+
+#~ msgid "All plugins installed and activated successfully. %1$s"
+#~ msgstr "Alles Plugins wurden installiert und erfolgreich aktiviert. %1$s"
+
+#~ msgid "Dismiss this notice"
+#~ msgstr "Verwerfe die Notiz"
+
+#~ msgid "Return to the Dashboard"
+#~ msgstr "Zurück zum Dashboard"
+
+#~ msgid "Private Repository"
+#~ msgstr "private Quelle"
+
+#~ msgid "Pre-Packaged"
+#~ msgstr "vorgepackt"
+
+#~ msgid "WordPress Repository"
+#~ msgstr "WordPress Quelle"
+
+#~ msgid "Required"
+#~ msgstr "benötigt"
+
+#~ msgid "Recommended"
+#~ msgstr "empfohlen"
+
+#~ msgid "Not Installed"
+#~ msgstr "nicht installiert"
+
+#~ msgid "Installed But Not Activated"
+#~ msgstr "Installiert aber icht aktiviert"
+
+#~ msgid "Install"
+#~ msgstr "installiere"
+
+#~ msgid "Activate"
+#~ msgstr "aktiviere"
+
+#~ msgid ""
+#~ "No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
+#~ "Dashboard\">Return to the Dashboard</a>"
+#~ msgstr ""
+#~ "Keine Plugins installiert oder aktiviert. <a href=\"%1$s\" title=\"Zurück "
+#~ "zum Dashboard\">Zurück zum Dashboard</a>"
+
+#~ msgid "Plugin"
+#~ msgstr "Plugin"
+
+#~ msgid "Source"
+#~ msgstr "Quelle"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "No plugins are available to be installed at this time."
+#~ msgstr "Zur Zeit sind keine Plugins sind zur Installation verfügbar."
+
+#~ msgid "No plugins are available to be activated at this time."
+#~ msgstr "Zur Zeit sind keine Plugins sind zur Aktivierung verfügbar."
+
+#~ msgid "Install package not available."
+#~ msgstr "Installationspaket nicht verfügbar."
+
+#~ msgid ""
+#~ "Downloading install package from <span class=\"code\">%s</span>&#8230;"
+#~ msgstr ""
+#~ "Download Installationspaket von <span class=\"code\">%s</span>&#8230;"
+
+#~ msgid "Unpacking the package&#8230;"
+#~ msgstr "Entpacke das Paket&#8230;"
+
+#~ msgid "Installing the plugin&#8230;"
+#~ msgstr "Installiere das Plugin&#8230;"
+
+#~ msgid "Plugin install failed."
+#~ msgstr "Plugin-Installation gescheitert"
+
+#~ msgid "Plugin installed successfully."
+#~ msgstr "Plugin erfolgreich installiert."
+
+#~ msgid "Plugin activation failed."
+#~ msgstr "Plugin Aktivierung fehlgeschlagen"
+
+#~ msgid ""
+#~ "The installation and activation process is starting. This process may "
+#~ "take a while on some hosts, so please be patient."
+#~ msgstr ""
+#~ "Der Installations - und Aktivierungsprozess startet. Dieser Prozess kann "
+#~ "eine Weile dauern, bitte seien Sie geduldig."
+
+#~ msgid "%1$s installed and activated successfully."
+#~ msgstr "%1$s erfolgreich installiert und aktiviert."
+
+#~ msgid "Show Details"
+#~ msgstr "Zeige Details"
+
+#~ msgid "Hide Details"
+#~ msgstr "Verstecke Details"
+
+#~ msgid "All installations and activations have been completed."
+#~ msgstr "Alles Installation und Aktivierungen sind beendet."
+
+#~ msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+#~ msgstr "Installiere und Aktiviere Plugin %1$s (%2$d/%3$d)"
+
+#~ msgid ""
+#~ "The installation process is starting. This process may take a while on "
+#~ "some hosts, so please be patient."
+#~ msgstr ""
+#~ "Der Installationsprozess startet. Dies könnte eine Weile dauern, bitte "
+#~ "bleiben Sie geduldig."
+
+#~ msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+#~ msgstr ""
+#~ "Ein Fehler ist während der Installation aufgetreten %1$s: <strong>%2$s</"
+#~ "strong>."
+
+#~ msgid "The installation of %1$s failed."
+#~ msgstr "Die Installation von %1$s ist fehlgeschlagen"
+
+#~ msgid "%1$s installed successfully."
+#~ msgstr "%1$s erfolgreich installiert"
+
+#~ msgid "All installations have been completed."
+#~ msgstr "Alle Installationen sind beendet."
+
+#~ msgid "Installing Plugin %1$s (%2$d/%3$d)"
+#~ msgstr "Installiere Plugin %1$s (%2$d/%3$d)"
+
 #, fuzzy
-msgid "Purchase URL"
-msgstr "Page URL"
+#~ msgid "Blog sidebar"
+#~ msgstr "rechte Sidebar"
 
-#: ../lib/SilverWp/MetaBox/Portfolio.php:40
+#~ msgid "Kinds of Posts"
+#~ msgstr "Arten von Posts"
+
+#~ msgid ""
+#~ "If you select ONE of groups below (Link, Quote, Gallery, Video), you will "
+#~ "create a specific kind of Post."
+#~ msgstr ""
+#~ "Wenn Sie eine der folgenden Gruppen (Link, Zitat, Galerie, Video) "
+#~ "auswählen, wird eine bestimmte Art von Beitrag zu erstellen."
+
+#~ msgid "Website URL"
+#~ msgstr "Website URL"
+
 #, fuzzy
-msgid "Details URL"
-msgstr "Zeige Details"
+#~ msgid "Main information"
+#~ msgstr "Firmen Informationen"
 
-#: ../lib/SilverWp/MetaBox/PricePlan.php:33
-msgid "Price"
-msgstr "Preis"
+#~ msgid "Background image"
+#~ msgstr "Hintergrund Bild"
 
-#: ../lib/SilverWp/MetaBox/PricePlan.php:34
-msgid "Frequency fees"
-msgstr "Frequenzgebühren"
+#~ msgid "Buttons"
+#~ msgstr "Buttons"
 
-#: ../lib/SilverWp/MetaBox/PricePlan.php:37
-msgid "Button text"
-msgstr "Button text"
-
-#: ../lib/SilverWp/MetaBox/PricePlan.php:38
-msgid "Button URL"
-msgstr "Button URL"
-
-#: ../lib/SilverWp/MetaBox/Service.php:31
-msgid "Page URL"
-msgstr "Page URL"
-
-#: ../lib/SilverWp/MetaBox/Slider.php:32
-msgid "Title #2:"
-msgstr "Titel #2:"
-
-#: ../lib/SilverWp/MetaBox/Team.php:31 ../lib/SilverWp/Theme/Option.php:246
-msgid "Email address"
-msgstr "E-Mail Adresse"
-
-#: ../lib/SilverWp/MetaBox/Team.php:33
-msgid "Personal website Url"
-msgstr "Eigene Website URL"
-
-#: ../lib/SilverWp/MetaBox/Testimonial.php:31
-#: ../lib/SilverWp/Theme/Option.php:235
-msgid "Company name"
-msgstr "Firmen Name"
-
-#: ../lib/SilverWp/MetaBox/Testimonial.php:32
-msgid "Author name"
-msgstr "Autorenname"
-
-#: ../lib/SilverWp/MetaBox/Testimonial.php:33
-msgid "Author profession"
-msgstr "Authoren Zugehörigkeit"
-
-#: ../lib/SilverWp/MetaBox/Timeline.php:34
 #, fuzzy
-msgid "Important"
-msgstr "importieren"
+#~ msgid "Short Code"
+#~ msgstr "Shortcode"
 
-#: ../lib/SilverWp/MetaBox/Timeline.php:35
-msgid "Date format"
-msgstr "Datum Format"
+#~ msgid "Icon (Beauty Line Icons)"
+#~ msgstr "Icon (Beauty Line Icons)"
 
-#: ../lib/SilverWp/PostType/Client.php:50
-#: ../lib/SilverWp/PostType/Client.php:51
-#: ../lib/SilverWp/PostType/Client.php:52
-#: ../lib/SilverWp/ShortCode/Template.php:400
-msgid "Clients"
-msgstr "Clienten"
+#~ msgid "Number"
+#~ msgstr "Nummer"
 
-#: ../lib/SilverWp/PostType/Client.php:53
-msgid "All Clients"
-msgstr "Alle Clienten"
+#~ msgid "Sign before number"
+#~ msgstr "Zeichen vor Nummer"
 
-#: ../lib/SilverWp/PostType/ColourfulBar.php:45
-#: ../lib/SilverWp/PostType/ColourfulBar.php:46
-#: ../lib/SilverWp/PostType/ColourfulBar.php:47
-msgid "Colourful Bars"
-msgstr "Farbige Leisten"
+#~ msgid "Sign after number"
+#~ msgstr "Zeichen nach Nummer"
 
-#: ../lib/SilverWp/PostType/ColourfulBar.php:48
-msgid "All Colourful Bars"
-msgstr "Alle farbige Leisten"
+#~ msgid "$_id variable is required and can't be emapty."
+#~ msgstr "$ _id Variable ist erforderlich und kann nicht leer sein."
 
-#: ../lib/SilverWp/PostType/CompanyAdvantage.php:49
-#: ../lib/SilverWp/PostType/CompanyAdvantage.php:50
-#: ../lib/SilverWp/PostType/CompanyAdvantage.php:51
-msgid "Company Advantages"
-msgstr "Firmenname"
+#~ msgid "$_title variable is required and can't be emapty."
+#~ msgstr "$ _title Variable ist erforderlich und kann nicht leer sein."
 
-#: ../lib/SilverWp/PostType/CompanyAdvantage.php:52
-msgid "All Company Advantages"
-msgstr "Alle Firemenvorteile"
+#~ msgid "Template for meta box structure isn't defined."
+#~ msgstr "Vorlage für Meta-Box-Struktur ist nicht definiert."
 
-#: ../lib/SilverWp/PostType/CompanyStats.php:47
-#: ../lib/SilverWp/PostType/CompanyStats.php:48
-#: ../lib/SilverWp/PostType/CompanyStats.php:49
-#: ../lib/SilverWp/ShortCode/Template.php:38
-msgid "Company Stats"
-msgstr "Firmen Statistik"
-
-#: ../lib/SilverWp/PostType/CompanyStats.php:50
-msgid "All Company Stats"
-msgstr "Alle Firmen Statistiken"
-
-#: ../lib/SilverWp/PostType/Features.php:53
-msgid "All Features"
-msgstr "Alle Features"
-
-#: ../lib/SilverWp/PostType/PieCharts.php:47
-#: ../lib/SilverWp/PostType/PieCharts.php:48
-#: ../lib/SilverWp/PostType/PieCharts.php:49
-msgid "Pie Charts"
-msgstr "Kreisdiagramme"
-
-#: ../lib/SilverWp/PostType/PieCharts.php:50
-msgid "All Pie Charts"
-msgstr "Alle Kuchendiagramme"
-
-#: ../lib/SilverWp/PostType/Portfolio.php:33
-#: ../lib/SilverWp/PostType/Portfolio.php:35
-#: ../lib/SilverWp/Sidebar/Portfolio.php:26
-#: ../lib/SilverWp/Theme/Option.php:155
-msgid "Portfolio"
-msgstr "Portfolio"
-
-#: ../lib/SilverWp/PostType/Portfolio.php:34
-msgid "Portfolio Projects"
-msgstr "Portfolio Projektdetails"
-
-#: ../lib/SilverWp/PostType/Portfolio.php:36
-msgid "All Portfolio"
-msgstr "Alle Portfolios"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:220
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:554
-msgid "Item"
-msgstr "Item"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:221
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:222
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:225
-msgid "Add New Item"
-msgstr "Füge Item hinzu"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:223
-msgid "Edit Item"
-msgstr "Item editieren"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:224
-msgid "All Items"
-msgstr "Alle Items"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:226
-msgid "View Item"
-msgstr "Zobacz pozycję"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:228
-msgid "No items found"
-msgstr "Keine Ergebnisse gefunden"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:229
-msgid "No items found in trash"
-msgstr "Keine Ergebnisse im Papierkorb gefunden"
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:341
-msgid "Post Type $_name is required and can't be empty."
-msgstr "Beitrag Typ $ _name ist erforderlich und kann nicht leer sein."
-
-#: ../lib/SilverWp/PostType/PostTypeAbstract.php:565
-msgid "Item Pending"
-msgstr "Item ausstehend"
-
-#: ../lib/SilverWp/PostType/Presentation.php:51
-#: ../lib/SilverWp/PostType/Presentation.php:52
-#: ../lib/SilverWp/PostType/Presentation.php:53
-msgid "Presentations"
-msgstr "Präsenationen"
-
-#: ../lib/SilverWp/PostType/Presentation.php:54
-msgid "All Presentations"
-msgstr "Alle Präsentationen"
-
-#: ../lib/SilverWp/PostType/PricePlan.php:47
-#: ../lib/SilverWp/PostType/PricePlan.php:48
-#: ../lib/SilverWp/PostType/PricePlan.php:49
-#: ../lib/SilverWp/ShortCode/Main.php:424
-#: ../lib/SilverWp/ShortCode/Template.php:497
-msgid "Price Plan"
-msgstr "Preisplan"
-
-#: ../lib/SilverWp/PostType/PricePlan.php:50
-msgid "All Price Plan"
-msgstr "Alle Preispläne"
-
-#: ../lib/SilverWp/PostType/Service.php:44
-#: ../lib/SilverWp/PostType/Service.php:45
-#: ../lib/SilverWp/PostType/Service.php:46
-#: ../lib/SilverWp/ShortCode/Template.php:235
-msgid "Services"
-msgstr "Services"
-
-#: ../lib/SilverWp/PostType/Service.php:47
-msgid "All Services"
-msgstr "Alle Services"
-
-#: ../lib/SilverWp/PostType/Slider.php:49
-#: ../lib/SilverWp/PostType/Slider.php:50
-#: ../lib/SilverWp/PostType/Slider.php:51
-msgid "Sliders"
-msgstr "Sliders"
-
-#: ../lib/SilverWp/PostType/Slider.php:52
-msgid "All Sliders"
-msgstr "Alle Slider"
-
-#: ../lib/SilverWp/PostType/Team.php:35 ../lib/SilverWp/PostType/Team.php:36
-#: ../lib/SilverWp/PostType/Team.php:37
-#: ../lib/SilverWp/ShortCode/Template.php:373
-msgid "Team"
-msgstr "Team"
-
-#: ../lib/SilverWp/PostType/Team.php:38
-msgid "All Team"
-msgstr "Ganzes Team"
-
-#: ../lib/SilverWp/PostType/Testimonial.php:35
-#: ../lib/SilverWp/PostType/Testimonial.php:36
-#: ../lib/SilverWp/ShortCode/Template.php:102
-msgid "Testimonial"
-msgstr "Bewertung"
-
-#: ../lib/SilverWp/PostType/Testimonial.php:37
-msgid "Testimonial list"
-msgstr "Bewertungenliste"
-
-#: ../lib/SilverWp/PostType/Testimonial.php:38
-msgid "All Testimonial"
-msgstr "Alle Bewertung"
-
-#: ../lib/SilverWp/PostType/Timeline.php:51
-#: ../lib/SilverWp/PostType/Timeline.php:52
-#: ../lib/SilverWp/PostType/Timeline.php:53
-#: ../lib/SilverWp/ShortCode/Template.php:568
-msgid "Timeline"
-msgstr "Zeitlinie"
-
-#: ../lib/SilverWp/PostType/Timeline.php:54
 #, fuzzy
-msgid "All Timeline"
-msgstr "Alle Preispläne"
+#~ msgid "Page sidebar"
+#~ msgstr "Lewy sidebar"
 
-#: ../lib/SilverWp/PostType/Video.php:47 ../lib/SilverWp/PostType/Video.php:49
-msgid "Videos"
-msgstr "Videos"
+#~ msgid "Texts and Shortcodes"
+#~ msgstr "Texte und Shortcodes"
 
-#: ../lib/SilverWp/PostType/Video.php:50
-msgid "All Videos"
-msgstr "Alle Videos"
+#~ msgid ""
+#~ "The following fields allow for setting content and shortcodes above and "
+#~ "below the container. Thanks to this elment you can use full width of the "
+#~ "screen."
+#~ msgstr ""
+#~ "Die folgenden Felder können für die Einstellungs Inhalte und Shortcodes "
+#~ "über und unter dem Container benutzt werden. Dank dieser Elment können "
+#~ "Sie die volle Breite des Bildschirms nutzen."
 
-#: ../lib/SilverWp/ShortCode/Main.php:41
-msgid "Grid"
-msgstr "Gitter"
+#~ msgid "Above the content"
+#~ msgstr "Über Content"
 
-#: ../lib/SilverWp/ShortCode/Main.php:42
-msgid "Tabs"
-msgstr "Registerkarten"
+#~ msgid "Below the content"
+#~ msgstr "Unter Content"
 
-#: ../lib/SilverWp/ShortCode/Main.php:43
-#: ../lib/SilverWp/ShortCode/Template.php:197
-msgid "Accordion"
-msgstr "Accordion"
+#~ msgid "Percent"
+#~ msgstr "Prozent"
 
-#: ../lib/SilverWp/ShortCode/Main.php:44
-msgid "Elements"
-msgstr "Elemente"
+#~ msgid "Colour"
+#~ msgstr "Farbe"
 
-#: ../lib/SilverWp/ShortCode/Main.php:87
-msgid "Meet our team"
-msgstr "Lernen Sie unser Team kennen"
+#, fuzzy
+#~ msgid "Short description"
+#~ msgstr "Box Beschreibung"
 
-#: ../lib/SilverWp/ShortCode/Main.php:144
-msgid "Some of our clients"
-msgstr "Einige unserer Clienten"
+#, fuzzy
+#~ msgid "Title #2"
+#~ msgstr "Titel #2:"
 
-#: ../lib/SilverWp/ShortCode/Main.php:318
-msgid "Skills and Experiences"
-msgstr "Fähigkeiten und Erfahrungen"
+#~ msgid "Client name"
+#~ msgstr "Clientenname"
 
-#: ../lib/SilverWp/ShortCode/Main.php:371
-msgid "Important statistics"
-msgstr "wichtige Statistiken"
+#, fuzzy
+#~ msgid "Purchase URL"
+#~ msgstr "Page URL"
+
+#, fuzzy
+#~ msgid "Details URL"
+#~ msgstr "Zeige Details"
+
+#~ msgid "Price"
+#~ msgstr "Preis"
+
+#~ msgid "Frequency fees"
+#~ msgstr "Frequenzgebühren"
+
+#~ msgid "Button text"
+#~ msgstr "Button text"
+
+#~ msgid "Button URL"
+#~ msgstr "Button URL"
+
+#~ msgid "Page URL"
+#~ msgstr "Page URL"
+
+#~ msgid "Title #2:"
+#~ msgstr "Titel #2:"
+
+#~ msgid "Email address"
+#~ msgstr "E-Mail Adresse"
+
+#~ msgid "Personal website Url"
+#~ msgstr "Eigene Website URL"
+
+#~ msgid "Company name"
+#~ msgstr "Firmen Name"
+
+#~ msgid "Author name"
+#~ msgstr "Autorenname"
+
+#~ msgid "Author profession"
+#~ msgstr "Authoren Zugehörigkeit"
+
+#, fuzzy
+#~ msgid "Important"
+#~ msgstr "importieren"
+
+#~ msgid "Date format"
+#~ msgstr "Datum Format"
+
+#~ msgid "Clients"
+#~ msgstr "Clienten"
+
+#~ msgid "All Clients"
+#~ msgstr "Alle Clienten"
+
+#~ msgid "Colourful Bars"
+#~ msgstr "Farbige Leisten"
+
+#~ msgid "All Colourful Bars"
+#~ msgstr "Alle farbige Leisten"
+
+#~ msgid "Company Advantages"
+#~ msgstr "Firmenname"
+
+#~ msgid "All Company Advantages"
+#~ msgstr "Alle Firemenvorteile"
+
+#~ msgid "Company Stats"
+#~ msgstr "Firmen Statistik"
+
+#~ msgid "All Company Stats"
+#~ msgstr "Alle Firmen Statistiken"
+
+#~ msgid "All Features"
+#~ msgstr "Alle Features"
+
+#~ msgid "Pie Charts"
+#~ msgstr "Kreisdiagramme"
+
+#~ msgid "All Pie Charts"
+#~ msgstr "Alle Kuchendiagramme"
+
+#~ msgid "Portfolio"
+#~ msgstr "Portfolio"
+
+#~ msgid "Portfolio Projects"
+#~ msgstr "Portfolio Projektdetails"
+
+#~ msgid "All Portfolio"
+#~ msgstr "Alle Portfolios"
+
+#~ msgid "Post Type $_name is required and can't be empty."
+#~ msgstr "Beitrag Typ $ _name ist erforderlich und kann nicht leer sein."
+
+#~ msgid "Presentations"
+#~ msgstr "Präsenationen"
+
+#~ msgid "All Presentations"
+#~ msgstr "Alle Präsentationen"
+
+#~ msgid "Price Plan"
+#~ msgstr "Preisplan"
+
+#~ msgid "All Price Plan"
+#~ msgstr "Alle Preispläne"
+
+#~ msgid "Services"
+#~ msgstr "Services"
+
+#~ msgid "All Services"
+#~ msgstr "Alle Services"
+
+#~ msgid "Sliders"
+#~ msgstr "Sliders"
+
+#~ msgid "All Sliders"
+#~ msgstr "Alle Slider"
+
+#~ msgid "Team"
+#~ msgstr "Team"
+
+#~ msgid "All Team"
+#~ msgstr "Ganzes Team"
+
+#~ msgid "Testimonial"
+#~ msgstr "Bewertung"
+
+#~ msgid "Testimonial list"
+#~ msgstr "Bewertungenliste"
+
+#~ msgid "All Testimonial"
+#~ msgstr "Alle Bewertung"
+
+#~ msgid "Timeline"
+#~ msgstr "Zeitlinie"
+
+#, fuzzy
+#~ msgid "All Timeline"
+#~ msgstr "Alle Preispläne"
+
+#~ msgid "Videos"
+#~ msgstr "Videos"
+
+#~ msgid "All Videos"
+#~ msgstr "Alle Videos"
+
+#~ msgid "Grid"
+#~ msgstr "Gitter"
+
+#~ msgid "Tabs"
+#~ msgstr "Registerkarten"
+
+#~ msgid "Accordion"
+#~ msgstr "Accordion"
+
+#~ msgid "Elements"
+#~ msgstr "Elemente"
+
+#~ msgid "Meet our team"
+#~ msgstr "Lernen Sie unser Team kennen"
+
+#~ msgid "Some of our clients"
+#~ msgstr "Einige unserer Clienten"
+
+#~ msgid "Skills and Experiences"
+#~ msgstr "Fähigkeiten und Erfahrungen"
+
+#~ msgid "Important statistics"
+#~ msgstr "wichtige Statistiken"
 
 # front
-#: ../lib/SilverWp/ShortCode/Main.php:550
-msgid "Our latest projects"
-msgstr "Unsee letzten Projekte"
+#~ msgid "Our latest projects"
+#~ msgstr "Unsee letzten Projekte"
 
-#: ../lib/SilverWp/ShortCode/Main.php:637
-#: ../templates/related-project-portfolio.php:82
 #, fuzzy
-msgid "All projects"
-msgstr "Ähnliche Projekte"
+#~ msgid "All projects"
+#~ msgstr "Ähnliche Projekte"
 
-#: ../lib/SilverWp/ShortCode/Main.php:663
-msgid "Latest Blogposts"
-msgstr "Letzte Beiträge"
+#~ msgid "Latest Blogposts"
+#~ msgstr "Letzte Beiträge"
 
-#: ../lib/SilverWp/ShortCode/Main.php:724 ../templates/content.php:47
-msgid "Read more"
-msgstr "Mehr Lesen"
+#~ msgid "Read more"
+#~ msgstr "Mehr Lesen"
 
-#: ../lib/SilverWp/ShortCode/ShortCodeAbstract.php:86
-msgid "Class attribute $_name is required and can't be empty."
-msgstr "Klasse attribute $_name wird benötigt und kann nicht leer sein"
+#~ msgid "Class attribute $_name is required and can't be empty."
+#~ msgstr "Klasse attribute $_name wird benötigt und kann nicht leer sein"
 
-#: ../lib/SilverWp/ShortCode/Template.php:65
-msgid "Social button"
-msgstr "Social Button"
+#~ msgid "Social button"
+#~ msgstr "Social Button"
 
-#: ../lib/SilverWp/ShortCode/Template.php:85
-msgid "Font Awesome"
-msgstr "Font Awesome"
+#~ msgid "Font Awesome"
+#~ msgstr "Font Awesome"
 
-#: ../lib/SilverWp/ShortCode/Template.php:105
-#: ../lib/SilverWp/ShortCode/Template.php:538
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:41
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:39
-#: ../lib/SilverWp/Sidebar/Widget/Social.php:39
-msgid "Title"
-msgstr "Titel"
+#~ msgid "Number of quots"
+#~ msgstr "Anzahl der Zitate"
 
-#: ../lib/SilverWp/ShortCode/Template.php:108
-msgid "Number of quots"
-msgstr "Anzahl der Zitate"
+#~ msgid "Row"
+#~ msgstr "rEIHE"
 
-#: ../lib/SilverWp/ShortCode/Template.php:130
-msgid "Row"
-msgstr "rEIHE"
+#~ msgid "Column"
+#~ msgstr "Spalte"
 
-#: ../lib/SilverWp/ShortCode/Template.php:135
-msgid "Column"
-msgstr "Spalte"
+#~ msgid "Main"
+#~ msgstr "Main"
 
-#: ../lib/SilverWp/ShortCode/Template.php:138
-msgid "Main"
-msgstr "Main"
+#~ msgid "Offset"
+#~ msgstr "Offset"
 
-#: ../lib/SilverWp/ShortCode/Template.php:139
-msgid "Offset"
-msgstr "Offset"
+#~ msgid "Tab nav"
+#~ msgstr "Tab nav"
 
-#: ../lib/SilverWp/ShortCode/Template.php:157
-msgid "Tab nav"
-msgstr "Tab nav"
+#~ msgid "Tab nav item"
+#~ msgstr "Tab nav item"
 
-#: ../lib/SilverWp/ShortCode/Template.php:162
-msgid "Tab nav item"
-msgstr "Tab nav item"
+#~ msgid "Active"
+#~ msgstr "aktiv"
 
-#: ../lib/SilverWp/ShortCode/Template.php:165
-#: ../lib/SilverWp/ShortCode/Template.php:180
-msgid "Active"
-msgstr "aktiv"
+#~ msgid "Href"
+#~ msgstr "Href"
 
-#: ../lib/SilverWp/ShortCode/Template.php:166
-#: ../lib/SilverWp/ShortCode/Template.php:207
-msgid "Href"
-msgstr "Href"
+#~ msgid "Tab content"
+#~ msgstr "Tab content"
 
-#: ../lib/SilverWp/ShortCode/Template.php:167
-#: ../lib/SilverWp/ShortCode/Template.php:205
-#: ../lib/SilverWp/ShortCode/Template.php:317
-#: ../lib/SilverWp/ShortCode/Template.php:427
-#: ../lib/SilverWp/ShortCode/Template.php:445 ../templates/comments.php:49
-msgid "Name"
-msgstr "Name"
+#~ msgid "Tab content item"
+#~ msgstr "Tab content item"
 
-#: ../lib/SilverWp/ShortCode/Template.php:171
-msgid "Tab content"
-msgstr "Tab content"
+#~ msgid "Id"
+#~ msgstr "Id"
 
-#: ../lib/SilverWp/ShortCode/Template.php:176
-msgid "Tab content item"
-msgstr "Tab content item"
+#~ msgid "Accordion content item"
+#~ msgstr "Accordion content item"
 
-#: ../lib/SilverWp/ShortCode/Template.php:179
-msgid "Id"
-msgstr "Id"
+#~ msgid "Open"
+#~ msgstr "Offen"
 
-#: ../lib/SilverWp/ShortCode/Template.php:202
-msgid "Accordion content item"
-msgstr "Accordion content item"
+#~ msgid "Center"
+#~ msgstr "Mitte"
 
-#: ../lib/SilverWp/ShortCode/Template.php:206
-msgid "Open"
-msgstr "Offen"
+#~ msgid "Left"
+#~ msgstr "links"
 
-#: ../lib/SilverWp/ShortCode/Template.php:226
-msgid "Center"
-msgstr "Mitte"
+#~ msgid "Box title"
+#~ msgstr "Boxtitel"
 
-#: ../lib/SilverWp/ShortCode/Template.php:230
-msgid "Left"
-msgstr "links"
+#~ msgid "Box description"
+#~ msgstr "Box Beschreibung"
 
-#: ../lib/SilverWp/ShortCode/Template.php:238
-#: ../lib/SilverWp/ShortCode/Template.php:259
-#: ../lib/SilverWp/ShortCode/Template.php:296
-#: ../lib/SilverWp/ShortCode/Template.php:357
-#: ../lib/SilverWp/ShortCode/Template.php:376
-#: ../lib/SilverWp/ShortCode/Template.php:403
-#: ../lib/SilverWp/ShortCode/Template.php:463
-#: ../lib/SilverWp/ShortCode/Template.php:500
-#: ../lib/SilverWp/ShortCode/Template.php:556
-#: ../lib/SilverWp/ShortCode/Template.php:571
-msgid "Box title"
-msgstr "Boxtitel"
+#~ msgid "Maximum item in row"
+#~ msgstr "Maximale Items in einer Reihe"
 
-#: ../lib/SilverWp/ShortCode/Template.php:239
-#: ../lib/SilverWp/ShortCode/Template.php:297
-#: ../lib/SilverWp/ShortCode/Template.php:358
-#: ../lib/SilverWp/ShortCode/Template.php:377
-#: ../lib/SilverWp/ShortCode/Template.php:404
-#: ../lib/SilverWp/ShortCode/Template.php:464
-#: ../lib/SilverWp/ShortCode/Template.php:501
-#: ../lib/SilverWp/ShortCode/Template.php:557
-#: ../lib/SilverWp/ShortCode/Template.php:572
-msgid "Box description"
-msgstr "Box Beschreibung"
+#~ msgid "Icon position"
+#~ msgstr "Icons Position"
 
-#: ../lib/SilverWp/ShortCode/Template.php:240
-msgid "Maximum item in row"
-msgstr "Maximale Items in einer Reihe"
+#~ msgid "Icon border"
+#~ msgstr "Iconrand"
 
-#: ../lib/SilverWp/ShortCode/Template.php:241
-msgid "Icon position"
-msgstr "Icons Position"
+#~ msgid "Latest from the Blog"
+#~ msgstr "Letzte Beiträge vom Blog"
 
-#: ../lib/SilverWp/ShortCode/Template.php:242
-msgid "Icon border"
-msgstr "Iconrand"
+#~ msgid "Number of posts"
+#~ msgstr "Anzahl der Beiträge"
 
-#: ../lib/SilverWp/ShortCode/Template.php:256
-msgid "Latest from the Blog"
-msgstr "Letzte Beiträge vom Blog"
+#~ msgid "static"
+#~ msgstr "statisch"
 
-#: ../lib/SilverWp/ShortCode/Template.php:260
-#: ../lib/SilverWp/Theme/Option.php:450
-msgid "Number of posts"
-msgstr "Anzahl der Beiträge"
+#~ msgid "carousel with merge items"
+#~ msgstr "Karussell mit merge Items"
 
-#: ../lib/SilverWp/ShortCode/Template.php:280
-msgid "static"
-msgstr "statisch"
+#~ msgid "carousel with separate items"
+#~ msgstr "Karussell mit seperaten Items"
 
-#: ../lib/SilverWp/ShortCode/Template.php:284
-msgid "carousel with merge items"
-msgstr "Karussell mit merge Items"
+#~ msgid "Portfolio - Latest projects"
+#~ msgstr "Portfolio - Letzte Projekte"
 
-#: ../lib/SilverWp/ShortCode/Template.php:288
-msgid "carousel with separate items"
-msgstr "Karussell mit seperaten Items"
+#~ msgid "Number of projects"
+#~ msgstr "Anzahl der Projekte"
 
-#: ../lib/SilverWp/ShortCode/Template.php:293
-msgid "Portfolio - Latest projects"
-msgstr "Portfolio - Letzte Projekte"
+#~ msgid "Button"
+#~ msgstr "Button"
 
-#: ../lib/SilverWp/ShortCode/Template.php:298
-#: ../lib/SilverWp/Theme/Option.php:166
-msgid "Number of projects"
-msgstr "Anzahl der Projekte"
+#~ msgid "Colour (background)"
+#~ msgstr "Farbe (Hintergrund)"
 
-#: ../lib/SilverWp/ShortCode/Template.php:332
-msgid "Button"
-msgstr "Button"
+#~ msgid "Icon (under title)"
+#~ msgstr "Icon (unter dem Titel)"
 
-#: ../lib/SilverWp/ShortCode/Template.php:336
-msgid "Colour (background)"
-msgstr "Farbe (Hintergrund)"
+#~ msgid "Number of person"
+#~ msgstr "Anzahl der Personen"
 
-#: ../lib/SilverWp/ShortCode/Template.php:359
-msgid "Icon (under title)"
-msgstr "Icon (unter dem Titel)"
+#~ msgid "Number of clients"
+#~ msgstr "Anzahl an Clienten"
 
-#: ../lib/SilverWp/ShortCode/Template.php:380
-msgid "Number of person"
-msgstr "Anzahl der Personen"
+#~ msgid "Icons"
+#~ msgstr "Icons"
 
-#: ../lib/SilverWp/ShortCode/Template.php:405
-msgid "Number of clients"
-msgstr "Anzahl an Clienten"
+#~ msgid "Colourful Bar"
+#~ msgstr "Farbige Leiste"
 
-#: ../lib/SilverWp/ShortCode/Template.php:424
-msgid "Icons"
-msgstr "Icons"
+#~ msgid "simple"
+#~ msgstr "einfach"
 
-#: ../lib/SilverWp/ShortCode/Template.php:442
-msgid "Colourful Bar"
-msgstr "Farbige Leiste"
+#~ msgid "grid"
+#~ msgstr "Gitter"
 
-#: ../lib/SilverWp/ShortCode/Template.php:472
-msgid "simple"
-msgstr "einfach"
+#~ msgid "Presentation"
+#~ msgstr "Präsenation"
 
-#: ../lib/SilverWp/ShortCode/Template.php:476
-msgid "grid"
-msgstr "Gitter"
+#~ msgid "Progressbar"
+#~ msgstr "Progressleiste"
 
-#: ../lib/SilverWp/ShortCode/Template.php:513
-msgid "Presentation"
-msgstr "Präsenation"
+#~ msgid "Percent value"
+#~ msgstr "Prozentwert"
 
-#: ../lib/SilverWp/ShortCode/Template.php:524
-msgid "Progressbar"
-msgstr "Progressleiste"
-
-#: ../lib/SilverWp/ShortCode/Template.php:527
-msgid "Percent value"
-msgstr "Prozentwert"
-
-#: ../lib/SilverWp/ShortCode/Template.php:541
 #, fuzzy
-msgid "Text of title"
-msgstr "Boxtitel"
+#~ msgid "Text of title"
+#~ msgstr "Boxtitel"
 
-#: ../lib/SilverWp/ShortCode/Template.php:542
-#: ../lib/SilverWp/Theme/Option.php:463
-msgid "Style"
-msgstr "Stil"
+#~ msgid "Style"
+#~ msgstr "Stil"
 
-#: ../lib/SilverWp/ShortCode/Template.php:553
 #, fuzzy
-msgid "Piecharts"
-msgstr "Kreisdiagramme"
+#~ msgid "Piecharts"
+#~ msgstr "Kreisdiagramme"
 
-#: ../lib/SilverWp/Sidebar/Blog.php:25 ../lib/SilverWp/Theme/Option.php:121
-msgid "Blog"
-msgstr "Blog"
+#~ msgid "Blog"
+#~ msgstr "Blog"
 
-#: ../lib/SilverWp/Sidebar/Blog.php:28
-msgid "Place for right site in Blog view"
-msgstr "Platziere auf der rechten Seite in Blog"
+#~ msgid "Place for right site in Blog view"
+#~ msgstr "Platziere auf der rechten Seite in Blog"
 
-#: ../lib/SilverWp/Sidebar/Contact.php:25
-msgid "Contact Page"
-msgstr "Kontakt Seite"
+#~ msgid "Contact Page"
+#~ msgstr "Kontakt Seite"
 
-#: ../lib/SilverWp/Sidebar/Contact.php:28
-msgid "Place for right site in Contact Page view"
-msgstr "Platziere auf der rechten Seite in Kontakt"
+#~ msgid "Place for right site in Contact Page view"
+#~ msgstr "Platziere auf der rechten Seite in Kontakt"
 
-#: ../lib/SilverWp/Sidebar/Footer.php:24 ../lib/SilverWp/Theme/Option.php:86
-msgid "Footer"
-msgstr "Footer"
+#~ msgid "some description"
+#~ msgstr "einige Beschreibung"
 
-#: ../lib/SilverWp/Sidebar/Footer.php:27
-msgid "some description"
-msgstr "einige Beschreibung"
+#~ msgid "Pages"
+#~ msgstr "Seiten"
 
-#: ../lib/SilverWp/Sidebar/Page.php:26
-msgid "Pages"
-msgstr "Seiten"
+#~ msgid "Sidebar area for Widgets for Pages templates"
+#~ msgstr "Sidebar Area für Widgets von Seitentemplates"
 
-#: ../lib/SilverWp/Sidebar/Page.php:29
-msgid "Sidebar area for Widgets for Pages templates"
-msgstr "Sidebar Area für Widgets von Seitentemplates"
+#~ msgid "Place for right site in Portfolio view"
+#~ msgstr "Platziere auf der rechten Seite in Portfolio"
 
-#: ../lib/SilverWp/Sidebar/Portfolio.php:29
-msgid "Place for right site in Portfolio view"
-msgstr "Platziere auf der rechten Seite in Portfolio"
+#~ msgid "Company Info"
+#~ msgstr "Firmen Info"
 
-#: ../lib/SilverWp/Sidebar/Primary.php:26
-msgid "Primary"
-msgstr "erster"
+#~ msgid "Company information contact details."
+#~ msgstr "Firmen Kontakt Details"
 
-#: ../lib/SilverWp/Sidebar/Primary.php:29
-msgid "Place for right site in Page view"
-msgstr "Platziere auf der rechten Seite in Seitenansicht"
+#~ msgid "Show Company Name"
+#~ msgstr "Zeige Firmen Name"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:29
-msgid "Company Info"
-msgstr "Firmen Info"
+#~ msgid "Show Company Street"
+#~ msgstr "Zeige Firmen Straße"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:32
-msgid "Company information contact details."
-msgstr "Firmen Kontakt Details"
+#~ msgid "Show Postcode"
+#~ msgstr "Zeige Postleitzahl"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:94
-msgid "Show Company Name"
-msgstr "Zeige Firmen Name"
+#~ msgid "Show City"
+#~ msgstr "Zeige Stadt"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:103
-msgid "Show Company Street"
-msgstr "Zeige Firmen Straße"
+#~ msgid "Show State / Region"
+#~ msgstr "Zeige Region / Bundesland"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:111
-msgid "Show Postcode"
-msgstr "Zeige Postleitzahl"
+#~ msgid "Show Country"
+#~ msgstr "Zeige Land"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:119
-msgid "Show City"
-msgstr "Zeige Stadt"
+#~ msgid "Show Phone number %s"
+#~ msgstr "Zeige Telefonnummer %s"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:127
-msgid "Show State / Region"
-msgstr "Zeige Region / Bundesland"
+#~ msgid "Show Mobile phone number %s"
+#~ msgstr "Zeige Handynummer %s"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:135
-msgid "Show Country"
-msgstr "Zeige Land"
+#~ msgid "Show Fax number"
+#~ msgstr "Zeige Faxnummer"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:151
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:159
-#, php-format
-msgid "Show Phone number %s"
-msgstr "Zeige Telefonnummer %s"
+#~ msgid "Show Email address"
+#~ msgstr "Zeige E-Mail"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:167
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:175
-#, php-format
-msgid "Show Mobile phone number %s"
-msgstr "Zeige Handynummer %s"
+#~ msgid "Show Business hours"
+#~ msgstr "Zeige Arbeitszeiten"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:183
-msgid "Show Fax number"
-msgstr "Zeige Faxnummer"
+#~ msgid "Company Information"
+#~ msgstr "Firmen Informationen"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:191
-msgid "Show Email address"
-msgstr "Zeige E-Mail"
+#~ msgid "Phone"
+#~ msgstr "Telefon"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:199
-msgid "Show Business hours"
-msgstr "Zeige Arbeitszeiten"
+#~ msgid "Mobile"
+#~ msgstr "Handy"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:221
-msgid "Company Information"
-msgstr "Firmen Informationen"
+#~ msgid "Fax"
+#~ msgstr "Fax"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:233
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:234
-msgid "Phone"
-msgstr "Telefon"
+#~ msgid "Recent Posts With Image"
+#~ msgstr "Neuste Beiträge mit Bild"
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:235
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:236
-msgid "Mobile"
-msgstr "Handy"
+#~ msgid "Blogposts with images from selected categories."
+#~ msgstr "Blogposts mit Bildern aus ausgewählten Kategorien."
 
-#: ../lib/SilverWp/Sidebar/Widget/CompanyInfo.php:237
-msgid "Fax"
-msgstr "Fax"
+#~ msgid "Number of posts to show"
+#~ msgstr "Anzahl an Beiträgen die angezeigt werden sollen"
 
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:28
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:45
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:106
-msgid "Recent Posts With Image"
-msgstr "Neuste Beiträge mit Bild"
+#~ msgid "Display post date"
+#~ msgstr "Anzeige nach Datum"
 
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:31
-msgid "Blogposts with images from selected categories."
-msgstr "Blogposts mit Bildern aus ausgewählten Kategorien."
+#~ msgid "Display post author"
+#~ msgstr "Anzeige nach Autor"
 
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:48
-msgid "Number of posts to show"
-msgstr "Anzahl an Beiträgen die angezeigt werden sollen"
+#~ msgid "Display post category"
+#~ msgstr "Anzeige nach Katgorie"
 
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:57
-msgid "Display post date"
-msgstr "Anzeige nach Datum"
+#~ msgid "Display post image"
+#~ msgstr "Anzeige nach Beiträgsbildern"
 
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:65
-msgid "Display post author"
-msgstr "Anzeige nach Autor"
-
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:73
-msgid "Display post category"
-msgstr "Anzeige nach Katgorie"
-
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:81
-msgid "Display post image"
-msgstr "Anzeige nach Beiträgsbildern"
-
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:89
-msgid "Categories"
-msgstr "Kategorien"
-
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:149
-msgid "Permanent link to "
-msgstr "Permanent link zu"
+#~ msgid "Permanent link to "
+#~ msgstr "Permanent link zu"
 
 # Date in Category
-#: ../lib/SilverWp/Sidebar/Widget/RecentPosts.php:206
-#, php-format
-msgid "in %s "
-msgstr "in %s "
+#~ msgid "in %s "
+#~ msgstr "in %s "
 
-#: ../lib/SilverWp/Sidebar/Widget/Social.php:28
-#: ../lib/SilverWp/Sidebar/Widget/Social.php:45
-msgid "Social bookmarks"
-msgstr "Soziale Lesezeichen"
+#~ msgid "Social bookmarks"
+#~ msgstr "Soziale Lesezeichen"
 
-#: ../lib/SilverWp/Sidebar/Widget/Social.php:31
-msgid "Social icons with link to social accounts."
-msgstr "Social Icons mit Link zu sozialen Konten."
+#~ msgid "Social icons with link to social accounts."
+#~ msgstr "Social Icons mit Link zu sozialen Konten."
 
-#: ../lib/SilverWp/Sidebar/Widget/Social.php:69
-#: ../lib/SilverWp/Theme/Option.php:341
-msgid "Social"
-msgstr "Sozial"
+#~ msgid "Social"
+#~ msgstr "Sozial"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:54
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:56
-msgid "Portfolio categories"
-msgstr "Portfolio Kategorien"
+#~ msgid "Portfolio categories"
+#~ msgstr "Portfolio Kategorien"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:55
-msgid "Protfolio category"
-msgstr "Portfolio Kategorie"
+#~ msgid "Protfolio category"
+#~ msgstr "Portfolio Kategorie"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:57
-msgid "All Portfolio categories"
-msgstr "Alle Portfolio Kategorien"
+#~ msgid "All Portfolio categories"
+#~ msgstr "Alle Portfolio Kategorien"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:58
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:59
-msgid "Parent Protfolio category"
-msgstr "Eltern Portfolio Kategorie"
+#~ msgid "Parent Protfolio category"
+#~ msgstr "Eltern Portfolio Kategorie"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:60
-msgid "Update Protfolio category"
-msgstr "Update Portfolio Kategorie"
+#~ msgid "Update Protfolio category"
+#~ msgstr "Update Portfolio Kategorie"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:61
-msgid "Separate Portfolio categories with commas"
-msgstr "Trenne Portfolio Kategorien mit Kommas"
+#~ msgid "Separate Portfolio categories with commas"
+#~ msgstr "Trenne Portfolio Kategorien mit Kommas"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:62
 #, fuzzy
-msgid "Choose from the most used Protfolio category"
-msgstr "Wählen Sie aus dem am meisten verwendeten"
+#~ msgid "Choose from the most used Protfolio category"
+#~ msgstr "Wählen Sie aus dem am meisten verwendeten"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:66
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:68
-msgid "Portfolio tags"
-msgstr "Portfolio Tags"
+#~ msgid "Portfolio tags"
+#~ msgstr "Portfolio Tags"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:67
-msgid "Protfolio tag"
-msgstr "Portfolio Tag"
+#~ msgid "Protfolio tag"
+#~ msgstr "Portfolio Tag"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:69
-msgid "All Portfolio tags"
-msgstr "Alle Portfolio Tags"
+#~ msgid "All Portfolio tags"
+#~ msgstr "Alle Portfolio Tags"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:70
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:71
-msgid "Parent Protfolio tag"
-msgstr "Eltern Portfolio Tags"
+#~ msgid "Parent Protfolio tag"
+#~ msgstr "Eltern Portfolio Tags"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:72
-msgid "Update Protfolio tag"
-msgstr "Update Portfolio Tag"
+#~ msgid "Update Protfolio tag"
+#~ msgstr "Update Portfolio Tag"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:73
-msgid "Separate Portfolio tags with commas"
-msgstr "Trenne Portfolio Tags mit Kommas"
+#~ msgid "Separate Portfolio tags with commas"
+#~ msgstr "Trenne Portfolio Tags mit Kommas"
 
-#: ../lib/SilverWp/Taxonomy/Portfolio.php:74
 #, fuzzy
-msgid "Choose from the most used Protfolio tag"
-msgstr "Wählen Sie aus dem am meisten verwendeten"
+#~ msgid "Choose from the most used Protfolio tag"
+#~ msgstr "Wählen Sie aus dem am meisten verwendeten"
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:95
-msgid "Popular"
-msgstr "beliebte"
+#~ msgid "$_post_type_name is required and can't be empty."
+#~ msgstr "$_post_type_name wird benötigt und kann nicht leer sein"
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:96
-msgid "Add New"
-msgstr "füge neu hinzu"
+#~ msgid "Parametr args in $this->_taxonomies is required!"
+#~ msgstr "Parameter args in $this->_taxonomies werden benötigt!"
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:97
-msgid "New name"
-msgstr "Neuer Name"
+#~ msgid "Team proffesions"
+#~ msgstr "Team Professionen"
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:98
-msgid "Edit"
-msgstr "editiere"
+#~ msgid "Team proffesion"
+#~ msgstr "Teamzugehörigkeit"
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:99
-msgid "Add or remove"
-msgstr "füge hinzu oder entferne"
+#~ msgid "Site name"
+#~ msgstr "Seiten Name"
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:172
-msgid "$_post_type_name is required and can't be empty."
-msgstr "$_post_type_name wird benötigt und kann nicht leer sein"
+#~ msgid ""
+#~ "If you do not set the \"Logo image\" only this value will be displayed."
+#~ msgstr ""
+#~ "Wenn Sie die \"Logo image \" nicht setzen wird nur dieser Wert angezeigt."
 
-#: ../lib/SilverWp/Taxonomy/TaxonomyAbstract.php:196
-msgid "Parametr args in $this->_taxonomies is required!"
-msgstr "Parameter args in $this->_taxonomies werden benötigt!"
+#~ msgid "Logo image"
+#~ msgstr "Logo Bild"
 
-#: ../lib/SilverWp/Taxonomy/Team.php:41 ../lib/SilverWp/Taxonomy/Team.php:43
-msgid "Team proffesions"
-msgstr "Team Professionen"
+#~ msgid "If you do not set the image only \"Site name\" will be displayed."
+#~ msgstr "Wenn Sie das Bild nicht setzen, wird nur  \"Site-Name \" angezeigt."
 
-#: ../lib/SilverWp/Taxonomy/Team.php:42
-msgid "Team proffesion"
-msgstr "Teamzugehörigkeit"
+#~ msgid "Margin top"
+#~ msgstr "Margin top"
 
-#: ../lib/SilverWp/Theme/Option.php:28
-msgid "SilverWp Theme Options"
-msgstr "SilverWp Theme Optionen"
+#~ msgid "Set the margin size in \"px\"."
+#~ msgstr "Stellen Sie die Randgröße in \"px\"."
 
-#: ../lib/SilverWp/Theme/Option.php:29
-msgid "Theme Options"
-msgstr "Theme Optionen"
+#~ msgid "Image should have 16&times;16px."
+#~ msgstr "Das Bild sollte 16&times;16px groß sein."
 
-#: ../lib/SilverWp/Theme/Option.php:30
-msgid "SilverWp Theme Options Panel"
-msgstr "SilverWp Theme Options Panel"
+#~ msgid "Show phone number"
+#~ msgstr "Zeige Telefonnummer"
 
-#: ../lib/SilverWp/Theme/Option.php:56
-msgid "General"
-msgstr "Allgemein"
+#~ msgid "Available only when WPML switcher is turned off."
+#~ msgstr "Nur verfügbar wenn der WPML Switcher ausgeschaltet ist."
 
-#: ../lib/SilverWp/Theme/Option.php:62
-msgid "Logo"
-msgstr "Logo"
+#~ msgid "Enable top footer"
+#~ msgstr "Aktivieren footer"
 
-#: ../lib/SilverWp/Theme/Option.php:64
-msgid "Site name"
-msgstr "Seiten Name"
+#~ msgid "Sidebar with widgets."
+#~ msgstr "Sidebar mit widgets."
 
-#: ../lib/SilverWp/Theme/Option.php:64
-msgid "If you do not set the \"Logo image\" only this value will be displayed."
-msgstr ""
-"Wenn Sie die \"Logo image \" nicht setzen wird nur dieser Wert angezeigt."
+#~ msgid "Entered text will be shown under the footer."
+#~ msgstr "Geben Sie die in der Fußzeile unterhalb verwendeten Text."
 
-#: ../lib/SilverWp/Theme/Option.php:65
-msgid "Logo image"
-msgstr "Logo Bild"
+#~ msgid "Comments"
+#~ msgstr "Kommentare"
 
-#: ../lib/SilverWp/Theme/Option.php:65
-msgid "If you do not set the image only \"Site name\" will be displayed."
-msgstr "Wenn Sie das Bild nicht setzen, wird nur  \"Site-Name \" angezeigt."
+#~ msgid "Globally disable Page comments"
+#~ msgstr "Kommentare global abschlaten"
 
-#: ../lib/SilverWp/Theme/Option.php:66
-msgid "Margin top"
-msgstr "Margin top"
+#~ msgid "Globally disable Blog post comments"
+#~ msgstr "Beiträge global abschlaten"
 
-#: ../lib/SilverWp/Theme/Option.php:66
-msgid "Set the margin size in \"px\"."
-msgstr "Stellen Sie die Randgröße in \"px\"."
+#~ msgid "Globally disable Portfolio comments"
+#~ msgstr "Portfolio global abschlaten"
 
-#: ../lib/SilverWp/Theme/Option.php:67
-msgid "Favicon"
-msgstr "Favicon"
+#~ msgid "Javascript"
+#~ msgstr "Javascript"
 
-#: ../lib/SilverWp/Theme/Option.php:67
-msgid "Image should have 16&times;16px."
-msgstr "Das Bild sollte 16&times;16px groß sein."
+#~ msgid "Custom code in Head page"
+#~ msgstr "Eiegener Code in der Head Seite"
 
-#: ../lib/SilverWp/Theme/Option.php:73
-msgid "Top bar"
-msgstr "Topleiste"
+#~ msgid ""
+#~ "Any code you place here will appear in the &lt;head/&gt; section of every "
+#~ "page of your site."
+#~ msgstr ""
+#~ "Jeder Code, den Sie hier hinterlegen wird in dem  <head/> Abschnitt jeder "
+#~ "Seite Ihrer Website erscheinen."
 
-#: ../lib/SilverWp/Theme/Option.php:75
-msgid "Welcome text"
-msgstr "Willkommens Text"
+#~ msgid "Custom code in Body page"
+#~ msgstr "Eigener Code in der Body Seite"
 
-#: ../lib/SilverWp/Theme/Option.php:75
-msgid "First sentence displayed in Top Bar"
-msgstr "Erster Satz erscheint in der Topleiste"
+#~ msgid ""
+#~ "Any code you place here will appear before &lt;/body&gt; tag of every "
+#~ "page of your site."
+#~ msgstr ""
+#~ "Jeder Code, den Sie hier hinterlegen wird in dem  &lt;/body&gt; tag "
+#~ "Abschnitt jeder Seite Ihrer Website erscheinen."
 
-#: ../lib/SilverWp/Theme/Option.php:76
-msgid "Show company address"
-msgstr "Zeige Firmenadresse"
+#~ msgid "Listed view"
+#~ msgstr "Listen Ansicht"
 
-#: ../lib/SilverWp/Theme/Option.php:77
-msgid "Show phone number"
-msgstr "Zeige Telefonnummer"
+#~ msgid "Show author"
+#~ msgstr "Zeige Autor"
 
-#: ../lib/SilverWp/Theme/Option.php:78
-msgid "Show mobile number"
-msgstr "Zeige Handynummer "
+#~ msgid "Show \"like it\""
+#~ msgstr "Zeige \"like it\""
 
-#: ../lib/SilverWp/Theme/Option.php:79
-msgid "Show email address"
-msgstr "Zeige E-Mail Adresse"
+#~ msgid "Likes number will be enabled if it is greater than zero."
+#~ msgstr "Gefällt-mir werden angezeigt, wenn sie größer als Null sind."
 
-#: ../lib/SilverWp/Theme/Option.php:80
-msgid "Show WPML language switcher"
-msgstr "Zeige WPML Seitenübersetzer"
+#~ msgid "Post view"
+#~ msgstr "Beitrag anzeigen"
 
-#: ../lib/SilverWp/Theme/Option.php:81
-msgid "Show social icons"
-msgstr "Zeige Social Icons"
-
-#: ../lib/SilverWp/Theme/Option.php:81
-msgid "Available only when WPML switcher is turned off."
-msgstr "Nur verfügbar wenn der WPML Switcher ausgeschaltet ist."
-
-#: ../lib/SilverWp/Theme/Option.php:88
-msgid "Enable top footer"
-msgstr "Aktivieren footer"
-
-#: ../lib/SilverWp/Theme/Option.php:88
-msgid "Sidebar with widgets."
-msgstr "Sidebar mit widgets."
-
-#: ../lib/SilverWp/Theme/Option.php:89
-msgid "Copyright text"
-msgstr "Copyright Text"
-
-#: ../lib/SilverWp/Theme/Option.php:89
-msgid "Entered text will be shown under the footer."
-msgstr "Geben Sie die in der Fußzeile unterhalb verwendeten Text."
-
-#: ../lib/SilverWp/Theme/Option.php:94 ../templates/comments.php:8
-msgid "Comments"
-msgstr "Kommentare"
-
-#: ../lib/SilverWp/Theme/Option.php:97
-msgid "Globally disable Page comments"
-msgstr "Kommentare global abschlaten"
-
-#: ../lib/SilverWp/Theme/Option.php:98
-msgid "Globally disable Blog post comments"
-msgstr "Beiträge global abschlaten"
-
-#: ../lib/SilverWp/Theme/Option.php:99
-msgid "Globally disable Portfolio comments"
-msgstr "Portfolio global abschlaten"
-
-#: ../lib/SilverWp/Theme/Option.php:104
-msgid "Javascript"
-msgstr "Javascript"
-
-#: ../lib/SilverWp/Theme/Option.php:106
-msgid "Custom code in Head page"
-msgstr "Eiegener Code in der Head Seite"
-
-#: ../lib/SilverWp/Theme/Option.php:106
-msgid ""
-"Any code you place here will appear in the &lt;head/&gt; section of every "
-"page of your site."
-msgstr ""
-"Jeder Code, den Sie hier hinterlegen wird in dem  <head/> Abschnitt jeder "
-"Seite Ihrer Website erscheinen."
-
-#: ../lib/SilverWp/Theme/Option.php:107
-msgid "Custom code in Body page"
-msgstr "Eigener Code in der Body Seite"
-
-#: ../lib/SilverWp/Theme/Option.php:107
-msgid ""
-"Any code you place here will appear before &lt;/body&gt; tag of every page "
-"of your site."
-msgstr ""
-"Jeder Code, den Sie hier hinterlegen wird in dem  &lt;/body&gt; tag "
-"Abschnitt jeder Seite Ihrer Website erscheinen."
-
-#: ../lib/SilverWp/Theme/Option.php:127 ../lib/SilverWp/Theme/Option.php:161
-msgid "Listed view"
-msgstr "Listen Ansicht"
-
-#: ../lib/SilverWp/Theme/Option.php:129 ../lib/SilverWp/Theme/Option.php:137
-#: ../lib/SilverWp/Theme/Option.php:181
-msgid "Show author"
-msgstr "Zeige Autor"
-
-#: ../lib/SilverWp/Theme/Option.php:130 ../lib/SilverWp/Theme/Option.php:140
-#: ../lib/SilverWp/Theme/Option.php:165 ../lib/SilverWp/Theme/Option.php:182
-msgid "Show \"like it\""
-msgstr "Zeige \"like it\""
-
-#: ../lib/SilverWp/Theme/Option.php:130 ../lib/SilverWp/Theme/Option.php:140
-msgid "Likes number will be enabled if it is greater than zero."
-msgstr "Gefällt-mir werden angezeigt, wenn sie größer als Null sind."
-
-#: ../lib/SilverWp/Theme/Option.php:135
-msgid "Post view"
-msgstr "Beitrag anzeigen"
-
-#: ../lib/SilverWp/Theme/Option.php:139
 #, fuzzy
-msgid "Show social share"
-msgstr "Zeige Social Icons"
+#~ msgid "Show social share"
+#~ msgstr "Zeige Social Icons"
 
-#: ../lib/SilverWp/Theme/Option.php:163
-msgid "Show categories"
-msgstr "Zeige Kategorien"
+#~ msgid "Show categories"
+#~ msgstr "Zeige Kategorien"
 
-#: ../lib/SilverWp/Theme/Option.php:164
 #, fuzzy
-msgid "Show tags"
-msgstr "Zeige Details"
+#~ msgid "Show tags"
+#~ msgstr "Zeige Details"
 
-#: ../lib/SilverWp/Theme/Option.php:178
-msgid "Item project view"
-msgstr "Item Projektansicht"
+#~ msgid "Item project view"
+#~ msgstr "Item Projektansicht"
 
-#: ../lib/SilverWp/Theme/Option.php:180
-msgid "Show realization date"
-msgstr "Zeige Datum Realisierung"
+#~ msgid "Show realization date"
+#~ msgstr "Zeige Datum Realisierung"
 
-#: ../lib/SilverWp/Theme/Option.php:183
-msgid "Show related projects"
-msgstr "Projekte zum Thema anzeigen"
+#~ msgid "Show related projects"
+#~ msgstr "Projekte zum Thema anzeigen"
 
-#: ../lib/SilverWp/Theme/Option.php:198
-msgid "Home page"
-msgstr "Homepage"
+#~ msgid "Home page"
+#~ msgstr "Homepage"
 
-#: ../lib/SilverWp/Theme/Option.php:204
-msgid "Slider options"
-msgstr "Slider Optionen"
+#~ msgid "Slider options"
+#~ msgstr "Slider Optionen"
 
-#: ../lib/SilverWp/Theme/Option.php:206
-msgid "Interval"
-msgstr "Intervall"
+#~ msgid "Interval"
+#~ msgstr "Intervall"
 
-#: ../lib/SilverWp/Theme/Option.php:206
-msgid ""
-"The amount of time to delay between automatically cycling an item. If false, "
-"carousel will not automatically cycle."
-msgstr ""
-"Die Zeit, die zwischen ein Element automatisch Radfahren verzögern. Wenn "
-"nicht, wird nicht automatisch gezirkelt."
+#~ msgid ""
+#~ "The amount of time to delay between automatically cycling an item. If "
+#~ "false, carousel will not automatically cycle."
+#~ msgstr ""
+#~ "Die Zeit, die zwischen ein Element automatisch Radfahren verzögern. Wenn "
+#~ "nicht, wird nicht automatisch gezirkelt."
 
-#: ../lib/SilverWp/Theme/Option.php:207
-msgid "Pause when \"hover\""
-msgstr "Pause wenn  \"hover\""
+#~ msgid "Pause when \"hover\""
+#~ msgstr "Pause wenn  \"hover\""
 
-#: ../lib/SilverWp/Theme/Option.php:207
-msgid ""
-"Pauses the cycling of the carousel on mouseenter and resumes the cycling of "
-"the carousel on mouseleave."
-msgstr ""
-"Hält das Radfahren des Karussells auf mouseenter und nimmt die Fahrrad des "
-"Karussells auf Leave."
+#~ msgid ""
+#~ "Pauses the cycling of the carousel on mouseenter and resumes the cycling "
+#~ "of the carousel on mouseleave."
+#~ msgstr ""
+#~ "Hält das Radfahren des Karussells auf mouseenter und nimmt die Fahrrad "
+#~ "des Karussells auf Leave."
 
-#: ../lib/SilverWp/Theme/Option.php:208
-msgid "Wrap"
-msgstr "Wrap"
+#~ msgid "Wrap"
+#~ msgstr "Wrap"
 
-#: ../lib/SilverWp/Theme/Option.php:208
-msgid "Whether the carousel should cycle continuously or have hard stops."
-msgstr ""
-"Ob das Karussell  kontinuierlich zirkulieren soll oder feststehen soll."
+#~ msgid "Whether the carousel should cycle continuously or have hard stops."
+#~ msgstr ""
+#~ "Ob das Karussell  kontinuierlich zirkulieren soll oder feststehen soll."
 
-#: ../lib/SilverWp/Theme/Option.php:227
-msgid "Company"
-msgstr "Firma"
+#~ msgid "Company"
+#~ msgstr "Firma"
 
-#: ../lib/SilverWp/Theme/Option.php:233
-msgid "Address and Contact"
-msgstr "Adresse und Kontakt"
+#~ msgid "Address and Contact"
+#~ msgstr "Adresse und Kontakt"
 
-#: ../lib/SilverWp/Theme/Option.php:236
-msgid "Street"
-msgstr "Straße"
+#~ msgid "Street"
+#~ msgstr "Straße"
 
-#: ../lib/SilverWp/Theme/Option.php:237
-msgid "Postcode"
-msgstr "Postleitzahl"
+#~ msgid "Postcode"
+#~ msgstr "Postleitzahl"
 
-#: ../lib/SilverWp/Theme/Option.php:238
-msgid "City"
-msgstr "Stadt"
+#~ msgid "City"
+#~ msgstr "Stadt"
 
-#: ../lib/SilverWp/Theme/Option.php:239
-msgid "State / Region"
-msgstr "Region / Bundesland"
+#~ msgid "State / Region"
+#~ msgstr "Region / Bundesland"
 
-#: ../lib/SilverWp/Theme/Option.php:240
-msgid "Country"
-msgstr "Land"
+#~ msgid "Country"
+#~ msgstr "Land"
 
-#: ../lib/SilverWp/Theme/Option.php:241 ../lib/SilverWp/Theme/Option.php:242
-#, php-format
-msgid "Phone number %s"
-msgstr "Zeige Telefonnummer %s"
+#~ msgid "Phone number %s"
+#~ msgstr "Zeige Telefonnummer %s"
 
-#: ../lib/SilverWp/Theme/Option.php:243 ../lib/SilverWp/Theme/Option.php:244
-#, php-format
-msgid "Mobile phone number %s"
-msgstr "Handynummer %s"
+#~ msgid "Mobile phone number %s"
+#~ msgstr "Handynummer %s"
 
-#: ../lib/SilverWp/Theme/Option.php:245
-msgid "Fax number"
-msgstr "Fax"
+#~ msgid "Fax number"
+#~ msgstr "Fax"
 
-#: ../lib/SilverWp/Theme/Option.php:251 ../lib/SilverWp/Theme/Option.php:253
-msgid "Working hours"
-msgstr "Arbeitszeiten"
+#~ msgid "Working hours"
+#~ msgstr "Arbeitszeiten"
 
-#: ../lib/SilverWp/Theme/Option.php:258
-msgid "Google Maps"
-msgstr "Google Maps"
+#~ msgid "Google Maps"
+#~ msgstr "Google Maps"
 
-#: ../lib/SilverWp/Theme/Option.php:260
-msgid "Map enable"
-msgstr "Karte aktivieren"
+#~ msgid "Map enable"
+#~ msgstr "Karte aktivieren"
 
-#: ../lib/SilverWp/Theme/Option.php:263
-msgid "Page with Google Map"
-msgstr "Seite mit Google Map"
+#~ msgid "Page with Google Map"
+#~ msgstr "Seite mit Google Map"
 
-#: ../lib/SilverWp/Theme/Option.php:269
-msgid "Map type"
-msgstr "Karten Typ"
+#~ msgid "Map type"
+#~ msgstr "Karten Typ"
 
-#: ../lib/SilverWp/Theme/Option.php:294
-msgid "Point coordinates latitude"
-msgstr "Punktkoordinaten Breite"
+#~ msgid "Point coordinates latitude"
+#~ msgstr "Punktkoordinaten Breite"
 
-#: ../lib/SilverWp/Theme/Option.php:296 ../lib/SilverWp/Theme/Option.php:302
-msgid ""
-"You can define coordinates using this <a href=\"http://universimmedia."
-"pagesperso-orange.fr/geo/loc.htm\" target=\"_blank\">tool</a>."
-msgstr ""
-"Sie können mit dieser Koordinaten zu <a href=\"http://universimmedia."
-"pagesperso-orange.fr/geo/loc.htm\" target=\"_blank\"> Tool </ a> definieren "
+#~ msgid ""
+#~ "You can define coordinates using this <a href=\"http://universimmedia."
+#~ "pagesperso-orange.fr/geo/loc.htm\" target=\"_blank\">tool</a>."
+#~ msgstr ""
+#~ "Sie können mit dieser Koordinaten zu <a href=\"http://universimmedia."
+#~ "pagesperso-orange.fr/geo/loc.htm\" target=\"_blank\"> Tool </ a> "
+#~ "definieren "
 
-#: ../lib/SilverWp/Theme/Option.php:300
-msgid "Point coordinates longitude"
-msgstr "Punktkoordinaten Länge"
+#~ msgid "Point coordinates longitude"
+#~ msgstr "Punktkoordinaten Länge"
 
-#: ../lib/SilverWp/Theme/Option.php:306
-msgid "Zoom"
-msgstr "Zoom"
+#~ msgid "Zoom"
+#~ msgstr "Zoom"
 
-#: ../lib/SilverWp/Theme/Option.php:377
-#, php-format
-msgid "%s plugin"
-msgstr "%s Plugin"
+#~ msgid "%s plugin"
+#~ msgstr "%s Plugin"
 
-#: ../lib/SilverWp/Theme/Option.php:379
-msgid "Show plugin"
-msgstr "Zeige Plugin"
+#~ msgid "Show plugin"
+#~ msgstr "Zeige Plugin"
 
-#: ../lib/SilverWp/Theme/Option.php:380
-msgid "Order"
-msgstr "Ordnen"
+#~ msgid "Order"
+#~ msgstr "Ordnen"
 
-#: ../lib/SilverWp/Theme/Option.php:397
-#, php-format
-msgid "%s URL"
-msgstr "%s URL"
+#~ msgid "%s URL"
+#~ msgstr "%s URL"
 
-#: ../lib/SilverWp/Theme/Option.php:398
-#, php-format
-msgid "%s order"
-msgstr "%s Reihenfolge"
+#~ msgid "%s order"
+#~ msgstr "%s Reihenfolge"
 
-#: ../lib/SilverWp/Theme/Option.php:400
-msgid "Social bookmark"
-msgstr "Soziales Lesezeichen"
+#~ msgid "Social bookmark"
+#~ msgstr "Soziales Lesezeichen"
 
 # Social plugins
-#: ../lib/SilverWp/Theme/Option.php:423
-msgid "Share providers"
-msgstr "Provider teilen"
+#~ msgid "Share providers"
+#~ msgstr "Provider teilen"
 
-#: ../lib/SilverWp/Theme/Option.php:442
-msgid "Twitter Plugin (above the footer)"
-msgstr "Twitter Plugin (über dem Footer)"
+#~ msgid "Twitter Plugin (above the footer)"
+#~ msgstr "Twitter Plugin (über dem Footer)"
 
-#: ../lib/SilverWp/Theme/Option.php:444
-msgid "Twitter plugin enabled"
-msgstr "Twitter Plugin aktiviert"
+#~ msgid "Twitter plugin enabled"
+#~ msgstr "Twitter Plugin aktiviert"
 
-#: ../lib/SilverWp/Theme/Option.php:445
-msgid ""
-"These details are available in <a href=\"https://dev.twitter.com/apps\" "
-"target=\"_blank\">your Twitter dashboard</a>"
-msgstr ""
-"Diese Details sind in deinem<a href=\"https://dev.twitter.com/apps\" target="
-"\"_blank\"> Twitter Dashboard</a> verfügbar"
+#~ msgid ""
+#~ "These details are available in <a href=\"https://dev.twitter.com/apps\" "
+#~ "target=\"_blank\">your Twitter dashboard</a>"
+#~ msgstr ""
+#~ "Diese Details sind in deinem<a href=\"https://dev.twitter.com/apps\" "
+#~ "target=\"_blank\"> Twitter Dashboard</a> verfügbar"
 
-#: ../lib/SilverWp/Theme/Option.php:446
-msgid "OAuth Consumer Key"
-msgstr "OAuth Consumer Key"
+#~ msgid "OAuth Consumer Key"
+#~ msgstr "OAuth Consumer Key"
 
-#: ../lib/SilverWp/Theme/Option.php:447
-msgid "OAuth Consumer Secret"
-msgstr "OAuth Consumer Secret"
+#~ msgid "OAuth Consumer Secret"
+#~ msgstr "OAuth Consumer Secret"
 
-#: ../lib/SilverWp/Theme/Option.php:448
-msgid "OAuth Access Token"
-msgstr "OAuth Access Token"
+#~ msgid "OAuth Access Token"
+#~ msgstr "OAuth Access Token"
 
-#: ../lib/SilverWp/Theme/Option.php:449
-msgid "OAuth Access Secret"
-msgstr "OAuth Access Secret"
+#~ msgid "OAuth Access Secret"
+#~ msgstr "OAuth Access Secret"
 
-#: ../lib/SilverWp/Theme/Option.php:477
 #, fuzzy
-msgid "Background"
-msgstr "Hintergrund Bild"
+#~ msgid "Background"
+#~ msgstr "Hintergrund Bild"
 
-#: ../lib/SilverWp/Theme/Option.php:485
-msgid "Fonts"
-msgstr "Schriften"
-
-#: ../lib/SilverWp/Theme/Option.php:495
 #, fuzzy
-msgid "Custom CSS"
-msgstr "Eigener CSS Code"
+#~ msgid "Custom CSS"
+#~ msgstr "Eigener CSS Code"
 
-#: ../lib/SilverWp/Theme/Option.php:518
-msgid "Enable custom CSS settings"
-msgstr "Eigene CSS Optionen ermöglichen"
+#~ msgid "Enable custom CSS settings"
+#~ msgstr "Eigene CSS Optionen ermöglichen"
 
-#: ../lib/SilverWp/Theme/Option.php:519
-msgid "Brand primary colour"
-msgstr "Marke Primärfarbe"
+#~ msgid "Brand primary colour"
+#~ msgstr "Marke Primärfarbe"
 
-#: ../lib/SilverWp/Theme/Option.php:521
-msgid "Main (top) menu position"
-msgstr "Haupt- (oben) Menüposition"
+#~ msgid "Main (top) menu position"
+#~ msgstr "Haupt- (oben) Menüposition"
 
-#: ../lib/SilverWp/Theme/Option.php:522
-msgid "Animation display content element"
-msgstr "Animationsanzeige Inhaltselement"
+#~ msgid "Animation display content element"
+#~ msgstr "Animationsanzeige Inhaltselement"
 
-#: ../lib/SilverWp/Theme/Option.php:523
 #, fuzzy
-msgid "Page header image"
-msgstr "Seiten Kopf"
+#~ msgid "Page header image"
+#~ msgstr "Seiten Kopf"
 
-#: ../lib/SilverWp/Theme/Option.php:523
 #, fuzzy
-msgid "Default background image."
-msgstr "Hintergrund Bild"
+#~ msgid "Default background image."
+#~ msgstr "Hintergrund Bild"
 
-#: ../lib/SilverWp/Theme/Option.php:524
 #, fuzzy
-msgid "Pages sidebar default position"
-msgstr "Stelle die Standardoptionen wieder her"
+#~ msgid "Pages sidebar default position"
+#~ msgstr "Stelle die Standardoptionen wieder her"
 
-#: ../lib/SilverWp/Theme/Option.php:525
 #, fuzzy
-msgid "Blogs sidebar default position"
-msgstr "Plugins Bar Position"
+#~ msgid "Blogs sidebar default position"
+#~ msgstr "Plugins Bar Position"
 
-#: ../lib/SilverWp/Theme/Option.php:547
 #, fuzzy
-msgid "Colour of the body background"
-msgstr "Farbe (Hintergrund)"
+#~ msgid "Colour of the body background"
+#~ msgstr "Farbe (Hintergrund)"
 
-#: ../lib/SilverWp/Theme/Option.php:549
 #, fuzzy
-msgid "Background covered"
-msgstr "Hintergrundfarbe"
+#~ msgid "Background covered"
+#~ msgstr "Hintergrundfarbe"
 
-#: ../lib/SilverWp/Theme/Option.php:550
-msgid "Repeat"
-msgstr "wiederholen"
+#~ msgid "Repeat"
+#~ msgstr "wiederholen"
 
-#: ../lib/SilverWp/Theme/Option.php:551
 #, fuzzy
-msgid "Position"
-msgstr "Icons Position"
+#~ msgid "Position"
+#~ msgstr "Icons Position"
 
-#: ../lib/SilverWp/Theme/Option.php:570 ../lib/SilverWp/Theme/Option.php:593
-#: ../lib/SilverWp/Theme/Option.php:617
 #, fuzzy
-msgid "Colour text"
-msgstr "Farbe"
+#~ msgid "Colour text"
+#~ msgstr "Farbe"
 
-#: ../lib/SilverWp/Theme/Option.php:570 ../lib/SilverWp/Theme/Option.php:593
-#: ../lib/SilverWp/Theme/Option.php:617
-msgid "Colour of the body text"
-msgstr "Farbe des Body Textes"
+#~ msgid "Colour of the body text"
+#~ msgstr "Farbe des Body Textes"
 
-#: ../lib/SilverWp/Theme/Option.php:573 ../lib/SilverWp/Theme/Option.php:596
-#: ../lib/SilverWp/Theme/Option.php:620
-msgid "Font face"
-msgstr "Schriftart"
+#~ msgid "Font face"
+#~ msgstr "Schriftart"
 
-#: ../lib/SilverWp/Theme/Option.php:573 ../lib/SilverWp/Theme/Option.php:596
-#: ../lib/SilverWp/Theme/Option.php:620
-msgid "Choose your font for the content"
-msgstr "Wähle deine Schriftart für den Content"
+#~ msgid "Choose your font for the content"
+#~ msgstr "Wähle deine Schriftart für den Content"
 
-#: ../lib/SilverWp/Theme/Option.php:574 ../lib/SilverWp/Theme/Option.php:597
-#: ../lib/SilverWp/Theme/Option.php:621
-msgid "Font weight"
-msgstr "Schriftstärke"
+#~ msgid "Font weight"
+#~ msgstr "Schriftstärke"
 
-#: ../lib/SilverWp/Theme/Option.php:575 ../lib/SilverWp/Theme/Option.php:598
-#: ../lib/SilverWp/Theme/Option.php:622
-msgid "Font style"
-msgstr "Schriftstil"
+#~ msgid "Font style"
+#~ msgstr "Schriftstil"
 
-#: ../lib/SilverWp/Theme/Option.php:576 ../lib/SilverWp/Theme/Option.php:599
-#: ../lib/SilverWp/Theme/Option.php:623
-msgid "Font subset"
-msgstr "Schriftunter"
+#~ msgid "Font subset"
+#~ msgstr "Schriftunter"
 
-#: ../lib/SilverWp/Theme/Option.php:578
-msgid "Body"
-msgstr "Body"
+#~ msgid "Body"
+#~ msgstr "Body"
 
-#: ../lib/SilverWp/Theme/Option.php:600 ../lib/SilverWp/Theme/Option.php:624
-msgid "Font transform"
-msgstr "Schrift verwandeln"
+#~ msgid "Font transform"
+#~ msgstr "Schrift verwandeln"
 
-#: ../lib/SilverWp/Theme/Option.php:602
-msgid "Heading"
-msgstr "Überschrift"
+#~ msgid "Heading"
+#~ msgstr "Überschrift"
 
-#: ../lib/SilverWp/Theme/Option.php:626
 #, fuzzy
-msgid "Main menu"
-msgstr "Main"
+#~ msgid "Main menu"
+#~ msgstr "Main"
 
-#: ../lib/SilverWp/Theme/Option.php:644
-msgid "Custom CSS code"
-msgstr "Eigener CSS Code"
+#~ msgid "Custom CSS code"
+#~ msgstr "Eigener CSS Code"
 
-#: ../lib/SilverWp/Theme/Option.php:645
 #, fuzzy
-msgid ""
-"Any code you place here will appear in the head section of every page of "
-"your site."
-msgstr ""
-"Jeder Code, den Sie hier hinterlegen wird in dem  <head/> Abschnitt jeder "
-"Seite Ihrer Website erscheinen."
+#~ msgid ""
+#~ "Any code you place here will appear in the head section of every page of "
+#~ "your site."
+#~ msgstr ""
+#~ "Jeder Code, den Sie hier hinterlegen wird in dem  <head/> Abschnitt jeder "
+#~ "Seite Ihrer Website erscheinen."
 
-#: ../lib/SilverWp/Theme/Option.php:655
-msgid "Contact Form"
-msgstr "Kontakt Form"
+#~ msgid "Contact Form"
+#~ msgstr "Kontakt Form"
 
-#: ../lib/SilverWp/Theme/Option.php:666
-msgid "Slider"
-msgstr "Slider"
+#~ msgid "Slider"
+#~ msgstr "Slider"
 
-#: ../templates/comment.php:4
-#, php-format
-msgid "%1$s"
-msgstr "%1$s"
+#~ msgid "%1$s"
+#~ msgstr "%1$s"
 
-#: ../templates/comment.php:5
-msgid "(Edit)"
-msgstr "(editieren)"
+#~ msgid "(Edit)"
+#~ msgstr "(editieren)"
 
-#: ../templates/comment.php:9
-msgid "Your comment is awaiting moderation."
-msgstr "Deine Kommentar wird gerade moderiert."
+#~ msgid "Your comment is awaiting moderation."
+#~ msgstr "Deine Kommentar wird gerade moderiert."
 
-#: ../templates/comments.php:17
-msgid "Older comments"
-msgstr "ältere Kommentare"
+#~ msgid "Older comments"
+#~ msgstr "ältere Kommentare"
 
-#: ../templates/comments.php:20
-msgid "Newer comments"
-msgstr "Neuere Kommentare"
+#~ msgid "Newer comments"
+#~ msgstr "Neuere Kommentare"
 
-#: ../templates/comments.php:27 ../templates/comments.php:36
-msgid "Comments are closed."
-msgstr "Kommentare sind geschlossen."
+#~ msgid "Comments are closed."
+#~ msgstr "Kommentare sind geschlossen."
 
-#: ../templates/comments.php:50
-msgid "enter a name"
-msgstr "gebe einen Namen ein"
+#~ msgid "enter a name"
+#~ msgstr "gebe einen Namen ein"
 
-#: ../templates/comments.php:56
-msgid "Mail (will not be published)"
-msgstr "Mail (wird nicht angezeigt)"
+#~ msgid "Mail (will not be published)"
+#~ msgstr "Mail (wird nicht angezeigt)"
 
-#: ../templates/comments.php:57
-msgid "enter an email address"
-msgstr "gebe eine E-Mail Adresse ein"
+#~ msgid "enter an email address"
+#~ msgstr "gebe eine E-Mail Adresse ein"
 
-#: ../templates/comments.php:63 ../templates/content-single-portfolio.php:54
-msgid "Website"
-msgstr "Website"
+#~ msgid "Website"
+#~ msgstr "Website"
 
-#: ../templates/comments.php:64
-msgid "enter a website address, example: http://www.mysite.com"
-msgstr "gebe eine Website URL ein, Beispiel: http://www.mysite.com"
+#~ msgid "enter a website address, example: http://www.mysite.com"
+#~ msgstr "gebe eine Website URL ein, Beispiel: http://www.mysite.com"
 
-#: ../templates/comments.php:71
-msgid "Your Comment"
-msgstr "Dein Kommentar"
+#~ msgid "Your Comment"
+#~ msgstr "Dein Kommentar"
 
-#: ../templates/comments.php:72
-msgid "enter a comment"
-msgstr "Gebe ein Kommentar ein"
+#~ msgid "enter a comment"
+#~ msgstr "Gebe ein Kommentar ein"
 
-#: ../templates/comments.php:76
-#, php-format
-msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
-msgstr ""
-"Sie müssen <a href=\"%s\"> in </ a> angemeldet sein, um einen Kommentar "
-"verfassen zu können."
+#~ msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+#~ msgstr ""
+#~ "Sie müssen <a href=\"%s\"> in </ a> angemeldet sein, um einen Kommentar "
+#~ "verfassen zu können."
 
-#: ../templates/comments.php:78
-#, php-format
-msgid ""
-"Fill out all required fields to send a message. You are logged in as <a "
-"href='%s/wp-admin/profile.php'>%s</a>. Please do not spam. Thank you!"
-msgstr ""
-"Füllen Sie alle erforderlichen Felder aus, um eine Nachricht zu senden. Sie "
-"sind als <a href='%s/wp-admin/profile.php'>% s </ a> protokolliert. Bitte "
-"kein Spam. Danke!"
+#~ msgid ""
+#~ "Fill out all required fields to send a message. You are logged in as <a "
+#~ "href='%s/wp-admin/profile.php'>%s</a>. Please do not spam. Thank you!"
+#~ msgstr ""
+#~ "Füllen Sie alle erforderlichen Felder aus, um eine Nachricht zu senden. "
+#~ "Sie sind als <a href='%s/wp-admin/profile.php'>% s </ a> protokolliert. "
+#~ "Bitte kein Spam. Danke!"
 
-#: ../templates/comments.php:83
-msgid "Leave a Reply"
-msgstr "Schreibe einen Kommentar"
+#~ msgid "Leave a Reply"
+#~ msgstr "Schreibe einen Kommentar"
 
-#: ../templates/comments.php:84
-#, php-format
-msgid "Leave a Reply to %s"
-msgstr "Schreibe einen Kommentar an %s"
+#~ msgid "Leave a Reply to %s"
+#~ msgstr "Schreibe einen Kommentar an %s"
 
-#: ../templates/comments.php:85
-msgid "Cancel reply"
-msgstr "schließe Antwort"
+#~ msgid "Cancel reply"
+#~ msgstr "schließe Antwort"
 
-#: ../templates/comments.php:86
-msgid "Submit Comment"
-msgstr "Sende das Kommentar ab"
+#~ msgid "Submit Comment"
+#~ msgstr "Sende das Kommentar ab"
 
-#: ../templates/content-single-portfolio.php:39
 #, fuzzy
-msgid "Project Description"
-msgstr "einige Beschreibung"
+#~ msgid "Project Description"
+#~ msgstr "einige Beschreibung"
 
-#: ../templates/content-single-portfolio.php:47
-msgid "Project Details"
-msgstr "Projektdetails"
+#~ msgid "Project Details"
+#~ msgstr "Projektdetails"
 
-#: ../templates/content-single-portfolio.php:49
-msgid "Date"
-msgstr "Datum"
+#~ msgid "Category"
+#~ msgstr "Kategorie"
 
-#: ../templates/content-single-portfolio.php:51
-msgid "Category"
-msgstr "Kategorie"
+#~ msgid "Client"
+#~ msgstr "Client"
 
-#: ../templates/content-single-portfolio.php:52
-msgid "Tags"
-msgstr "Tags"
+#~ msgid "Purchase"
+#~ msgstr "kaufen"
 
-#: ../templates/content-single-portfolio.php:53
-msgid "Client"
-msgstr "Client"
-
-#: ../templates/content-single-portfolio.php:71
-msgid "Purchase"
-msgstr "kaufen"
-
-#: ../templates/content-single-portfolio.php:72
 #, fuzzy
-msgid "Details"
-msgstr "Zeige Details"
+#~ msgid "Details"
+#~ msgstr "Zeige Details"
 
-#: ../templates/content-single.php:33
 #, fuzzy
-msgid "Share this blogpost"
-msgstr "Ostatnie wpisy na blogu"
+#~ msgid "Share this blogpost"
+#~ msgstr "Ostatnie wpisy na blogu"
 
-#: ../templates/content-single.php:54
 #, fuzzy
-msgid "Pages:"
-msgstr "Seiten"
+#~ msgid "Pages:"
+#~ msgstr "Seiten"
 
-#: ../templates/entry-meta.php:23
-#, php-format
-msgid "%s topic"
-msgstr "%s Überschrift"
+#~ msgid "%s topic"
+#~ msgstr "%s Überschrift"
 
-#: ../templates/header-top-navbar.php:47 ../templates/searchform.php:3
-msgid "search something"
-msgstr "suche etwas"
+#~ msgid "search something"
+#~ msgstr "suche etwas"
 
-#: ../templates/header-top-navbar.php:54
-msgid "Sidebar menu"
-msgstr "Sidebar Menu"
+#~ msgid "Sidebar menu"
+#~ msgstr "Sidebar Menu"
 
-#: ../templates/header-topbar.php:28
-msgid "Meet us"
-msgstr "Lernen Sie uns kennen"
+#~ msgid "Meet us"
+#~ msgstr "Lernen Sie uns kennen"
 
-#: ../templates/header-topbar.php:36 ../templates/header-topbar.php:56
-#: ../templates/header-topbar.php:65
-msgid "Call us"
-msgstr "Rufe uns an"
+#~ msgid "Call us"
+#~ msgstr "Rufe uns an"
 
-#: ../templates/header-topbar.php:74
-msgid "Send email"
-msgstr "Sende eine E-Mail"
+#~ msgid "Send email"
+#~ msgstr "Sende eine E-Mail"
 
-#: ../templates/list-fullscr-project-portfolio.php:21
-#: ../templates/list-grid-project-portfolio.php:19
-msgid "All"
-msgstr "Alles"
-
-#: ../templates/related-project-portfolio.php:19
-msgid "Related projects"
-msgstr "Ähnliche Projekte"
+#~ msgid "Related projects"
+#~ msgstr "Ähnliche Projekte"
 
 #~ msgid "theme available"
 #~ msgstr "Theme erhältlich"
