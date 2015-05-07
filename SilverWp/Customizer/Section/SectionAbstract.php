@@ -16,16 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\Customizer\Section;
 
-use SilverWp\Translate;
 use SilverWp\Customizer\Control\ControlInterface;
 use SilverWp\Customizer\Section\Exception;
 
@@ -36,7 +28,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage Wp\Customizer\Sections
+     * @subpackage Customizer\Sections
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
      * @version $Revision:$
@@ -83,12 +75,12 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
          * @access public
          */
         public function __construct() {
-            add_action( 'customize_register', array( $this, 'init' ), 2 );
-            add_filter( 'kirki/controls', array( $this, 'registerControls' ), 1 );
+            add_action( 'customize_register', array( $this, 'init' ) );
+            add_filter( 'kirki/controls', array( $this, 'registerControls' ) );
         }
 
         /**
-         * Get all section controls
+         *
          *
          * @param array $controls
          *

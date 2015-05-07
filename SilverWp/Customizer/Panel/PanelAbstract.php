@@ -19,6 +19,7 @@
 namespace SilverWp\Customizer\Panel;
 
 use SilverWp\Customizer\Section\SectionInterface;
+use SilverWp\Debug;
 
 if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
 
@@ -59,7 +60,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
          * @access public
          */
         public function __construct() {
-            add_action( 'customize_register', array( $this, 'init' ), 1 );
+            add_action( 'customize_register', array( $this, 'init' ) );
         }
 
         /**
@@ -92,6 +93,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
                 );
             }
             $params = $this->createPanelParams();
+            Debug::dump($params);
             $wp_customize->add_panel( $this->panel_id, $params );
         }
 
