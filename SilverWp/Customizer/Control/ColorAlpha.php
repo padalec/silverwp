@@ -16,30 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 namespace SilverWp\Customizer\Control;
 
-if ( ! class_exists( '\SilverWp\Customizer\Control\ImageRadio' ) ) {
-
+if ( ! class_exists( '\SilverWp\Customizer\Control\ColorAlpha' ) ) {
     /**
-     *
-     * Control Radio image
+     * Color-Alpha Field
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage Wp\Customizer\Control
+     * @subpackage Customizer\Control
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
      * @version $Revision:$
-     * @link http://kirki.org/#ImageRadio
+     * @link http://kirki.org/#color-alpha-field
      */
-    class ImageRadio extends Radio {
-        protected $type = 'radio-image';
+    class ColorAlpha extends ControlAbstract {
+        protected $type = 'color-alpha';
     }
 }

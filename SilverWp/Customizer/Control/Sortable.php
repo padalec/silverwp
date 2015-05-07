@@ -18,21 +18,38 @@
  */
 namespace SilverWp\Customizer\Control;
 
-if ( ! class_exists( 'SilverWp\Customizer\Control\Number' ) ) {
+if ( ! class_exists( '\SilverWp\Customizer\Control\Sortable' ) ) {
 
     /**
-     * Customizer control Number
+     * Customizer sortable control field
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage Customizer\Control
+     * @subpackage SilverWp\Customizer\Control
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
      * @version $Revision:$
-     * @link http://kirki.org/#number-field
-     * @see http://kirki.org/#number-field
      */
-    class Number extends ControlAbstract {
-        protected $type = 'number';
+    class Sortable extends MultiControlAbstract {
+        protected $type = 'sortable';
+
+        public function setDefault( $default ) {
+            $this->setting[ 'default' ] = ( is_array( $default ) ? $default : (array) $default );
+
+            return $this;
+        }
+
+        public function getValue() {
+            // Serialize the defaults array
+            $defaults = serialize(
+                $this->getDefault()
+            );
+            // The following will get a serialized array of our options
+            $value_serialized = get_theme_mod( $this->getName(), $defaults );
+            // Convert the theme mod value to a PHP array
+            $value = unserialize( $value_serialized );
+
+            return $value;
+        }
     }
 }
