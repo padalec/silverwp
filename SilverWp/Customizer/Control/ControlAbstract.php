@@ -47,6 +47,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
     abstract class ControlAbstract extends \SilverWp\Helper\Control\ControlAbstract implements \SilverWp\Customizer\Control\ControlInterface {
 
         /**
+         * Export or not to less variable
          *
          * @var bool
          * @access protected
@@ -91,7 +92,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          */
         public function setName( $name ) {
             $this->removeSetting( 'name' );
-            $this->setting[ 'settings' ] = $name;
+            $this->setting[ 'setting' ] = $name;
 
             return $this;
         }
@@ -103,7 +104,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @access public
          */
         public function getName() {
-            return $this->setting[ 'settings' ];
+            return $this->setting[ 'setting' ];
         }
 
         /**
@@ -132,6 +133,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          */
         public function setSubtitle( $subtitle ) {
             $this->setDescription( $subtitle );
+
             return $this;
         }
 
@@ -141,9 +143,11 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          *
          * @return string
          * @access public
+         * @link http://kirki.org/#getting-the-value-of-a-background-control
          */
         public function getValue() {
-            $value = get_theme_mod( $this->getName(), $this->getDefault() );
+            //$value = get_theme_mod( $this->getName(), $this->getDefault() );
+            $value = kirki_get_option( $this->getName() );
 
             return $value;
         }
@@ -166,9 +170,16 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
         }
 
         /**
-         * When the 'output' argument is used, we will automatically process this and generate the necessary CSS for your page.
-         * You can specify an array of arrays so that you can affect multiple elements at once.
-         * You will need to define the CSS element you want to change, the CSS property, and optionally a unit.
+         * Using the output argument you can specify if you want Kirki to automatically
+         * generate and apply CSS for various elements of your page.
+         * This is defined as an array of arrays and each array contains a CSS element,
+         * a CSS property, and - optionally - a unit.
+         * Based on these values Kirki will then automatically generate the necessary
+         * CSS and properly enqueue it to the <head> of your document so that your changes
+         * take effect immediately without the need to write any additional code.
+         * As element you define a CSS element in your document that you want to affect.
+         * As property you can use any valid CSS property.
+         * As units you can use any valid CSS unit (for example px, em, rem etc.)
          *
          * @param array $output example:
          * array(
@@ -190,7 +201,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @return $this
          */
         public function setOutput( array $output ) {
-            $this->setting[ 'output' ] = $output;
+            $this->setting[ 'output' ][] = $output;
 
             return $this;
         }
@@ -210,13 +221,13 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          *
          * Set this field will be added to less variables
          *
-         * @param bool $is_less
+         * @param bool $is_less true/false
          *
          * @return $this
          * @access public
          */
         public function setIsLessVariable( $is_less ) {
-            $this->is_less_variable = $is_less ? true : false;
+            $this->is_less_variable = (bool) $is_less;
 
             return $this;
         }
@@ -267,6 +278,34 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          */
         public function setHelp( $message ) {
             $this->setting[ 'help' ] = $message;
+
+            return $this;
+        }
+
+        /**
+         * If you set transport to postMessage you can write your own scripts,
+         * or you can use the js_vars argument and let Kirki automatically create these for you.
+         *
+         * It is defined as an array of arrays so you can specify multiple elements.
+         * 'ELEMENT'
+         *
+         * The CSS element you want to affect
+         * 'FUNCTION'
+         *
+         * Can be 'css' or 'html'.
+         * 'PROPERTY'
+         *
+         * If you set 'function' to 'css' then this will allow you to select what
+         * CSS you want applied to the selected 'element'.
+         *
+         * @param array $variable
+         *
+         * @return $this
+         * @access public
+         * @link http://kirki.org/#js_vars
+         */
+        public function addJsVariable( array $variable ) {
+            $this->setting[ 'js_vars' ][] = $variable;
 
             return $this;
         }

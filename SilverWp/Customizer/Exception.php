@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 namespace SilverWp\Customizer;
 
 if ( ! class_exists( 'SilverWp\Customizer\Exception' ) ) {

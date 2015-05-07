@@ -18,10 +18,10 @@
  */
 namespace SilverWp\Customizer\Control;
 
-if ( ! class_exists( 'SilverWp\Customizer\Control\Number' ) ) {
+if ( ! class_exists( '\SilverWp\Customizer\Control\Palette' ) ) {
 
     /**
-     * Customizer control Number
+     * Palette Field
      *
      * @category WordPress
      * @package SilverWp
@@ -29,10 +29,10 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Number' ) ) {
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
      * @version $Revision:$
-     * @link http://kirki.org/#number-field
-     * @see http://kirki.org/#number-field
+     * @link http://kirki.org/#palette-field
+     * @see http://kirki.org/#palette-field
      */
-    class Number extends ControlAbstract {
-        protected $type = 'number';
+    class Palette extends MultiControlAbstract {
+        protected $type = 'palette';
     }
 }

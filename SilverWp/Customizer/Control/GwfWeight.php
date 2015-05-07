@@ -35,7 +35,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\GwfWeight' ) ) {
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage Wp\Customizer\Control
+     * @subpackage Customizer\Control
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright Dynamite-Studio.pl & silversite.pl 2015
      * @version $Revision:$
