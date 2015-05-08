@@ -1,5 +1,5 @@
 {
-  "name": "silverwp",
+  "name": "padalec/silverwp",
   "type": "wordpress-plugin",
   "description": "WordPress framework to help developers create plugins and themes",
   "homepage": "http://silversite.pl",
