@@ -4,8 +4,46 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "03b5a8d61917f0da5e5f27853aeadba1",
+    "hash": "9ee8c7a48ab25b40ff675f60d93a35f9",
     "packages": [
+        {
+            "name": "aristath/kirki",
+            "version": "0.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aristath/kirki.git",
+                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aristath/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv2 or later"
+            ],
+            "authors": [
+                {
+                    "name": "aristath",
+                    "email": "aristath@gmail.com",
+                    "homepage": "http://aristeides.com"
+                },
+                {
+                    "name": "fovoc",
+                    "email": "kalliris.d@gmail.com",
+                    "homepage": "https://github.com/fovoc"
+                }
+            ],
+            "description": "Extending the WordPress customizer",
+            "homepage": "http://kirki.org",
+            "time": "2015-04-06 15:38:43"
+        },
         {
             "name": "leafo/lessphp",
             "version": "v0.4.0",
@@ -136,16 +174,6 @@
                 "stylesheet"
             ],
             "time": "2014-03-04 19:02:04"
-        },
-        {
-            "name": "reduxframework/kirki",
-            "version": "0.8.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reduxframework/kirki.git",
-                "reference": "master"
-            },
-            "type": "library"
         }
     ],
     "packages-dev": [],

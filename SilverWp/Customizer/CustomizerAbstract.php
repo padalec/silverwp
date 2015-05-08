@@ -30,7 +30,7 @@ use SilverWp\Translate;
 
 if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
-    require_once SILVERWP_VENDOR_PATH . 'reduxframework/kirki/kirki.php';
+    require_once SILVERWP_VENDOR_PATH . 'aristath/kirki/kirki.php';
 
     /**
      * Main customizer class. Setup main settings.
