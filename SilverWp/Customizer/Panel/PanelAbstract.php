@@ -19,6 +19,7 @@
 namespace SilverWp\Customizer\Panel;
 
 use SilverWp\Customizer\Section\SectionInterface;
+use SilverWp\Debug;
 
 if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
 

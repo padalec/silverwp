@@ -18,6 +18,7 @@
  */
 namespace SilverWp\Helper\Control;
 
+use SilverWp\Debug;
 use SilverWp\Helper\MetaBox;
 
 if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
@@ -50,7 +51,7 @@ if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
         public function __construct( $name ) {
             parent::__construct( $name );
             //add fontello icons
-            $assets_uri = $this->getAssetsUri();
+            $assets_uri = $this->getAssetsUri() . 'css/fontello.css';
             $items = MetaBox::getFontelloIcons( 'icon', $assets_uri, 'silverwp_fontello_icons' );
             $this->setOptions( $items );
         }

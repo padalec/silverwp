@@ -34,5 +34,6 @@ if ( ! class_exists( '\SilverWp\Customizer\Control\Image' ) ) {
      */
     class Image extends ControlAbstract {
         protected $type = 'image';
+        protected $is_less_variable = false;
     }
 }

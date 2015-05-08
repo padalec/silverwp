@@ -16,17 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\Customizer\Control;
 
-use SilverWp\Debug;
-use SilverWp\Helper\Control\ControlInterface;
 use SilverWp\Translate;
 
 if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
@@ -44,7 +35,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
      * @link http://kirki.org/
      * @abstract
      */
-    abstract class ControlAbstract extends \SilverWp\Helper\Control\ControlAbstract implements \SilverWp\Customizer\Control\ControlInterface {
+    abstract class ControlAbstract extends \SilverWp\Helper\Control\ControlAbstract implements ControlInterface {
 
         /**
          * Export or not to less variable
@@ -155,15 +146,22 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
         /**
          * Set control Dependency
          *
-         * @param \SilverWp\Helper\Control\ControlInterface $parent_control parent control
-         * @param string                                    $parent_option parent option value
-         *
          * @return $this
+         * @throws \SilverWp\Customizer\Control\Exception
          * @access public
          */
-        public function setDependency( ControlInterface $parent_control, $parent_option ) {
+        public function setDependency() {
+            list( $parent_control, $parent_option ) = func_get_args();
+
+            if ( ! $parent_control instanceof ControlInterface ) {
+                throw new Exception(
+                    Translate::translate(
+                        'First arguments should by instance of \SilverWp\Customizer\Control\ControlInterface'
+                    )
+                );
+            }
             $this->setting[ 'required' ] = array(
-                $parent_control->getName() => $parent_option
+                $parent_control->getName()    => $parent_option,
             );
 
             return $this;
