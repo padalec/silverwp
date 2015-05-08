@@ -88,7 +88,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          */
         public function generateLessCssFileAfterOptionsSave() {
 
-            if ( isset( $_GET[ 'page' ] ) && 'silverwp-theme_options' != $_GET[ 'page' ]) { // && ! $css_is_writable
+            if ( isset( $_GET[ 'page' ] ) && 'silverwp-theme_options' != $_GET[ 'page' ] ) { // && ! $css_is_writable
                 return;
             }
 
@@ -105,7 +105,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
 
             $dynamic_stylesheets = $this->getDynamicCssList();
             foreach ( $dynamic_stylesheets as $stylesheet_handle => $stylesheet ) {
-                $this->generateLessCssFiles( $stylesheet_handle, $stylesheet[ 'src' ], $stylesheet['compress'] );
+                $this->generateLessCssFiles( $stylesheet_handle, $stylesheet[ 'src' ], $stylesheet[ 'compress' ] );
                 //$this->lessCache( $stylesheet[ 'path' ], $stylesheet['output_path'] );
             }
         }
@@ -121,6 +121,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          */
         public function setUploadDir( $upload_dir ) {
             $this->upload_dir = $upload_dir;
+
             return $this;
         }
 
@@ -136,6 +137,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          */
         public function setUploadUrl( $upload_url ) {
             $this->upload_url = $upload_url;
+
             return $this;
         }
 
@@ -148,6 +150,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          * @param bool   $compress the file should by compressed
          *
          * @return mixed
+         * @throws \SilverWp\Exception
          * @access public
          */
         public function generateLessCssFiles( $handler = 'custom.less', $src = '', $compress = false ) {
@@ -158,14 +161,15 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 $less_config = $less->getConfiguration();
                 $less_config->setUploadDir( $this->upload_dir );
                 $less_config->setUploadUrl( $this->upload_url );
+                $assets_uri = FileSystem::getDirectory( 'assets_uri' );
 
-                $less->setImportDir( array( ASSETS_URI . 'less' ) );
+                $less->setImportDir( array( $assets_uri . 'less' ) );
 
                 $less_variable = $this->less_variables;
                 $less->setVariables( $less_variable );
 
-                \Less_Parser::$default_options[ 'compress' ]   = $compress;
-                \Less_Parser::$default_options['cache_method'] =  'serialize';
+                \Less_Parser::$default_options[ 'compress' ] = $compress;
+                //\Less_Parser::$default_options['cache_method'] = 'serialize';
 
                 \WPLessStylesheet::$upload_dir = $less_config->getUploadDir();
                 \WPLessStylesheet::$upload_uri = $less_config->getUploadUrl();
@@ -173,7 +177,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 if ( ! wp_style_is( $handler, 'registered' ) ) {
 
                     if ( ! $src ) {
-                        $src = ASSETS_URI . 'less/style.less';
+                        $src = $assets_uri . 'less/style.less';
                     }
 
                     wp_register_style( $handler, $src );
@@ -181,6 +185,8 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 }
 
                 return $less->processStylesheet( $handler, true );
+            } else {
+                throw new Exception( Translate::translate( 'WP-Less plugin not found.' ) );
             }
 
         }
@@ -214,12 +220,13 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 }
             }
         }
+
         /**
          *
          * Add dynamic css files
          *
-         * @param string    $handle
-         * @param array     $params
+         * @param string $handle
+         * @param array  $params
          *
          * @access public
          * @static
@@ -239,16 +246,16 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
 
             if ( null === self::$dynamic_stylesheets ) {
 
-                $template_uri       = $this->getAssetsUri();
-                $template_directory = $this->getAssetsPath();
+                $assets_uri  = FileSystem::getDirectory( 'assets_uri' );
+                $assets_path = FileSystem::getDirectory( 'assets_path' );
 
                 $theme_version = SILVERWP_VER;
 
                 self::$dynamic_stylesheets[ 'app.less' ] = array(
-                    'path'         => $template_directory . 'less/app.less',
-                    'output_path'  => $template_directory . 'less/generated/app.css',
-                    'src'          => $template_uri . 'less/app.less',
-                    'fallback_src' => $template_uri . 'css/generated/app.css',
+                    'path'         => $assets_path . 'less/app.less',
+                    'output_path'  => $assets_path . 'less/generated/app.css',
+                    'src'          => $assets_uri . 'less/app.less',
+                    'fallback_src' => $assets_uri . 'css/generated/app.css',
                     'deps'         => array(),
                     'ver'          => $theme_version,
                     'media'        => 'all',
@@ -256,10 +263,10 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 );
 
                 self::$dynamic_stylesheets[ 'style.less' ] = array(
-                    'path'         => $template_directory . 'less/style.less',
-                    'src'          => $template_uri . 'less/style.less',
-                    'output_path'  => $template_directory . 'less/generated/style.css',
-                    'fallback_src' => $template_uri . 'css/generated/style.css',
+                    'path'         => $assets_path . 'less/style.less',
+                    'output_path'  => $assets_path . 'less/generated/style.css',
+                    'src'          => $assets_uri . 'less/style.less',
+                    'fallback_src' => $assets_uri . 'css/generated/style.css',
                     'deps'         => array( 'project_style' ),
                     'ver'          => $theme_version,
                     'media'        => 'all',
@@ -333,8 +340,9 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
             $target_path_array = explode( '/', $target_path );
             $css_file          = end( $target_path_array );
             if ( self::$remove_random ) {
-                $css_file = str_replace('-%s', '', $css_file);
+                $css_file = str_replace( '-%s', '', $css_file );
             }
+
             return '/' . $css_file;
         }
 
@@ -367,30 +375,6 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          */
         public function lessCompiler() {
             return 'less.php';
-        }
-
-        /**
-         *
-         * @return string
-         * @access private
-         */
-        private function getAssetsPath() {
-            $file_system = FileSystem::getInstance();
-            $path = $file_system->getDirectories( 'assets_path' );
-
-            return $path;
-        }
-
-        /**
-         *
-         * @return string
-         * @access private
-         */
-        private function getAssetsUri() {
-            $file_system = FileSystem::getInstance();
-            $path = $file_system->getDirectories( 'assets_uri' );
-
-            return $path;
         }
     }
 }

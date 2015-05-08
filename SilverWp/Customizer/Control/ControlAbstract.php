@@ -161,7 +161,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
                 );
             }
             $this->setting[ 'required' ] = array(
-                $parent_control->getName()    => $parent_option,
+                $parent_control->getName() => $parent_option,
             );
 
             return $this;
@@ -199,7 +199,30 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @return $this
          */
         public function setOutput( array $output ) {
-            $this->setting[ 'output' ][] = $output;
+            $this->setting[ 'output' ] = $output;
+
+            return $this;
+        }
+
+        /**
+         * Add output element
+         *
+         * @param string $element as you define a CSS element in your document that you want to affect.
+         * @param string $property as you can use any valid CSS property.
+         * @param null|string $units as units you can use any valid CSS unit (for example px, em, rem etc.)
+         *
+         * @return $this
+         * @access public
+         */
+        public function addOutput( $element, $property, $units = null ) {
+            $output = array(
+                'element'  => $element,
+                'property' => $property,
+            );
+            if ( ! is_null( $units ) ) {
+                $output[ 'units' ] = $units;
+            }
+            $this->setting[ 'output' ][ ] = $output;
 
             return $this;
         }
@@ -303,7 +326,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @link http://kirki.org/#js_vars
          */
         public function addJsVariable( array $variable ) {
-            $this->setting[ 'js_vars' ][] = $variable;
+            $this->setting[ 'js_vars' ][ ] = $variable;
 
             return $this;
         }

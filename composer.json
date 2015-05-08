@@ -31,12 +31,16 @@
   ],
   "require": {
     "php": ">=5.3",
-    "reduxframework/kirki": "*"
+    "reduxframework/kirki": "*",
+    "oncletom/wp-less":"@stable",
+    "oyejorge/less.php": "~1.7"
   },
   "autoload": {
     "files": [
       "vendor/vafour/vafpress-framework/bootstrap.php",
-      "vendor/evanto/auto-updates/class-pixelentity-theme-update.php"
+      "vendor/evanto/auto-updates/class-pixelentity-theme-update.php",
+      "vendor/oyejorge/less.php/lessc.inc.php",
+      "vendor/oncletom/wp-less/bootstrap-for-theme.php"
     ],
     "psr-4": {
       "SilverWp\\": "SilverWp/"
