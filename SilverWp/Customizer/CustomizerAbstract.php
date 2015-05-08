@@ -29,7 +29,7 @@ use SilverWp\Translate;
 
 if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
-    require_once SILVERWP_VENDOR_PATH . 'aristath/kirki/kirki.php';
+    require_once SILVERWP_VENDOR_PATH . 'reduxframework/kirki/kirki.php';
 
     /**
      * Main customizer class. Setup main settings.
@@ -131,7 +131,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access protected
          */
         protected function __construct() {
-            $url = SILVERWP_VENDOR_URI . '/vendor/aristath/kirki/';
+            $url = SILVERWP_VENDOR_URI . '/vendor/reduxframework/kirki/';
             $this->setUrlPath( $url );
 
             $this->initStrings();

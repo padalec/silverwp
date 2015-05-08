@@ -60,7 +60,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
          * @access public
          */
         public function __construct() {
-            add_action( 'customize_register', array( $this, 'init' ) );
+            add_action( 'customize_register', array( $this, 'init' ), 1 );
         }
 
         /**
@@ -93,7 +93,6 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
                 );
             }
             $params = $this->createPanelParams();
-            Debug::dump($params);
             $wp_customize->add_panel( $this->panel_id, $params );
         }
 

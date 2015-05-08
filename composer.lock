@@ -4,48 +4,17 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b02ea9d5bc1e9d998b00e2bd62ea4104",
+    "hash": "3f3a2ca2e7925b0d881b727932fde44b",
     "packages": [
         {
-            "name": "aristath/kirki",
+            "name": "reduxframework/kirki",
             "version": "0.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reduxframework/kirki.git",
-                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
+                "reference": "master"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reduxframework/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
-                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "library",
-            "license": [
-                "GPLv2 or later"
-            ],
-            "authors": [
-                {
-                    "name": "aristath",
-                    "email": "aristath@gmail.com",
-                    "homepage": "http://aristeides.com"
-                },
-                {
-                    "name": "fovoc",
-                    "email": "kalliris.d@gmail.com",
-                    "homepage": "https://github.com/fovoc"
-                }
-            ],
-            "description": "Extending the WordPress customizer",
-            "homepage": "http://kirki.org",
-            "support": {
-                "source": "https://github.com/reduxframework/kirki/tree/0.8.4",
-                "issues": "https://github.com/reduxframework/kirki/issues"
-            },
-            "time": "2015-04-06 15:38:43"
+            "type": "library"
         }
     ],
     "packages-dev": [],

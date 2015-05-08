@@ -19,7 +19,6 @@
 namespace SilverWp\Customizer\Control;
 
 use SilverWp\Translate;
-use SilverWp\Customizer\Control\ControlInterface;
 
 if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
 
