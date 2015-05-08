@@ -132,5 +132,19 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
                 }
             }
         }
+
+        /**
+         * Shortcut get directory by name
+         *
+         * @param string $path_name
+         *
+         * @return string
+         * @static
+         * @access public
+         */
+        public static function getDirectory( $path_name ) {
+            $handler = self::getInstance();
+            return $handler->getDirectories($path_name);
+        }
     }
 }

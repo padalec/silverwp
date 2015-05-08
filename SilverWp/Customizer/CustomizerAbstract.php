@@ -19,6 +19,7 @@
 namespace SilverWp\Customizer;
 
 use SilverWp\CoreInterface;
+use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\File;
 use SilverWp\Less;
@@ -138,7 +139,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
             add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 150 );
             add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
-            //add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 11 );
+            add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 11 );
             add_filter( 'kirki/config', array( $this, 'init' ) );
 
             $this->includes();
