@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 namespace RequiredPluginInstaller;
 
 if ( ! class_exists( 'RequiredPluginInstaller\RequiredPluginsAbstract' ) ) {
@@ -159,23 +152,45 @@ if ( ! class_exists( 'RequiredPluginInstaller\RequiredPluginsAbstract' ) ) {
                 'nag_type'                        => 'updated'
                 // Determines admin notice type - can only be 'updated', 'update-nag' or 'error'.
             );
-            $this->init();
             add_action( 'tgmpa_register', array($this, 'activation') );
         }
 
+        /**
+         * Change string translation
+         * 
+         * @param string $key
+         * @param string $label
+         *
+         * @return $this
+         * @access public
+         */
         public function setString( $key, $label ) {
             $this->strings[ $key ] = $label;
 
             return $this;
         }
 
-        public function addPlugin( $settings ) {
+        /**
+         * Add required plugin to registry
+         *
+         * @param array $settings
+         *
+         * @return $this
+         * @access public
+         */
+        public function addPlugin( array $settings ) {
             $this->plugins[ ] = $settings;
 
             return $this;
         }
 
+        /**
+         * Activate required plugins
+         *
+         * @access public
+         */
         public function activation() {
+            $this->init();
             $plugins = $this->plugins;
             $config  = array(
                 'id'           => $this->id,
