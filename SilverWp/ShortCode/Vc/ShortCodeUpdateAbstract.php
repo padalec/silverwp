@@ -85,7 +85,9 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeUpdateAbstract' ) ) {
         private function addAttributes() {
             $this->create();
             $controls = $this->getControls();
-            vc_add_params( $this->tag_base, $controls );
+            if (function_exists('vc_add_params')) {
+                vc_add_params( $this->tag_base, $controls );
+            }
         }
 
         /**
