@@ -10,28 +10,9 @@
       "homepage": "http://silversite.pl"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/reduxframework/kirki"
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "reduxframework/kirki",
-        "version": "0.8.4",
-        "type": "library",
-        "source": {
-          "url": "https://github.com/reduxframework/kirki.git",
-          "type": "git",
-          "reference": "master"
-        }
-      }
-    }
-  ],
   "require": {
     "php": ">=5.3",
-    "reduxframework/kirki": "*",
+    "aristath/kirki": "*",
     "oncletom/wp-less":"@stable",
     "oyejorge/less.php": "~1.7"
   },
