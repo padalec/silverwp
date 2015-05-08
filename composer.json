@@ -1,6 +1,6 @@
 {
-  "name": "padalec/silverwp",
-  "type": "library",
+  "name": "silverwp",
+  "type": "wordpress-plugin",
   "description": "WordPress framework to help developers create plugins and themes",
   "homepage": "http://silversite.pl",
   "license": "GPLv2 or later",
