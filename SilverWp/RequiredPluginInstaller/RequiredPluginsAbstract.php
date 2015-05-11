@@ -157,7 +157,7 @@ if ( ! class_exists( 'RequiredPluginInstaller\RequiredPluginsAbstract' ) ) {
 
         /**
          * Change string translation
-         * 
+         *
          * @param string $key
          * @param string $label
          *

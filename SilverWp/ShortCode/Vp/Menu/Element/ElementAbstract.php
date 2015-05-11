@@ -16,15 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/plugins/schedule/vendor/SilverWp/ShortCode/Vp/Menu/Element/ElementAbstract.php $
-  Last committed: $Revision: 2591 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-03-24 17:26:17 +0100 (Wt, 24 mar 2015) $
-  ID: $Id: ElementAbstract.php 2591 2015-03-24 16:26:17Z padalec $
- */
-
 namespace SilverWp\ShortCode\Vp\Menu\Element;
 
 use SilverWp\Helper\Control\ControlInterface;
