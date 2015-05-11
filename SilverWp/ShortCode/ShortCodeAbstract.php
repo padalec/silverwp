@@ -16,17 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 namespace SilverWp\ShortCode;
 
+use SilverWp\Exception;
 use SilverWp\FileSystem;
 use SilverWp\Translate;
+use SilverWp\View;
 
 if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
     /**
@@ -34,9 +29,9 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage SilverWp\ShortCode
+     * @subpackage ShortCode
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright silversite.pl 2015
      * @version $Revision:$
      * @abstract
      */
@@ -112,11 +107,11 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
                 $view_file = $this->tag_base;
             }
             try {
-                $view = View::getInstance()->load( 'shortcode/' . $view_file, $data );
+                $view = View::getInstance()->load( 'shortcodes/' . $view_file, $data );
 
                 return $view;
             } catch ( Exception $ex ) {
-                echo $ex->displayAdminNotice();
+                echo $ex->catchException();
             }
         }
 

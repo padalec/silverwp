@@ -55,11 +55,11 @@ class View extends SingletonAbstract {
      * @return String The result view
      * @access public
      */
-    public function load( $file, $data = array() ) {
-        $view_file = VP_FileSystem::instance()->resolve_path( 'views', $file );
-
-        if ( $view_file === false ) {
-            throw new Exception( "View file not found: Views/$file.php" );
+    public function load( $file, $data = array(), $extension = 'php' ) {
+        $view_path = FileSystem::getDirectory( 'views' );
+        $view_file = $view_path . $file . '.' . $extension;
+        if ( ! file_exists($view_file) ) {
+            throw new Exception( "View file not found: $view_file" );
         }
         \extract( $data );
         // fix bug when data is form Ajaxt request
