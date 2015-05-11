@@ -18,6 +18,7 @@
  */
 namespace SilverWp\ShortCode;
 
+use SilverWp\Exception;
 use SilverWp\FileSystem;
 use SilverWp\Translate;
 use SilverWp\View;
@@ -106,11 +107,11 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
                 $view_file = $this->tag_base;
             }
             try {
-                $view = View::getInstance()->load( 'shortcode/' . $view_file, $data );
+                $view = View::getInstance()->load( 'shortcodes/' . $view_file, $data );
 
                 return $view;
             } catch ( Exception $ex ) {
-                echo $ex->displayAdminNotice();
+                echo $ex->catchException();
             }
         }
 
