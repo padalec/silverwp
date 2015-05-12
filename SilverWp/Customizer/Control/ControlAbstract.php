@@ -143,30 +143,50 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
             return $value;
         }
 
-        /**
-         * Set control Dependency
-         *
-         * @return $this
-         * @throws \SilverWp\Customizer\Control\Exception
-         * @access public
-         */
-        public function setDependency() {
-            list( $parent_control, $parent_option ) = func_get_args();
+	    /**
+	     * Set control Dependency
+	     *
+	     * @return $this
+	     * @throws \SilverWp\Customizer\Control\Exception
+	     * @access public
+	     */
+	    public function setDependency() {
+		    list( $parent_control, $operator, $parent_option ) = func_get_args();
 
-            if ( ! $parent_control instanceof ControlInterface ) {
-                throw new Exception(
-                    Translate::translate(
-                        'First arguments should by instance of \SilverWp\Customizer\Control\ControlInterface'
-                    )
-                );
-            }
-            $this->setting[ 'required' ] = array(
-                $parent_control->getName() => $parent_option,
-            );
+		    if ( ! $parent_control instanceof ControlInterface ) {
+			    throw new Exception(
+				    Translate::translate(
+					    'First arguments should by instance of \SilverWp\Customizer\Control\ControlInterface'
+				    )
+			    );
+		    }
+		    $this->setting['required'][] = array(
+			    'setting'  => $parent_control->getName(),
+			    'operator' => $operator,
+			    'value'    => $parent_option,
+		    );
 
-            return $this;
-        }
+		    return $this;
+	    }
 
+	    /**
+	     * Add dependency
+	     *
+	     * @param ControlInterface $parent_control
+	     * @param string $operator example: ==, !== etc.
+	     * @param string $parent_option
+	     *
+	     * @return $this
+	     */
+	    public function addDependency( ControlInterface $parent_control, $operator, $parent_option ) {
+		    $this->setting['required'][] = array(
+			    'setting'  => $parent_control->getName(),
+			    'operator' => $operator,
+			    'value'    => $parent_option,
+		    );
+
+		    return $this;
+	    }
         /**
          * Using the output argument you can specify if you want Kirki to automatically
          * generate and apply CSS for various elements of your page.
