@@ -82,7 +82,7 @@ class Exception extends \Exception {
         } else {
             echo $this->getMessage();
             if ( WP_DEBUG ) {
-                \SilverWp\Debug::dump( $ex->getTrace() );
+                \SilverWp\Debug::dump( $this->getTrace() );
             }
         }
     }
