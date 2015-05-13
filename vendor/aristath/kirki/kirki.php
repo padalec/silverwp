@@ -16,15 +16,38 @@ if ( ! defined( 'KIRKI_URL' ) ) {
 	define( 'KIRKI_URL', plugin_dir_url( __FILE__ ) );
 }
 
-// Include helper files
-include_once( KIRKI_PATH . '/includes/Helpers/libraries/class-kirki-color.php' );
-include_once( KIRKI_PATH . '/includes/Helpers/libraries/class-kirki-colourlovers.php' );
-include_once( KIRKI_PATH . '/includes/Helpers/deprecated.php' );
-include_once( KIRKI_PATH . '/includes/Helpers/sanitize.php' );
-include_once( KIRKI_PATH . '/includes/Helpers/helpers.php' );
+// Include the main plugin class
+include_once( KIRKI_PATH . '/includes/class-kirki.php' );
 
-// Include the main kirki class
-include_once( KIRKI_PATH . '/includes/Kirki.php' );
+/**
+ * The Kirki class autoloader.
+ * Finds the path to a class that we're requiring and includes the file.
+ */
+function kirki_autoload_classes( $class_name ) {
+
+	if ( 0 === stripos( $class_name, 'Kirki' ) ) {
+
+		$foldername = ( 0 === stripos( $class_name, 'Kirki_Controls_' ) ) ? 'controls' : '';
+		$foldername = ( 0 === stripos( $class_name, 'Kirki_Scripts' ) )   ? 'scripts'  : $foldername;
+		$foldername = ( 0 === stripos( $class_name, 'Kirki_Styles' ) )    ? 'styles'   : $foldername;
+
+		$foldername = ( '' != $foldername ) ? $foldername . DIRECTORY_SEPARATOR : '';
+
+		$class_path = KIRKI_PATH . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . $foldername . 'class-' . strtolower( str_replace( '_', '-', $class_name ) ) . '.php';
+		if ( file_exists( $class_path ) ) {
+			include $class_path;
+		}
+
+	}
+
+}
+// Run the autoloader
+spl_autoload_register( 'kirki_autoload_classes' );
+
+// Include helper files
+include_once( KIRKI_PATH . '/includes/deprecated.php' );
+include_once( KIRKI_PATH . '/includes/sanitize.php' );
+include_once( KIRKI_PATH . '/includes/helpers.php' );
 
 // Make sure the class is instanciated
 Kirki::get_instance();

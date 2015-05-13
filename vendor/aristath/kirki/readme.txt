@@ -1,6 +1,6 @@
 === Kirki ===
 Contributors: aristath, fovoc
-Tags: customizer, options famework, theme mods
+Tags: customizer, options framework, theme mods
 Donate link: http://kirki.org/
 Requires at least: 4.0
 Tested up to: 4.2
@@ -57,6 +57,10 @@ For configuration instructions please visit http://kirki.org/#configuration
 
 **Method 2: Embed in your theme**
 Please visit http://kirki.org for documentation and instructions.
+
+== Sample Theme ==
+
+To get an idea on how to include Kirki in your next project, a [sample theme](https://github.com/aristath/kirki/wiki/Sample-Theme-with-Kirki) has been created.
 
 == Changelog ==
 
