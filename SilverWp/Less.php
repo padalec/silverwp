@@ -75,7 +75,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          * @access protected
          */
         protected function __construct() {
-            //add_action( 'plugins_loaded', array( $this, 'registerLessFallback' ) );
+            add_action( 'plugins_loaded', array( $this, 'registerLessFallback' ) );
             add_filter( 'wp-less_stylesheet_compute_target_path', array( $this, 'filterWpLessTargetPath' ), 10, 1 );
             add_filter( 'wp-less_stylesheet_save', array( $this, 'makeRelativeImagePath' ), 99 );
             add_filter( 'wp_less_compiler', array( $this, 'lessCompiler' ) );
@@ -105,7 +105,14 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
 
             $dynamic_stylesheets = $this->getDynamicCssList();
             foreach ( $dynamic_stylesheets as $stylesheet_handle => $stylesheet ) {
-                $this->generateLessCssFiles( $stylesheet_handle, $stylesheet[ 'src' ], $stylesheet[ 'compress' ] );
+                $this->generateLessCssFiles(
+                    $stylesheet_handle
+                    , $stylesheet[ 'src' ]
+                    , $stylesheet[ 'deps' ]
+                    , $stylesheet[ 'ver' ]
+                    , $stylesheet[ 'media' ]
+                    , $stylesheet[ 'compress' ]
+                );
                 //$this->lessCache( $stylesheet[ 'path' ], $stylesheet['output_path'] );
             }
         }
@@ -147,13 +154,23 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          *
          * @param string $handler
          * @param string $src css file source
+         * @param array  $deps
+         * @param bool   $version
+         * @param string $media
          * @param bool   $compress the file should by compressed
          *
          * @return mixed
          * @throws \SilverWp\Exception
          * @access public
          */
-        public function generateLessCssFiles( $handler = 'custom.less', $src = '', $compress = false ) {
+        public function generateLessCssFiles(
+            $handler = 'custom.less',
+            $src = '',
+            array $deps = array(),
+            $version = false,
+            $media = 'all',
+            $compress = false
+        ) {
             if ( class_exists( '\WPLessPlugin' ) ) {
                 $less = \WPLessPlugin::getInstance();
                 $less->dispatch(); // we’re done, everything works as if the plugin is activated
@@ -161,8 +178,8 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 $less_config = $less->getConfiguration();
                 $less_config->setUploadDir( $this->upload_dir );
                 $less_config->setUploadUrl( $this->upload_url );
-                $assets_uri = FileSystem::getDirectory( 'assets_uri' );
 
+                $assets_uri = FileSystem::getDirectory( 'assets_uri' );
                 $less->setImportDir( array( $assets_uri . 'less' ) );
 
                 $less_variable = $this->less_variables;
@@ -180,7 +197,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                         $src = $assets_uri . 'less/style.less';
                     }
 
-                    wp_register_style( $handler, $src );
+                    wp_register_style( $handler, $src, $deps, $version, $media );
                     wp_enqueue_style( $handler );
                 }
 
@@ -243,60 +260,6 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          * @access public
          */
         public function getDynamicCssList() {
-
-            if ( null === self::$dynamic_stylesheets ) {
-
-                $assets_uri  = FileSystem::getDirectory( 'assets_uri' );
-                $assets_path = FileSystem::getDirectory( 'assets_path' );
-
-                $theme_version = SILVERWP_VER;
-
-                self::$dynamic_stylesheets[ 'app.less' ] = array(
-                    'path'         => $assets_path . 'less/app.less',
-                    'output_path'  => $assets_path . 'less/generated/app.css',
-                    'src'          => $assets_uri . 'less/app.less',
-                    'fallback_src' => $assets_uri . 'css/generated/app.css',
-                    'deps'         => array(),
-                    'ver'          => $theme_version,
-                    'media'        => 'all',
-                    'compress'     => false,
-                );
-
-                self::$dynamic_stylesheets[ 'style.less' ] = array(
-                    'path'         => $assets_path . 'less/style.less',
-                    'output_path'  => $assets_path . 'less/generated/style.css',
-                    'src'          => $assets_uri . 'less/style.less',
-                    'fallback_src' => $assets_uri . 'css/generated/style.css',
-                    'deps'         => array( 'project_style' ),
-                    'ver'          => $theme_version,
-                    'media'        => 'all',
-                    'compress'     => false,
-                );
-                /*
-                self::$dynamic_stylesheets[ 'ds-custom.less' ] = array(
-                    'path'         => $template_directory . 'less/test1.less',
-                    'src'          => $template_uri . 'less/test1.less',
-                    //'fallback_src' => $template_uri . 'css/compiled/test1-%preset%.css',
-                    'deps'         => array(),
-                    'ver'          => $theme_version,
-                    'media'        => 'all',
-                    'compress'     => true,
-                );
-
-                if ( dt_is_woocommerce_enabled() ) {
-
-                    $dynamic_stylesheets['wc-dt-custom.less'] = array(
-                        'path' => $template_directory . '/css/wc-dt-custom.less',
-                        'src' => $template_uri . '/css/wc-dt-custom.less',
-                        'fallback_src' => $template_uri . '/css/compiled/wc-dt-custom-%preset%.css',
-                        'deps' => array(),
-                        'ver' => $theme_version,
-                        'media' => 'all'
-                    );
-                }
-                */
-            }
-
             return self::$dynamic_stylesheets;
         }
 
@@ -337,13 +300,13 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
          * @access public
          */
         public function filterWpLessTargetPath( $target_path ) {
-            $target_path_array = explode( '/', $target_path );
+            $target_path_array = explode( DIRECTORY_SEPARATOR, $target_path );
             $css_file          = end( $target_path_array );
-            if ( self::$remove_random ) {
-                $css_file = str_replace( '-%s', '', $css_file );
-            }
 
-            return '/' . $css_file;
+            $css_file = str_replace( '-%s', '', $css_file );
+            $css_file = preg_replace( '/\.css{1,}/', '', $css_file ) . '.css';
+
+            return DIRECTORY_SEPARATOR . $css_file ;
         }
 
         /**

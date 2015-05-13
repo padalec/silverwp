@@ -48,8 +48,9 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
          * @access public
          */
         public function normalizePath( $path ) {
+            $path = str_replace( '\\', DIRECTORY_SEPARATOR, $path );
 
-            $path = rtrim($path, '/') . '/';
+            $path = rtrim( $path, '/' ) . '/';
 
             return $path;
         }
@@ -64,7 +65,7 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
          */
         public function addDirectory( $key, $directory ) {
             $this->addVpDirectory( $key, $directory );
-            $this->lookup_dirs[ $key ] = $this->normalizePath($directory);
+            $this->lookup_dirs[ $key ] = $this->normalizePath( $directory );
 
             return $this;
         }
@@ -144,7 +145,8 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
          */
         public static function getDirectory( $path_name ) {
             $handler = self::getInstance();
-            return $handler->getDirectories($path_name);
+
+            return $handler->getDirectories( $path_name );
         }
     }
 }

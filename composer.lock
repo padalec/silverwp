@@ -4,27 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9ee8c7a48ab25b40ff675f60d93a35f9",
+    "hash": "f91f98f5084ae4f0d3614b93a920fc3f",
     "packages": [
         {
             "name": "aristath/kirki",
             "version": "0.8.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aristath/kirki.git",
+                "url": "https://github.com/reduxframework/kirki.git",
                 "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aristath/kirki/zipball/9cd0303a03f73957c8475b0cab5abcab86fb84e2",
-                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2",
-                "shasum": ""
             },
             "require": {
                 "php": ">=5.3"
             },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPLv2 or later"
             ],

@@ -585,6 +585,8 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
                     'link' => \get_permalink( $post_id ),
                     'date' => $this->dateFormat( 'date' ),
                     'like' => $like_count,
+                    'slug' => $loop->post->post_name,
+
                 );
 
                 if ( $this->isTaxonomyRegistered() && $this->getTaxonomy()->isRegistered( 'category' ) ) {
