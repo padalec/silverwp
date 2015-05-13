@@ -18,6 +18,7 @@
  */
 namespace SilverWp\Customizer\Control;
 
+use SilverWp\Debug;
 use SilverWp\Translate;
 
 if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
@@ -137,9 +138,9 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @link http://kirki.org/#getting-the-value-of-a-background-control
          */
         public function getValue() {
-            //$value = get_theme_mod( $this->getName(), $this->getDefault() );
-            $value = kirki_get_option( $this->getName() );
 
+//            $value = get_theme_mod( $this->getName(), $this->getDefault() );
+            $value = kirki_get_option( $this->getName() );
             return $value;
         }
 

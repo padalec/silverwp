@@ -132,14 +132,14 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access protected
          */
         protected function __construct() {
-            $url = SILVERWP_VENDOR_URI . '/vendor/reduxframework/kirki/';
+            $url = SILVERWP_VENDOR_URI . 'aristath/kirki/';
             $this->setUrlPath( $url );
 
             $this->initStrings();
 
-            add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 150 );
+            add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 101 );
+            add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 102 );
             add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
-            add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 11 );
             add_filter( 'kirki/config', array( $this, 'init' ) );
 
             $this->includes();
@@ -284,13 +284,15 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
             if ( is_customize_preview() ) {
                 try {
                     $assets_path = $this->getAssetsPath();
+                    $assets_uri = FileSystem::getDirectory('assets_uri');
 
                     $less = Less::getInstance();
                     $less->setUploadDir( $assets_path . 'css/generated' );
-                    $less->setUploadUrl( $assets_path . 'css/generated' );
+                    $less->setUploadUrl( $assets_uri . 'css/generated' );
                     $less_variable = $this->getLessVariablesFromControls();
                     $less->setVariables( $less_variable );
                     $less->compileCss();
+
                 } catch ( Exception $ex ) {
                     $ex->catchException();
                 }
@@ -306,11 +308,12 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
         public function generateAfterSave() {
             try {
                 $assets_path = $this->getAssetsPath();
+                $assets_uri = FileSystem::getDirectory('assets_uri');
 
                 Less::$remove_random = true;
                 $less                = Less::getInstance();
                 $less->setUploadDir( $assets_path . 'css' );
-                $less->setUploadUrl( $assets_path . 'css' );
+                $less->setUploadUrl( $assets_uri . 'css' );
                 $less_variable = $this->getLessVariablesFromControls();
                 $less->setVariables( $less_variable );
                 $less->compileCss();
@@ -399,7 +402,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access private
          */
         private function deleteCssTmp() {
-            $files = File::get_file_list( $this->get . 'css/generated', array(), false, true );
+            $files = File::get_file_list( $this->getAssetsPath() . 'css/generated', array(), false, true );
             foreach ( $files as $file ) {
                 unlink( $file );
             }

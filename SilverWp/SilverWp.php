@@ -86,7 +86,7 @@ if ( ! class_exists( 'SilverWp' ) ) {
             define( 'SILVERWP_VENDOR_PATH', SILVERWP_DIR . '../vendor/' );
 
             defined( 'SILVERWP_VENDOR_URI' ) ||
-            define( 'SILVERWP_VENDOR_URI', plugins_url( 'silverwp', 'silverwp' ) );
+            define( 'SILVERWP_VENDOR_URI', plugins_url( 'silverwp', 'silverwp' ) . '/vendor/' );
         }
 
         /**
