@@ -31,7 +31,8 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
      * @version $Revision:$
      */
     class FileSystem extends SingletonAbstract {
-        private $lookup_dirs = array();
+
+        private $dirs = array();
 
         /**
          * @access protected
@@ -65,7 +66,7 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
          */
         public function addDirectory( $key, $directory ) {
             $this->addVpDirectory( $key, $directory );
-            $this->lookup_dirs[ $key ] = $this->normalizePath( $directory );
+            $this->dirs[ $key ] = $this->normalizePath( $directory );
 
             return $this;
         }
@@ -94,7 +95,7 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
          * @access public
          */
         public function __unset( $key ) {
-            unset( $this->lookup_dirs[ $key ] );
+            unset( $this->dirs[ $key ] );
         }
 
         /**
@@ -109,13 +110,13 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
         public function getDirectories( $key = null ) {
 
             if ( is_null( $key ) ) {
-                return $this->lookup_dirs;
+                return $this->dirs;
             }
-            if ( ! isset( $this->lookup_dirs[ $key ] ) ) {
+            if ( ! isset( $this->dirs[ $key ] ) ) {
                 throw new Exception( Translate::translate( 'Key %s does not exists in registered directories', $key ) );
             }
 
-            return $this->lookup_dirs[ $key ];
+            return $this->dirs[ $key ];
         }
 
         /**

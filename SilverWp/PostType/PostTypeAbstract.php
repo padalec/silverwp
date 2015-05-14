@@ -18,13 +18,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/PostType/PostTypeAbstract.php $
-  Last committed: $Revision: 2319 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-02-03 10:45:36 +0100 (Wt, 03 lut 2015) $
-  ID: $Id: PostTypeAbstract.php 2319 2015-02-03 09:45:36Z padalec $
- */
 namespace SilverWp\PostType;
 
 use SilverWp\Ajax\PostLike;
