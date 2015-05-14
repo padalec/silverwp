@@ -20,12 +20,12 @@
       "url": "https://github.com/reduxframework/kirki.git",
       "package": {
         "name": "silverwp",
-        "version": "master",
+        "version": "dev-master",
         "type": "library",
         "source": {
           "url": "https://github.com/reduxframework/kirki.git",
           "type": "git",
-          "reference": "master"
+          "reference": "dev-master"
         }
       }
     }
