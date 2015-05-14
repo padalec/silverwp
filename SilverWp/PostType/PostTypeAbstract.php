@@ -194,14 +194,6 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     protected static $page_templates = array();
 
     /**
-     * paginator handler
-     *
-     * @var object
-     * @access private
-     */
-    private $paginator = null;
-
-    /**
      * image thumbnail size
      *
      * @var mixed string or array
@@ -224,9 +216,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      * @access protected
      */
     protected function __construct() {
-        //set labels
-        $this->setLabels();
-        // Thumbnail support for portfolio posts
+        // Thumbnail support
         add_theme_support( 'post-thumbnails', array( $this->name ) );
         // Adds new post type
         add_action( 'init', array( $this, 'init' ) );
@@ -240,7 +230,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      */
     private function getDefaultLabels() {
 
-        $labels = array(
+        $this->labels = array(
             'singular_name'      => Translate::translate( 'Item' ),
             'add_new'            => Translate::translate( 'Add New Item' ),
             'add_new_item'       => Translate::translate( 'Add New Item' ),
@@ -253,7 +243,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
             'not_found_in_trash' => Translate::translate( 'No items found in trash' )
         );
 
-        return $labels;
+        return $this->labels;
     }
 
     /**
@@ -263,7 +253,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      * @abstract
      * @access protected
      */
-    abstract protected function setLabels();
+    abstract protected function setUp();
 
     /**
      *
@@ -282,8 +272,10 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     }
 
     /**
-     * get all added templates if post_type isn't null
-     * return all tempalates directed for post type
+     * Get all added templates if post_type isn't null
+     * return all templates directed for post type
+     *
+     * @param null|string $post_type
      *
      * @return array
      * @static
@@ -323,7 +315,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
 
     /**
      *
-     * get taxonomy object hendle
+     * Get taxonomy object handler
      *
      * @return object
      * @access public
@@ -364,6 +356,9 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      * @return void
      */
     public function init() {
+        //setUp post type
+        $this->setUp();
+
         if ( \is_null( $this->name ) ) {
             throw new Exception( Translate::translate( 'Post Type $name is required and can\'t be empty.' ) );
         }
@@ -431,7 +426,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
             $class_name = \get_called_class();
             $meta_box->setPostTypeClass( $class_name::getInstance() );
         } catch ( MetaBoxException $ex ) {
-            echo $ex->displayAdminNotice();
+            $ex->catchException();
         }
     }
 
@@ -472,230 +467,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     }
 
     /**
-     *
-     * Add count to "Right Now" Dashboard Widget
-     * hook right_now_content_table_end it's seams
-     * to by deprecated in WP 3.9 > so this doesn't work
-     *
-     * @deprecated since 1.8
-     * @link http://codex.wordpress.org/Plugin_API/Action_Reference/right_now_content_table_end
-     * @access public
-     * @return void
-     */
-    public function addCounts() {
-        if ( ! \post_type_exists( $this->name ) ) {
-            return;
-        }
-
-        $num_posts = \wp_count_posts( $this->name );
-        $num       = \number_format_i18n( $num_posts->publish );
-        $text      = Translate::n( 'Item', 'Items', \intval( $num_posts->publish ) );
-        if ( \current_user_can( 'edit_posts' ) ) {
-            $num  = "<a href=\"edit.php?post_type={$this->name}\">$num</a>";
-            $text = "<a href=\"edit.php?post_type={$this->name}\">$text</a>";
-        }
-        echo '<td class="first b b-portfolio">' . $num . '</td>';
-        echo '<td class="t portfolio">' . $text . '</td>';
-        echo '</tr>';
-
-        if ( $num_posts->pending > 0 ) {
-            $num  = \number_format_i18n( $num_posts->pending );
-            $text = Translate::n( 'Item Pending', 'Items Pending', \intval( $num_posts->pending ) );
-            if ( \current_user_can( 'edit_posts' ) ) {
-                $num  = "<a href=\"edit.php?post_status=pending&post_type={$this->name}\">$num</a>";
-                $text = "<a href=\"edit.php?post_status=pending&post_type={$this->name}\">$text</a>";
-            }
-            echo '<td class="first b b-portfolio">' . $num . '</td>';
-            echo '<td class="t portfolio">' . $text . '</td>';
-            echo '</tr>';
-        }
-    }
-
-    /**
-     * get post type data from data base
-     *
-     * @param integer $limit if not limit set this variable to 0
-     * @param boolean $paginator the post should be paginated or not
-     * @param mixed   $thumbnail image thubnail size array or string
-     * @param array   $query_args
-     *
-     * @return array
-     * @todo move this method to SilverWp\Db\Query
-     */
-    public function getQueryData( $limit = 5, $paginator = false, array $query_args = array() ) {
-        $return    = array();
-        $like_bool = Option::get_theme_option( $this->getName() . '_list_like' );
-        if ( $like_bool === '1' ) {
-            $PostLike = PostLike::getInstance();
-        }
-
-        $defualt_query_args = array(
-            'post_type'        => $this->getName(),
-            'orderby'          => 'post_date',
-            'order'            => 'DESC',
-            'suppress_filters' => false //wpml
-        );
-        if ( $limit > 0 ) {
-            $defualt_query_args[ 'posts_per_page' ] = $limit;
-        } else {
-            $defualt_query_args[ 'posts_per_page' ] = - 1;
-        }
-        if ( $paginator ) {
-            $paged                         = \get_query_var( 'paged' ) ? \get_query_var( 'paged' ) : 1;
-            $defualt_query_args[ 'paged' ] = $paged;
-        }
-        $query_args = \wp_parse_args( $query_args, $defualt_query_args );
-        //change to custome Select class
-        $loop = new Query( $query_args );
-
-        if ( $loop->have_posts() ) {
-
-            if ( $paginator ) {
-                $Paginator = $this->setPaginator( new Pager() );
-                $Paginator->setMaxNumPages( $paged );
-                $Paginator->setTotalPosts( $loop->max_num_pages );
-            }
-
-            while ( $loop->have_posts() ) {
-                $loop->the_post();
-                $post_id    = $loop->post->ID;
-                $like_count = $like_bool === '1' ? $PostLike->getPostLikeCount( $post_id ) : '';
-                //add meta box
-                if ( $this->isMetaBoxRegistered() ) {
-                    $meta_box_all = $this->getMetaBox()->setPostId( $post_id )->getAll();
-                    //Fix Ticket #319
-                    if ( ! empty( $meta_box_all ) ) {
-                        $mata_box = RecursiveArray::removeEmpty( $meta_box_all );
-                    } else {
-                        $mata_box = array();
-                    }
-                } else {
-                    $mata_box = array();
-                }
-
-                $post_data = array(
-                    'ID'   => $post_id,
-                    'link' => \get_permalink( $post_id ),
-                    'date' => $this->dateFormat( 'date' ),
-                    'like' => $like_count,
-                    'slug' => $loop->post->post_name,
-
-                );
-
-                if ( $this->isTaxonomyRegistered() && $this->getTaxonomy()->isRegistered( 'category' ) ) {
-                    $post_data[ 'category' ] = $this->getTaxonomy()
-                                                    ->setPostId( $post_id )
-                                                    ->getPostTerms( 'category' );
-                }
-
-                if ( $this->isTaxonomyRegistered() && $this->getTaxonomy()->isRegistered( 'tag' ) ) {
-                    $post_data[ 'tags' ] = $this->getTaxonomy()
-                                                ->setPostId( $post_id )
-                                                ->getPostTerms( 'tag' );
-                }
-
-                if ( $this->isTitle() ) {
-                    $post_data[ 'title' ] = \get_the_title( $post_id );
-                }
-
-                if ( $this->isThumbnail( $post_id ) ) {
-                    $post_data[ 'image_html' ] = \get_the_post_thumbnail( $post_id, $this->thumbnail_size );// Thumbnail
-
-                    $image_attributes              = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ),
-                                                                                  'full' );
-                    $post_data[ 'image_full_src' ] = isset( $image_attributes[ 0 ] ) ? $image_attributes[ 0 ] : null;
-
-                } else {
-                    $post_data[ 'image_html' ] = null;
-                }
-
-                if ( $this->isDescription() ) {
-                    $post_data[ 'description' ]       = apply_filters( 'the_content', $loop->post->post_content );
-                    $post_data[ 'short_description' ] = get_the_excerpt();
-                }
-                $return[ ] = \array_merge( $post_data, $mata_box );
-            }
-        }
-        \wp_reset_postdata();
-
-        return $return;
-    }
-
-    /**
-     * set paginator object handler
-     *
-     * @param PaginatorInterface $paginator
-     *
-     * @return PostTypeAbstract
-     * @access public
-     */
-    public function setPaginator( PaginatorInterface $paginator ) {
-        $this->paginator = $paginator;
-
-        return $this->paginator;
-    }
-
-    /**
-     * get paginator object handler
-     *
-     * @return object paginator handler
-     * @access public
-     */
-    public function getPaginator() {
-        return $this->paginator;
-    }
-
-    /**
-     * ceck if paginator is set
-     *
-     * @return boolean true or false
-     * @access public
-     */
-    public function isPaginator() {
-        if ( \is_null( $this->paginator ) ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     *
-     * get single item
-     *
-     * @return array array with all data
-     * @access public
-     */
-    public function getSingleItem() {
-        $post_id   = $this->post_id;
-        $post_data = UtlArray::object_to_array( \get_post( $post_id ) );
-
-        if ( $this->isMetaBoxRegistered() ) {
-            $meta_box_all = $this->getMetaBox()->setPostId( $post_id )->getAll();
-            $mata_box     = RecursiveArray::removeEmpty( $meta_box_all );
-        } else {
-            $mata_box = array();
-        }
-
-        if ( $this->isTaxonomyRegistered() && $this->getTaxonomy()->isRegistered( 'category' ) ) {
-            $post_data[ 'category' ] = $this->getTaxonomy()->setPostId( $post_id )->getPostTerms( 'category' );
-        }
-
-        if ( $this->isTaxonomyRegistered() && $this->getTaxonomy()->isRegistered( 'tag' ) ) {
-            $post_data[ 'tags' ] = $this->getTaxonomy()->setPostId( $post_id )->getPostTerms( 'tag' );
-        }
-
-        if ( $this->isThumbnail( $post_id ) ) {
-            $post_data[ 'image_html' ] = \get_the_post_thumbnail( $post_id, $this->thumbnail_size );// Thumbnail
-        }
-
-        $data = \array_merge( $post_data, $mata_box );
-
-        return $data;
-    }
-
-    /**
-     * check if the taxonowy was registered
+     * Check if the taxonomy was registered
      *
      * @return boolean
      * @access public
@@ -709,7 +481,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     }
 
     /**
-     * check if the meta box class was registered
+     * Check if the meta box class was registered
      *
      * @return boolean
      * @access public
@@ -789,35 +561,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
         return $this->post_id;
     }
 
-    /**
-     * date format type
-     *
-     * @param string $date_format
-     *
-     * @return array
-     */
-    private function dateFormat( $date_format ) {
-        $post_id = $this->post_id;
-        $return  = array();
-        switch ( $date_format ) {
-            case 'full':
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                $return[ 'hour' ]    = \get_the_time( '', $post_id );
-                break;
-            case 'date':
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                break;
-            default:
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                $return[ 'hour' ]    = \get_the_time( '', $post_id );
-                break;
-        }
 
-        return $return;
-    }
 
     /**
      *
