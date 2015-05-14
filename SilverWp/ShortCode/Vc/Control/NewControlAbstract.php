@@ -48,8 +48,10 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
                 $script_url = $this->getJsScript();
             }
 
-            if ( ! vc_add_shortcode_param( $this->type, array( $this, 'createControl' ), $script_url ) ) {
-                throw new Exception( Translate::translate( 'Can\'t create element ' . $this->type ) );
+            if ( function_exists( 'vc_add_shortcode_param' ) ) {
+                if ( ! vc_add_shortcode_param( $this->type, array( $this, 'createControl' ), $script_url ) ) {
+                    throw new Exception( Translate::translate( 'Can\'t create element ' . $this->type ) );
+                }
             }
         }
 
