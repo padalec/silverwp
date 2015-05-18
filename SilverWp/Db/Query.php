@@ -29,6 +29,18 @@ class Query extends \WP_Query {
     private $post_type;
     private $query_args = array();
 
+    public function setPostType( PostTypeInterface $post_type ) {
+        $this->post_type = $post_type;
+
+        return $this;
+    }
+
+    public function setQueryArgs( array $query_args ) {
+        $this->query_args = $query_args;
+
+        return $this;
+    }
+
     /**
      * Date format type
      *
@@ -36,7 +48,7 @@ class Query extends \WP_Query {
      *
      * @return array
      */
-    private function dateFormat( $date_format ) {
+    public function getDate( $date_format ) {
         $post_id = $this->post_id;
         $return  = array();
         switch ( $date_format ) {
@@ -57,18 +69,6 @@ class Query extends \WP_Query {
         }
 
         return $return;
-    }
-
-    public function setPostType( PostTypeInterface $post_type ) {
-        $this->post_type = $post_type;
-
-        return $this;
-    }
-
-    public function setQueryArgs( array $query_args ) {
-        $this->query_args = $query_args;
-
-        return $this;
     }
 
     public function getQueryArgs() {
@@ -95,43 +95,34 @@ class Query extends \WP_Query {
         return $query_args;
     }
 
-    /**
-     * get post type data from data base
-     *
-     * @return array
-     *
-     */
-    public function getData() {
-        $return = array();
-        $query_args = $this->getQueryArgs();
-        $this->parse_query($query_args);
-
-        if ( $this->have_posts() ) {
-            while ( $this->have_posts() ) {
-                $this->the_post();
-                $post_id    = $this->post->ID;
-                $post_data = array(
-                    'ID'   => $post_id,
-                    'link' => \get_permalink( $post_id ),
-                    'date' => $this->dateFormat( 'date' ),
-                    'slug' =>
-                );
-                if ( $this->post_type->isTitle() ) {
-                    $post_data[ 'title' ] = \get_the_title( $post_id );
-                }
-                if ( $this->isDescription() ) {
-                    $post_data[ 'description' ]       = apply_filters( 'the_content', $loop->post->post_content );
-                    $post_data[ 'short_description' ] = get_the_excerpt();
-                }
-                $return[ ] = \array_merge( $post_data, $mata_box );
-            }
+    public function getTitle() {
+        $title = '';
+        if ( $this->post_type->isTitle() ) {
+            $title = \get_the_title( $this->post_id );
         }
-        \wp_reset_postdata();
-
-        return $return;
+        return $title;
     }
+
+    public function getUrl() {
+        $url = get_permalink( $this->post_id );
+        return $url;
+    }
+
     public function getSlug() {
         return $this->post->post_name;
+    }
+
+    public function getDescription() {
+        $description = '';
+        if ($this->post_type->isDescription()) {
+            $description = apply_filters( 'the_content', $this->post->post_content );
+        }
+        return $description;
+    }
+
+    public function getShortDescription() {
+        $short_description = get_the_excerpt();
+        return $short_description;
     }
 
     public function getMetaBoxes() {
@@ -167,14 +158,17 @@ class Query extends \WP_Query {
     }
 
     public function getThumbnail() {
+        $image_html = '';
         if ( $this->post_type->isThumbnail( $this->post_id ) ) {
-            $post_data[ 'image_html' ]     = \get_the_post_thumbnail( $this->post_id,
-                                                                      $this->post_type->thumbnail_size );// Thumbnail
-            $image_attributes              = \wp_get_attachment_image_src( get_post_thumbnail_id( $this->post_id ),
-                                                                           'full' );
-            $post_data[ 'image_full_src' ] = isset( $image_attributes[ 0 ] ) ? $image_attributes[ 0 ] : null;
-        } else {
-            $post_data[ 'image_html' ] = null;
+            $image_html     = \get_the_post_thumbnail(
+                $this->post_id
+                ,$this->post_type->thumbnail_size
+            );// Thumbnail
+            $image_attributes  = \wp_get_attachment_image_src(
+                get_post_thumbnail_id( $this->post_id )
+                ,'full'
+            );
+            $image_full_src = isset( $image_attributes[ 0 ] ) ? $image_attributes[ 0 ] : null;
         }
 
     }
