@@ -27,7 +27,8 @@
       "vendor/vafour/vafpress-framework/bootstrap.php",
       "vendor/evanto/auto-updates/class-pixelentity-theme-update.php",
       "vendor/oyejorge/less.php/lessc.inc.php",
-      "vendor/oncletom/wp-less/bootstrap-for-theme.php"
+      "vendor/oncletom/wp-less/bootstrap-for-theme.php",
+      "vendor/aristath/kirki/kirki.php"
     ],
     "psr-4": {
       "SilverWp\\": "SilverWp/"
