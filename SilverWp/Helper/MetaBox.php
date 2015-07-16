@@ -130,9 +130,8 @@ class MetaBox {
      */
     public static function getFontelloIcons( $name = 'icon', $path = null, $transient_name = 'silverwp_fontello' ) {
         if ( \is_null( $path ) ) {
-            $file_system = FileSystem::getInstance();
-            $assets_path = $file_system->getDirectories( 'assets_path' );
-            $path        = $assets_path . 'fonts/fontello.css';
+            $fonts_path = FileSystem::getDirectory( 'fonts_path' );
+            $path        = $fonts_path . 'fonts/fontello.css';
         }
 
         if ( ( $icons = \get_transient( $transient_name ) ) == false ) {

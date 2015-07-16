@@ -19,6 +19,7 @@
 namespace SilverWp\Helper\Control;
 
 use SilverWp\Debug;
+use SilverWp\FileSystem;
 use SilverWp\Helper\MetaBox;
 
 if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
@@ -51,8 +52,8 @@ if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
         public function __construct( $name ) {
             parent::__construct( $name );
             //add fontello icons
-            $assets_uri = $this->getAssetsUri() . 'css/fontello.css';
-            $items = MetaBox::getFontelloIcons( 'icon', $assets_uri, 'silverwp_fontello_icons' );
+            $css_uri = FileSystem::getDirectory( 'fonts_uri' ) . 'fontello.css';
+            $items = MetaBox::getFontelloIcons( 'icon', $css_uri, 'silverwp_fontello_icons' );
             $this->setOptions( $items );
         }
 
@@ -64,10 +65,11 @@ if ( ! class_exists( '\SilverWp\Helper\Control\Fontello' ) ) {
          * @access public
          */
         public function enqueueAssets() {
-            $assets_uri = $this->getAssetsUri();
-            wp_register_style( 'fontello_icons', $assets_uri . 'css/fontello.css' );
+	        $fonts_uri = FileSystem::getDirectory( 'fonts_uri' );
+            wp_register_style( 'fontello_icons', $fonts_uri . 'fontello.css' );
             wp_enqueue_style( 'fontello_icons' );
         }
+
         /**
          * The default value of the chooser,
          * refers to an item choice value or smart tags: {{first}} / {{last}}.

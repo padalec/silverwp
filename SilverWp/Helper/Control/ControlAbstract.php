@@ -281,18 +281,5 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
 
             return $this;
         }
-
-        /**
-         * Get assets folder URI
-         *
-         * @return string
-         * @access protected
-         */
-        protected function getAssetsUri() {
-            $file_system = FileSystem::getInstance();
-            $assets_uri  = $file_system->getDirectories( 'assets_uri' );
-
-            return $assets_uri;
-        }
     }
 }

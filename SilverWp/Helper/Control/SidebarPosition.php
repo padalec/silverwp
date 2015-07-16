@@ -39,7 +39,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
      * @package SilverWp
      * @subpackage Helper\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version $Revision:$
      */
     class SidebarPosition extends RadioImage {
@@ -49,29 +49,31 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
          * Class constructor
          *
          * @param string $name
+         * @access public
          */
         public function __construct( $name ) {
             parent::__construct( $name );
 
-            $assets_uri = $this->getAssetsUri();
+            $images_uri = FileSystem::getDirectory( 'images_uri' );
 
             $sidebar_positions = array(
                 array(
                     'value' => 0,
                     'label' => Translate::translate( 'None' ),
-                    'img'   => $assets_uri . 'img/admin/sidebar/icon_0_sidebar_off.png',
+                    'img'   => $images_uri . 'admin/sidebar/icon_0_sidebar_off.png',
                 ),
                 array(
                     'value' => 1,
                     'label' => Translate::translate( 'Left sidebar' ),
-                    'img'   => $assets_uri . 'assets/img/admin/sidebar/icon_1_sidebar_off.png',
+                    'img'   => $images_uri . 'img/admin/sidebar/icon_1_sidebar_off.png',
                 ),
                 array(
                     'value' => 2,
                     'label' => Translate::translate( 'Right sidebar' ),
-                    'img'   => $assets_uri . 'img/admin/sidebar/icon_2_sidebar_off.png',
+                    'img'   => $images_uri . 'admin/sidebar/icon_2_sidebar_off.png',
                 ),
             );
+
             $this->setOptions( $sidebar_positions );
         }
     }

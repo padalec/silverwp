@@ -27,7 +27,7 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
      * @package SilverWp
      * @subpackage ShortCode\Vc\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version $Revision:$
      * @abstract
      * @link https://wpbakery.atlassian.net/wiki/display/VC/Create+New+Param+Type
@@ -77,8 +77,8 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
          * @access public
          */
         public function __call( $method_name, $attributes ) {
-            silverwp_debug_var( $method_name );
-            silverwp_debug_var( $attributes );
+            //\SilverWp\Debug::dump( $method_name );
+            //\SilverWp\Debug::dump( $attributes );
             if ( $method_name == 'createControl' ) {
                 $settings = $attributes[ 0 ];
                 $value    = $attributes[ 1 ];
