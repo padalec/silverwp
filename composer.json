@@ -14,27 +14,13 @@
     {
       "type": "composer",
       "url": "http://wpackagist.org"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/reduxframework/kirki.git",
-      "package": {
-        "name": "silverwp",
-        "version": "dev-master",
-        "type": "library",
-        "source": {
-          "url": "https://github.com/reduxframework/kirki.git",
-          "type": "git",
-          "reference": "dev-master"
-        }
-      }
     }
   ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "*",
     "oncletom/wp-less":"@stable",
-    "oyejorge/less.php": "~1.7"
+    "oyejorge/less.php": "~1.7",
+    "aristath/kirki": "1.0.0"
   },
   "autoload": {
     "files": [
