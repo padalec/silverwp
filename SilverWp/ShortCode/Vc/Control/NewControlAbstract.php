@@ -18,6 +18,9 @@
  */
 namespace SilverWp\ShortCode\Vc\Control;
 
+use SilverWp\Exception;
+use SilverWp\Translate;
+
 if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
 
     /**
@@ -74,16 +77,19 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
          * @param $method_name
          * @param $attributes
          *
+         * @throws Exception
          * @access public
          */
         public function __call( $method_name, $attributes ) {
-            //\SilverWp\Debug::dump( $method_name );
-            //\SilverWp\Debug::dump( $attributes );
             if ( $method_name == 'createControl' ) {
+                //\SilverWp\Debug::dump( $method_name );
+                //\SilverWp\Debug::dump( $attributes );
                 $settings = $attributes[ 0 ];
                 $value    = $attributes[ 1 ];
                 $this->init( $settings, $value );
                 $this->createControl( $settings, $value );
+            } else {
+                throw new Exception( Translate::translate( "Method $method_name des not exists!" ) );
             }
         }
 
