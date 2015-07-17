@@ -152,8 +152,8 @@ abstract class ThemeOptionAbstract extends SingletonAbstract implements ThemeOpt
      * add custom css file
      */
     public function addCss() {
-        $assets_uri = $this->getAssetsUri();
-        wp_register_style( 'theme_options', $assets_uri . 'css/theme_options.css', array( 'vp-option' ), SILVERWP_VER );
+        $css_uri = $this->getCssUri();
+        wp_register_style( 'theme_options', $css_uri . 'theme_options.css', array( 'vp-option' ), SILVERWP_VER );
         wp_enqueue_style( 'theme_options' );
     }
 
@@ -164,9 +164,9 @@ abstract class ThemeOptionAbstract extends SingletonAbstract implements ThemeOpt
      * @return string
      * @access public
      */
-    public function getAssetsUri() {
+    public function getCssUri() {
         $file_system = FileSystem::getInstance();
-        return $file_system->getDirectories('assets_uri');
+        return $file_system->getDirectories('css_uri');
     }
 
     /**

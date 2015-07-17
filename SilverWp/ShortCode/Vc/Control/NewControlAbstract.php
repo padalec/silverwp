@@ -18,6 +18,9 @@
  */
 namespace SilverWp\ShortCode\Vc\Control;
 
+use SilverWp\Exception;
+use SilverWp\Translate;
+
 if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
 
     /**
@@ -27,7 +30,7 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
      * @package SilverWp
      * @subpackage ShortCode\Vc\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version $Revision:$
      * @abstract
      * @link https://wpbakery.atlassian.net/wiki/display/VC/Create+New+Param+Type
@@ -74,16 +77,19 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\NewControlAbstract' ) ) {
          * @param $method_name
          * @param $attributes
          *
+         * @throws Exception
          * @access public
          */
         public function __call( $method_name, $attributes ) {
-            silverwp_debug_var( $method_name );
-            silverwp_debug_var( $attributes );
             if ( $method_name == 'createControl' ) {
+                //\SilverWp\Debug::dump( $method_name );
+                //\SilverWp\Debug::dump( $attributes );
                 $settings = $attributes[ 0 ];
                 $value    = $attributes[ 1 ];
                 $this->init( $settings, $value );
                 $this->createControl( $settings, $value );
+            } else {
+                throw new Exception( Translate::translate( "Method $method_name des not exists!" ) );
             }
         }
 
