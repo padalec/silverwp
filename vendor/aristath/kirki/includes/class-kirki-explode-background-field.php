@@ -6,7 +6,7 @@ class Kirki_Explode_Background_Field extends Kirki_Field {
 	 * Takes a single field with type = background and explodes it to multiple controls.
 	 *
 	 * @param array
-	 * @return null|array<Array>
+	 * @return null|array
 	 */
 	public static function explode( $field ) {
 		$i18n    = Kirki_Toolkit::i18n();
@@ -50,6 +50,9 @@ class Kirki_Explode_Background_Field extends Kirki_Field {
 					 */
 					$type = ( false !== strpos( $field['default']['color'], 'rgba' ) ) ? 'color-alpha' : 'color';
 					$type = ( isset( $field['default']['opacity'] ) ) ? 'color-alpha' : $type;
+					if ( isset( $field['default']['opacity'] ) && false === strpos( $value, 'rgb' ) ) {
+						$value = Kirki_Color::get_rgba( $value, $field['default']['opacity'] );
+					}
 					break;
 				case 'image':
 					$type = 'image';

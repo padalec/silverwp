@@ -34,7 +34,6 @@ class Kirki_Controls_Toggle_Control extends WP_Customize_Control {
 	 * Render the control's content.
 	 */
 	protected function render_content() { ?>
-		<?php $i18n = Kirki_Toolkit::i18n(); ?>
 		<label for="toggle_<?php echo $this->id; ?>">
 			<span class="customize-control-title">
 				<?php echo esc_attr( $this->label ); ?>
@@ -44,8 +43,11 @@ class Kirki_Controls_Toggle_Control extends WP_Customize_Control {
 				<?php endif; ?>
 			</span>
 		</label>
-		<input name="toggle_<?php echo $this->id; ?>" id="toggle_<?php echo $this->id; ?>" type="checkbox" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); checked( $this->value() ); ?> />
+		<input name="toggle_<?php echo $this->id; ?>" id="toggle_<?php echo $this->id; ?>" type="checkbox" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?> <?php if ( '1' == $this->value() ) { echo 'checked'; } ?> />
 		<script>jQuery(document).ready(function($){$('[id="toggle_<?php echo $this->id; ?>"]').checkbox({toggle:true});});</script>
-		<?php
+		<?php if ( '0' == $this->value() ) { ?>
+			<script>jQuery(document).ready(function($){$('#customize-control-<?php echo $this->id; ?> .fs-checkbox').removeClass('fs-checkbox-checked');});</script>
+		<?php } ?>
+		<?php 
 	}
 }

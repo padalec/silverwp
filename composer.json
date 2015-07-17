@@ -20,7 +20,7 @@
     "php": ">=5.3",
     "oncletom/wp-less":"@stable",
     "oyejorge/less.php": "~1.7",
-    "aristath/kirki": "1.0.0"
+    "aristath/kirki": "~1.0"
   },
   "autoload": {
     "files": [

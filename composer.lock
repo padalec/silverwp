@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "34dca1e6374c6cd000b67c082680a146",
+    "hash": "c9245acc5260a353b6bd68c6d07a6b63",
     "packages": [
         {
             "name": "aristath/kirki",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aristath/kirki.git",
-                "reference": "0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6"
+                "reference": "12364efbc69170b707f7965e22dbd81a1c043d1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aristath/kirki/zipball/0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6",
-                "reference": "0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6",
+                "url": "https://api.github.com/repos/aristath/kirki/zipball/12364efbc69170b707f7965e22dbd81a1c043d1a",
+                "reference": "12364efbc69170b707f7965e22dbd81a1c043d1a",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
             ],
             "description": "Extending the WordPress customizer",
             "homepage": "http://kirki.org",
-            "time": "2015-07-11 02:19:13"
+            "time": "2015-07-17 12:04:08"
         },
         {
             "name": "leafo/lessphp",

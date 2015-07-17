@@ -65,21 +65,21 @@ class Kirki_Styles_Frontend {
 		foreach ( $fields as $field ) {
 
 			// Only continue if $field['output'] is set
-			if ( isset( $field['output'] ) && 'background' != $field['type'] ) {
+			if ( isset( $field['output'] ) && ! empty( $field['output'] ) && 'background' != $field['type'] ) {
 
 				$css = array_merge_recursive( $css, Kirki_Output::css(
-					Kirki_Field::sanitize_settings_raw( $field ),
-					Kirki_Field::sanitize_type( $field ),
-					Kirki_Field::sanitize_output( $field ),
-					isset( $field['output']['callback'] ) ? $field['output']['callback'] : '',
-					true
+					Kirki_Field::sanitize_field( $field )
 				) );
 
 			}
 
 		}
 
-		return Kirki_Output::styles_parse( Kirki_Output::add_prefixes( $css ) );
+		if ( is_array( $css ) ) {
+			return Kirki_Output::styles_parse( Kirki_Output::add_prefixes( $css ) );
+		}
+
+		return;
 
 	}
 

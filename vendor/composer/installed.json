@@ -138,17 +138,17 @@
     },
     {
         "name": "aristath/kirki",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
+        "version": "1.0.1",
+        "version_normalized": "1.0.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/aristath/kirki.git",
-            "reference": "0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6"
+            "reference": "12364efbc69170b707f7965e22dbd81a1c043d1a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/aristath/kirki/zipball/0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6",
-            "reference": "0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6",
+            "url": "https://api.github.com/repos/aristath/kirki/zipball/12364efbc69170b707f7965e22dbd81a1c043d1a",
+            "reference": "12364efbc69170b707f7965e22dbd81a1c043d1a",
             "shasum": ""
         },
         "require": {
@@ -158,7 +158,7 @@
             "phpunit/phpunit": "~4.0",
             "satooshi/php-coveralls": "dev-master"
         },
-        "time": "2015-07-11 02:19:13",
+        "time": "2015-07-17 12:04:08",
         "type": "library",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
