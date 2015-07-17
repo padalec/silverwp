@@ -18,14 +18,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/SingletonAbstract.php $
-  Last committed: $Revision: 2182 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:00:49 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: SingletonAbstract.php 2182 2015-01-21 12:00:49Z padalec $
- */
-
 namespace SilverWp;
 
 if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
@@ -46,7 +38,7 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
          *
          * @var object
          */
-        private static $instance = array();
+        protected static $instance = array();
 
         /**
          * @abstract
@@ -65,11 +57,11 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
          */
         final public static function getInstance() {
             $class = \get_called_class();
-            if ( ! isset( self::$instance[ $class ] ) ) {
-                self::$instance[ $class ] = new $class();
+            if ( ! isset( static::$instance[ $class ] ) ) {
+	            static::$instance[ $class ] = new $class();
             }
 
-            return self::$instance[ $class ];
+            return static::$instance[ $class ];
         }
 
         /**
@@ -82,7 +74,7 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
          */
         final public static function resetInstance() {
             $class                    = \get_called_class();
-            self::$instance[ $class ] = null;
+	        static::$instance[ $class ] = null;
         }
 
         /**

@@ -1,23 +1,34 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f91f98f5084ae4f0d3614b93a920fc3f",
+    "hash": "34dca1e6374c6cd000b67c082680a146",
     "packages": [
         {
             "name": "aristath/kirki",
-            "version": "0.8.4",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/reduxframework/kirki.git",
-                "reference": "9cd0303a03f73957c8475b0cab5abcab86fb84e2"
+                "url": "https://github.com/aristath/kirki.git",
+                "reference": "0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aristath/kirki/zipball/0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6",
+                "reference": "0a8857cf7399f7f40c56d3eaebc3222b04ca2fb6",
+                "shasum": ""
             },
             "require": {
-                "php": ">=5.3"
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "dev-master"
             },
             "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPLv2 or later"
             ],
@@ -35,7 +46,7 @@
             ],
             "description": "Extending the WordPress customizer",
             "homepage": "http://kirki.org",
-            "time": "2015-04-06 15:38:43"
+            "time": "2015-07-11 02:19:13"
         },
         {
             "name": "leafo/lessphp",

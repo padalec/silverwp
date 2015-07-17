@@ -179,8 +179,8 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 $less_config->setUploadDir( $this->upload_dir );
                 $less_config->setUploadUrl( $this->upload_url );
 
-                $assets_uri = FileSystem::getDirectory( 'assets_uri' );
-                $less->setImportDir( array( $assets_uri . 'less' ) );
+                $css_uri = FileSystem::getDirectory( 'css_uri' );
+                $less->setImportDir( array( $css_uri . 'less' ) );
 
                 $less_variable = $this->less_variables;
                 $less->setVariables( $less_variable );
@@ -194,7 +194,7 @@ if ( ! class_exists( '\SilverWp\Less' ) ) {
                 if ( ! wp_style_is( $handler, 'registered' ) ) {
 
                     if ( ! $src ) {
-                        $src = $assets_uri . 'less/style.less';
+                        $src = $css_uri . 'less/style.less';
                     }
 
                     wp_register_style( $handler, $src, $deps, $version, $media );

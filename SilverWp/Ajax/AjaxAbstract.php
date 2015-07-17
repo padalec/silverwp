@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -17,14 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Ajax/AjaxAbstract.php $
-  Last committed: $Revision: 2184 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: AjaxAbstract.php 2184 2015-01-21 12:20:08Z padalec $
- */
-
 namespace SilverWp\Ajax;
 
 use SilverWp\Ajax\Exception;
@@ -125,7 +116,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
     public function scriptsRegister() {
         \wp_register_script(
             $this->ajax_handler
-            , $this->getAssetsUri() . 'js/' . $this->ajax_js_file
+            , $this->getJsUri() . $this->ajax_js_file
             , array(
                 'jquery',
             )
@@ -141,11 +132,11 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
      * @return string
      * @access protected
      */
-    protected function getAssetsUri() {
+    protected function getJsUri() {
         $file_system = FileSystem::getInstance();
-        $assets_uri  = $file_system->getDirectories( 'assets_uri' );
+        $js_uri  = $file_system->getDirectories( 'js_uri' );
 
-        return $assets_uri;
+        return $js_uri;
     }
 
     /**

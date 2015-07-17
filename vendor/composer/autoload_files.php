@@ -10,4 +10,5 @@ return array(
     $vendorDir . '/evanto/auto-updates/class-pixelentity-theme-update.php',
     $vendorDir . '/oyejorge/less.php/lessc.inc.php',
     $vendorDir . '/oncletom/wp-less/bootstrap-for-theme.php',
+    $vendorDir . '/aristath/kirki/kirki.php',
 );

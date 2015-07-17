@@ -263,18 +263,6 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
         /**
          *
-         * @return string
-         * @access private
-         */
-        private function getAssetsPath() {
-            $file_system = FileSystem::getInstance();
-            $path = $file_system->getDirectories( 'assets_path' );
-
-            return $path;
-        }
-
-        /**
-         *
          * Generate temp css from less for customizer preview
          *
          * @access public
@@ -283,12 +271,12 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
             if ( is_customize_preview() ) {
                 try {
-                    $assets_path = $this->getAssetsPath();
-                    $assets_uri = FileSystem::getDirectory('assets_uri');
+                    $css_path = FileSystem::getDirectory( 'css_path' );
+                    $css_uri = FileSystem::getDirectory( 'css_uri' );
 
                     $less = Less::getInstance();
-                    $less->setUploadDir( $assets_path . 'css/generated' );
-                    $less->setUploadUrl( $assets_uri . 'css/generated' );
+                    $less->setUploadDir( $css_path . 'generated' );
+                    $less->setUploadUrl( $css_uri . 'generated' );
                     $less_variable = $this->getLessVariablesFromControls();
                     $less->setVariables( $less_variable );
                     $less->compileCss();
@@ -307,13 +295,13 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          */
         public function generateAfterSave() {
             try {
-                $assets_path = $this->getAssetsPath();
-                $assets_uri = FileSystem::getDirectory('assets_uri');
+                $css_path = FileSystem::getDirectory('css_path');
+                $css_uri = FileSystem::getDirectory('css_uri');
 
                 Less::$remove_random = true;
                 $less                = Less::getInstance();
-                $less->setUploadDir( $assets_path . 'css' );
-                $less->setUploadUrl( $assets_uri . 'css' );
+                $less->setUploadDir( $css_path );
+                $less->setUploadUrl( $css_uri );
                 $less_variable = $this->getLessVariablesFromControls();
                 $less->setVariables( $less_variable );
                 $less->compileCss();
