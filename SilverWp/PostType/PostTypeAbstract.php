@@ -248,7 +248,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
 
     /**
      *
-     * set labels
+     * Setup class
      *
      * @abstract
      * @access protected
@@ -257,7 +257,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
 
     /**
      *
-     * add post type template
+     * Add post type template
      *
      * @param mixed $template_name array or string
      *
