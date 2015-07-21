@@ -19,6 +19,7 @@
 namespace SilverWp\Customizer;
 
 use SilverWp\CoreInterface;
+use SilverWp\CssTemplate\Sass;
 use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\File;
@@ -29,8 +30,6 @@ use SilverWp\Customizer\Section\SectionInterface;
 use SilverWp\Translate;
 
 if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
-
-    require_once SILVERWP_VENDOR_PATH . 'aristath/kirki/kirki.php';
 
     /**
      * Main customizer class. Setup main settings.
@@ -139,7 +138,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
             add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 101 );
             add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 102 );
-            add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
+            //add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
             add_filter( 'kirki/config', array( $this, 'init' ) );
 
             $this->includes();
@@ -273,13 +272,20 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
                 try {
                     $css_path = FileSystem::getDirectory( 'css_path' );
                     $css_uri = FileSystem::getDirectory( 'css_uri' );
+					$template_uri = FileSystem::getDirectory( 'css_template_uri' );
 
-                    $less = Less::getInstance();
-                    $less->setUploadDir( $css_path . 'generated' );
-                    $less->setUploadUrl( $css_uri . 'generated' );
-                    $less_variable = $this->getLessVariablesFromControls();
-                    $less->setVariables( $less_variable );
-                    $less->compileCss();
+                    $sass = Sass::getInstance();
+                    $sass->setUploadDir( $css_path );
+                    $sass->setUploadUrl( $css_uri );
+                    $variables = $this->getVariablesFromControls();
+
+	                $variables = array(
+		                'brand-primary' => '#000',
+		                'stylesheet_directory_uri' => $css_uri,
+		                'template_directory_uri' => $template_uri,
+	                );
+	                $sass->setVariables( $variables );
+                    $sass->registerFallback();
 
                 } catch ( Exception $ex ) {
                     $ex->catchException();
@@ -302,10 +308,11 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
                 $less                = Less::getInstance();
                 $less->setUploadDir( $css_path );
                 $less->setUploadUrl( $css_uri );
-                $less_variable = $this->getLessVariablesFromControls();
-                $less->setVariables( $less_variable );
+                $less_variable = $this->getVariablesFromControls();
+	            $less->setVariables( $less_variable );
                 $less->compileCss();
-                $this->deleteCssTmp();
+                $this->deleteTmp();
+
             } catch ( Exception $ex ) {
                 $ex->catchException();
             }
@@ -355,7 +362,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @return array
          * @access protected
          */
-        protected function getLessVariablesFromControls() {
+        protected function getVariablesFromControls() {
             if ( ! count( self::$less_variables ) ) {
                 foreach ( $this->sections as $section ) {
                     if ( $section instanceof PanelInterface ) {

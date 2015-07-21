@@ -436,7 +436,7 @@ class Less_Parser{
 	 * @param string $file_path
 	 */
 	private function _parse( $file_path = null ){
-		$this->rules = array_merge($this->GetRules( $file_path ), $this->rules);
+		$this->rules = array_merge($this->rules, $this->GetRules( $file_path ));
 	}
 
 

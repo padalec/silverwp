@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c9245acc5260a353b6bd68c6d07a6b63",
+    "hash": "1d206a330c5bf39008b1702eef712f39",
     "packages": [
         {
             "name": "aristath/kirki",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aristath/kirki.git",
-                "reference": "12364efbc69170b707f7965e22dbd81a1c043d1a"
+                "reference": "0d51d155f07857bb512935d082052a50f48f9760"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aristath/kirki/zipball/12364efbc69170b707f7965e22dbd81a1c043d1a",
-                "reference": "12364efbc69170b707f7965e22dbd81a1c043d1a",
+                "url": "https://api.github.com/repos/aristath/kirki/zipball/0d51d155f07857bb512935d082052a50f48f9760",
+                "reference": "0d51d155f07857bb512935d082052a50f48f9760",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
             ],
             "description": "Extending the WordPress customizer",
             "homepage": "http://kirki.org",
-            "time": "2015-07-17 12:04:08"
+            "time": "2015-07-17 13:14:39"
         },
         {
             "name": "leafo/lessphp",
@@ -90,35 +90,60 @@
             "time": "2013-08-09 17:09:19"
         },
         {
-            "name": "oncletom/wp-less",
-            "version": "1.7.5",
+            "name": "leafo/scssphp",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/oncletom/wp-less.git",
-                "reference": "cde9a938fb4383b5f182aafbba3ec1be2bfc0d65"
+                "url": "https://github.com/leafo/scssphp.git",
+                "reference": "9ea6a90fd36a1ca27ae1012449f28bf7ae77f454"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oncletom/wp-less/zipball/cde9a938fb4383b5f182aafbba3ec1be2bfc0d65",
-                "reference": "cde9a938fb4383b5f182aafbba3ec1be2bfc0d65",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/9ea6a90fd36a1ca27ae1012449f28bf7ae77f454",
+                "reference": "9ea6a90fd36a1ca27ae1012449f28bf7ae77f454",
                 "shasum": ""
             },
             "require": {
-                "leafo/lessphp": "0.4.0",
-                "oyejorge/less.php": "1.7"
+                "php": ">=5.3.0"
             },
+            "require-dev": {
+                "kherge/box": "~2.5",
+                "phpunit/phpunit": "~3.7",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "bin": [
+                "bin/pscss"
+            ],
             "type": "library",
+            "autoload": {
+                "classmap": [
+                    "classmap.php"
+                ],
+                "psr-4": {
+                    "Leafo\\ScssPhp\\": "src/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "oncletom",
-                    "email": "hi@oncletom.io"
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
                 }
             ],
-            "time": "2014-10-08 08:21:15"
+            "description": "scssphp is a compiler for SCSS written in PHP.",
+            "homepage": "http://leafo.github.io/scssphp/",
+            "keywords": [
+                "css",
+                "less",
+                "sass",
+                "scss",
+                "stylesheet"
+            ],
+            "time": "2015-07-18 13:59:07"
         },
         {
             "name": "oyejorge/less.php",
@@ -178,13 +203,44 @@
                 "stylesheet"
             ],
             "time": "2014-03-04 19:02:04"
+        },
+        {
+            "name": "pluswp/wp-scss",
+            "version": "1.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PlusWP/wp-scss.git",
+                "reference": "daa14384232a50b1fda9dbb87e901e1542a64cd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PlusWP/wp-scss/zipball/daa14384232a50b1fda9dbb87e901e1542a64cd3",
+                "reference": "daa14384232a50b1fda9dbb87e901e1542a64cd3",
+                "shasum": ""
+            },
+            "require": {
+                "leafo/lessphp": "0.4.0",
+                "oyejorge/less.php": "1.7"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "oncletom",
+                    "email": "hi@oncletom.io"
+                }
+            ],
+            "time": "2014-09-15 18:45:07"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "oncletom/wp-less": 0
+        "pluswp/wp-scss": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
