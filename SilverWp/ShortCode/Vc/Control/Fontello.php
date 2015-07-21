@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/Form/Element/Fontello.php $
- Last committed: $Revision: 2415 $
- Last changed by: $Author: padalec $
- Last changed date: $Date: 2015-02-11 14:49:13 +0100 (Śr, 11 lut 2015) $
- ID: $Id: Fontello.php 2415 2015-02-11 13:49:13Z padalec $
-*/
 namespace SilverWp\ShortCode\Vc\Control;
 
 use SilverWp\Helper\MetaBox;
