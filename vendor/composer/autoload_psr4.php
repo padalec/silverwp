@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'SilverWp\\' => array($baseDir . '/SilverWp'),
+    'Leafo\\ScssPhp\\' => array($vendorDir . '/leafo/scssphp/src'),
 );

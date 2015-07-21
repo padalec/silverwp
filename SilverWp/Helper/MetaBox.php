@@ -18,6 +18,7 @@
  */
 namespace SilverWp\Helper;
 
+use SilverWp\Debug;
 use SilverWp\FileSystem;
 
 /**
@@ -131,7 +132,7 @@ class MetaBox {
     public static function getFontelloIcons( $name = 'icon', $path = null, $transient_name = 'silverwp_fontello' ) {
         if ( \is_null( $path ) ) {
             $fonts_path = FileSystem::getDirectory( 'fonts_path' );
-            $path        = $fonts_path . 'fonts/fontello.css';
+            $path        = $fonts_path . 'fontello.css';
         }
 
         if ( ( $icons = \get_transient( $transient_name ) ) == false ) {
