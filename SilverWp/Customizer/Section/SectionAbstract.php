@@ -18,8 +18,10 @@
  */
 namespace SilverWp\Customizer\Section;
 
+use RequiredPluginInstaller\CoreInterface;
 use SilverWp\Customizer\Control\ControlInterface;
 use SilverWp\Customizer\Section\Exception;
+use SilverWp\Debug;
 
 if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
 
@@ -34,7 +36,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
      * @version $Revision:$
      * @abstract
      */
-    abstract class SectionAbstract implements SectionInterface {
+    abstract class SectionAbstract implements SectionInterface, CoreInterface {
         /**
          *
          * Section name
@@ -76,11 +78,11 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
          */
         public function __construct() {
             add_action( 'customize_register', array( $this, 'init' ) );
-            add_filter( 'kirki/controls', array( $this, 'registerControls' ) );
+            add_filter( 'kirki/fields', array( $this, 'registerControls' ) );
         }
 
         /**
-         *
+         * Register controls to panel
          *
          * @param array $controls
          *
@@ -90,18 +92,17 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
         public function registerControls( array $controls ) {
             $this->controls_settings = $controls;
             $this->createControls();
+
             return $this->controls_settings;
         }
 
         /**
          * Initialize customizer and add panel and section object
          *
-         * @param \WP_Customize_Manager $wp_customize
-         *
          * @access public
          */
-        public function init( \WP_Customize_Manager $wp_customize ) {
-            $this->addSection( $wp_customize );
+        public function init() {
+            $this->addSection();
         }
 
         /**
@@ -125,7 +126,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
          *
          * @access private
          */
-        private function addSection( \WP_Customize_Manager $wp_customize ) {
+        private function addSection() {
             $params = $this->getSectionParams();
             if ( isset( $this->panel_id ) ) {
                 $params[ 'panel' ] = $this->panel_id;
@@ -138,7 +139,10 @@ if ( ! class_exists( 'SilverWp\Customizer\Section\SectionAbstract' ) ) {
                 }
                 //end();
             }*/
-            $wp_customize->add_section( $this->name, $params );
+
+            \Kirki::add_section( $this->name, $params);
+
+            //$wp_customize->add_section( $this->name, $params );
         }
 
         /**

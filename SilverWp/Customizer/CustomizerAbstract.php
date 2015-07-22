@@ -123,7 +123,46 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access private
          * @static
          */
-        private static $less_variables = array();
+        private static $variables = array();
+
+        /**
+         * Any valid WordPress capability.
+         *
+         * @see https://codex.wordpress.org/Roles_and_Capabilities
+         * @var string
+         * @access protected
+         */
+        protected $capability = 'edit_theme_options';
+
+        /**
+         * Can be either option or theme_mod.
+         *
+         * @var string
+         * @access protected
+         */
+        protected $option_type = 'option';
+
+        /**
+         * If you're using options instead of theme mods then
+         * you can use this to specify an option name.
+         * All your fields will then be saved as an array
+         * under that option in the WordPress database.
+         *
+         * @var string
+         * @access protected
+         */
+        protected $option_key_name;
+
+        /**
+         * Unique Customizer ID
+         * Kirki allows you to create configurations for your plugins
+         * or themes and group them by an id. All fields that are then
+         * linked to that ID will inherit the configuration properties.
+         *
+         * @var string
+         * @access protected
+         */
+        protected $id;
 
         /**
          * Class constructor
@@ -139,10 +178,66 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
             add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 101 );
             add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 102 );
             //add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
-            add_filter( 'kirki/config', array( $this, 'init' ) );
+            add_action( 'kirki/config', array( $this, 'init' ) );
+
+            $this->config();
 
             $this->includes();
         }
+
+	    /**
+	     * Config main kirki settings
+	     *
+	     * @throws Exception
+	     * @access private
+	     */
+        private function config() {
+            if ( ! isset( $this->id ) || is_null( $this->id ) ) {
+                throw new Exception(
+                    Translate::translate(
+                        __CLASS__ . '::id is required and can not be empty!'
+                    )
+                );
+            }
+
+            if ( ! isset( $this->capability )
+                 || is_null( $this->capability )
+            ) {
+                throw new Exception(
+                    Translate::translate(
+                        __CLASS__
+                        . '::capability is required and can not be empty!'
+                    )
+                );
+            }
+
+            if ( ! isset( $this->option_key_name )
+                 || is_null( $this->option_key_name )
+            ) {
+                throw new Exception(
+                    Translate::translate(
+                        __CLASS__
+                        . '::option_key_name is required and can not be empty!'
+                    )
+                );
+            }
+
+            \Kirki::add_config( $this->id , array(
+                'capability'    => $this->capability,
+                'option_type'   => $this->option_type,
+                'option_name'   => $this->option_key_name,
+            ) );
+        }
+
+	    /**
+	     * Get customizer Id
+	     *
+	     * @return string
+	     * @access public
+	     */
+	    public function getId() {
+		    return $this->id;
+	    }
 
         /**
          * Include all panel and sections classes
@@ -245,19 +340,22 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
             return $this;
         }
 
-        /**
-         * Add new section to customizer interface
-         *
-         * @param \SilverWp\Customizer\Section\SectionInterface $section
-         *
-         * @access public
-         */
+	    /**
+	     * Add new section to customizer interface
+	     *
+	     * @param \SilverWp\Customizer\Section\SectionInterface $section
+	     *
+	     * @access public
+	     * @return $this
+	     */
         public function addSection( $section ) {
             if ( $section instanceof SectionInterface ) {
                 $this->sections[ $section->getName() ] = $section;
             } elseif ( $section instanceof PanelInterface ) {
                 $this->sections[ $section->getPanelId() ] = $section;
             }
+
+	        return $this;
         }
 
         /**
@@ -277,13 +375,11 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
                     $sass = Sass::getInstance();
                     $sass->setUploadDir( $css_path );
                     $sass->setUploadUrl( $css_uri );
-                    $variables = $this->getVariablesFromControls();
 
-	                $variables = array(
-		                'brand-primary' => '#000',
-		                'stylesheet_directory_uri' => $css_uri,
-		                'template_directory_uri' => $template_uri,
-	                );
+                    $variables = $this->getVariablesFromControls();
+                    $variables['stylesheet_directory_uri'] = $css_uri;
+                    $variables['template_directory_uri'] = $template_uri;
+
 	                $sass->setVariables( $variables );
                     $sass->registerFallback();
 
@@ -326,7 +422,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access public
          */
         public static function resetLessVariable() {
-            self::$less_variables = array();
+            self::$variables = array();
         }
 
         /**
@@ -336,9 +432,9 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access public
          */
         public function getLessVariable() {
-            $this->getLessVariablesFromControls();
+            $this->getVariablesFromControls();
 
-            return self::$less_variables;
+            return self::$variables;
         }
 
         /**
@@ -351,8 +447,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @static
          * @access public
          */
-        public static function addLessVariable( $name, $value ) {
-            self::$less_variables[ $name ] = $value;
+        public static function addVariable( $name, $value ) {
+            self::$variables[ $name ] = $value;
         }
 
         /**
@@ -363,15 +459,15 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access protected
          */
         protected function getVariablesFromControls() {
-            if ( ! count( self::$less_variables ) ) {
+            if ( ! count( self::$variables ) ) {
                 foreach ( $this->sections as $section ) {
                     if ( $section instanceof PanelInterface ) {
                         $sections = $section->getSections();
                         foreach ( $sections as $section ) {
                             $controls = $section->getControls();
                             foreach ( $controls as $control ) {
-                                if ( $control->getIsLessVariable() ) {
-                                    self::$less_variables[ $control->getName() ] = $control->getValue();
+                                if ( $control->isTemplateVariable() ) {
+                                    self::$variables[ $control->getName() ] = $control->getValue();
                                 }
                             }
                         }
@@ -379,15 +475,15 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
                     } elseif ( $section instanceof SectionInterface ) {
                         $controls = $section->getControls();
                         foreach ( $controls as $control ) {
-                            if ( $control->getIsLessVariable() ) {
-                                self::$less_variables[ $control->getName() ] = $control->getValue();
+                            if ( $control->isTemplateVariable() ) {
+                                self::$variables[ $control->getName() ] = $control->getValue();
                             }
                         }
                     }
                 }
             }
 
-            return self::$less_variables;
+            return self::$variables;
         }
 
         /**

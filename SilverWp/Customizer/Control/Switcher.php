@@ -35,6 +35,6 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Switcher' ) ) {
      */
     class Switcher extends Checkbox {
         protected $mode = 'switch';
-        protected $is_less_variable = false;
+        protected $is_template_variable = false;
     }
 }
