@@ -170,8 +170,6 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @access protected
          */
         protected function __construct() {
-            $url = SILVERWP_VENDOR_URI . 'aristath/kirki/';
-            $this->setUrlPath( $url );
 
             $this->initStrings();
 

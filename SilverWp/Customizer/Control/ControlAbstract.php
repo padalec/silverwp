@@ -140,7 +140,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
         public function getValue() {
 
 //            $value = get_theme_mod( $this->getName(), $this->getDefault() );
-            $value = kirki_get_option( $this->getName() );
+            $value =  \Kirki::get_option( 'silverwp', $this->getName());
             return $value;
         }
 
