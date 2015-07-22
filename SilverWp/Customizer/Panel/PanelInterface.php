@@ -16,27 +16,47 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 namespace SilverWp\Customizer\Panel;
+
+use SilverWp\Customizer\Section\SectionInterface;
 
 
 /**
  * Interface for panels params
  *
- * @category WordPress
- * @package SilverWp
+ * @category   WordPress
+ * @package    SilverWp
  * @subpackage SilverWp\Customizer\Section
- * @author Michal Kalkowski <michal at silversite.pl>
- * @copyright Dynamite-Studio.pl & silversite.pl 2015
- * @version $Revision:$
+ * @author     Michal Kalkowski <michal at silversite.pl>
+ * @copyright  SilverSite.pl 2015
+ * @version    $Revision:$
  */
 interface PanelInterface {
 
+    /**
+     *
+     * Get unique panel id
+     *
+     * @return string
+     * @access public
+     */
     public function getPanelId();
+
+    /**
+     *
+     * Add section to panel container
+     *
+     * @param \SilverWp\Customizer\Section\SectionInterface $section
+     *
+     * @access public
+     */
+    public function addSection( SectionInterface $section );
+
+    /**
+     * Get all registered sections
+     *
+     * @return array
+     * @access public
+     */
+    public function getSections();
 }

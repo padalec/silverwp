@@ -31,7 +31,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
      * @package SilverWp
      * @subpackage Customizer\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version $Revision:$
      * @link http://kirki.org/
      * @abstract
@@ -44,7 +44,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @var bool
          * @access protected
          */
-        protected $is_less_variable = true;
+        protected $is_template_variable = true;
 
         /**
          *
@@ -84,7 +84,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          */
         public function setName( $name ) {
             $this->removeSetting( 'name' );
-            $this->setting[ 'setting' ] = $name;
+            $this->setting[ 'settings' ] = $name;
 
             return $this;
         }
@@ -96,7 +96,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @access public
          */
         public function getName() {
-            return $this->setting[ 'setting' ];
+            return $this->setting[ 'settings' ];
         }
 
         /**
@@ -178,6 +178,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
 	     * @param string $parent_option
 	     *
 	     * @return $this
+         * @see https://github.com/aristath/kirki/wiki/required
 	     */
 	    public function addDependency( ControlInterface $parent_control, $operator, $parent_option ) {
 		    $this->setting['required'][] = array(
@@ -188,6 +189,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
 
 		    return $this;
 	    }
+
         /**
          * Using the output argument you can specify if you want Kirki to automatically
          * generate and apply CSS for various elements of your page.
@@ -218,6 +220,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          *
          * @access public
          * @return $this
+         * @see https://github.com/aristath/kirki/wiki/output
          */
         public function setOutput( array $output ) {
             $this->setting[ 'output' ] = $output;
@@ -234,6 +237,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          *
          * @return $this
          * @access public
+         * @see https://github.com/aristath/kirki/wiki/output
          */
         public function addOutput( $element, $property, $units = null ) {
             $output = array(
@@ -255,21 +259,21 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @return bool
          * @access public
          */
-        public function getIsLessVariable() {
-            return $this->is_less_variable;
+        public function isTemplateVariable() {
+            return $this->is_template_variable;
         }
 
         /**
          *
-         * Set this field will be added to less variables
+         * Value from this field will be available in css template
          *
-         * @param bool $is_less true/false
+         * @param bool $is_template_variable true/false
          *
          * @return $this
          * @access public
          */
-        public function setIsLessVariable( $is_less ) {
-            $this->is_less_variable = (bool) $is_less;
+        public function setIsTemplateVariable( $is_template_variable ) {
+            $this->is_template_variable = (bool) $is_template_variable;
 
             return $this;
         }
@@ -310,13 +314,16 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
 
         /**
          *
-         * You may add extra info in the help area
+         * Help, like description can be any string you want.
+         * If you add some help text here, it will be added on a tooltip
+         * that users can see on hover. It is an easy way to provide
+         * additional information and help without cluttering the screen.
          *
          * @param string $message
          *
          * @return $this
          * @access public
-         * @link https://github.com/aristath/kirki/issues/82#issuecomment-85444685
+         * @see https://github.com/aristath/kirki/wiki/help
          */
         public function setHelp( $message ) {
             $this->setting[ 'help' ] = $message;
@@ -325,18 +332,18 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
         }
 
         /**
+         *
          * If you set transport to postMessage you can write your own scripts,
          * or you can use the js_vars argument and let Kirki automatically create these for you.
          *
          * It is defined as an array of arrays so you can specify multiple elements.
          * 'ELEMENT'
-         *
          * The CSS element you want to affect
+         *
          * 'FUNCTION'
-         *
          * Can be 'css' or 'html'.
-         * 'PROPERTY'
          *
+         * 'PROPERTY'
          * If you set 'function' to 'css' then this will allow you to select what
          * CSS you want applied to the selected 'element'.
          *
@@ -344,7 +351,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          *
          * @return $this
          * @access public
-         * @link http://kirki.org/#js_vars
+         * @see https://github.com/aristath/kirki/wiki/js_vars
          */
         public function addJsVariable( array $variable ) {
             $this->setting[ 'js_vars' ][ ] = $variable;
