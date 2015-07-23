@@ -65,7 +65,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
                 array(
                     'value' => 1,
                     'label' => Translate::translate( 'Left sidebar' ),
-                    'img'   => $images_uri . 'img/admin/sidebar/icon_1_sidebar_off.png',
+                    'img'   => $images_uri . 'admin/sidebar/icon_1_sidebar_off.png',
                 ),
                 array(
                     'value' => 2,
