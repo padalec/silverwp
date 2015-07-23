@@ -18,6 +18,7 @@
  */
 namespace SilverWp\Customizer\Control;
 
+use SilverWp\Customizer\CustomizerAbstract;
 use SilverWp\Debug;
 use SilverWp\Translate;
 
@@ -140,7 +141,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
         public function getValue() {
 
 //            $value = get_theme_mod( $this->getName(), $this->getDefault() );
-            $value =  \Kirki::get_option( 'silverwp', $this->getName());
+            $value =  \Kirki::get_option( CustomizerAbstract::getId(), $this->getName());
             return $value;
         }
 

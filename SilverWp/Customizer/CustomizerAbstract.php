@@ -162,7 +162,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
          * @var string
          * @access protected
          */
-        protected $id;
+        protected static $id;
 
         /**
          * Class constructor
@@ -190,7 +190,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 	     * @access private
 	     */
         private function config() {
-            if ( ! isset( $this->id ) || is_null( $this->id ) ) {
+            if ( ! isset( static::$id ) || is_null( static::$id ) ) {
                 throw new Exception(
                     Translate::translate(
                         __CLASS__ . '::id is required and can not be empty!'
@@ -220,7 +220,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
                 );
             }
 
-            \Kirki::add_config( $this->id , array(
+            \Kirki::add_config( static::$id , array(
                 'capability'    => $this->capability,
                 'option_type'   => $this->option_type,
                 'option_name'   => $this->option_key_name,
@@ -233,8 +233,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 	     * @return string
 	     * @access public
 	     */
-	    public function getId() {
-		    return $this->id;
+	    public static function getId() {
+		    return static::$id;
 	    }
 
         /**
