@@ -18,21 +18,24 @@
  */
 namespace SilverWp\Helper\Control;
 
+use SilverWp\Debug;
+
 if ( ! class_exists( 'SilverWp\Helper\Control\MultiControlAbstract' ) ) {
 
     /**
      *
      * Abstract base class for controls with multi elements
      *
-     * @category WordPress
-     * @package SilverWp
+     * @category   WordPress
+     * @package    SilverWp
      * @subpackage Helper\Control
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Revision:$
+     * @author     Michal Kalkowski <michal at silversite.pl>
+     * @copyright  Dynamite-Studio.pl & silversite.pl 2015
+     * @version    $Revision:$
      * @abstract
      */
-    abstract class MultiControlAbstract extends ControlAbstract implements MultiControlInterface {
+    abstract class MultiControlAbstract extends ControlAbstract
+        implements MultiControlInterface {
 
         /**
          * Set multi options
@@ -43,7 +46,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\MultiControlAbstract' ) ) {
          * @access public
          */
         public function setOptions( array $options ) {
-            $this->setting[ 'items' ] = $options;
+            $this->setting['items'] = $options;
 
             return $this;
         }
@@ -59,7 +62,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\MultiControlAbstract' ) ) {
          * @access public
          */
         public function addOption( $value, $label ) {
-            $this->setting[ 'items' ][] = array(
+            $this->setting['items'][] = array(
                 'value' => $value,
                 'label' => $label,
             );
@@ -78,7 +81,21 @@ if ( ! class_exists( 'SilverWp\Helper\Control\MultiControlAbstract' ) ) {
          */
         public function setDefault( $default ) {
             parent::setDefault( array( $default ) );
+
             return $this;
+        }
+
+        /**
+         * Remove one option from option array
+         *
+         * @param string|int $key
+         *
+         * @access public
+         */
+        public function removeOption( $key ) {
+            if ( isset( $this->setting[ 'items' ][ $key ] ) ) {
+                unset( $this->setting[ 'items' ][ $key ] );
+            }
         }
     }
 }
