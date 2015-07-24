@@ -18,7 +18,6 @@
  */
 namespace SilverWp\Helper\Control;
 
-use SilverWp\FileSystem;
 use SilverWp\Translate;
 
 if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
