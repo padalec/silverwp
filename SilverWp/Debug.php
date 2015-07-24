@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp;
 
 if ( ! class_exists( 'SilverWp\Debug' ) ) {
@@ -31,19 +24,19 @@ if ( ! class_exists( 'SilverWp\Debug' ) ) {
      *
      * Debug
      *
-     * @category WordPress
-     * @package SilverWp
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Revision:$
+     * @category  WordPress
+     * @package   SilverWp
+     * @author    Michal Kalkowski <michal at silversite.pl>
+     * @copyright SilverSite.pl 2015
+     * @version   $Revision:$
      */
     class Debug {
 
         /**
          * Prate dump variable used var_dump function.
          *
-         * @param mixed $variable variable to dump
-         * @param null|string $label label displayed before dumping
+         * @param mixed       $variable variable to dump
+         * @param null|string $label    label displayed before dumping
          *
          * @access public
          * @static
@@ -61,15 +54,15 @@ if ( ! class_exists( 'SilverWp\Debug' ) ) {
          *
          * Prate dump variable used print_r function.
          *
-         * @param mixed $variable variable to dump
-         * @param null|string $label label displayed before dumping
+         * @param mixed       $variable variable to dump
+         * @param null|string $label    label displayed before dumping
          *
          * @static
          * @access public
          */
         public static function dumpPrint( $variable, $label = null ) {
-            if (!is_null($label)) {
-                echo '<p><strong>' . $label .'</strong></p>';
+            if ( ! is_null( $label ) ) {
+                echo '<p><strong>' . $label . '</strong></p>';
             }
             echo '<pre style="width:950px; padding:6px 18px; background:#fff; color:red; text-align:left; position:relative; z-index:9999999;">';
             print_r( $variable );
