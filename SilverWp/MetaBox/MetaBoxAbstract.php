@@ -18,6 +18,7 @@
  */
 namespace SilverWp\MetaBox;
 
+use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
 use SilverWp\Helper\Form\Group;
 use SilverWp\Helper\Message;
@@ -164,6 +165,12 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 // the safest hook to use, since Vafpress Framework may exists in Theme or Plugin
                 add_action( 'after_setup_theme', array( $this, 'init' ), 20 );
                 add_filter( 'enter_title_here', array( $this, 'changeDefaultTitleLabel' ) );
+                $parent_class = get_called_class();
+                if (
+                    $this->isImplemented( $parent_class, 'SilverWp\MetaBox\RemoveInterface' )
+                ) {
+                    add_action( 'admin_menu', array( $this, 'removeMetaBoxes' ) );
+                }
             }
         }
 
@@ -315,7 +322,10 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
          *
          * @param string $name meta box name
          *
+         * @param bool   $remove_first remove first element
+         *
          * @return mixed
+         * @throws Exception
          * @access public
          */
         public function getSingle( $name, $remove_first = true ) {
@@ -756,6 +766,17 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 }
             }
             return $title;
+        }
+
+        /**
+         * Remove meta boxes fromr admin page
+         *
+         * @access public
+         */
+        public function removeMetaBoxes() {
+            foreach($this->remove() as $value) {
+                remove_meta_box( $value['id'], $value['page'], $value['context'] );
+            }
         }
     }
 }

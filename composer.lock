@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1d206a330c5bf39008b1702eef712f39",
+    "hash": "99679bc2df68adab2bfd3d64334f6931",
     "packages": [
         {
             "name": "aristath/kirki",
