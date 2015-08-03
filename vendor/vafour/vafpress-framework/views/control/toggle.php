@@ -3,9 +3,9 @@
 	            ->load( 'control/template_control_head', $head_info );
 } ?>
 	<label>
-		<input <?php if ( $value || $default ) {
+		<input <?php if ( $value && ( $value || $default ) ) {
 			echo 'checked';
-		} ?> class="vp-input<?php if ( $value || $default ) {
+		} ?> class="vp-input<?php if ( $value && ( $value || $default ) ) {
 			echo ' checked';
 		} ?>" type="checkbox" name="<?php echo $name; ?>" value="1"/>
 		<span></span>
