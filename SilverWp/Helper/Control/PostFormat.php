@@ -71,26 +71,22 @@ if ( ! class_exists( 'SilverWp\Helper\Control\PostFormat' ) ) {
 			);
 			$this->addControl( $format );
 			*/
-			$group = new Group( 'link' );
-			$group->setLabel( Translate::translate( 'Link' ) );
-			$url = new Text( 'video_url' );
+			$group = new Group( 'video' );
+			$group->setLabel( Translate::translate( 'Video' ) );
+			$url = new Text( 'url' );
 			$url->setLabel( Translate::translate( 'YouTube or Vimeo file URL' ) );
 			$url->setValidation( 'url' );
 //			$url->setDependency($format, 'silverwp_post_format_dep_boolean', 'video');
 			$group->addControl( $url );
 			$this->addControl( $group );
 
-			$group = new Group( 'gallery' );
+			$group = new Gallery( 'gallery' );
 			$group->setLabel( Translate::translate( 'Gallery' ) );
-			$gallery = new Upload( 'image' );
-			$gallery->setLabel( Translate::translate( 'Image' ) );
-//			$gallery->setDependency($format, 'silverwp_post_format_dep_boolean', 'gallery');
-			$group->addControl( $gallery );
 			$this->addControl( $group );
 
 			$group = new Group( 'audio' );
 			$group->setLabel( Translate::translate( 'Audio' ) );
-			$audio = new Text( 'audio_url' );
+			$audio = new Text( 'url' );
 			$audio->setLabel( Translate::translate( 'SoundCloud audio URL' ) );
 			$audio->setValidation( 'url' );
 			//$audio->setDependency($format, 'silverwp_post_format_dep_boolean', 'audio');
