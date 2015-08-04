@@ -11,6 +11,9 @@
       "homepage": "http://silversite.pl"
     }
   ],
+  "support": {
+    "issues": "https://github.com/silversite/silverwp/issues"
+  },
   "keywords": [
     "gim",
     "roots",
@@ -20,12 +23,6 @@
     "composer",
     "silverwp",
     "wp"
-  ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "http://wpackagist.org"
-    }
   ],
   "require": {
     "php": ">=5.3",
