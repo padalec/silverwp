@@ -46,7 +46,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\PostFormat' ) ) {
 		public function __construct( $name = 'post_format' ) {
 			parent::__construct( $name );
 			$this->setLabel( Translate::translate( 'Post format' ) );
-
+			/*TODO implement dependency
 			$format = new Select( 'format' );
 			$format->setLabel( Translate::translate( 'Post format' ) );
 			$format->setOptions(
@@ -70,24 +70,32 @@ if ( ! class_exists( 'SilverWp\Helper\Control\PostFormat' ) ) {
 				)
 			);
 			$this->addControl( $format );
-
+			*/
+			$group = new Group( 'link' );
+			$group->setLabel( Translate::translate( 'Link' ) );
 			$url = new Text( 'video_url' );
 			$url->setLabel( Translate::translate( 'YouTube or Vimeo file URL' ) );
 			$url->setValidation( 'url' );
-			$url->setDependency($format, 'silverwp_post_format_dep_boolean');
-			$this->addControl( $url );
+//			$url->setDependency($format, 'silverwp_post_format_dep_boolean', 'video');
+			$group->addControl( $url );
+			$this->addControl( $group );
 
+			$group = new Group( 'gallery' );
+			$group->setLabel( Translate::translate( 'Gallery' ) );
 			$gallery = new Upload( 'image' );
 			$gallery->setLabel( Translate::translate( 'Image' ) );
-			$gallery->setDependency($format, 'silverwp_post_format_dep_boolean');
-			$this->addControl( $gallery );
+//			$gallery->setDependency($format, 'silverwp_post_format_dep_boolean', 'gallery');
+			$group->addControl( $gallery );
+			$this->addControl( $group );
 
+			$group = new Group( 'audio' );
+			$group->setLabel( Translate::translate( 'Audio' ) );
 			$audio = new Text( 'audio_url' );
 			$audio->setLabel( Translate::translate( 'SoundCloud audio URL' ) );
 			$audio->setValidation( 'url' );
-			$audio->setDependency($format, 'silverwp_post_format_dep_boolean');
-			$this->addControl( $audio );
-
+			//$audio->setDependency($format, 'silverwp_post_format_dep_boolean', 'audio');
+			$group->addControl( $audio );
+			$this->addControl( $group );
 		}
 	}
 }
