@@ -61,37 +61,34 @@ if ( ! class_exists( 'SilverWp' ) ) {
          */
         private function constant() {
 
-            ! defined( 'SILVERWP_VER' )
+            defined( 'SILVERWP_VER' )
             || define( 'SILVERWP_VER', $this->version );
 
-            ! defined( 'SILVERWP_DIR' )
-            || define( 'SILVERWP_DIR', plugin_dir_path( __FILE__ ) );
+            define( 'SILVERWP_DIR', plugin_dir_path( __FILE__ ) );
 
-            ! defined( 'SILVERWP_THEME_TEXT_DOMAIN' )
-            || define( 'SILVERWP_THEME_TEXT_DOMAIN', 'silverwp' );
+            define( 'SILVERWP_THEME_TEXT_DOMAIN', 'silverwp' );
 
-            ! defined( 'SILVERWP_OPTION_PREFIX' )
-            || define( 'SILVERWP_OPTION_PREFIX', '_silverwp_option' );
+            define( 'SILVERWP_OPTION_PREFIX', '_silverwp_option' );
 
-            ! defined( 'SILVERWP_META_BOX_DEV' )
+            defined( 'SILVERWP_META_BOX_DEV' )
             || define( 'SILVERWP_META_BOX_DEV', false );
 
-            ! defined( 'THEME_OPTION_PREFIX' )
+            defined( 'THEME_OPTION_PREFIX' )
             || define( 'THEME_OPTION_PREFIX', '_silverwp_option' );
 
-            ! defined( 'SILVERWP_META_BOX_DEV' )
+            defined( 'SILVERWP_META_BOX_DEV' )
             || define( 'SILVERWP_META_BOX_DEV', false );
 
-            ! defined( 'SILVERWP_THEME_OPTIONS_DEV' )
+            defined( 'SILVERWP_THEME_OPTIONS_DEV' )
             || define( 'SILVERWP_THEME_OPTIONS_DEV', true );
 
-            ! defined( 'SILVERWP_LIBS_PATH' )
+            defined( 'SILVERWP_LIBS_PATH' )
             || define( 'SILVERWP_LIBS_PATH', SILVERWP_DIR . 'libs/' );
 
-            ! defined( 'SILVERWP_VENDOR_PATH' )
+            defined( 'SILVERWP_VENDOR_PATH' )
             || define( 'SILVERWP_VENDOR_PATH', SILVERWP_DIR . '../vendor/' );
 
-            ! defined( 'SILVERWP_VENDOR_URI' )
+            defined( 'SILVERWP_VENDOR_URI' )
             || define(
                     'SILVERWP_VENDOR_URI',
                     plugins_url( 'silverwp', 'silverwp' ) . '/vendor/'
