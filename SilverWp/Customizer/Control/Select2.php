@@ -31,7 +31,7 @@ if ( ! class_exists( '\SilverWp\Customizer\Control\Select2' ) ) {
      * @version $Revision:$
      * @see https://github.com/aristath/kirki/wiki/select2
      */
-    class Select extends MultiControlAbstract {
+    class Select2 extends MultiControlAbstract {
         protected $type = 'select2';
     }
 }
