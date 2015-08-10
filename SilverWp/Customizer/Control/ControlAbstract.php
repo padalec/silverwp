@@ -142,7 +142,8 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
 
 //            $value = get_theme_mod( $this->getName(), $this->getDefault() );
             $value =  \Kirki::get_option( CustomizerAbstract::getId(), $this->getName());
-            return $value;
+
+	        return htmlspecialchars_decode( $value );
         }
 
 	    /**
