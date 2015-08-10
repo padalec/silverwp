@@ -40,7 +40,8 @@ if ( ! class_exists( 'SilverWp\Helper\Control\MultiControlAbstract' ) ) {
         /**
          * Set multi options
          *
-         * @param array $options
+         * @param array $options example:
+         *                       array('value' => $value,'label' => $label)
          *
          * @return $this
          * @access public

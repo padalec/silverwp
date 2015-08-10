@@ -1,16 +1,18 @@
 {
-  "name": "padalec/silverwp",
+  "name": "silversite/silverwp",
   "type": "wordpress-plugin",
   "description": "Platform to help WordPress developers create plugins and themes",
-  "homepage": "https://github.com/padalec/silverwp",
+  "homepage": "https://github.com/silversite/silverwp",
   "license": "GPLv2 or later",
   "authors": [
     {
       "name": "Michal Kalkowski",
-      "email": "michal@silversite.pl",
       "homepage": "http://silversite.pl"
     }
   ],
+  "support": {
+    "issues": "https://github.com/silversite/silverwp/issues"
+  },
   "keywords": [
     "gim",
     "roots",
@@ -20,12 +22,6 @@
     "composer",
     "silverwp",
     "wp"
-  ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "http://wpackagist.org"
-    }
   ],
   "require": {
     "php": ">=5.3",

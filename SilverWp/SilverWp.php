@@ -24,11 +24,11 @@ if ( ! class_exists( 'SilverWp' ) ) {
      *
      * Main core class loader
      *
-     * @category WordPress
-     * @package SilverWp
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Revision:$
+     * @category  WordPress
+     * @package   SilverWp
+     * @author    Michal Kalkowski <michal at silversite.pl>
+     * @copyright SilverSite.pl 2015
+     * @version   $Revision:$
      */
     class SilverWp extends SingletonAbstract {
         /**
@@ -58,38 +58,38 @@ if ( ! class_exists( 'SilverWp' ) ) {
          */
         private function constant() {
 
-            defined( 'SILVERWP_VER' ) ||
-            define( 'SILVERWP_VER', $this->version );
+            defined( 'SILVERWP_VER' )
+            || define( 'SILVERWP_VER', $this->version );
 
-            defined( 'SILVERWP_DIR' ) ||
             define( 'SILVERWP_DIR', plugin_dir_path( __FILE__ ) );
 
-            defined( 'SILVERWP_THEME_TEXT_DOMAIN' ) ||
             define( 'SILVERWP_THEME_TEXT_DOMAIN', 'silverwp' );
 
-            defined( 'SILVERWP_OPTION_PREFIX' ) ||
             define( 'SILVERWP_OPTION_PREFIX', '_silverwp_option' );
 
-            defined( 'SILVERWP_META_BOX_DEV' ) ||
-            define( 'SILVERWP_META_BOX_DEV', false );
+            defined( 'SILVERWP_META_BOX_DEV' )
+            || define( 'SILVERWP_META_BOX_DEV', false );
 
-            defined( 'THEME_OPTION_PREFIX' ) ||
-            define( 'THEME_OPTION_PREFIX', '_silverwp_option' );
+            defined( 'THEME_OPTION_PREFIX' )
+            || define( 'THEME_OPTION_PREFIX', '_silverwp_option' );
 
-            defined( 'SILVERWP_META_BOX_DEV' ) ||
-            define( 'SILVERWP_META_BOX_DEV', false );
+            defined( 'SILVERWP_META_BOX_DEV' )
+            || define( 'SILVERWP_META_BOX_DEV', false );
 
-            defined( 'SILVERWP_THEME_OPTIONS_DEV' ) ||
-            define( 'SILVERWP_THEME_OPTIONS_DEV', true );
+            defined( 'SILVERWP_THEME_OPTIONS_DEV' )
+            || define( 'SILVERWP_THEME_OPTIONS_DEV', true );
 
-            defined( 'SILVERWP_LIBS_PATH' ) ||
-            define( 'SILVERWP_LIBS_PATH', SILVERWP_DIR . 'libs/' );
+            defined( 'SILVERWP_LIBS_PATH' )
+            || define( 'SILVERWP_LIBS_PATH', SILVERWP_DIR . 'libs/' );
 
-            defined( 'SILVERWP_VENDOR_PATH' ) ||
-            define( 'SILVERWP_VENDOR_PATH', SILVERWP_DIR . '../vendor/' );
+            defined( 'SILVERWP_VENDOR_PATH' )
+            || define( 'SILVERWP_VENDOR_PATH', SILVERWP_DIR . '../vendor/' );
 
-            defined( 'SILVERWP_VENDOR_URI' ) ||
-            define( 'SILVERWP_VENDOR_URI', plugins_url( 'silverwp', 'silverwp' ) . '/vendor/' );
+            defined( 'SILVERWP_VENDOR_URI' )
+            || define(
+                    'SILVERWP_VENDOR_URI',
+                    plugins_url( 'silverwp', 'silverwp' ) . '/vendor/'
+                );
         }
 
         /**
@@ -116,10 +116,22 @@ if ( ! class_exists( 'SilverWp' ) ) {
         public function isPlugin( PluginInterface $plugin_class ) {
 
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-            if ( is_plugin_active( $plugin_class->getPluginName() . '/' . $plugin_class->getPluginName() . '.php' ) ) {
-                register_activation_hook( __FILE__, array( $plugin_class, 'activateHook' ) );
-                register_deactivation_hook( __FILE__, array( $plugin_class, 'deactivateHook' ) );
+            $plugin_file = $plugin_class->getPluginName() . '/' . $plugin_class->getPluginName() . '.php';
+            if ( is_plugin_active( $plugin_file ) ) {
+                register_activation_hook(
+                    __FILE__
+                    , array(
+                        $plugin_class,
+                        'activateHook'
+                    )
+                );
+                register_deactivation_hook(
+                    __FILE__
+                    , array(
+                        $plugin_class,
+                        'deactivateHook'
+                    )
+                );
             }
         }
 
@@ -132,7 +144,8 @@ if ( ! class_exists( 'SilverWp' ) ) {
         private function vpFix() {
             \VP_AutoLoader::remove_directories( VP_CLASSES_DIR, VP_NAMESPACE );
             \VP_AutoLoader::add_directories(
-                SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR
+                SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR
+                . 'classes' . DIRECTORY_SEPARATOR
                 , VP_NAMESPACE
             );
             \VP_AutoLoader::add_directories( VP_CLASSES_DIR, VP_NAMESPACE );
@@ -140,10 +153,13 @@ if ( ! class_exists( 'SilverWp' ) ) {
 
             $vp = \VP_FileSystem::instance();
             $vp->remove_directories( 'views' );
-            $vp->add_directories( 'views', SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR . 'views' );
+            $vp->add_directories(
+                'views',
+                SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR . 'views'
+            );
             $vp->add_directories( 'views', ABSPATH . 'Views' );
             $vp->add_directories( 'views', VP_VIEWS_DIR );
-        }
 
+        }
     }
 }

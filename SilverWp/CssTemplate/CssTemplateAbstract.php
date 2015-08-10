@@ -23,237 +23,239 @@ namespace SilverWp\CssTemplate;
 use SilverWp\SingletonAbstract;
 
 if ( ! class_exists( 'SilverWp\CssTemplate\CssTemplateAbstract' ) ) {
-    /**
-     * Base Class for css compilers
-     *
-     * @abstract
-     * @category   WordPress
-     * @package    SilverWp
-     * @subpackage CssTemplate
-     * @author     Michal Kalkowski <michal at silversite.pl>
-     * @copyright  SilverSite.pl 2015
-     * @version    $Revision:$
-     */
-    abstract class CssTemplateAbstract extends SingletonAbstract
-        implements CssTemplateInterface {
+	/**
+	 * Base Class for css compilers
+	 *
+	 * @abstract
+	 * @category   WordPress
+	 * @package    SilverWp
+	 * @subpackage CssTemplate
+	 * @author     Michal Kalkowski <michal at silversite.pl>
+	 * @copyright  SilverSite.pl 2015
+	 * @version    $Revision:$
+	 */
+	abstract class CssTemplateAbstract extends SingletonAbstract
+		implements CssTemplateInterface {
 
-        /**
-         *
-         * @var string
-         * @access protected
-         */
-        protected $upload_dir;
+		/**
+		 *
+		 * @var string
+		 * @access protected
+		 */
+		protected $upload_dir;
 
-        /**
-         *
-         * @var string
-         * @access protected
-         */
-        protected $upload_url;
+		/**
+		 *
+		 * @var string
+		 * @access protected
+		 */
+		protected $upload_url;
 
-        /**
-         * Associative array with Less or Sass variables
-         *
-         * @var array
-         * @access protected
-         */
-        protected $variables = array();
+		/**
+		 * Associative array with Less or Sass variables
+		 *
+		 * @var array
+		 * @access protected
+		 */
+		protected $variables = array();
 
-        /**
-         *
-         * @var null|array
-         * @static
-         * @access private
-         */
-        protected static $stylesheets_templates = null;
+		/**
+		 *
+		 * @var null|array
+		 * @static
+		 * @access private
+		 */
+		protected static $stylesheets_templates = null;
 
-        /**
-         *
-         * Class constructor
-         *
-         * @access protected
-         */
-        protected function __construct() {
-            add_action( 'plugins_loaded', array( $this, 'registerFallback' ) );
+		/**
+		 *
+		 * Class constructor
+		 *
+		 * @access protected
+		 */
+		protected function __construct() {
+			add_action( 'plugins_loaded', array( $this, 'registerFallback' ) );
 
-            $childClass = get_called_class();
-            if ( $this->isImplemented( $childClass,
-                '\SilverWp\CssTemplate\CssTemplateCompilerInterface' )
-            ) {
-                add_filter( 'wp_scss_compiler', 'compiler' );
-            }
-        }
-
-
-        /**
-         * Add new php variable will be change by Sass or Less compiler
-         *
-         * @param string $name  variable name
-         * @param string $value variable value
-         *
-         * @access public
-         * @return $this
-         */
-        public function addVariable( $name, $value ) {
-            $this->variables[ $name ] = $value;
-
-            return $this;
-        }
+			$childClass = get_called_class();
+			if ( $this->isImplemented( $childClass,
+				'\SilverWp\CssTemplate\CssTemplateCompilerInterface' )
+			) {
+				add_filter( 'wp_scss_compiler', 'compiler' );
+			}
+		}
 
 
-        /**
-         *
-         * Set place when generated files will be stored
-         *
-         * @param string $upload_dir full path to upload directory
-         *
-         * @return $this
-         * @access public
-         */
-        public function setUploadDir( $upload_dir ) {
-            $this->upload_dir = $upload_dir;
+		/**
+		 * Add new php variable will be change by Sass or Less compiler
+		 *
+		 * @param string $name  variable name
+		 * @param string $value variable value
+		 *
+		 * @access public
+		 * @return $this
+		 */
+		public function addVariable( $name, $value ) {
+			$this->variables[ $name ] = $value;
 
-            return $this;
-        }
+			return $this;
+		}
 
-        /**
-         *
-         * Set URL to place when generated files will be stored
-         * Used for enqueue scripts
-         *
-         * @param string $upload_url full url to upload directory
-         *
-         * @return $this
-         * @access public
-         */
-        public function setUploadUrl( $upload_url ) {
-            $this->upload_url = $upload_url;
 
-            return $this;
-        }
+		/**
+		 *
+		 * Set place when generated files will be stored
+		 *
+		 * @param string $upload_dir full path to upload directory
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setUploadDir( $upload_dir ) {
+			$this->upload_dir = $upload_dir;
 
-        /**
-         * Set php to Sass variables
-         *
-         * @param array $variables
-         *
-         * @return $this
-         * @access public
-         */
-        public function setVariables( array $variables ) {
-            $this->variables = $variables;
+			return $this;
+		}
 
-            return $this;
-        }
+		/**
+		 *
+		 * Set URL to place when generated files will be stored
+		 * Used for enqueue scripts
+		 *
+		 * @param string $upload_url full url to upload directory
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setUploadUrl( $upload_url ) {
+			$this->upload_url = $upload_url;
 
-        /**
-         *
-         * Get less files and compile variable to CSS.
-         *
-         * @access public
-         */
-        public function registerFallback() {
+			return $this;
+		}
 
-            $stylesheets = $this->getStylesheetsTemplates();
-            foreach ( $stylesheets as $handle => $stylesheet ) {
-                $this->registerStylesheetsTemplates(
-                    $handle
-                    , $stylesheet['src']
-                    , $stylesheet['deps']
-                    , $stylesheet['ver']
-                    , $stylesheet['media']
-                );
-            }
-        }
+		/**
+		 * Set php to Sass variables
+		 *
+		 * @param array $variables
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setVariables( array $variables ) {
+			$this->variables = $variables;
 
-        /**
-         * Register Stylesheets templates files
-         *
-         * @param string      $handle   handle name
-         * @param string      $src      path to stylesheets template file
-         * @param array       $deps     An array of registered style handles this stylesheet depends on. Default empty array.
-         * @param string|bool $ver      String specifying the stylesheet version number. Used to ensure that the correct version
-         *                              is sent to the client regardless of caching. Default 'false'. Accepts 'false', 'null', or 'string'.
-         * @param string      $media    Optional. The media for which this stylesheet has been defined.
-         *                              Default 'all'. Accepts 'all', 'aural', 'braille', 'handheld', 'projection', 'print',
-         *                              'screen', 'tty', or 'tv'.
-         *
-         * @abstract
-         * @return WPScssStylesheet
-         */
-        abstract protected function registerStylesheetsTemplates(
-            $handle
-            , $src
-            , array $deps = array()
-            , $ver = false
-            , $media = 'all'
-        );
+			return $this;
+		}
 
-        /**
-         * Return array with all stylesheets templates
-         *
-         * @return array
-         * @access public
-         */
-        public function getStylesheetsTemplates() {
-            return self::$stylesheets_templates;
-        }
+		/**
+		 *
+		 * Get less files and compile variable to CSS.
+		 *
+		 * @access public
+		 */
+		public function registerFallback() {
 
-        /**
-         *
-         * Add stylesheet template file
-         *
-         * @param string $handle
-         * @param array  $params array( 'src' => '', 'deps' => array(), 'version' => '', 'media' => 'all' )
-         *
-         * @access public
-         * @static
-         */
-        public static function addStylesheetsTemplate( $handle, array $params
-        ) {
-            self::$stylesheets_templates[ $handle ] = $params;
-        }
+			$stylesheets = $this->getStylesheetsTemplates();
+			if ( count( $stylesheets ) ) {
+				foreach ( $stylesheets as $handle => $stylesheet ) {
+					$this->registerStylesheetsTemplates(
+						$handle
+						, $stylesheet['src']
+						, $stylesheet['deps']
+						, $stylesheet['ver']
+						, $stylesheet['media']
+					);
+				}
+			}
+		}
 
-        /**
-         *
-         * Change compiled css target path.
-         * Remove not necessary folder path structure
-         *
-         * @param string $target_path current target path
-         *
-         * @return string
-         * @access public
-         */
-        public function filterTargetPath( $target_path ) {
-            $target_path_array = explode( DIRECTORY_SEPARATOR, $target_path );
-            $css_file          = end( $target_path_array );
+		/**
+		 * Register Stylesheets templates files
+		 *
+		 * @param string      $handle   handle name
+		 * @param string      $src      path to stylesheets template file
+		 * @param array       $deps     An array of registered style handles this stylesheet depends on. Default empty array.
+		 * @param string|bool $ver      String specifying the stylesheet version number. Used to ensure that the correct version
+		 *                              is sent to the client regardless of caching. Default 'false'. Accepts 'false', 'null', or 'string'.
+		 * @param string      $media    Optional. The media for which this stylesheet has been defined.
+		 *                              Default 'all'. Accepts 'all', 'aural', 'braille', 'handheld', 'projection', 'print',
+		 *                              'screen', 'tty', or 'tv'.
+		 *
+		 * @abstract
+		 * @return WPScssStylesheet
+		 */
+		abstract protected function registerStylesheetsTemplates(
+			$handle
+			, $src
+			, array $deps = array()
+			, $ver = false
+			, $media = 'all'
+		);
 
-            $css_file = str_replace( '-%s', '', $css_file );
-            $css_file = preg_replace( '/\.css{1,}/', '', $css_file ) . '.css';
+		/**
+		 * Return array with all stylesheets templates
+		 *
+		 * @return array
+		 * @access public
+		 */
+		public function getStylesheetsTemplates() {
+			return self::$stylesheets_templates;
+		}
 
-            return DIRECTORY_SEPARATOR . $css_file;
-        }
+		/**
+		 *
+		 * Add stylesheet template file
+		 *
+		 * @param string $handle
+		 * @param array  $params array( 'src' => '', 'deps' => array(), 'version' => '', 'media' => 'all' )
+		 *
+		 * @access public
+		 * @static
+		 */
+		public static function addStylesheetsTemplate( $handle, array $params
+		) {
+			self::$stylesheets_templates[ $handle ] = $params;
+		}
 
-        /**
-         * Change absolute image path to relative
-         *
-         * @param string $content
-         *
-         * @return mixed|string
-         * @access public
-         */
-        public function makeRelativeImagePath( $content = '' ) {
+		/**
+		 *
+		 * Change compiled css target path.
+		 * Remove not necessary folder path structure
+		 *
+		 * @param string $target_path current target path
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function filterTargetPath( $target_path ) {
+			$target_path_array = explode( DIRECTORY_SEPARATOR, $target_path );
+			$css_file          = end( $target_path_array );
 
-            /*if ( !get_option( 'presscore_less_css_is_writable' ) ) {
-                return $content;
-            }*/
+			$css_file = str_replace( '-%s', '', $css_file );
+			$css_file = preg_replace( '/\.css{1,}/', '', $css_file ) . '.css';
 
-            $content = str_replace( set_url_scheme( content_url(), 'http' ),
-                '../../../..', $content );
-            $content = str_replace( set_url_scheme( content_url(), 'https' ),
-                '../../../..', $content );
+			return DIRECTORY_SEPARATOR . $css_file;
+		}
 
-            return $content;
-        }
-    }
+		/**
+		 * Change absolute image path to relative
+		 *
+		 * @param string $content
+		 *
+		 * @return mixed|string
+		 * @access public
+		 */
+		public function makeRelativeImagePath( $content = '' ) {
+
+			/*if ( !get_option( 'presscore_less_css_is_writable' ) ) {
+				return $content;
+			}*/
+
+			$content = str_replace( set_url_scheme( content_url(), 'http' ),
+				'../../../..', $content );
+			$content = str_replace( set_url_scheme( content_url(), 'https' ),
+				'../../../..', $content );
+
+			return $content;
+		}
+	}
 }

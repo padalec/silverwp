@@ -1,4 +1,9 @@
 <?php
+namespace SilverWp;
+
+use \SilverWp\Customizer\CustomizerAbstract;
+use \SilverWp\Helper\Paginator\Pager;
+
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -16,20 +21,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
-if ( ! function_exists( 'silverwp_pager' ) ) {
-    function silverwp_pager( $total_posts, $current_page ) {
-        $pager = new \SilverWp\Helper\Paginator\Pager();
-        $pager->setMaxNumPages( $current_page );
-        $pager->setTotalPosts( $total_posts );
-        $links = $pager->getLinks();
+if ( ! function_exists( '\SilverWp\pager' ) ) {
+	function pager( $total_posts, $current_page ) {
+		$pager = new Pager();
+		$pager->setMaxNumPages( $current_page );
+		$pager->setTotalPosts( $total_posts );
+		$links = $pager->getLinks();
 
-        return $links;
-    }
+		return $links;
+	}
+}
+
+if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
+	/**
+	 * Short cut to CustomizerAbstract::getOption()
+	 *
+	 * @param string $option_name
+	 *
+	 * @return string
+	 * @access public
+	 */
+	function get_customizer_option( $option_name ) {
+		return CustomizerAbstract::getOption( $option_name );
+	}
 }

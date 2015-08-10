@@ -164,7 +164,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
          * @access public
          */
         public function getValue() {
-            $value = $this->value;
+	        $value = $this->getSetting( 'value' );
 
             return $value;
         }
@@ -206,21 +206,27 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
          */
         public function setDependency() {
 
-            list( $parent_control, $callback_function ) = func_get_args();
+	        $args              = func_get_args();
+	        $parent_control    = $args[ 0 ];
+	        $callback_function = $args[ 1 ];
 
-            if ( ! $parent_control instanceof ControlInterface ) {
-                throw new Exception(
-                    Translate::translate(
-                        'First arguments should by instance of \SilverWp\Helper\Control\ControlInterface'
-                    )
-                );
-            }
-            $this->setting[ 'dependency' ] = array(
-                'field'    => $parent_control->getName(),
-                'function' => $callback_function
-            );
+	        if ( ! $parent_control instanceof ControlInterface ) {
+		        throw new Exception(
+			        Translate::translate(
+				        'First arguments should by instance of \SilverWp\Helper\Control\ControlInterface'
+			        )
+		        );
+	        }
+	        $this->setting[ 'dependency' ] = array(
+		        'field'    => $parent_control->getName(),
+		        'function' => $callback_function,
+	        );
+	        //TODO: this doesn't work yet
+	        if ( isset( $args[2] ) ) {
+		        $this->setting[ 'dependency' ][ 'value' ] = $args[2];
+	        }
 
-            return $this;
+	        return $this;
         }
 
         /**

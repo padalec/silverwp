@@ -18,7 +18,7 @@
  */
 namespace SilverWp\Customizer\Control;
 
-if ( ! class_exists( '\SilverWp\Customizer\Control\Select' ) ) {
+if ( ! class_exists( '\SilverWp\Customizer\Control\SelectPages' ) ) {
 
     /**
      * Combo box (select) control with all pages list
@@ -27,7 +27,7 @@ if ( ! class_exists( '\SilverWp\Customizer\Control\Select' ) ) {
      * @package SilverWp
      * @subpackage Customizer\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version $Revision:$
      * @link http://kirki.org/#Select
      */
