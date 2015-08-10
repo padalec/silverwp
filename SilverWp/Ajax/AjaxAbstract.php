@@ -29,319 +29,326 @@ use SilverWp\View;
 /**
  * Ajax server response
  *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: AjaxAbstract.php 2184 2015-01-21 12:20:08Z padalec $
- * @category WordPress
- * @package SilverWp
+ * @author        Michal Kalkowski <michal at silversite.pl>
+ * @version       $Id: AjaxAbstract.php 2184 2015-01-21 12:20:08Z padalec $
+ * @category      WordPress
+ * @package       SilverWp
  * @tutorial http://wordpress.stackexchange.com/questions/106427/using-ajax-with-a-class-file
  * @copyright (c) 2009 - 2014, SilverSite.pl
  * @abstract
  */
 abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 
-    /**
-     *
-     * ajax js file
-     *
-     * @var string
-     * @access protected
-     */
-    protected $ajax_js_file = 'ajax.js';
+	/**
+	 *
+	 * ajax js file
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $ajax_js_file = null;
 
-    /**
-     *
-     * ajax js script handle name
-     *
-     * @var string
-     * @access protected
-     */
-    protected $ajax_handler = 'SilverWpAjax';
+	/**
+	 *
+	 * ajax js script handle name
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $ajax_handler = 'SilverWpAjax';
 
-    /**
-     * ajax response function name
-     *
-     * @var string
-     * @access protected
-     */
-    protected $name = null;
+	/**
+	 * ajax response function name
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $name = null;
 
-    /**
-     * nonce security field
-     *
-     * @var string
-     * @access protected
-     */
-    protected $nonce = null;
+	/**
+	 * nonce security field
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $nonce = null;
 
-    /**
-     *
-     * class constructor
-     *
-     * @throws Exception
-     * @access protected
-     */
-    protected function __construct() {
-        if ( \is_null( $this->name ) ) {
-            throw new Exception( Translate::translate( 'Variable name is requaied and can\'t be empty.' ) );
-        }
-        \add_action( 'wp_loaded', array( $this, 'scriptsRegister' ) );
-        # Could as well be: wp_enqueue_scripts or login_enqueue_scripts
-        \add_action( 'wp_enqueue_scripts', array( $this, 'scriptsEnqueue' ) );
-        \add_action( 'wp_enqueue_scripts', array( $this, 'scriptsLocalize' ) );
+	/**
+	 *
+	 * class constructor
+	 *
+	 * @throws Exception
+	 * @access protected
+	 */
+	protected function __construct() {
+		if ( \is_null( $this->name ) ) {
+			throw new Exception( Translate::translate( 'Variable name is requaied and can\'t be empty.' ) );
+		}
+		if ( ! empty( $this->ajax_js_file ) ) {
+			\add_action( 'wp_loaded', array( $this, 'scriptsRegister' ) );
+		}
+		# Could as well be: wp_enqueue_scripts or login_enqueue_scripts
+		\add_action( 'wp_enqueue_scripts', array( $this, 'scriptsEnqueue' ) );
+		\add_action( 'wp_enqueue_scripts', array( $this, 'scriptsLocalize' ) );
 
-        # Guests:
-        \add_action( "wp_ajax_nopriv_{$this->name}", array( $this, 'ajaxResponse' ) );
-        # Logged in users:
-        //TODO add iterface and method ajaxPrivResponse
-        \add_action( "wp_ajax_{$this->name}", array( $this, 'ajaxResponse' ) );
-    }
+		# Guests:
+		\add_action( "wp_ajax_nopriv_{$this->name}",
+			array( $this, 'ajaxResponse' ) );
+		# Logged in users:
+		//TODO add iterface and method ajaxPrivResponse
+		\add_action( "wp_ajax_{$this->name}", array( $this, 'ajaxResponse' ) );
+	}
 
-    /**
-     *
-     * get action hook name
-     *
-     * @return string
-     */
-    public function getName() {
-        return $this->name;
-    }
+	/**
+	 *
+	 * get action hook name
+	 *
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
 
-    /**
-     *
-     * register ajax js scripts
-     *
-     * @return void
-     * @access public
-     */
-    public function scriptsRegister() {
-        \wp_register_script(
-            $this->ajax_handler
-            , $this->getJsUri() . $this->ajax_js_file
-            , array(
-                'jquery',
-            )
-            , SILVERWP_VER
-            , true
-        );
-    }
+	/**
+	 *
+	 * register ajax js scripts
+	 *
+	 * @return void
+	 * @access public
+	 */
+	public function scriptsRegister() {
+		\wp_register_script(
+			$this->ajax_handler
+			, $this->getJsUri() . $this->ajax_js_file
+			, array(
+				'jquery',
+			)
+			, SILVERWP_VER
+			, true
+		);
+	}
 
-    /**
-     *
-     * Get assets URI
-     *
-     * @return string
-     * @access protected
-     */
-    protected function getJsUri() {
-        $file_system = FileSystem::getInstance();
-        $js_uri  = $file_system->getDirectories( 'js_uri' );
+	/**
+	 *
+	 * Get assets URI
+	 *
+	 * @return string
+	 * @access protected
+	 */
+	protected function getJsUri() {
+		$file_system = FileSystem::getInstance();
+		$js_uri      = $file_system->getDirectories( 'js_uri' );
 
-        return $js_uri;
-    }
+		return $js_uri;
+	}
 
-    /**
-     *
-     * Enqueue ajax scripts
-     *
-     * @return void
-     * @access public
-     */
-    public function scriptsEnqueue() {
-        \wp_enqueue_script( $this->ajax_handler );
-    }
+	/**
+	 *
+	 * Enqueue ajax scripts
+	 *
+	 * @return void
+	 * @access public
+	 */
+	public function scriptsEnqueue() {
+		\wp_enqueue_script( $this->ajax_handler );
+	}
 
-    /**
-     *
-     * Localize and add params to ajax js
-     *
-     * @access public
-     * @return void
-     * @access public
-     */
-    public function scriptsLocalize() {
-        $this->nonce = \wp_create_nonce( $this->getNonceName() );
-        \wp_localize_script(
-            $this->ajax_handler,
-            $this->name,
-            array(
-                'nonce'  => $this->nonce,
-                'url'    => \admin_url( 'admin-ajax.php' ),
-                'action' => $this->name
-            )
-        );
-    }
+	/**
+	 *
+	 * Localize and add params to ajax js
+	 *
+	 * @access public
+	 * @return void
+	 * @access public
+	 */
+	public function scriptsLocalize() {
+		$this->nonce = \wp_create_nonce( $this->getNonceName() );
+		\wp_localize_script(
+			$this->ajax_handler,
+			$this->name,
+			array(
+				'nonce'  => $this->nonce,
+				'url'    => \admin_url( 'admin-ajax.php' ),
+				'action' => $this->name
+			)
+		);
+	}
 
-    /**
-     *
-     * Get name of nonce field
-     *
-     * @return string
-     * @access public
-     */
-    public function getNonceName() {
-        return $this->name . 'nonce';
-    }
+	/**
+	 *
+	 * Get name of nonce field
+	 *
+	 * @return string
+	 * @access public
+	 */
+	public function getNonceName() {
+		return $this->name . 'nonce';
+	}
 
-    /**
-     *
-     * Verifies the AJAX request to prevent
-     * processing requests external of the blog.
-     *
-     * @return void
-     * @access public
-     */
-    public function checkAjaxReferer() {
-        \check_ajax_referer( $this->getNonceName(), 'nonce', true );
-    }
+	/**
+	 *
+	 * Verifies the AJAX request to prevent
+	 * processing requests external of the blog.
+	 *
+	 * @return void
+	 * @access public
+	 */
+	public function checkAjaxReferer() {
+		\check_ajax_referer( $this->getNonceName(), 'nonce', true );
+	}
 
-    /**
-     *
-     * Get params from JS request
-     *
-     * @access protected
-     *
-     * @param string $name
-     * @param int    $filter_options
-     * @param null   $default
-     *
-     * @return mixed filtered request data
-     */
-    protected function getRequestData( $name, $filter_options = FILTER_DEFAULT, $default = null ) {
-        if ( $this->isGet( $name ) ) {
-            $request = Filter::get_var( $name, $filter_options, $default );
-        } elseif ( $this->isPost( $name ) ) {
-            $request = Filter::post_var( $name, $filter_options, $default );
-        } /* else {
+	/**
+	 *
+	 * Get params from JS request
+	 *
+	 * @access protected
+	 *
+	 * @param string $name
+	 * @param int    $filter_options
+	 * @param null   $default
+	 *
+	 * @return mixed filtered request data
+	 */
+	protected function getRequestData(
+		$name, $filter_options = FILTER_DEFAULT, $default = null
+	) {
+		if ( $this->isGet( $name ) ) {
+			$request = Filter::get_var( $name, $filter_options, $default );
+		} elseif ( $this->isPost( $name ) ) {
+			$request = Filter::post_var( $name, $filter_options, $default );
+		} /* else {
           throw new Exception(Translate::translate('Request param ('.$name.') isn\'t send by POST or GET.'));
           } */
 
-        return $request;
-    }
+		return $request;
+	}
 
-    /**
-     *
-     * request is $_GET data
-     *
-     * @access private
-     * @return boolean if the request is $_GET return true else false
-     */
-    private function isGet( $name ) {
-        //TODO has_var
-        if ( \is_null( Filter::get_var( $name ) ) ) {
-            return false;
-        }
+	/**
+	 *
+	 * request is $_GET data
+	 *
+	 * @access private
+	 * @return boolean if the request is $_GET return true else false
+	 */
+	private function isGet( $name ) {
+		//TODO has_var
+		if ( \is_null( Filter::get_var( $name ) ) ) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     *
-     * request is $_POST data
-     *
-     * @access private
-     * @return boolean if the request is $_GET return true else false
-     */
-    private function isPost( $name ) {
-        //TODO has_var
-        if ( \is_null( Filter::post_var( $name ) ) ) {
-            return false;
-        }
+	/**
+	 *
+	 * request is $_POST data
+	 *
+	 * @access private
+	 * @return boolean if the request is $_GET return true else false
+	 */
+	private function isPost( $name ) {
+		//TODO has_var
+		if ( \is_null( Filter::post_var( $name ) ) ) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * request data format
-     *
-     * @todo http://stackoverflow.com/questions/17816515/detect-an-ajax-request
-     * @return type
-     */
-    protected function requestFormat() {
-        return;
-    }
+	/**
+	 * request data format
+	 *
+	 * @todo http://stackoverflow.com/questions/17816515/detect-an-ajax-request
+	 * @return type
+	 */
+	protected function requestFormat() {
+		return;
+	}
 
-    /**
-     *
-     * respons data format
-     *
-     * @todo http://stackoverflow.com/questions/17816515/detect-an-ajax-request
-     * @return type
-     */
-    protected function responseFormat() {
-        return;
-    }
+	/**
+	 *
+	 * respons data format
+	 *
+	 * @todo http://stackoverflow.com/questions/17816515/detect-an-ajax-request
+	 * @return type
+	 */
+	protected function responseFormat() {
+		return;
+	}
 
-    /**
-     *
-     * ajax response in json format
-     *
-     * @param array|object $data array or object with data should by returned
-     */
-    protected function responseJson( $data ) {
-        \header( 'Content-Type: application/json' );
-        echo \json_encode( $data );
-        exit;
-    }
+	/**
+	 *
+	 * ajax response in json format
+	 *
+	 * @param array|object $data array or object with data should by returned
+	 */
+	protected function responseJson( $data ) {
+		\header( 'Content-Type: application/json' );
+		echo \json_encode( $data );
+		exit;
+	}
 
-    /**
-     * Ajax response in HTML format
-     *
-     * @param array  $data data
-     * @param string $view_file view file name
-     *
-     * @return string rendered view
-     * @throws Exception
-     */
-    protected function responseHtml( array $data, $view_file = null ) {
-        if ( \is_null( $view_file ) ) {
-            $view_file = $this->name;
-        }
-        try {
-            $view = View::getInstance()->load( 'Ajax/' . $view_file, $data );
-            //some servers don't display content with out echo
-            echo $view;
-            //fix display 0
-            //return $view;
-        } catch ( Exception $ex ) {
-            echo $ex->displayAdminNotice( $ex->getMessage() );
-        }
-        exit;
-    }
+	/**
+	 * Ajax response in HTML format
+	 *
+	 * @param array  $data      data
+	 * @param string $view_file view file name
+	 *
+	 * @return string rendered view
+	 * @throws Exception
+	 */
+	protected function responseHtml( array $data, $view_file = null ) {
+		if ( \is_null( $view_file ) ) {
+			$view_file = $this->name;
+		}
+		try {
+			$view = View::getInstance()->load( 'Ajax/' . $view_file, $data );
+			//some servers don't display content with out echo
+			echo $view;
+			//fix display 0
+			//return $view;
+		} catch ( Exception $ex ) {
+			echo $ex->displayAdminNotice( $ex->getMessage() );
+		}
+		exit;
+	}
 
-    /**
-     * check the header is from ajax request
-     *
-     * @return boolean
-     * @static
-     * @access public
-     * @todo move $_SERVER add filters
-     */
-    public static function isAjax() {
-        if ( function_exists( 'apache_request_headers' ) ) {
-            $headers = \apache_request_headers();
-        } else {
-            $headers = $_SERVER;
-        }
-        if ( isset( $headers[ 'X-Requested-With' ] ) && $headers[ 'X-Requested-With' ] == 'XMLHttpRequest' ) {
-            return true;
-        }
+	/**
+	 * check the header is from ajax request
+	 *
+	 * @return boolean
+	 * @static
+	 * @access public
+	 * @todo   move $_SERVER add filters
+	 */
+	public static function isAjax() {
+		if ( function_exists( 'apache_request_headers' ) ) {
+			$headers = \apache_request_headers();
+		} else {
+			$headers = $_SERVER;
+		}
+		if ( isset( $headers['X-Requested-With'] )
+		     && $headers['X-Requested-With'] == 'XMLHttpRequest'
+		) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Get view file from AJAX request
-     *
-     * @return string view file name
-     * @access protected
-     */
-    protected function getViewFileFromRequest() {
-        $view = $this->getRequestData( 'view' );
-        if ( is_null( $view ) || $view == '0' ) {
-            return null;
-        }
-        $view_file = $this->name . '-' . $view;
+	/**
+	 * Get view file from AJAX request
+	 *
+	 * @return string view file name
+	 * @access protected
+	 */
+	protected function getViewFileFromRequest() {
+		$view = $this->getRequestData( 'view' );
+		if ( is_null( $view ) || $view == '0' ) {
+			return null;
+		}
+		$view_file = $this->name . '-' . $view;
 
-        return $view_file;
-    }
+		return $view_file;
+	}
 }
