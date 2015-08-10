@@ -20,6 +20,8 @@ namespace SilverWp\Helper\Control;
 
 use SilverWp\Debug;
 use SilverWp\FileSystem;
+use SilverWp\Helper\MetaBox;
+use SilverWp\Helper\Option;
 use SilverWp\SilverWp;
 use SilverWp\Translate;
 
@@ -84,16 +86,16 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
             if ( ( is_search() && is_home() ) || is_tag() || is_date()
                  || is_archive()
             ) {
-                $post_id   = \SilverWp\Helper\Option::get_option( 'page_for_posts' );
+                $post_id   = Option::get_option( 'page_for_posts' );
                 $post_type = 'page';
             } else {
                 $page_object = get_queried_object();
                 $post_id     = get_queried_object_id();
                 $post_type   = isset( $page_object->post_type )
-                    ? $page_object->post_type : 'portfolio';
+                    ? $page_object->post_type : 'posts';
             }
 
-            $sidebar = \SilverWp\Helper\MetaBox::isSidebar( $post_type, $post_id );
+            $sidebar = MetaBox::isSidebar( $post_type, $post_id );
 
             $display = apply_filters( 'sage/display_sidebar', $sidebar );
 

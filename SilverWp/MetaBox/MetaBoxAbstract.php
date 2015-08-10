@@ -526,7 +526,7 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
         /**
          * Get sidebar position
          *
-         * @return string
+         * @return string|bool
          * @access public
          */
         public function getSidebarPosition() {
@@ -537,18 +537,21 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
 
             $sidebar_code = $this->getSingle( 'sidebar' );
 
-            switch ( $sidebar_code ) {
-                case '1':
+	        switch ( $sidebar_code ) {
+				case '0':
+					$sidebar_position = false;
+			        break;
+				case '1':
                     $sidebar_position = 'left';
                     break;
                 case '2':
                     $sidebar_position = 'right';
                     break;
                 default:
-                    $sidebar_position = 'right'; // default position
+                    $sidebar_position = false; // default position
             }
 
-            return $sidebar_position;
+	        return $sidebar_position;
         }
 
         /**

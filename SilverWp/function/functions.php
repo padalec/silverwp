@@ -21,7 +21,7 @@ use \SilverWp\Helper\Paginator\Pager;
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-if ( ! function_exists( 'silverwp_pager' ) ) {
+if ( ! function_exists( '\SilverWp\pager' ) ) {
 	function pager( $total_posts, $current_page ) {
 		$pager = new Pager();
 		$pager->setMaxNumPages( $current_page );
@@ -32,7 +32,7 @@ if ( ! function_exists( 'silverwp_pager' ) ) {
 	}
 }
 
-if ( ! function_exists( 'silverwp_get_customizer_option' ) ) {
+if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 	/**
 	 * Short cut to CustomizerAbstract::getOption()
 	 *

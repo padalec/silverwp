@@ -18,8 +18,6 @@
  */
 namespace SilverWp;
 
-use SilverWp\Helper\Control\SidebarPosition;
-
 if ( ! class_exists( 'SilverWp' ) ) {
 
     /**
@@ -29,7 +27,7 @@ if ( ! class_exists( 'SilverWp' ) ) {
      * @category  WordPress
      * @package   SilverWp
      * @author    Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version   $Revision:$
      */
     class SilverWp extends SingletonAbstract {
@@ -50,7 +48,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
         protected function __construct() {
             $this->constant();
             $this->includeCore();
-            add_filter( 'body_class', array( $this, 'bodyClass' ) );
         }
 
         /**
@@ -163,23 +160,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
             $vp->add_directories( 'views', ABSPATH . 'Views' );
             $vp->add_directories( 'views', VP_VIEWS_DIR );
 
-        }
-
-        /**
-         * Add extra classes to body_class hook
-         *
-         * @param array $classes
-         *
-         * @return array
-         */
-        public function bodyClass( array $classes ) {
-            if ( SidebarPosition::isDisplayed()
-                 && ! in_array( 'sidebar-primary', $classes )
-            ) {
-                $classes[] = 'sidebar-primary';
-            }
-            //Debug::dump($classes);
-            return $classes;
         }
     }
 }
