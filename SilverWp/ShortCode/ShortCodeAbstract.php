@@ -106,8 +106,9 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
             if ( \is_null( $view_file ) ) {
                 $view_file = $this->tag_base;
             }
+
             try {
-                $view = View::getInstance()->load( 'shortcodes/' . $view_file, $data );
+	            $view = View::getInstance()->load( 'shortcodes/' . $view_file, $data );
 
                 return $view;
             } catch ( Exception $ex ) {
