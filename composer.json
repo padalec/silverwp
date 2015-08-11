@@ -25,7 +25,7 @@
   ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "1.0.*",
+    "aristath/kirki": "1.*",
     "leafo/scssphp": "^0.1.8",
     "pluswp/wp-scss": "@stable"
   },
