@@ -20,7 +20,6 @@ namespace SilverWp\MetaBox;
 
 use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
-use SilverWp\Helper\Form\Group;
 use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\Option;
@@ -457,8 +456,8 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 } catch ( \SilverWp\Exception $ex ) {
                     echo Message::alert( $ex->getMessage(), 'alert-danger' );
                     if ( WP_DEBUG ) {
-                        silverwp_debug_array($ex->getTraceAsString(), 'Stack trace:');
-                        silverwp_debug_array($ex->getTrace(), 'Full stack:');
+                        Debug::dumpPrint($ex->getTraceAsString(), 'Stack trace:');
+	                    Debug::dumpPrint($ex->getTrace(), 'Full stack:');
                     }
                 }
             }
@@ -565,7 +564,7 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
         private function isSetPostId() {
             if ( isset( $this->post_id ) && \is_null( $this->post_id ) ) {
                 $child_class = \get_called_class();
-                throw new Exception( Translate::param( 'Variable %s::post_id is not sets.', $child_class ) );
+                throw new Exception( Translate::translate( 'Variable %s::post_id is not sets.', $child_class ) );
             }
         }
 
