@@ -45,7 +45,7 @@ if ( ! class_exists( 'SilverWp\Debug' ) ) {
             if ( ! is_null( $label ) ) {
                 echo '<p><strong>' . $label . '</strong></p>';
             }
-            echo '<pre style="width:950px; padding:6px 18px; background:#fff; color:red; text-align:left; position:relative; z-index:9999999;">';
+            echo '<pre style="width:950px; padding:6px 18px; background:#fff; color:red; text-align:left; position:relative; z-index:9999999; ">';
             var_dump( $variable );
             echo '</pre>';
         }
@@ -64,7 +64,7 @@ if ( ! class_exists( 'SilverWp\Debug' ) ) {
             if ( ! is_null( $label ) ) {
                 echo '<p><strong>' . $label . '</strong></p>';
             }
-            echo '<pre style="width:950px; padding:6px 18px; background:#fff; color:red; text-align:left; position:relative; z-index:9999999;">';
+            echo '<pre style="width:950px; padding:6px 18px; background:#fff; color:red; text-align:left; position:relative; z-index:9999999; ">';
             print_r( $variable );
             echo '</pre>';
         }

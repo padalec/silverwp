@@ -34,61 +34,63 @@ use VP_FileSystem;
 /**
  * View file renderer
  *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: View.php 2182 2015-01-21 12:00:49Z padalec $
- * @category WordPress
- * @package SilverWp
+ * @author        Michal Kalkowski <michal at silversite.pl>
+ * @version       $Id: View.php 2182 2015-01-21 12:00:49Z padalec $
+ * @category      WordPress
+ * @package       SilverWp
  * @copyright (c) 2009 - 2014, SilverSite.pl
  */
 class View extends SingletonAbstract {
-    protected function __construct() {
+	protected function __construct() {
 
-    }
+	}
 
-    /**
-     * Load view file
-     *
-     * @param  string $file Name of the view file
-     * @param  array  $data Array of data to be bind on the view
-     *
-     * @throws \SilverWp\Exception
-     * @return String The result view
-     * @access public
-     */
-    public function load( $file, $data = array(), $extension = 'php' ) {
-        $view_path = FileSystem::getDirectory( 'views' );
-        $view_file = $view_path . $file . '.' . $extension;
-        if ( ! file_exists($view_file) ) {
-            throw new Exception( "View file not found: $view_file" );
-        }
-        \extract( $data );
-        // fix bug when data is form Ajaxt request
-        if ( AjaxAbstract::isAjax() ) {
-            return include $view_file;
-        } else {
-            \ob_start();
-            include $view_file;
-            $content = \ob_get_clean();
+	/**
+	 * Load view file
+	 *
+	 * @param  string $file Name of the view file
+	 * @param  array  $data Array of data to be bind on the view
+	 *
+	 * @throws \SilverWp\Exception
+	 * @return String The result view
+	 * @access public
+	 */
+	public function load( $file, $data = array(), $extension = 'php' ) {
+		$view_path = FileSystem::getDirectory( 'views' );
+		$view_file = $view_path . $file . '.' . $extension;
 
-            return $content;
-        }
-    }
+		if ( ! file_exists( $view_file ) ) {
+			throw new Exception( "View file not found: $view_file" );
+		}
+		\extract( $data );
+		// fix bug when data is form Ajaxt request
+		if ( AjaxAbstract::isAjax() ) {
+			return include $view_file;
+		} else {
+			\ob_start();
+			include $view_file;
+			$content = \ob_get_clean();
 
-    /**
-     * Render view
-     *
-     * @param string $view_file path to file important: without extension
-     * @param array  $data data to load to theme
-     *
-     * @static
-     * @access public
-     */
-    public static function render( $view_file, array $data ) {
-        try {
-            $view = View::getInstance()->load( $view_file, $data );
-            return $view;
-        } catch ( Exception $ex ) {
-            echo $ex->displayAdminNotice();
-        }
-    }
+			return $content;
+		}
+	}
+
+	/**
+	 * Render view
+	 *
+	 * @param string $view_file path to file important: without extension
+	 * @param array  $data      data to load to theme
+	 *
+	 * @static
+	 * @access public
+	 */
+	public static function render( $view_file, array $data ) {
+		try {
+			$view = View::getInstance()->load( $view_file, $data );
+
+			return $view;
+		} catch ( Exception $ex ) {
+			echo $ex->displayAdminNotice();
+		}
+	}
 }

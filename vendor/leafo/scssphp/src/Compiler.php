@@ -67,8 +67,6 @@ class Compiler
 
         '<=' => 'lte',
         '>=' => 'gte',
-
-        '<=>' => 'cmp',
     );
 
     static protected $namespaces = array(
@@ -121,6 +119,7 @@ class Compiler
     private $storeEnv;
     private $charsetSeen;
     private $stderr;
+    private $shouldEvaluate;
 
     /**
      * Compile scss
@@ -470,8 +469,7 @@ class Compiler
     {
         $env = $this->pushEnv($block);
 
-        $env->selectors =
-            array_map(array($this, 'evalSelector'), $block->selectors);
+        $env->selectors = $this->evalSelectors($block->selectors);
 
         $out = $this->makeOutputBlock(null, $this->multiplySelectors($env));
 
@@ -512,6 +510,66 @@ class Compiler
         $this->scope->children[] = $out;
     }
 
+    protected function evalSelectors($selectors)
+    {
+        $this->shouldEvaluate = false;
+
+        $selectors = array_map(array($this, 'evalSelector'), $selectors);
+
+        // after evaluating interpolates, we might need a second pass
+        if ($this->shouldEvaluate) {
+            $buffer = $this->collapseSelectors($selectors);
+            $parser = new Parser(__METHOD__, false);
+
+            if ($parser->parseSelector($buffer, $newSelectors)) {
+                $selectors = array_map(array($this, 'evalSelector'), $newSelectors);
+            }
+        }
+
+        return $selectors;
+    }
+
+    protected function evalSelector($selector)
+    {
+        return array_map(array($this, 'evalSelectorPart'), $selector);
+    }
+
+    // replaces all the interpolates, stripping quotes
+    protected function evalSelectorPart($part)
+    {
+        foreach ($part as &$p) {
+            if (is_array($p) && ($p[0] === 'interpolate' || $p[0] === 'string')) {
+                $p = $this->compileValue($p);
+
+                // force re-evaluation
+                if (strpos($p, '&') !== false || strpos($p, ',') !== false) {
+                    $this->shouldEvaluate = true;
+                }
+            } elseif (is_string($p) && strlen($p) >= 2 &&
+                ($first = $p[0]) && ($first === '"' || $first === "'") &&
+                substr($p, -1) === $first
+            ) {
+                $p = substr($p, 1, -1);
+            }
+        }
+
+        return $this->flattenSelectorSingle($part);
+    }
+
+    protected function collapseSelectors($selectors)
+    {
+        $output = '';
+
+        array_walk_recursive(
+            $selectors,
+            function ($value, $key) use (&$output) {
+                $output .= $value;
+            }
+        );
+
+        return $output;
+    }
+
     // joins together .classes and #ids
     protected function flattenSelectorSingle($single)
     {
@@ -533,32 +591,6 @@ class Compiler
         }
 
         return $joined;
-    }
-
-    // replaces all the interpolates
-    protected function evalSelector($selector)
-    {
-        return array_map(array($this, 'evalSelectorPart'), $selector);
-    }
-
-    protected function evalSelectorPart($piece)
-    {
-        foreach ($piece as &$p) {
-            if (! is_array($p)) {
-                continue;
-            }
-
-            switch ($p[0]) {
-                case 'interpolate':
-                    $p = $this->compileValue($p);
-                    break;
-                case 'string':
-                    $p = $this->compileValue($p);
-                    break;
-            }
-        }
-
-        return $this->flattenSelectorSingle($piece);
     }
 
     // compiles to string
@@ -892,8 +924,8 @@ class Compiler
 
                 foreach ($selectors as $sel) {
                     // only use the first one
-                    $sel = current($this->evalSelector($sel));
-                    $this->pushExtends($sel, $out->selectors);
+                    $result = $this->evalSelectors(array($sel));
+                    $this->pushExtends(current($result[0]), $out->selectors);
                 }
                 break;
             case 'if':
@@ -1053,11 +1085,25 @@ class Compiler
                 unset($this->storeEnv);
                 break;
             case 'debug':
-                list(, $value, $pos) = $child;
+                list(, $value) = $child;
 
-                $line = $this->parser->getLineNo($pos);
+                $line = $this->parser->getLineNo($this->sourcePos);
                 $value = $this->compileValue($this->reduce($value, true));
                 fwrite($this->stderr, "Line $line DEBUG: $value\n");
+                break;
+            case 'warn':
+                list(, $value) = $child;
+
+                $line = $this->parser->getLineNo($this->sourcePos);
+                $value = $this->compileValue($this->reduce($value, true));
+                echo "Line $line WARN: $value\n";
+                break;
+            case 'error':
+                list(, $value) = $child;
+
+                $line = $this->parser->getLineNo($this->sourcePos);
+                $value = $this->compileValue($this->reduce($value, true));
+                $this->throwError("Line $line ERROR: $value\n");
                 break;
             default:
                 $this->throwError("unknown child type: $child[0]");
@@ -1336,7 +1382,7 @@ class Compiler
                 return $value;
 
             case 'string':
-                return array($value[0], '"', $value[2]);
+                return array($type, '"', $this->compileStringContent($value));
 
             case 'number':
                 return $this->normalizeNumber($value);
@@ -1550,23 +1596,6 @@ class Compiler
     protected function opLtNumberNumber($left, $right)
     {
         return $this->toBool($left[1] < $right[1]);
-    }
-
-    /**
-     * Three-way comparison, aka spaceship operator
-     *
-     * @param array $left
-     * @param array $right
-     *
-     * @return array
-     */
-    protected function opCmpNumberNumber($left, $right)
-    {
-        $n = $left[1] - $right[1];
-
-        return array('number', $n ? $n / abs($n) : 0, '');
-
-        // PHP7: return array('number', $left[1] <=> $right[1], '');
     }
 
     public function toBool($thing)
@@ -3136,6 +3165,27 @@ class Compiler
         return count($list[2]);
     }
 
+    // TODO: need a way to declare this built-in as varargs
+    //protected static $libListSeparator = array('list...');
+    protected function libListSeparator($args)
+    {
+        if (count($args) > 1) {
+            return 'comma';
+        }
+
+        $list = $this->coerceList($args[0]);
+
+        if (count($list[2]) <= 1) {
+            return 'space';
+        }
+
+        if ($list[1] === ',') {
+            return 'comma';
+        }
+
+        return 'space';
+    }
+
     protected static $libNth = array('list', 'n');
     protected function libNth($args)
     {
@@ -3143,6 +3193,21 @@ class Compiler
         $n = $this->assertNumber($args[1]) - 1;
 
         return isset($list[2][$n]) ? $list[2][$n] : self::$defaultValue;
+    }
+
+    protected static $libSetNth = array('list', 'n', 'value');
+    protected function libSetNth($args)
+    {
+        $list = $this->coerceList($args[0]);
+        $n = $this->assertNumber($args[1]) - 1;
+
+        if (! isset($list[2][$n])) {
+            $this->throwError('Invalid argument for "n"');
+        }
+
+        $list[2][$n] = $args[2];
+
+        return $list;
     }
 
     protected static $libMapGet = array('map', 'key');

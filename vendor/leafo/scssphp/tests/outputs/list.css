@@ -9,3 +9,13 @@ p {
 div {
   x: 2;
   z: 2; }
+
+div {
+  a: 10px;
+  b: -20px;
+  c: 30px; }
+
+div {
+  x: space;
+  y: comma;
+  z: space; }
