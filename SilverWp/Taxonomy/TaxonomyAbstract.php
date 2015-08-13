@@ -27,6 +27,7 @@
  */
 namespace SilverWp\Taxonomy;
 
+use SilverWp\Debug;
 use SilverWp\Helper\Filter;
 use SilverWp\Helper\UtlArray;
 use SilverWp\PostInterface;
@@ -490,29 +491,36 @@ abstract class TaxonomyAbstract extends SingletonAbstract implements TaxonomyInt
     }
 
     /**
-     * add teaxonomy slug to query for filter by taxonomy
+     * Add teaxonomy slug to query for filter by taxonomy
      *
      * @global string $pagenow current page
      *
-     * @param object  $query Wp_query instance
+     * @param object  $query WP_Query instance
      *
      * @access public
      * @return void
      */
-    public function addFilter2QueryList( $query ) {
-        global $pagenow;
-        $post_type  = $this->getPostType();
-        $taxonomy   = $this->getName( 'category' );
-        $query_vars = &$query->query_vars;
-        if ( $pagenow == 'edit.php' &&
-             isset( $query_vars[ 'post_type' ] ) &&
-             $query_vars[ 'post_type' ] == $post_type &&
-             isset( $query_vars[ $taxonomy ] ) &&
-             is_numeric( $query_vars[ $taxonomy ] ) &&
-             $query_vars[ $taxonomy ] != 0
-        ) {
-            $term                    = get_term_by( 'id', $query_vars[ $taxonomy ], $taxonomy );
-            $query_vars[ $taxonomy ] = $term->slug;
-        }
-    }
+	public function addFilter2QueryList( \WP_Query $query ) {
+		global $pagenow;
+		$post_type  = $this->getPostType();
+		//TODO its works only wen category tax is registered
+		//TODO method getName return array with all registerd taxonomies
+		$taxonomy   = $this->getName( 'category' );
+		$query_vars = &$query->query_vars;
+
+		if ( $pagenow == 'edit.php'
+		     && isset( $query_vars['post_type'] )
+		     && $query_vars['post_type'] == $post_type
+		     && isset( $query_vars[ $taxonomy ] )
+		     && is_numeric( $query_vars[ $taxonomy ] )
+		     && $query_vars[ $taxonomy ] != 0
+		) {
+			$term = get_term_by(
+				'id',
+				$query_vars[ $taxonomy ],
+				$taxonomy
+			);
+			$query_vars[ $taxonomy ] = $term->slug;
+		}
+	}
 }
