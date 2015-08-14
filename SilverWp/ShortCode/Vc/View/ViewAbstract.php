@@ -69,5 +69,29 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
 
             return $return;
         }
+
+	    /**
+	     * Get args to WP_Query obiect
+	     *
+	     * @param array $args
+	     *
+	     * @return array
+	     * @access public
+	     */
+	    public function getQueryArgs( array $args = array() ) {
+		    return wp_parse_args( $args, $this->getDefaultQueryArgs() );
+	    }
+
+	    /**
+	     * Defualt query args
+	     *
+	     * @return array
+	     * @access public
+	     */
+	    private function getDefaultQueryArgs() {
+		    return array(
+			    'post_type' => $this->post_type,
+		    );
+	    }
     }
 }

@@ -8,17 +8,19 @@
  */
 
 /**
- * Db query 
+ * Db query
  *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: Query.php 1572 2014-10-02 11:22:19Z padalec $
- * @category WordPress
- * @package Db
- * @copyright (c) 2014, SilverSite.pl
+ * @author        Michal Kalkowski <michal at silversite.pl>
+ * @version       0.1
+ * @category      WordPress
+ * @package       Db
+ * @copyright     2015 (c) SilverSite.pl
+ * @since         0.2
  */
 
 namespace SilverWp\Db;
+if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
+	class Query extends \WP_Query {
 
-class Query extends \WP_Query{
-    
+	}
 }
