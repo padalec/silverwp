@@ -90,7 +90,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
 	     */
 	    private function getDefaultQueryArgs() {
 		    return array(
-			    'post_type' => $this->post_type,
+			    'post_type' => 'posts',
 		    );
 	    }
     }
