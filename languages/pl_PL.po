@@ -1,23 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silverwp\n"
-"POT-Creation-Date: 2015-05-06 13:43+0100\n"
-"PO-Revision-Date: 2015-05-06 13:43+0100\n"
+"POT-Creation-Date: 2015-08-13 11:30+0200\n"
+"PO-Revision-Date: 2015-08-13 11:44+0200\n"
 "Last-Translator: Michał Kalkowski <michal@dynamite-studio.pl>\n"
 "Language-Team: silverwp\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;__params;_n;escHtmlE;"
 "escHtml;e;escAttr;escAttrE;n;params;nNoop;translate\n"
-"X-Poedit-Basepath: ./\n"
+"X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPathExcluded-0: ../vendor\n"
 
-#: ../SilverWp/Ajax/AjaxAbstract.php:94
+#: ../SilverWp/Ajax/AjaxAbstract.php:85
 #, fuzzy
 msgid "Variable name is requaied and can't be empty."
 msgstr "Zmienna _name jest obowiązkowa i nie może być pusta."
@@ -36,6 +36,20 @@ msgid ""
 "one is available <br/><br/> Your\n"
 "                            current %s Version Number is <strong> %s </"
 "strong>"
+msgstr ""
+
+#: ../SilverWp/CssTemplate/Less.php:128
+msgid "WP-Less plugin not found."
+msgstr ""
+
+#: ../SilverWp/CssTemplate/Sass.php:93
+msgid "Plugin WPScssPlugin not found!"
+msgstr ""
+
+#: ../SilverWp/Customizer/Control/ControlAbstract.php:162
+msgid ""
+"First arguments should by instance of \\SilverWp\\Customizer\\Control"
+"\\ControlInterface"
 msgstr ""
 
 #: ../SilverWp/Customizer/Control/GwfStyle.php:48
@@ -58,397 +72,172 @@ msgstr ""
 msgid "inherit"
 msgstr ""
 
-#: ../SilverWp/Customizer/Panel/Colors.php:72
-msgid "Colors"
+#: ../SilverWp/Customizer/CustomizerAbstract.php:196
+msgid "::id is required and can not be empty!"
 msgstr ""
 
-#: ../SilverWp/Customizer/Panel/Fonts.php:73
-msgid "Fonts"
-msgstr "Czcionki"
+#: ../SilverWp/Customizer/CustomizerAbstract.php:207
+msgid "::capability is required and can not be empty!"
+msgstr ""
 
-#: ../SilverWp/Customizer/Panel/Layout.php:66
-msgid "Layout"
-msgstr "Szablon"
+#: ../SilverWp/Customizer/CustomizerAbstract.php:218
+msgid "::option_key_name is required and can not be empty!"
+msgstr ""
 
-#: ../SilverWp/Customizer/Panel/PanelAbstract.php:98
+#: ../SilverWp/Customizer/CustomizerAbstract.php:260
+msgid "Background Color"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:261
+msgid "Background Image"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:262
+msgid "No Repeat"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:263
+msgid "Repeat All"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:264
+msgid "Repeat Horizontally"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:265
+msgid "Repeat Vertically"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:266
+msgid "Inherit"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:267
+msgid "Background Repeat"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:268
+msgid "Cover"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:269
+msgid "Contain"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:270
+msgid "Background Size"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:271
+msgid "Fixed"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:272
+msgid "Scroll"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:273
+msgid "Background Attachment"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:274
+msgid "Left Top"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:275
+msgid "Left Center"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:276
+msgid "Left Bottom"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:277
+msgid "Right Top"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:278
+msgid "Right Center"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:279
+msgid "Right Bottom"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:280
+msgid "Center Top"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:281
+msgid "Center Center"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:282
+msgid "Center Bottom"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:283
+msgid "Background Position"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:284
+msgid "Background Opacity"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:285
+msgid "ON"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:286
+msgid "OFF"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:287
+msgid "All"
+msgstr "Wszystko"
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:288
+msgid "Cyrillic"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:289
+msgid "Cyrillic Extended"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:290
+msgid "Devanagari"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:291
+msgid "Greek"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:292
+msgid "Greek Extended"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:293
+msgid "Khmer"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:294
+msgid "Latin"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:295
+msgid "Latin Extended"
+msgstr ""
+
+#: ../SilverWp/Customizer/CustomizerAbstract.php:296
+msgid "Vietnamese"
+msgstr ""
+
+#: ../SilverWp/Customizer/Panel/PanelAbstract.php:89
 msgid ""
 "If You want add panel to your section first define panel_id class property."
 msgstr ""
 
-#: ../SilverWp/Customizer/Section/Content.php:63
-msgid "Content"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Content.php:65
-msgid "All theme texts except headings and menu"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Content.php:79
-#: ../SilverWp/Customizer/Section/Headings.php:79
-#: ../SilverWp/Customizer/Section/Menu.php:79
-msgid "Google-Font font family"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Content.php:101
-msgid "Google-Font subsets"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Content.php:102
-#: ../SilverWp/Customizer/Section/Menu.php:96
-msgid "The subsets used from Google's API."
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Content.php:108
-#: ../SilverWp/Customizer/Section/Menu.php:106
-msgid "Size"
-msgstr "Rozmiar"
-
-#: ../SilverWp/Customizer/Section/Content.php:116
-#: ../SilverWp/Customizer/Section/Menu.php:114
-msgid "Line-height"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:58
-msgid "Favicon"
-msgstr "Favicon"
-
-#: ../SilverWp/Customizer/Section/Favicon.php:76
-#: ../SilverWp/Helper/Control/SocialAccounts.php:69
-msgid "Icon"
-msgstr "Ikona"
-
-#: ../SilverWp/Customizer/Section/Favicon.php:79
-msgid "image should have 16×16px"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:83
-msgid "Apple iPhone Icon Upload"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:85
-msgid "favicon for Apple iPhone (57px x 57px)"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:90
-msgid "Apple iPhone Retina Icon Upload"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:96
-msgid "favicon for Apple iPhone Retina Version (114px x 114px)"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:101
-msgid "Favicon light version"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:104
-#: ../SilverWp/Customizer/Section/Favicon.php:110
-#: ../SilverWp/Customizer/Section/Logo.php:119
-#: ../SilverWp/Customizer/Section/Logo.php:126
-msgid "on brand-color background container"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:108
-msgid "Retina version @2x"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:115
-msgid "Margin top for light version"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Favicon.php:121
-#: ../SilverWp/Customizer/Section/Logo.php:112
-#: ../SilverWp/Customizer/Section/Logo.php:136
-msgid "set the margin size in \"px\""
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Footer.php:58
-#: ../SilverWp/Customizer/Section/LayoutFooter.php:59
-msgid "Footer"
-msgstr "Stopka strony"
-
-#: ../SilverWp/Customizer/Section/Footer.php:75
-#: ../SilverWp/Customizer/Section/Header.php:80
-#: ../SilverWp/Customizer/Section/Header.php:98
-#: ../SilverWp/Customizer/Section/Header.php:134
-msgid "Background color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Footer.php:80
-msgid "Widget heading color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Footer.php:85
-#: ../SilverWp/Customizer/Section/Header.php:140
-msgid "Text and link color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Footer.php:90
-#: ../SilverWp/Customizer/Section/General.php:92
-msgid "Link color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Footer.php:95
-#: ../SilverWp/Customizer/Section/General.php:98
-msgid "Link hover color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/General.php:57
-msgid "General"
-msgstr "Ogólne"
-
-#: ../SilverWp/Customizer/Section/General.php:74
-msgid "Brand primary"
-msgstr "Kolor firmowy"
-
-#: ../SilverWp/Customizer/Section/General.php:80
-msgid "Body background"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/General.php:86
-msgid "Body text"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/General.php:104
-msgid "Blog template background color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:58
-#: ../SilverWp/Customizer/Section/LayoutHeader.php:62
-msgid "Header"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:75
-msgid "Top bar"
-msgstr "Pasek górny"
-
-#: ../SilverWp/Customizer/Section/Header.php:86
-msgid "Text color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:93
-msgid "Nav bar"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:104
-msgid "Navigation menu link hover color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:110
-msgid "Navigation drop-down menu background color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:116
-msgid "Navigation drop-down menu link color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:122
-msgid "Navigation dropdown menu link hover color"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Header.php:129
-msgid "Page header"
-msgstr "Nagłówek strony"
-
-#: ../SilverWp/Customizer/Section/Headings.php:63
-msgid "Headings"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:84
-msgid "Size H1"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:92
-msgid "Line-height H1"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:97
-msgid "Size H2"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:105
-msgid "Line-height H2"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:110
-msgid "Size H3"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:118
-msgid "Line-height H3"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:123
-msgid "Size H4"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:131
-msgid "Line-height H4"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:137
-msgid "Size H5"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:145
-msgid "Line-height H5"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:150
-msgid "Size H6"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:158
-msgid "Line-height H6"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:163
-#: ../SilverWp/Customizer/Section/Menu.php:84
-msgid "Weight"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:168
-msgid "Google-Font style"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:173
-msgid "Google-Font Transform"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Headings.php:178
-msgid "Google-Font Subset"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutFooter.php:76
-msgid "Background Image"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutFooter.php:82
-msgid "Copyright enabled?"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutFooter.php:88
-msgid "Copyright text"
-msgstr "Komunikat o prawach autorskich"
-
-#: ../SilverWp/Customizer/Section/LayoutFooter.php:89
-msgid "Copyright dynamite-studio.pl"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutHeader.php:80
-msgid "Search Icon"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutHeader.php:86
-msgid "WPML languages Flags"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutMenu.php:62
-msgid "Menu"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutMenu.php:79
-msgid "Menu - Align Right"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/LayoutMenu.php:80
-msgid "Align Main Menu to right. For some types of header only"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:61
-msgid "Logo"
-msgstr "Logotyp"
-
-#: ../SilverWp/Customizer/Section/Logo.php:79
-msgid "Text"
-msgstr "Tekst"
-
-#: ../SilverWp/Customizer/Section/Logo.php:86
-msgid "Logo link"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:92
-msgid "Logo standard version"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:94
-#: ../SilverWp/Customizer/Section/Logo.php:101
-msgid "on white background"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:99
-msgid "Logo retina version @2x"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:106
-msgid "Logo margin top for standard version"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:117
-msgid "Logo light version"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:124
-msgid "Logo light retina version @2x"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Logo.php:131
-msgid "Logo margin top for logo light version"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Menu.php:63
-msgid "Main navigation menu"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Menu.php:95
-msgid "Google Font Subsets"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/Menu.php:101
-msgid "Transform"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/TopBar.php:62
-msgid "Top Bar"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/TopBar.php:80
-msgid "Turn on top bar"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/TopBar.php:86
-msgid "Welcome text"
-msgstr "Tekst powitalny"
-
-#: ../SilverWp/Customizer/Section/TopBar.php:88
-msgid "First sentence displayed in Top Bar"
-msgstr "Pierwszy zwrot w pasku górnym"
-
-#: ../SilverWp/Customizer/Section/TopBar.php:94
-msgid "Show company address"
-msgstr "Pokaż adres firmy"
-
-#: ../SilverWp/Customizer/Section/TopBar.php:101
-msgid "Show company phone"
-msgstr ""
-
-#: ../SilverWp/Customizer/Section/TopBar.php:108
-msgid "Show mobile number"
-msgstr "Pokaż numer telefonu komórkowego"
-
-#: ../SilverWp/Customizer/Section/TopBar.php:115
-msgid "Show email address"
-msgstr "Pokaż adres email"
-
-#: ../SilverWp/Customizer/Section/TopBar.php:122
-msgid "Show WPML language switcher"
-msgstr "Pokaż odnośniki WPML do zmiany języka"
-
-#: ../SilverWp/Customizer/Section/TopBar.php:129
-msgid "Show social icons"
-msgstr "Pokaż przyciski społecznościowe"
-
-#: ../SilverWp/FileSystem.php:114
+#: ../SilverWp/FileSystem.php:116
 #, php-format
 msgid "Key %s does not exists in registered directories"
 msgstr ""
@@ -458,7 +247,7 @@ msgid "Archive by category"
 msgstr "Archiwum według kategorii"
 
 #: ../SilverWp/Helper/Breadcrumb.php:220
-#: ../SilverWp/PostType/PostTypeAbstract.php:258
+#: ../SilverWp/PostType/PostTypeAbstract.php:251
 #: ../SilverWp/Taxonomy/TaxonomyAbstract.php:156
 msgid "Search"
 msgstr "Szukaj"
@@ -479,18 +268,23 @@ msgstr "Błąd 404"
 msgid "Page"
 msgstr "Zakładka"
 
-#: ../SilverWp/Helper/Control/ControlAbstract.php:70
+#: ../SilverWp/Helper/Control/Checkbox.php:41
+msgid "yes"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/ControlAbstract.php:69
 msgid "Class property $type is required and can't be empty."
 msgstr ""
 
-#: ../SilverWp/Helper/Control/ControlAbstract.php:215
+#: ../SilverWp/Helper/Control/ControlAbstract.php:216
 msgid ""
 "First arguments should by instance of \\SilverWp\\Helper\\Control"
 "\\ControlInterface"
 msgstr ""
 
 #: ../SilverWp/Helper/Control/Features.php:55
-#: ../SilverWp/Helper/Control/Gallery.php:56
+#: ../SilverWp/Helper/Control/Gallery.php:49
+#: ../SilverWp/Helper/Control/PostFormat.php:84
 msgid "Gallery"
 msgstr "Galeria"
 
@@ -503,22 +297,43 @@ msgstr "Nazwa"
 msgid "Description"
 msgstr "Opis"
 
-#: ../SilverWp/Helper/Control/Gallery.php:59
+#: ../SilverWp/Helper/Control/Gallery.php:52
 msgid "Image"
 msgstr "Zdjęcie"
 
-#: ../SilverWp/Helper/Control/SidebarPosition.php:61
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:587
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:603
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:621
+#: ../SilverWp/Helper/Control/PostFormat.php:48
+msgid "Post format"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/PostFormat.php:75
+#: ../SilverWp/Helper/Control/Video.php:57
+msgid "Video"
+msgstr "Wideo"
+
+#: ../SilverWp/Helper/Control/PostFormat.php:77
+msgid "YouTube or Vimeo file URL"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/PostFormat.php:88
+msgid "Audio"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/PostFormat.php:90
+msgid "SoundCloud audio URL"
+msgstr ""
+
+#: ../SilverWp/Helper/Control/SidebarPosition.php:58
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:589
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:605
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:623
 msgid "None"
 msgstr "Brak"
 
-#: ../SilverWp/Helper/Control/SidebarPosition.php:66
+#: ../SilverWp/Helper/Control/SidebarPosition.php:63
 msgid "Left sidebar"
 msgstr "Lewy sidebar"
 
-#: ../SilverWp/Helper/Control/SidebarPosition.php:71
+#: ../SilverWp/Helper/Control/SidebarPosition.php:68
 msgid "Right sidebar"
 msgstr "Prawy sidebar"
 
@@ -526,9 +341,9 @@ msgstr "Prawy sidebar"
 msgid "Social Accounts"
 msgstr ""
 
-#: ../SilverWp/Helper/Control/Video.php:57
-msgid "Video"
-msgstr "Wideo"
+#: ../SilverWp/Helper/Control/SocialAccounts.php:69
+msgid "Icon"
+msgstr "Ikona"
 
 #: ../SilverWp/Helper/Control/Video.php:60
 msgid "URL"
@@ -538,41 +353,46 @@ msgstr "Adres URL"
 msgid "Footer menu"
 msgstr ""
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:268
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:264
 #, fuzzy
 msgid "$id variable is required and can't be emapty."
 msgstr "Wartość $_id jest obowiązkowa i nie może być pusta."
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:272
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:268
 #, fuzzy
 msgid "$title variable is required and can't be emapty."
 msgstr "Wartość $_title jest obowiązkowa i nie może być pusta."
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:376
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:375
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:699
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:567
+#, php-format
+msgid "Variable %s::post_id is not sets."
+msgstr ""
+
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:701
 msgid "Title"
 msgstr "Tytuł"
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:702
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:704
 msgid "Thumbnail"
 msgstr ""
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:705
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:707
 msgid "Author"
 msgstr "Autor"
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:708
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:710
 msgid "Date"
 msgstr "Data"
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:711
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:713
 msgid "Categories"
 msgstr "Kategorie"
 
-#: ../SilverWp/MetaBox/MetaBoxAbstract.php:714
+#: ../SilverWp/MetaBox/MetaBoxAbstract.php:716
 msgid "Tags"
 msgstr "Tagi"
 
@@ -592,84 +412,84 @@ msgid ""
 "post 2 post is required."
 msgstr ""
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:251
-#: ../SilverWp/PostType/PostTypeAbstract.php:499
+#: ../SilverWp/PostType/PostTypeAbstract.php:244
+#: ../SilverWp/PostType/PostTypeAbstract.php:492
 msgid "Item"
 msgstr "Pozycja (element)"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:252
-#: ../SilverWp/PostType/PostTypeAbstract.php:253
-#: ../SilverWp/PostType/PostTypeAbstract.php:256
+#: ../SilverWp/PostType/PostTypeAbstract.php:245
+#: ../SilverWp/PostType/PostTypeAbstract.php:246
+#: ../SilverWp/PostType/PostTypeAbstract.php:249
 msgid "Add New Item"
 msgstr "Dodaje nową pozycję"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:254
+#: ../SilverWp/PostType/PostTypeAbstract.php:247
 msgid "Edit Item"
 msgstr "Edytuj pozycję"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:255
+#: ../SilverWp/PostType/PostTypeAbstract.php:248
 msgid "All Items"
 msgstr "Wszystkie pozycje (elementy)"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:257
+#: ../SilverWp/PostType/PostTypeAbstract.php:250
 msgid "View Item"
 msgstr "Zobacz pozycję"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:259
+#: ../SilverWp/PostType/PostTypeAbstract.php:252
 msgid "No items found"
 msgstr "Brak wyników wyszukiwania"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:260
+#: ../SilverWp/PostType/PostTypeAbstract.php:253
 msgid "No items found in trash"
 msgstr "Nie znaleziono pozycji w śmietniku"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:375
+#: ../SilverWp/PostType/PostTypeAbstract.php:368
 #, fuzzy
 msgid "Post Type $name is required and can't be empty."
 msgstr "Typ wpisu $_name jest obowiązkowy i nie może być pusty."
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:510
+#: ../SilverWp/PostType/PostTypeAbstract.php:503
 msgid "Item Pending"
 msgstr ""
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:122
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:115
 #: ../SilverWp/RequiredPluginsAbstract.php:122
 msgid "Install Required Plugins"
 msgstr "Zainstaluj niezbędne pluginy"
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:123
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:116
 #: ../SilverWp/RequiredPluginsAbstract.php:123
 msgid "Install Plugins"
 msgstr "Zainstaluj wtyczki"
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:124
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:117
 #: ../SilverWp/RequiredPluginsAbstract.php:124
 #, php-format
 msgid "Installing Plugin: %s"
 msgstr "Instalowanie wtyczek: %s"
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:126
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:119
 #: ../SilverWp/RequiredPluginsAbstract.php:126
 msgid "Something went wrong with the plugin API."
 msgstr "Wystąpił problem z API wtyczek."
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:155
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:148
 #: ../SilverWp/RequiredPluginsAbstract.php:155
 msgid "Return to Required Plugins Installer"
 msgstr "Powrót do instalatora niezbędnych wtyczek."
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:156
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:149
 #: ../SilverWp/RequiredPluginsAbstract.php:156
 msgid "Plugin activated successfully."
 msgstr "Wtyczka aktywowana pomyślnie."
 
-#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:157
+#: ../SilverWp/RequiredPluginInstaller/RequiredPluginsAbstract.php:150
 #: ../SilverWp/RequiredPluginsAbstract.php:157
 #, php-format
 msgid "All plugins installed and activated successfully. %s"
 msgstr "Wszystkie wtyczki zainstalowane i aktywowane pomyślnie. %s"
 
-#: ../SilverWp/ShortCode/ShortCodeAbstract.php:68
+#: ../SilverWp/ShortCode/ShortCodeAbstract.php:63
 msgid "Property $tag_base is required and can't be empty"
 msgstr ""
 
@@ -695,7 +515,7 @@ msgid ""
 "to it in your css file."
 msgstr ""
 
-#: ../SilverWp/ShortCode/Vc/Control/NewControlAbstract.php:52
+#: ../SilverWp/ShortCode/Vc/Control/NewControlAbstract.php:56
 msgid "Can't create element "
 msgstr ""
 
@@ -816,7 +636,7 @@ msgstr "Opcje Motywu"
 msgid "SilverWp Theme Options Panel"
 msgstr "Panel konfiguracyjny szablonu SilverWP"
 
-#: ../SilverWp/ThemeOption/ThemeOptionAbstract.php:277
+#: ../SilverWp/ThemeOption/ThemeOptionAbstract.php:286
 #, php-format
 msgid "Class %s isn't instance of SilverWp\\ThemeOption\\Menu\\MenuAbstract"
 msgstr ""
@@ -894,8 +714,62 @@ msgstr ""
 msgid "Choose File"
 msgstr "Wybierz plik"
 
-#~ msgid "All"
-#~ msgstr "Wszystko"
+#~ msgid "Fonts"
+#~ msgstr "Czcionki"
+
+#~ msgid "Layout"
+#~ msgstr "Szablon"
+
+#~ msgid "Size"
+#~ msgstr "Rozmiar"
+
+#~ msgid "Favicon"
+#~ msgstr "Favicon"
+
+#~ msgid "Footer"
+#~ msgstr "Stopka strony"
+
+#~ msgid "General"
+#~ msgstr "Ogólne"
+
+#~ msgid "Brand primary"
+#~ msgstr "Kolor firmowy"
+
+#~ msgid "Top bar"
+#~ msgstr "Pasek górny"
+
+#~ msgid "Page header"
+#~ msgstr "Nagłówek strony"
+
+#~ msgid "Copyright text"
+#~ msgstr "Komunikat o prawach autorskich"
+
+#~ msgid "Logo"
+#~ msgstr "Logotyp"
+
+#~ msgid "Text"
+#~ msgstr "Tekst"
+
+#~ msgid "Welcome text"
+#~ msgstr "Tekst powitalny"
+
+#~ msgid "First sentence displayed in Top Bar"
+#~ msgstr "Pierwszy zwrot w pasku górnym"
+
+#~ msgid "Show company address"
+#~ msgstr "Pokaż adres firmy"
+
+#~ msgid "Show mobile number"
+#~ msgstr "Pokaż numer telefonu komórkowego"
+
+#~ msgid "Show email address"
+#~ msgstr "Pokaż adres email"
+
+#~ msgid "Show WPML language switcher"
+#~ msgstr "Pokaż odnośniki WPML do zmiany języka"
+
+#~ msgid "Show social icons"
+#~ msgstr "Pokaż przyciski społecznościowe"
 
 #~ msgid "Successful"
 #~ msgstr "Sukces"

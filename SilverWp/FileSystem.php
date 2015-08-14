@@ -112,7 +112,7 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
             if ( is_null( $key ) ) {
                 return $this->dirs;
             }
-            if ( ! isset( $this->dirs[ $key ] ) ) {
+            if ( WP_DEBUG && ! isset( $this->dirs[ $key ] ) ) {
                 throw new Exception( Translate::translate( 'Key %s does not exists in registered directories', $key ) );
             }
 
