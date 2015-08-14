@@ -18,9 +18,8 @@
  */
 namespace SilverWp\Taxonomy;
 
-use SilverWp\Debug;
+use SilverWp\CoreInterface;
 use SilverWp\Helper\Filter;
-use SilverWp\Helper\UtlArray;
 use SilverWp\PostInterface;
 use SilverWp\PostType\PostTypeInterface;
 use SilverWp\SingletonAbstract;
@@ -40,7 +39,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 	 * @copyright (c) 2009 - 2015, SilverSite.pl
 	 */
 	abstract class TaxonomyAbstract extends SingletonAbstract
-		implements TaxonomyInterface, PostInterface {
+		implements TaxonomyInterface, PostInterface, CoreInterface {
 
 		/**
 		 * Handler for post type class
@@ -204,7 +203,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		public function init() {
 			$this->setUp();
 
-			if ( \is_null( $this->posts_types_handler ) ) {
+			if ( ! count( $this->posts_types_handler ) ) {
 				throw new Exception(
 					Translate::translate(
 						__CLASS__ . '::posts_types_handler is required and can\'t be empty.'
@@ -217,31 +216,15 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			foreach ( $this->taxonomies as $taxonomy_name => $args ) {
 				//register taxonomy
 				register_taxonomy( $taxonomy_name, $post_type_objects, $args );
-
+				//add taxonomy to Post Type
 				foreach ( $post_type_objects as $post_type_object ) {
-					//add taxonomy to Post Type
 					register_taxonomy_for_object_type( $taxonomy_name, $post_type_object );
 				}
-
+				//if taxonomy have custom_meta_box args replace default MB for custom
 				if ( isset( $args['custom_meta_box'] ) && ! empty( $args[ 'custom_meta_box' ] ) ) {
 					$this->changeDefaultMetaBox($taxonomy_name, $args[ 'custom_meta_box' ]);
 				}
 			}
-		}
-
-		/**
-		 * Return all post types names registered with taxonomy
-		 *
-		 * @return array
-		 * @access private
-		 */
-		private function getPostsTypesNames() {
-			$post_type_name = array();
-			foreach ( $this->getPostsTypesHandler() as $post_type ) {
-				$post_type_name[] = $post_type->getName();
-			}
-
-			return $post_type_name;
 		}
 
 		/**
@@ -315,8 +298,9 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 				}
 			}
 		}
+
 		/**
-		 * add teaxonomy slug to query for filter by taxonomy
+		 * Add taxonomy slug to query for filter by taxonomy
 		 *
 		 * @global string $pagenow current page
 		 *
@@ -345,16 +329,33 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		}
 
 		/**
+		 * Replace default meta box in edit/add view of Post Types
+		 *
 		 * @param $taxonomy_name
 		 * @param $args
 		 *
-		 * @access
+		 * @access private
 		 */
-		protected function changeDefaultMetaBox( $taxonomy_name, $args ) {
+		private function changeDefaultMetaBox( $taxonomy_name, $args ) {
 			$custom_tax_mb = new \Taxonomy_Single_Term( $taxonomy_name, $this->getPostsTypesNames(), $args[ 'control_type' ] );
 			foreach ( $args as $name => $value ) {
 				$custom_tax_mb->set( $name, $value );
 			}
+		}
+
+		/**
+		 * Return all post types names registered with taxonomy
+		 *
+		 * @return array
+		 * @access private
+		 */
+		private function getPostsTypesNames() {
+			$post_type_name = array();
+			foreach ( $this->getPostsTypesHandler() as $post_type ) {
+				$post_type_name[] = $post_type->getName();
+			}
+
+			return $post_type_name;
 		}
 	}
 }
