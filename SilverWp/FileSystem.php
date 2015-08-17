@@ -109,14 +109,13 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
          */
         public function getDirectories( $key = null ) {
 
-            if ( is_null( $key ) ) {
+	        if ( is_null( $key ) ) {
                 return $this->dirs;
             }
             if ( WP_DEBUG && ! isset( $this->dirs[ $key ] ) ) {
-                throw new Exception( Translate::translate( 'Key %s does not exists in registered directories', $key ) );
+                //throw new Exception( Translate::translate( 'Key %s does not exists in registered directories', $key ) );
             }
-
-            return $this->dirs[ $key ];
+			return $this->dirs[ $key ];
         }
 
         /**
