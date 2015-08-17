@@ -142,23 +142,23 @@ if ( ! class_exists( 'SilverWp' ) ) {
          * @access private
          */
         private function vpFix() {
-            \VP_AutoLoader::remove_directories( VP_CLASSES_DIR, VP_NAMESPACE );
-            \VP_AutoLoader::add_directories(
-                SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR
-                . 'classes' . DIRECTORY_SEPARATOR
-                , VP_NAMESPACE
-            );
-            \VP_AutoLoader::add_directories( VP_CLASSES_DIR, VP_NAMESPACE );
-            \VP_AutoLoader::register();
+	        \VP_AutoLoader::remove_directories( VP_CLASSES_DIR, VP_NAMESPACE );
 
-            $vp = \VP_FileSystem::instance();
-            $vp->remove_directories( 'views' );
-            $vp->add_directories(
-                'views',
-                SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR . 'views'
-            );
-            $vp->add_directories( 'views', ABSPATH . 'Views' );
-            $vp->add_directories( 'views', VP_VIEWS_DIR );
+	        $classes = SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR
+	                   . 'classes' . DIRECTORY_SEPARATOR;
+	        \VP_AutoLoader::add_directories( $classes, VP_NAMESPACE );
+	        \VP_AutoLoader::add_directories( VP_CLASSES_DIR, VP_NAMESPACE );
+	        \VP_AutoLoader::register();
+
+	        $vp = \VP_FileSystem::instance();
+	        $vp->remove_directories( 'views' );
+	        $views = SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR
+	                 . 'views';
+	        $vp->add_directories( 'views', $views );
+	        $vp->add_directories( 'views', ABSPATH . 'Views' );
+	        $vp->add_directories( 'views', VP_VIEWS_DIR );
+
+	        FileSystem::getInstance()->addDirectory( 'views', $views );
 
         }
     }
