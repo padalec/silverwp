@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/View/View.php $
- Last committed: $Revision: 2211 $
- Last changed by: $Author: padalec $
- Last changed date: $Date: 2015-01-22 17:51:49 +0100 (Cz, 22 sty 2015) $
- ID: $Id: View.php 2211 2015-01-22 16:51:49Z padalec $
-*/
 namespace SilverWp\ShortCode\Vc\View;
 
 if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
@@ -33,13 +26,13 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
      * @category WordPress
      * @package SilverWp
      * @subpackage ShortCode
-     * @author Michal Kalkowski <michal at dynamite-studio.pl>
-     * @copyright Dynamite-Studio.pl 2014
-     * @version $Id: View.php 2211 2015-01-22 16:51:49Z padalec $
+     * @author Michal Kalkowski <michal at silversite.pl>
+     * @copyright SilverSite.pl (c) 2015
+     * @version $Revision:$
      */
 
     class ViewAbstract extends \WPBakeryShortCode {
-        const SC_PRFX = 'ds_';
+        const SC_PRFX = 'ss_';
 
         /**
          * Overrides method from WPBakeryShortCode::getFileName()
@@ -76,5 +69,29 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
 
             return $return;
         }
+
+	    /**
+	     * Get args to WP_Query obiect
+	     *
+	     * @param array $args
+	     *
+	     * @return array
+	     * @access public
+	     */
+	    public function getQueryArgs( array $args = array() ) {
+		    return wp_parse_args( $args, $this->getDefaultQueryArgs() );
+	    }
+
+	    /**
+	     * Defualt query args
+	     *
+	     * @return array
+	     * @access public
+	     */
+	    private function getDefaultQueryArgs() {
+		    return array(
+			    'post_type' => 'posts',
+		    );
+	    }
     }
 }

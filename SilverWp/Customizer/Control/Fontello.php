@@ -16,48 +16,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-namespace SilverWp\Helper\Control;
+namespace SilverWp\Customizer\Control;
 
-if ( ! class_exists( '\SilverWp\Helper\Control\Notebox' ) ) {
+use SilverWp\Customizer\Section\SectionAbstract;
+use SilverWp\Debug;
+use SilverWp\FileSystem;
+use SilverWp\Helper\MetaBox;
+
+if ( ! class_exists( '\SilverWp\Customizer\Control\Fontello' ) ) {
 
 	/**
-	 *
-	 * Notebox isn't really a control, it's only serve as a
-	 * way to give a notice to your users in a note box fashion.
+	 * Combo box with fontello icons (select2) control
 	 *
 	 * @category   WordPress
 	 * @package    SilverWp
-	 * @subpackage Helper\Control
+	 * @subpackage Customizer\Control
 	 * @author     Michal Kalkowski <michal at silversite.pl>
-	 * @copyright  Dynamite-Studio.pl & silversite.pl 2015
+	 * @copyright  SilverSite.pl 2015
 	 * @version    $Revision:$
+	 * @see        https://github.com/aristath/kirki/wiki/select2
 	 */
-	class Notebox extends ControlAbstract {
-		protected $type = 'notebox';
-
+	class Fontello extends Select2 {
 		/**
 		 * Class constructor
 		 *
-		 * @param string $name default empty string
-		 *
-		 * @throws Exception
-		 */
-		public function __construct( $name = '' ) {
-			parent::__construct( $name );
-        }
-
-		/**
-		 * Status of the note, supported status are:
-		 * normal, info, warning, error, success, default to normal.
-		 *
-		 * @param string $status
+		 * @param string $name
 		 *
 		 * @access public
 		 */
-		public function setStatus( $status ) {
-			$this->setting['status'] = $status;
+		public function __construct( $name ) {
+			parent::__construct( $name );
+			$css_path = FileSystem::getDirectory( 'fonts_path' ) . 'fontello.css';
+			$items   = SectionAbstract::flipSourceData(
+				MetaBox::getFontelloIcons( 'icon', $css_path, 'silverwp_fontello_icons' )
+			);
 
-			return $this;
+			$this->setOptions( $items );
 		}
 	}
 }

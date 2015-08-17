@@ -10,4 +10,5 @@ return array(
     $vendorDir . '/evanto/auto-updates/class-pixelentity-theme-update.php',
     $vendorDir . '/pluswp/wp-scss/bootstrap-for-theme.php',
     $vendorDir . '/aristath/kirki/kirki.php',
+    $vendorDir . '/Taxonomy_Single_Term/class.taxonomy-single-term.php',
 );

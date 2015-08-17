@@ -30,7 +30,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once 'vendor/autoload.php';
 try {
-    \SilverWp\SilverWp::getInstance()->isPlugin( new \SilverWp\Plugin() );
+	\SilverWp\SilverWp::getInstance()->isPlugin( new \SilverWp\Plugin() );
+
+	\SilverWp\Translate::$language_path = plugin_dir_path( __FILE__ ) . 'languages/';
+	\SilverWp\Translate::$text_domain = 'silverwp';
+	\SilverWp\Translate::init();
+
 } catch ( \SilverWp\Exception $ex ) {
     $ex->catchException();
 }

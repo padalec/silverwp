@@ -60,20 +60,19 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
          * @access public
          */
         public function __construct() {
-            add_action( 'customize_register', array( $this, 'init' ), 1 );
+            //add_action( 'customize_register', array( $this, 'init' ), 99 );
+            $this->init();
         }
 
         /**
          *
          * Initialize panel
          *
-         * @param \WP_Customize_Manager $wp_customize
-         *
          * @throws \SilverWp\Customizer\Panel\Exception
          * @access public
          */
-        public function init( \WP_Customize_Manager $wp_customize ) {
-            $this->addPanel( $wp_customize );
+        public function init() {
+            $this->addPanel();
             $this->createSections();
         }
 
@@ -81,19 +80,18 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
          *
          * Add new panel to customizer
          *
-         * @param \WP_Customize_Manager $wp_customize
-         *
          * @throws \SilverWp\Customizer\Panel\Exception
          * @access private
          */
-        private function addPanel( \WP_Customize_Manager $wp_customize ) {
+        private function addPanel() {
             if ( ! isset( $this->panel_id ) ) {
                 throw new Exception(
                     Translate::translate( 'If You want add panel to your section first define panel_id class property.' )
                 );
             }
             $params = $this->createPanelParams();
-            $wp_customize->add_panel( $this->panel_id, $params );
+
+            \Kirki::add_panel( $this->panel_id, $params);
         }
 
         /**
@@ -110,8 +108,6 @@ if ( ! class_exists( 'SilverWp\Customizer\Panel\PanelAbstract' ) ) {
          * An associative array with panel params:
          * array(
          *      'priority'       => 10,
-         *      'capability'     => 'edit_theme_options',
-         *      'theme_supports' => '',
          *      'title'          => __('Theme Options', 'mytheme'),
          *      'description'    => __('Several settings pertaining my theme', 'mytheme'),
          * )

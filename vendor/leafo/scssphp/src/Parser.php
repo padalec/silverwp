@@ -12,7 +12,6 @@
 namespace Leafo\ScssPhp;
 
 use Leafo\ScssPhp\Compiler;
-use SilverWp\Debug;
 
 /**
  * SCSS parser
@@ -33,7 +32,6 @@ class Parser
         'and' => 2,
         '==' => 3,
         '!=' => 3,
-        '<=>' => 3,
         '<=' => 4,
         '>=' => 4,
         '<' => 4,
@@ -56,7 +54,6 @@ class Parser
         '%',
         '==',
         '!=',
-        '<=>',
         '<=',
         '>=',
         '<',
@@ -171,6 +168,25 @@ class Parser
         $this->buffer          = (string) $buffer;
 
         return $this->valueList($out);
+    }
+
+    /**
+     * Parse a selector or selector list
+     *
+     * @param string $buffer
+     * @param string $out
+     *
+     * @return boolean
+     */
+    public function parseSelector($buffer, &$out)
+    {
+        $this->count           = 0;
+        $this->env             = null;
+        $this->inParens        = false;
+        $this->eatWhiteDefault = true;
+        $this->buffer          = (string) $buffer;
+
+        return $this->selectors($out);
     }
 
     /**
@@ -378,10 +394,33 @@ class Parser
 
             $this->seek($s);
 
-            if (($this->literal('@debug') || $this->literal('@warn')) &&
+            if ($this->literal('@debug') &&
                 $this->valueList($value) &&
-                $this->end()) {
-                $this->append(array('debug', $value, $s), $s);
+                $this->end()
+            ) {
+                $this->append(array('debug', $value), $s);
+
+                return true;
+            }
+
+            $this->seek($s);
+
+            if ($this->literal('@warn') &&
+                $this->valueList($value) &&
+                $this->end()
+            ) {
+                $this->append(array('warn', $value), $s);
+
+                return true;
+            }
+
+            $this->seek($s);
+
+            if ($this->literal('@error') &&
+                $this->valueList($value) &&
+                $this->end()
+            ) {
+                $this->append(array('error', $value), $s);
 
                 return true;
             }

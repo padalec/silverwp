@@ -1,13 +1,14 @@
 <?php
+
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
- * SilverWp is free software; you can redistribute it and/or
+ * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
  *
- * SilverWp is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -16,42 +17,37 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-namespace SilverWp\Helper\Control;
 
-use SilverWp\Translate;
+namespace SilverWp\MetaBox;
 
-if ( ! class_exists( 'SilverWp\Helper\Control\Gallery' ) ) {
 
+if ( ! interface_exists( '\SilverWp\MetaBox\RemoveInterface' ) ) {
     /**
      *
-     * Control group for create gallery
+     * Remove meta box
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage Helper\Control
+     * @subpackage MetaBox
      * @author Michal Kalkowski <michal at silversite.pl>
      * @copyright SilverSite.pl 2015
      * @version $Revision:$
      */
-    class Gallery extends Group {
+    interface RemoveInterface {
 
         /**
-         * Class constructor
+         * Remove meta box
          *
-         * @param string $name
-         *
+         * @return array example: array(
+         *                            array(
+         *                                'id'      => 'formatdiv',
+         *                                'page'    => 'post',
+         *                                'context' => 'side',
+         *                            ),
+         *                         );
+         * @see https://codex.wordpress.org/Function_Reference/remove_meta_box
          * @access public
          */
-        public function __construct( $name ) {
-            parent::__construct( $name );
-            $this->setRepeating( true );
-            $this->setSortable( true );
-            $this->setLabel( Translate::translate( 'Gallery' ) );
-
-            $upload = new Upload( 'image' );
-            $upload->setLabel( Translate::translate( 'Image' ) );
-
-            $this->addControl( $upload );
-        }
+        public function remove();
     }
 }

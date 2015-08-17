@@ -39,7 +39,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\GroupTitle' ) ) {
      */
     class GroupTitle extends ControlAbstract {
         protected $type = 'group_title';
-        protected $is_less_variable = false;
+        protected $is_template_variable = false;
 
         public function __construct( $control_name ) {
             parent::__construct( $control_name );

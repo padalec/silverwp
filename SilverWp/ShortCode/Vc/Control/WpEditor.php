@@ -16,30 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/Form/Element/Wpeditor.php $
-  Last committed: $Revision: 2184 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: Wpeditor.php 2184 2015-01-21 12:20:08Z padalec $
- */
 namespace SilverWp\ShortCode\Vc\Control;
 
 if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\WpEditor' ) ) {
 
-    /**
-     * Text area with default WordPress WYSIWYG Editor.
-     * Important: only one html textarea is permitted per
-     * ShortCode and it should have "content" as a param_name
-     *
-     * @category WordPress
-     * @package SilverWp
-     * @subpackage ShortCode\Form\Element
-     * @author Michal Kalkowski <michal at dynamite-studio.pl>
-     * @copyright Dynamite-Studio.pl 2014
-     * @version $Id: Wpeditor.php 2184 2015-01-21 12:20:08Z padalec $
-     */
-    class WpEditor extends ControlAbstract {
-        protected $type = 'textarea_html';
-    }
+	/**
+	 * Text area with default WordPress WYSIWYG Editor.
+	 * Important: only one html textarea is permitted per
+	 * ShortCode and it should have "content" as a param_name
+	 *
+	 * @category   SilverWp
+	 * @package    ShortCode
+	 * @subpackage Vc\Control
+	 * @author     Michal Kalkowski <michal at silversite.pl>
+	 * @copyright  Silversite.pl (c) 2015
+	 * @version    $Revision:$
+	 */
+	class WpEditor extends ControlAbstract {
+		protected $type = 'textarea_html';
+		public function __construct( $name ) {
+			parent::__construct( 'content' );
+		}
+	}
 }

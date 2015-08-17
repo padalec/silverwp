@@ -105,7 +105,7 @@ abstract class SidebarAbstract extends SingletonAbstract implements SidebarInter
      * @return string
      */
     public function getId() {
-        return 'sidebar-' . $this->id;
+        return 'sidebar-' . strtolower($this->id);
     }
 
     /**

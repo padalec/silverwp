@@ -16,30 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
-namespace SilverWp\Helper\Control;
+namespace SilverWp\Customizer\Control;
 
-if ( ! class_exists( '\SilverWp\Helper\Control\ImageRadio' ) ) {
+if ( ! class_exists( '\SilverWp\Customizer\Control\Select2' ) ) {
 
     /**
-     *
-     * Control Radio image
+     * Combo box with search (select2) control
      *
      * @category WordPress
      * @package SilverWp
-     * @subpackage Helper\Control
+     * @subpackage Customizer\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright SilverSite.pl 2015
      * @version $Revision:$
-     * @link http://kirki.org/#ImageRadio
+     * @see https://github.com/aristath/kirki/wiki/select2
      */
-    class ImageRadio extends Radio {
-        protected $mode = 'image';
+    class Select2 extends MultiControlAbstract {
+        protected $type = 'select2';
     }
 }

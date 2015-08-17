@@ -281,14 +281,16 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
         }
     }
 
-    /**
-     * get all added templates if post_type isn't null
-     * return all tempalates directed for post type
-     *
-     * @return array
-     * @static
-     * @access public
-     */
+	/**
+	 * Get all added templates if post_type isn't null
+	 * return all templates directed for post type
+	 *
+	 * @param null $post_type
+	 *
+	 * @return array
+	 * @static
+	 * @access public
+	 */
     public static function getTemplates( $post_type = null ) {
         $template = \is_null( $post_type ) ? self::$page_templates : self::$page_templates[ $post_type ];
 
@@ -437,7 +439,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
 
     /**
      *
-     * add a taxonomies to Post Type
+     * Set a taxonomies to Post Type
      *
      * @param TaxonomyInterface $taxonomy
      *
@@ -446,8 +448,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     public function registerTaxonomy( TaxonomyInterface $taxonomy ) {
         try {
             $this->setTaxonomy( $taxonomy );
-            $taxonomy->setPostType( $this->name );
-            $taxonomy->setObjectType( array( $this->name ) );
+            $taxonomy->setPostTypeHandler( $this );
         } catch ( TaxonomyException $ex ) {
             echo $ex->displayAdminNotice();
         }

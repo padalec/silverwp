@@ -40,7 +40,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\GwfSubset' ) ) {
      * @link http://kirki.org/#Buttonset
      */
     class GwfSubset extends MultiCheckbox {
-        protected $is_less_variable = false;
+        protected $is_template_variable = false;
         public function __construct( $control_name ) {
             parent::__construct( $control_name );
             //set up drop-down options for GWF fonts

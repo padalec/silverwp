@@ -18,8 +18,8 @@
  */
 namespace SilverWp\MetaBox;
 
+use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
-use SilverWp\Helper\Form\Group;
 use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\Option;
@@ -164,6 +164,12 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 // the safest hook to use, since Vafpress Framework may exists in Theme or Plugin
                 add_action( 'after_setup_theme', array( $this, 'init' ), 20 );
                 add_filter( 'enter_title_here', array( $this, 'changeDefaultTitleLabel' ) );
+                $parent_class = get_called_class();
+                if (
+                    $this->isImplemented( $parent_class, 'SilverWp\MetaBox\RemoveInterface' )
+                ) {
+                    add_action( 'admin_menu', array( $this, 'removeMetaBoxes' ) );
+                }
             }
         }
 
@@ -315,7 +321,10 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
          *
          * @param string $name meta box name
          *
+         * @param bool   $remove_first remove first element
+         *
          * @return mixed
+         * @throws Exception
          * @access public
          */
         public function getSingle( $name, $remove_first = true ) {
@@ -447,8 +456,8 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 } catch ( \SilverWp\Exception $ex ) {
                     echo Message::alert( $ex->getMessage(), 'alert-danger' );
                     if ( WP_DEBUG ) {
-                        silverwp_debug_array($ex->getTraceAsString(), 'Stack trace:');
-                        silverwp_debug_array($ex->getTrace(), 'Full stack:');
+                        Debug::dumpPrint($ex->getTraceAsString(), 'Stack trace:');
+	                    Debug::dumpPrint($ex->getTrace(), 'Full stack:');
                     }
                 }
             }
@@ -516,7 +525,7 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
         /**
          * Get sidebar position
          *
-         * @return string
+         * @return string|bool
          * @access public
          */
         public function getSidebarPosition() {
@@ -527,18 +536,21 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
 
             $sidebar_code = $this->getSingle( 'sidebar' );
 
-            switch ( $sidebar_code ) {
-                case '1':
+	        switch ( $sidebar_code ) {
+				case '0':
+					$sidebar_position = false;
+			        break;
+				case '1':
                     $sidebar_position = 'left';
                     break;
                 case '2':
                     $sidebar_position = 'right';
                     break;
                 default:
-                    $sidebar_position = 'right'; // default position
+                    $sidebar_position = false; // default position
             }
 
-            return $sidebar_position;
+	        return $sidebar_position;
         }
 
         /**
@@ -552,7 +564,7 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
         private function isSetPostId() {
             if ( isset( $this->post_id ) && \is_null( $this->post_id ) ) {
                 $child_class = \get_called_class();
-                throw new Exception( Translate::param( 'Variable %s::post_id is not sets.', $child_class ) );
+                throw new Exception( Translate::translate( 'Variable %s::post_id is not sets.', $child_class ) );
             }
         }
 
@@ -756,6 +768,17 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 }
             }
             return $title;
+        }
+
+        /**
+         * Remove meta boxes fromr admin page
+         *
+         * @access public
+         */
+        public function removeMetaBoxes() {
+            foreach($this->remove() as $value) {
+                remove_meta_box( $value['id'], $value['page'], $value['context'] );
+            }
         }
     }
 }

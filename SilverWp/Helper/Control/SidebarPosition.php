@@ -16,16 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: $
-  Last committed: $Revision: $
-  Last changed by: $Author: $
-  Last changed date: $Date: $
-  ID: $Id: $
- */
 namespace SilverWp\Helper\Control;
 
+use SilverWp\Debug;
 use SilverWp\FileSystem;
+use SilverWp\Helper\MetaBox;
+use SilverWp\Helper\Option;
 use SilverWp\SilverWp;
 use SilverWp\Translate;
 
@@ -51,7 +47,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
          * @param string $name
          * @access public
          */
-        public function __construct( $name ) {
+        public function __construct( $name = 'sidebar' ) {
             parent::__construct( $name );
 
             $images_uri = FileSystem::getDirectory( 'images_uri' );
@@ -65,7 +61,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
                 array(
                     'value' => 1,
                     'label' => Translate::translate( 'Left sidebar' ),
-                    'img'   => $images_uri . 'img/admin/sidebar/icon_1_sidebar_off.png',
+                    'img'   => $images_uri . 'admin/sidebar/icon_1_sidebar_off.png',
                 ),
                 array(
                     'value' => 2,
@@ -75,6 +71,35 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
             );
 
             $this->setOptions( $sidebar_positions );
+        }
+
+        /**
+         *
+         * Check the current post or page have a sidebar
+         *
+         * @static
+         * @access public
+         * @return boolean
+         */
+        public static function isDisplayed() {
+            //fix Ticket #220
+            if ( ( is_search() && is_home() ) || is_tag() || is_date()
+                 || is_archive()
+            ) {
+                $post_id   = Option::get_option( 'page_for_posts' );
+                $post_type = 'page';
+            } else {
+                $page_object = get_queried_object();
+                $post_id     = get_queried_object_id();
+                $post_type   = isset( $page_object->post_type )
+                    ? $page_object->post_type : 'posts';
+            }
+
+            $sidebar = MetaBox::isSidebar( $post_type, $post_id );
+
+            $display = apply_filters( 'sage/display_sidebar', $sidebar );
+
+            return $display;
         }
     }
 }

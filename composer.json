@@ -2,15 +2,17 @@
   "name": "silversite/silverwp",
   "type": "wordpress-plugin",
   "description": "Platform to help WordPress developers create plugins and themes",
-  "homepage": "https://github.com/padalec/silverwp",
+  "homepage": "https://github.com/silversite/silverwp",
   "license": "GPLv2 or later",
   "authors": [
     {
       "name": "Michal Kalkowski",
-      "email": "michal@silversite.pl",
       "homepage": "http://silversite.pl"
     }
   ],
+  "support": {
+    "issues": "https://github.com/silversite/silverwp/issues"
+  },
   "keywords": [
     "gim",
     "roots",
@@ -21,15 +23,9 @@
     "silverwp",
     "wp"
   ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "http://wpackagist.org"
-    }
-  ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "1.0.*",
+    "aristath/kirki": "1.*",
     "leafo/scssphp": "^0.1.8",
     "pluswp/wp-scss": "@stable"
   },
@@ -38,7 +34,8 @@
       "vendor/vafour/vafpress-framework/bootstrap.php",
       "vendor/evanto/auto-updates/class-pixelentity-theme-update.php",
       "vendor/pluswp/wp-scss/bootstrap-for-theme.php",
-      "vendor/aristath/kirki/kirki.php"
+      "vendor/aristath/kirki/kirki.php",
+      "vendor/Taxonomy_Single_Term/class.taxonomy-single-term.php"
     ],
     "psr-4": {
       "SilverWp\\": "SilverWp/"

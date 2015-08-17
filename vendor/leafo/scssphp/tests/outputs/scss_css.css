@@ -174,7 +174,7 @@ foo {
 12px {
   a: b; }
 
-"foo" {
+foo {
   a: b; }
 
 foo {
@@ -219,7 +219,7 @@ foo {
   /* b; c: */ }
 
 foo {
-  a : d;
+  a: d;
   /*: b; c */ }
 /* Foo
  * Bar */

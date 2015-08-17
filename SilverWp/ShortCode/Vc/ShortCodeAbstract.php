@@ -327,8 +327,9 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
          * @access protected
          */
         protected function render( array $attributes, $content = '' ) {
-            if ( isset( $this->settings[ 'php_class_name' ] ) && class_exists( $this->settings[ 'php_class_name' ] ) &&
-                 SingletonAbstract::isImplemented(
+            if ( isset( $this->settings[ 'php_class_name' ] )
+                 && class_exists( $this->settings[ 'php_class_name' ] )
+                 && SingletonAbstract::isImplemented(
                      $this->settings[ 'php_class_name' ],
                      '\SilverWp\ShortCode\Vc\View\ViewInterface'
                  )

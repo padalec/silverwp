@@ -35,6 +35,6 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Toggle' ) ) {
      */
     class Toggle extends Checkbox {
         protected $mode = 'toggle';
-        protected $is_less_variable = false;
+        protected $is_template_variable = false;
     }
 }
