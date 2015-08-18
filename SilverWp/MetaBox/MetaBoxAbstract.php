@@ -281,13 +281,24 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 if ( isset( $this->context ) && ! is_null( $this->context ) ) {
                     $data['context'] = $this->context;
                 }
-                new VP_Metabox( $data );
+
+	            new VP_Metabox( $data );
                 $this->manageColumns();
+
             } catch ( Exception $ex ) {
                 $ex->displayAdminNotice();
             }
         }
 
+	    /**
+	     * Get unique meta box ID
+	     *
+	     * @return string
+	     * @access public
+	     */
+	    public function getMetaBoxId() {
+		    return $this->id;
+	    }
         /**
          *
          * Get the registered meta boxes
@@ -377,136 +388,6 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
 
         /**
          *
-         * Get features list
-         *
-         * @return array
-         * @access public
-         */
-        public function getFeatures() {
-            $this->isSetPostId();
-            $post_id      = $this->post_id;
-            $return_array = array();
-            $features     = $this->getSingle( 'features', $post_id, true );
-            if ( $features ) {
-                foreach ( $features['feature'] as $key => $value ) {
-                    if ( $value['name'] != '' ) {
-                        $return_array[ $key ] = $value;
-                    }
-                }
-            }
-
-            return $return_array;
-        }
-
-        /**
-         *
-         * Gallery list
-         *
-         * @param string|array $size thumbnail image size
-         *
-         * @return array
-         */
-        public function getGallery( $size = 'thumbnail' ) {
-            $images  = array();
-
-            $gallery = $this->getSingle( 'gallery_section', false );
-            if ( $gallery && count( $gallery ) ) {
-                foreach ( $gallery as $key => $gallery_item ) {
-                    if ( ! is_null( $gallery_item['image'] ) && $gallery_item['image'] != '' ) {
-
-                        $gallery_item['attachment_id'] = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
-                        $image_html         = \wp_get_attachment_image( $gallery_item['attachment_id'], $size );
-
-                        $images[ $key ]  = array(
-                            'attachment_id' => $gallery_item['attachment_id'],
-                            'image_url'     => $gallery_item['image'],
-                            'image_html'    => $image_html,
-                        );
-                    }
-                }
-            }
-            return $images;
-        }
-
-        /**
-         * Get video data
-         *
-         * @param string $key_name field key name
-         *
-         * @return array
-         */
-        public function getMedia( $key_name = 'video' ) {
-            $file_data = array();
-
-            $meta_box = $this->getSingle( $key_name );
-
-            $video_url = false;
-            if ( isset( $meta_box['video_url'] ) && $meta_box['video_url'] ) {
-                $video_url = $meta_box['video_url'];
-            }
-
-            if ( $video_url ) {
-                try {
-                    $oEmbed = new Oembed( $video_url );
-
-                    $file_data['provider_name'] = $oEmbed->provider_name;
-                    $file_data['file_url']      = $video_url;
-                    $file_data['thumbnail_url'] = $oEmbed->getThumbnailUrl();
-
-                } catch ( \SilverWp\Exception $ex ) {
-                    echo Message::alert( $ex->getMessage(), 'alert-danger' );
-                    if ( WP_DEBUG ) {
-                        Debug::dumpPrint($ex->getTraceAsString(), 'Stack trace:');
-	                    Debug::dumpPrint($ex->getTrace(), 'Full stack:');
-                    }
-                }
-            }
-
-            return $file_data;
-        }
-
-        /**
-         *
-         * Get post format
-         *
-         * @return string link | quote | video | gallery | default
-         * @access public
-         */
-        public function getPostFormat() {
-
-            $link = $this->getSingle( 'link' );
-            if ( isset( $link['post_format_link'] ) && $link['post_format_link'] ) {
-                return 'link';
-            }
-
-            $quote = $this->getSingle( 'quote' );
-            if ( isset( $quote['post_format_quote_author'] ) && $quote['post_format_quote_author'] ) {
-                return 'quote';
-            }
-
-            $video = $this->getSingle( 'video' );
-            if ( isset( $video['video_url'] ) && $video['video_url'] ) {
-                return 'video';
-            }
-
-            $gallery = $this->getSingle( 'gallery_section' );
-
-            if ( $gallery && $this->isGallery( $gallery ) ) {
-                return 'gallery';
-            }
-
-            $audio_mp3 = $this->getSingle( 'audio_mp3' );
-            $audio_ogg = $this->getSingle( 'audio_ogg' );
-            $audio_wav = $this->getSingle( 'audio_wav' );
-            if ( $audio_mp3 || $audio_ogg || $audio_wav ) {
-                return 'audio';
-            }
-
-            return 'default';
-        }
-
-        /**
-         *
          * Check is images in array
          *
          * @param array $array_in
@@ -522,36 +403,6 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
             return $is_gallery;
         }
 
-        /**
-         * Get sidebar position
-         *
-         * @return string|bool
-         * @access public
-         */
-        public function getSidebarPosition() {
-            //Fix for tag page and all post type where don't have config from meta box
-            if ( \is_home() || \is_tag() || \is_date() || \is_archive() ) {
-                $this->post_id = Option::get_option( 'page_for_posts' );
-            }
-
-            $sidebar_code = $this->getSingle( 'sidebar' );
-
-	        switch ( $sidebar_code ) {
-				case '0':
-					$sidebar_position = false;
-			        break;
-				case '1':
-                    $sidebar_position = 'left';
-                    break;
-                case '2':
-                    $sidebar_position = 'right';
-                    break;
-                default:
-                    $sidebar_position = false; // default position
-            }
-
-	        return $sidebar_position;
-        }
 
         /**
          *
@@ -780,5 +631,37 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 remove_meta_box( $value['id'], $value['page'], $value['context'] );
             }
         }
+
+	    /**
+	     * Get sidebar position
+	     *
+	     * @return string|bool
+	     * @access public
+	     */
+	    public function getSidebarPosition() {
+		    //Fix for tag page and all post type where don't have config from meta box
+		    if ( \is_home() || \is_tag() || \is_date() || \is_archive() ) {
+			    $this->post_id = Option::get_option( 'page_for_posts' );
+		    }
+
+		    $sidebar_code = $this->getSingle( 'sidebar' );
+
+		    switch ( $sidebar_code ) {
+			    case '0':
+				    $sidebar_position = false;
+				    break;
+			    case '1':
+				    $sidebar_position = 'left';
+				    break;
+			    case '2':
+				    $sidebar_position = 'right';
+				    break;
+			    default:
+				    $sidebar_position = false; // default position
+		    }
+
+		    return $sidebar_position;
+	    }
     }
+
 }

@@ -623,30 +623,6 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     }
 
     /**
-     * set paginator object handler
-     *
-     * @param PaginatorInterface $paginator
-     *
-     * @return PostTypeAbstract
-     * @access public
-     */
-    public function setPaginator( PaginatorInterface $paginator ) {
-        $this->paginator = $paginator;
-
-        return $this->paginator;
-    }
-
-    /**
-     * get paginator object handler
-     *
-     * @return object paginator handler
-     * @access public
-     */
-    public function getPaginator() {
-        return $this->paginator;
-    }
-
-    /**
      * ceck if paginator is set
      *
      * @return boolean true or false
@@ -788,36 +764,6 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      */
     public function getPostId() {
         return $this->post_id;
-    }
-
-    /**
-     * date format type
-     *
-     * @param string $date_format
-     *
-     * @return array
-     */
-    private function dateFormat( $date_format ) {
-        $post_id = $this->post_id;
-        $return  = array();
-        switch ( $date_format ) {
-            case 'full':
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                $return[ 'hour' ]    = \get_the_time( '', $post_id );
-                break;
-            case 'date':
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                break;
-            default:
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                $return[ 'hour' ]    = \get_the_time( '', $post_id );
-                break;
-        }
-
-        return $return;
     }
 
     /**
