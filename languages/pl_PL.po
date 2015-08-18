@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silverwp\n"
-"POT-Creation-Date: 2015-08-13 11:32+0200\n"
-"PO-Revision-Date: 2015-08-13 11:33+0200\n"
+"POT-Creation-Date: 2015-08-17 12:07+0200\n"
+"PO-Revision-Date: 2015-08-17 12:08+0200\n"
 "Last-Translator: Michał Kalkowski <michal@dynamite-studio.pl>\n"
 "Language-Team: silverwp\n"
 "Language: pl_PL\n"
@@ -237,18 +237,12 @@ msgid ""
 "If You want add panel to your section first define panel_id class property."
 msgstr ""
 
-#: ../SilverWp/FileSystem.php:116
-#, php-format
-msgid "Key %s does not exists in registered directories"
-msgstr ""
-
 #: ../SilverWp/Helper/Breadcrumb.php:217
 msgid "Archive by category"
 msgstr "Archiwum według kategorii"
 
 #: ../SilverWp/Helper/Breadcrumb.php:220
 #: ../SilverWp/PostType/PostTypeAbstract.php:251
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:157
 msgid "Search"
 msgstr "Szukaj"
 
@@ -267,6 +261,14 @@ msgstr "Błąd 404"
 #: ../SilverWp/Helper/Breadcrumb.php:310
 msgid "Page"
 msgstr "Zakładka"
+
+#: ../SilverWp/Helper/Control/Attachments.php:49
+msgid "Attachments"
+msgstr "Załączniki"
+
+#: ../SilverWp/Helper/Control/Attachments.php:52
+msgid "File"
+msgstr ""
 
 #: ../SilverWp/Helper/Control/Checkbox.php:41
 msgid "yes"
@@ -413,7 +415,7 @@ msgid ""
 msgstr ""
 
 #: ../SilverWp/PostType/PostTypeAbstract.php:244
-#: ../SilverWp/PostType/PostTypeAbstract.php:492
+#: ../SilverWp/PostType/PostTypeAbstract.php:493
 msgid "Item"
 msgstr "Pozycja (element)"
 
@@ -443,12 +445,12 @@ msgstr "Brak wyników wyszukiwania"
 msgid "No items found in trash"
 msgstr "Nie znaleziono pozycji w śmietniku"
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:368
+#: ../SilverWp/PostType/PostTypeAbstract.php:370
 #, fuzzy
 msgid "Post Type $name is required and can't be empty."
 msgstr "Typ wpisu $_name jest obowiązkowy i nie może być pusty."
 
-#: ../SilverWp/PostType/PostTypeAbstract.php:503
+#: ../SilverWp/PostType/PostTypeAbstract.php:504
 msgid "Item Pending"
 msgstr ""
 
@@ -544,43 +546,14 @@ msgstr ""
 msgid "Field "
 msgstr ""
 
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:158
-msgid "Popular"
-msgstr "Popularne"
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:159
-msgid "Add New"
-msgstr "Dodaje nową pozycję"
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:160
-msgid "New name"
-msgstr "Nowa nazwa"
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:161
-msgid "Edit"
-msgstr "Edytuj"
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:162
-msgid "Add or remove"
-msgstr "Dodaj lub usuń"
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:249
-#, fuzzy
-msgid "$post_type is required and can't be empty."
-msgstr "$_post_type_name jest obowiązkowy i nie może być pusty."
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:275
-msgid "Parametr args in $this->taxonomies is required!"
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:209
+msgid "::posts_types_handler is required and can't be empty."
 msgstr ""
 
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:341
+#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:286
+#, fuzzy
 msgid "Show All "
 msgstr "Wszystkie"
-
-#: ../SilverWp/Taxonomy/TaxonomyAbstract.php:418
-#, php-format
-msgid "Variable %s::post_id is required and can't be empty"
-msgstr ""
 
 #: ../SilverWp/ThemeOption/Menu/MenuAbstract.php:154
 #, php-format
@@ -712,6 +685,25 @@ msgstr ""
 #: ../SilverWp/libs/ssvafpress/views/control/media.php:5
 msgid "Choose File"
 msgstr "Wybierz plik"
+
+#~ msgid "Popular"
+#~ msgstr "Popularne"
+
+#~ msgid "Add New"
+#~ msgstr "Dodaje nową pozycję"
+
+#~ msgid "New name"
+#~ msgstr "Nowa nazwa"
+
+#~ msgid "Edit"
+#~ msgstr "Edytuj"
+
+#~ msgid "Add or remove"
+#~ msgstr "Dodaj lub usuń"
+
+#, fuzzy
+#~ msgid "$post_type is required and can't be empty."
+#~ msgstr "$_post_type_name jest obowiązkowy i nie może być pusty."
 
 #~ msgid "Fonts"
 #~ msgstr "Czcionki"

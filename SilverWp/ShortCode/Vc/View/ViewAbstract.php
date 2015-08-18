@@ -34,7 +34,20 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
     class ViewAbstract extends \WPBakeryShortCode {
         const SC_PRFX = 'ss_';
 
-        /**
+	    protected $query_args = array();
+
+	    public function setQueryArgs( array $query_args ) {
+		    $this->query_args = $query_args;
+
+		    return $this;
+	    }
+
+	    public function addQueryArg( $name, $value ) {
+		    $this->query_args[ $name ] = $value;
+
+		    return $this;
+	    }
+	    /**
          * Overrides method from WPBakeryShortCode::getFileName()
          * change templates short code file name (remove prefix)
          *
@@ -47,6 +60,24 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
             return $file_name;
         }
 
+	    /**
+	     * Get current paged page
+	     *
+	     * @return int|string
+	     * @access public
+	     */
+	    public function getPaged() {
+
+		    if ( get_query_var( 'paged' ) ) {
+			    $paged = get_query_var( 'paged' );
+		    } else if ( get_query_var( 'page' ) ) {
+			    $paged = get_query_var( 'page' );
+		    } else {
+			    $paged = 1;
+		    }
+
+		    return $paged;
+	    }
         /**
          *
          * Overrides method from WPBakeryShortCode::prepareAtts()
@@ -69,5 +100,17 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ViewAbstract' ) ) {
 
             return $return;
         }
+
+	    /**
+	     * Get all set args to WP_Query object
+	     *
+	     * @param array $args
+	     *
+	     * @return array
+	     * @access public
+	     */
+	    public function getQueryArgs( array $args = array() ) {
+		    return wp_parse_args( $args, $this->query_args );
+	    }
     }
 }

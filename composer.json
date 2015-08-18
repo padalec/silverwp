@@ -34,7 +34,8 @@
       "vendor/vafour/vafpress-framework/bootstrap.php",
       "vendor/evanto/auto-updates/class-pixelentity-theme-update.php",
       "vendor/pluswp/wp-scss/bootstrap-for-theme.php",
-      "vendor/aristath/kirki/kirki.php"
+      "vendor/aristath/kirki/kirki.php",
+      "vendor/Taxonomy_Single_Term/class.taxonomy-single-term.php"
     ],
     "psr-4": {
       "SilverWp\\": "SilverWp/"

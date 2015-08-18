@@ -281,14 +281,16 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
         }
     }
 
-    /**
-     * get all added templates if post_type isn't null
-     * return all tempalates directed for post type
-     *
-     * @return array
-     * @static
-     * @access public
-     */
+	/**
+	 * Get all added templates if post_type isn't null
+	 * return all templates directed for post type
+	 *
+	 * @param null $post_type
+	 *
+	 * @return array
+	 * @static
+	 * @access public
+	 */
     public static function getTemplates( $post_type = null ) {
         $template = \is_null( $post_type ) ? self::$page_templates : self::$page_templates[ $post_type ];
 
@@ -437,7 +439,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
 
     /**
      *
-     * add a taxonomies to Post Type
+     * Set a taxonomies to Post Type
      *
      * @param TaxonomyInterface $taxonomy
      *
@@ -446,8 +448,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     public function registerTaxonomy( TaxonomyInterface $taxonomy ) {
         try {
             $this->setTaxonomy( $taxonomy );
-            $taxonomy->setPostType( $this->name );
-            $taxonomy->setObjectType( array( $this->name ) );
+            $taxonomy->setPostTypeHandler( $this );
         } catch ( TaxonomyException $ex ) {
             echo $ex->displayAdminNotice();
         }
@@ -622,30 +623,6 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
     }
 
     /**
-     * set paginator object handler
-     *
-     * @param PaginatorInterface $paginator
-     *
-     * @return PostTypeAbstract
-     * @access public
-     */
-    public function setPaginator( PaginatorInterface $paginator ) {
-        $this->paginator = $paginator;
-
-        return $this->paginator;
-    }
-
-    /**
-     * get paginator object handler
-     *
-     * @return object paginator handler
-     * @access public
-     */
-    public function getPaginator() {
-        return $this->paginator;
-    }
-
-    /**
      * ceck if paginator is set
      *
      * @return boolean true or false
@@ -787,36 +764,6 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      */
     public function getPostId() {
         return $this->post_id;
-    }
-
-    /**
-     * date format type
-     *
-     * @param string $date_format
-     *
-     * @return array
-     */
-    private function dateFormat( $date_format ) {
-        $post_id = $this->post_id;
-        $return  = array();
-        switch ( $date_format ) {
-            case 'full':
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                $return[ 'hour' ]    = \get_the_time( '', $post_id );
-                break;
-            case 'date':
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                break;
-            default:
-                $return[ 'date' ]    = \get_the_date( '', $post_id );
-                $return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-                $return[ 'hour' ]    = \get_the_time( '', $post_id );
-                break;
-        }
-
-        return $return;
     }
 
     /**

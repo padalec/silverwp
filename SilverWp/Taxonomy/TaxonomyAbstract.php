@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -17,510 +16,346 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Taxonomy/TaxonomyAbstract.php $
-  Last committed: $Revision: 2283 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-29 17:27:04 +0100 (Cz, 29 sty 2015) $
-  ID: $Id: TaxonomyAbstract.php 2283 2015-01-29 16:27:04Z padalec $
- */
 namespace SilverWp\Taxonomy;
 
-use SilverWp\Debug;
+use SilverWp\CoreInterface;
 use SilverWp\Helper\Filter;
-use SilverWp\Helper\UtlArray;
 use SilverWp\PostInterface;
+use SilverWp\PostType\PostTypeInterface;
 use SilverWp\SingletonAbstract;
-use SilverWp\Taxonomy\TaxonomyInterface;
 use SilverWp\Translate;
 
-/**
- *
- * Taxonomy Abstract
- *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: TaxonomyAbstract.php 2283 2015-01-29 16:27:04Z padalec $
- * @category WordPress
- * @package SilverWp
- * @subpackage Taxonomy
- * @abstract
- * @copyright (c) 2009 - 2014, SilverSite.pl
- */
-abstract class TaxonomyAbstract extends SingletonAbstract implements TaxonomyInterface, PostInterface {
-    /**
-     *
-     * single or list post type objects names
-     * where taxonomy shouldby displayed
-     * if singel shouldby passed array
-     *
-     * @var array
-     */
-    protected $object_type = array();
-    /**
-     *
-     * @var string
-     */
-    protected $post_type;
-    /**
-     * taxonomies to register
-     *
-     * @var array sample:
-     * array(
-     * 'name'   => '',
-     * 'args'   => array(
-     * 'public'            => true,
-     * 'show_in_nav_menus' => true,
-     * 'show_ui'           => true,
-     * 'show_tagcloud'     => true,
-     * 'hierarchical'      => true,
-     * 'query_var'         => true
-     * ),
-     * )
-     */
-    protected $taxonomies = array(
-        array(
-            'name' => '',
-            'args' => array(
-                'public'            => true,
-                'show_in_nav_menus' => true,
-                'show_ui'           => true,
-                'show_tagcloud'     => true,
-                'hierarchical'      => true,
-                'query_var'         => true
-            ),
-        )
-    );
-    /**
-     * list of all labels shoul by setsup
-     *
-     * @var array
-     * @access private
-     * @since 1.8
-     */
-    protected $labels = array(
-        'name' => array(
-            'name'                       => '',
-            'singular_name'              => '',
-            'menu_name'                  => '',
-            'all_items'                  => 'All items',
-            'parent_item'                => 'Parent',
-            'parent_item_colon'          => 'Parent',
-            'update_item'                => 'Update ',
-            'separate_items_with_commas' => 'Separate with commas',
-            'choose_from_most_used'      => 'Choose from the most used ',
-        )
-    );
+if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
+	/**
+	 *
+	 * Register new taxonomy to Post Type
+	 *
+	 * @author        Michal Kalkowski <michal at silversite.pl>
+	 * @version       0.2
+	 * @category      WordPress
+	 * @package       SilverWp
+	 * @subpackage    Taxonomy
+	 * @abstract
+	 * @copyright (c) 2009 - 2015, SilverSite.pl
+	 */
+	abstract class TaxonomyAbstract extends SingletonAbstract
+		implements TaxonomyInterface, PostInterface, CoreInterface {
 
-    /**
-     *
-     * variable handle all taxonomies names
-     *
-     * @var array
-     * @access private
-     */
-    private $taxonomy_name = array();
-    /**
-     * post id default null
-     *
-     * @var integer
-     * @access protected
-     */
-    protected $post_id = null;
+		/**
+		 * Handler for post type class
+		 *
+		 * @var array
+		 * @access private
+		 */
+		private $posts_types_handler = array();
 
-    /**
-     *
-     * calss constructor
-     *
-     * @access protected
-     * @return void
-     */
-    protected function __construct() {
-        //set labels
-        $this->setLabels();
-        // Adds taxonomies
-        \add_action( 'init', array( $this, 'init' ), 0 );
-        // Allows filtering of posts by taxonomy in the admin view
-        \add_action( 'restrict_manage_posts', array( $this, 'filterRestrictManagePosts' ) );
-        \add_filter( 'parse_query', array( $this, 'addFilter2QueryList' ), 10, 1 );
-    }
+		/**
+		 * Taxonomies to register
+		 *
+		 * @var array sample:
+		 * array(
+		 *  'name'   =>  array(
+		 *          'public'            => true,
+		 *          'show_in_nav_menus' => true,
+		 *          'show_ui'           => true,
+		 *          'show_tagcloud'     => true,
+		 *          'hierarchical'      => true,
+		 *          'query_var'         => true
+		 *      ),
+		 * )
+		 */
+		protected $taxonomies = array();
 
-    /**
-     * return all defailt labels
-     *
-     * @since 1.8
-     * @return array
-     * @access private
-     */
-    private function getDefaultLabels() {
-        $defaultlabels = array(
-            'search_items'        => Translate::translate( 'Search' ),
-            'popular_items'       => Translate::translate( 'Popular' ),
-            'add_new_item'        => Translate::translate( 'Add New' ),
-            'new_item_name'       => Translate::translate( 'New name' ),
-            'edit_item'           => Translate::translate( 'Edit' ),
-            'add_or_remove_items' => Translate::translate( 'Add or remove' ),
-        );
+		/**
+		 * Post id
+		 *
+		 * @var integer
+		 * @access private
+		 */
+		private $post_id = null;
 
-        return $defaultlabels;
-    }
+		/**
+		 *
+		 * Class constructor
+		 *
+		 * @access protected
+		 */
+		protected function __construct() {
+			// Adds taxonomies
+			add_action( 'init', array( $this, 'init' ) );
+			// Allows filtering of posts by taxonomy in the admin view
+			add_action( 'restrict_manage_posts', array( $this, 'filterAdminPostsTypeList' ) );
+			add_filter( 'parse_query', array( $this, 'addFilter2QueryList' ), 10, 1 );
+		}
 
-    /**
-     *
-     * add new taxonomy
-     *
-     * @param array $taxonomy
-     *
-     * @access public
-     * @return void
-     */
-    public function addTaxonomy( array $taxonomy ) {
-        $this->taxonomies[ ] = $taxonomy;
-        \array_unique( $this->taxonomies );
-    }
+		/**
+		 * Add new taxonomy
+		 *
+		 * @param string $taxonomy_name - unique taxonomy name
+		 * @param array  $args          - all taxonomy params @see https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function add( $taxonomy_name, array $args ) {
+			$this->taxonomies[ $taxonomy_name ] = $args;
 
-    /**
-     * add new taxonomy name
-     *
-     * @param string $taxonomy
-     */
-    private function addTaxonomyName( $taxonomy ) {
-        $this->taxonomy_name[ ] = $taxonomy;
-        \array_unique( $this->taxonomy_name );
-    }
+			return $this;
+		}
 
-    /**
-     *
-     * set post type
-     *
-     * @param string $post_type
-     *
-     * @access public
-     */
-    public function setPostType( $post_type ) {
-        $this->post_type = $post_type;
+		/**
+		 * Change default labels for taxonomy
+		 *
+		 * @param string $taxonomy_name
+		 * @param array  $labels (@see labels: https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments)
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setLabels( $taxonomy_name, array $labels ) {
+			$this->taxonomies[ $taxonomy_name ]['labels'] = $labels;
 
-        return $this;
-    }
+			return $this;
+		}
 
-    /**
-     *
-     * get post type name
-     *
-     * @return string
-     * @access public
-     */
-    public function getPostType() {
-        return $this->post_type;
-    }
+		/**
+		 * Set PostType class
+		 *
+		 * @param PostTypeInterface $post_type_class
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setPostTypeHandler( PostTypeInterface $post_type_class ) {
+			$this->posts_types_handler = array();
+			$this->posts_types_handler[] = $post_type_class;
 
-    /**
-     * set all not default labels
-     *
-     * @since 1.8
-     * @abstract
-     * @access protected
-     */
-    abstract protected function setLabels();
+			return $this;
+		}
 
-    /**
-     *
-     * set object post type name where
-     * taxonomy shouldby refferences
-     *
-     * @param array $post_type
-     *
-     * @access public
-     */
-    public function setObjectType( array $post_type ) {
-        $this->object_type = \array_unique( \array_merge( $this->object_type, $post_type ) );
-    }
+		/**
+		 * Add new Post Type class
+		 * Some of taxonomy can be displayed in different post types
+		 * so this method add our taxonomy to Custom Post Type
+		 *
+		 * @param PostTypeInterface $post_type_class
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addPostTypeHandler( PostTypeInterface $post_type_class ) {
+			$this->posts_types_handler[] = $post_type_class;
 
-    /**
-     *
-     * init taxnonomy
-     *
-     * @access public
-     * @throws Exception
-     */
-    public function init() {
-        try {
-            if ( \is_null( $this->post_type ) ) {
-                throw new Exception( Translate::translate( '$post_type is required and can\'t be empty.' ) );
-            }
-            foreach ( $this->taxonomies as $value ) {
-                $name = $this->getSlug( $value[ 'name' ] );
-                $this->addTaxonomyName( $name );
-                $args = $this->getArgs( $value );
-                \register_taxonomy( $name, $this->object_type, $args );
-                \register_taxonomy_for_object_type( $name, $this->post_type );
-            }
-        } catch ( Exception $ex ) {
-            $ex->displayAdminNotice();
-        }
-    }
+			return $this;
+		}
 
-    /**
-     *
-     * create array for register_taxonomy
-     *
-     * @param array $args - args
-     *
-     * @return array
-     * @throws Exception
-     * @access private
-     */
-    private function getArgs( $args ) {
-        if ( ! isset( $args[ 'args' ] ) ) {
-            throw new Exception( Translate::translate( 'Parametr args in $this->taxonomies is required!' ) );
-        }
-        $labels = \wp_parse_args( $this->labels[ $args[ 'name' ] ], $this->getDefaultLabels() );
+		/**
+		 * Set post id
+		 *
+		 * @param integer $post_id
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setPostId( $post_id ) {
+			$this->post_id = (int) $post_id;
 
-        $taxonomy_args = array(
-            'labels'  => $labels,
-            'rewrite' => array(
-                'slug'       => $this->getSlug( $args[ 'name' ] ),
-                'with_front' => true
-            ),
-        );
-        $args          = \wp_parse_args( $args[ 'args' ], $taxonomy_args );
+			return $this;
+		}
 
-        return $args;
-    }
+		/**
+		 * Get post id
+		 *
+		 * @return integer
+		 * @access public
+		 */
+		public function getPostId() {
+			return $this->post_id;
+		}
 
-    /**
-     * create uniqe slug for taxonomy
-     *
-     * @param string $taxonomy_name
-     *
-     * @return string
-     * @access private
-     */
-    private function getSlug( $taxonomy_name ) {
-        return $this->post_type . '_' . $taxonomy_name;
-    }
+		/**
+		 *
+		 * Get post type class handler
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getPostsTypesHandler() {
+			return $this->posts_types_handler;
+		}
 
-    /**
-     * get all registered taxonomies name
-     *
-     * @return array
-     * @access public
-     */
-    public function getName( $name = null ) {
-        foreach ( $this->taxonomies as $value ) {
-            if ( isset( $value[ 'name' ] ) && ! \is_null( $name ) && $value[ 'name' ] == $name ) {
-                return $this->getSlug( $value[ 'name' ] );
-            } else {
-                $tax_name[ ] = $this->getSlug( $value[ 'name' ] );
-            }
-        }
+		/**
+		 * Set up taxonomy class labels etc.
+		 *
+		 * @since  0.2
+		 * @abstract
+		 * @access protected
+		 */
+		abstract protected function setUp();
 
-        return $tax_name;
-    }
+		/**
+		 *
+		 * Register taxonomy
+		 *
+		 * @access public
+		 * @throws Exception
+		 */
+		public function init() {
+			$this->setUp();
 
-    /**
-     * Adds taxonomy filters to the admin page in lists
-     *
-     * @link http://pippinsplugins.com code artfully lifed
-     * @access public
-     * @return void
-     */
-    public function filterRestrictManagePosts() {
-        global $typenow;
-        // An array of all the taxonomyies you want to display. Use the taxonomy name or slug
-        // must set this to the post type you want the filter(s) displayed on
-        if ( $typenow == $this->post_type ) {
-            $taxonomies = \get_object_taxonomies( $typenow );
-            foreach ( $taxonomies as $tax_slug ) {
+			if ( ! count( $this->posts_types_handler ) ) {
+				throw new Exception(
+					Translate::translate(
+						__CLASS__ . '::posts_types_handler is required and can\'t be empty.'
+					)
+				);
+			}
 
-                $tax_obj = \get_taxonomy( $tax_slug );
+			$post_type_objects = $this->getPostsTypesNames();
 
-                if ( \wp_count_terms( $tax_slug ) ) {
-                    \wp_dropdown_categories(
-                        array(
-                            'show_option_all' => Translate::translate( 'Show All ' . $tax_obj->label ),
-                            'taxonomy'        => $tax_slug,
-                            'name'            => $tax_obj->name,
-                            'orderby'         => 'name',
-                            'selected'        => Filter::get_var( $tax_slug ),
-                            'hierarchical'    => $tax_obj->hierarchical,
-                            'show_count'      => false,
-                            'hide_empty'      => true
-                        )
-                    );
-                }
-            }
-        }
-    }
+			foreach ( $this->taxonomies as $taxonomy_name => $args ) {
+				//register taxonomy
+				register_taxonomy( $taxonomy_name, $post_type_objects, $args );
+				//add taxonomy to Post Type
+				foreach ( $post_type_objects as $post_type_object ) {
+					register_taxonomy_for_object_type( $taxonomy_name, $post_type_object );
+				}
+				//if taxonomy have custom_meta_box args replace default MB for custom
+				if ( isset( $args['custom_meta_box'] ) && ! empty( $args[ 'custom_meta_box' ] ) ) {
+					$this->changeDefaultMetaBox($taxonomy_name, $args[ 'custom_meta_box' ]);
+				}
+			}
+		}
 
-    /**
-     * get terms
-     *
-     * @param string $term_name taxonomy name
-     * @param array  $param - query args http://codex.wordpress.org/Function_Reference/get_terms
-     *
-     * @throws Exception
-     * @link http://codex.wordpress.org/Function_Reference/get_terms get_terms function
-     * @access public
-     * @return array
-     */
-    public function getAllTerms( $term_name = 'category', array $param = array() ) {
-        $default_args = array(
-            'orderby'      => 'name',
-            'order'        => 'ASC',
-            'hide_empty'   => false,
-            'exclude'      => array(),
-            'exclude_tree' => array(),
-            'include'      => array(),
-            'number'       => '',
-            'fields'       => 'all',
-            'slug'         => '',
-            'parent'       => '',
-            'hierarchical' => true,
-            'child_of'     => 0,
-            'name__like'   => '',
-            'pad_counts'   => false,
-            'offset'       => '',
-            'search'       => '',
-            'cache_domain' => 'core'
-        );
+		/**
+		 * This function return all taxonomies with his
+		 * arguments or all argument of $taxonomy_name
+		 *
+		 * @param null $taxonomy_name
+		 *
+		 * @return array
+		 * @access public
+		 */
+		public function get( $taxonomy_name = null ) {
+			if ( ! is_null( $taxonomy_name )
+			     && isset( $this->taxonomies[ $taxonomy_name ] )
+			) {
+				return $this->taxonomies[ $taxonomy_name ];
+			}
 
-        $args = \wp_parse_args( $param, $default_args );
+			return $this->taxonomies;
+		}
 
-        $tax_category = $this->getName( $term_name );
-        $tax_list     = UtlArray::object_to_array( \get_terms( $tax_category, $args ) );
-        if ( \is_wp_error( $tax_list ) ) {
-            throw new Exception( $tax_list->get_error_message() );
-        }
+		/**
+		 * Check if taxonomy $taxonomy_name is registered
+		 *
+		 * @param string $taxonomy_name taxonomy name
+		 *
+		 * @return boolean
+		 * @access public
+		 */
+		public function isRegistered( $taxonomy_name ) {
+			if ( isset( $this->taxonomies[ $taxonomy_name ] ) ) {
+				return true;
+			}
 
-        return $tax_list;
-    }
+			return false;
+		}
 
-    /**
-     *
-     * get terms directed to the post
-     *
-     * @param string $term_name category or tag
-     *
-     * @return array
-     * @throws Exception
-     * @access public
-     */
-    public function getPostTerms( $term_name = 'category' ) {
-        $query_args = array(
-            'orderby' => 'name',
-            'order'   => 'ASC',
-            'fields'  => 'all',
-        );
-        if ( \is_null( $this->post_id ) ) {
-            $child_class = \get_called_class();
-            throw new Exception(
-                Translate::params( 'Variable %s::post_id is required and can\'t be empty', $child_class )
-            );
-        }
-        $post_id  = $this->post_id;
-        $tax_name = $this->getName( $term_name );
-        $Terms    = \wp_get_object_terms( (int) $post_id, $tax_name, $query_args );
+		/**
+		 * Add taxonomy filter to the admin page in post type lists
+		 *
+		 * @link   https://pippinsplugins.com/post-list-filters-for-custom-taxonomies-in-manage-posts/
+		 * @access public
+		 * @return void
+		 */
+		public function filterAdminPostsTypeList() {
+			global $typenow;
+			// An array of all the taxonomyies you want to display. Use the taxonomy name or slug
+			// must set this to the post type you want the filter(s) displayed on
+			foreach ($this->getPostsTypesNames() as $post_type_name) {
+				if ( $typenow == $post_type_name ) {
+					$taxonomies = \get_object_taxonomies( $typenow );
+					foreach ( $taxonomies as $tax_slug ) {
 
-        if ( \is_wp_error( $Terms ) ) {
-            throw new Exception( $Terms->get_error_message(), $Terms->get_error_code() );
-        }
-        $terms = UtlArray::object_to_array( $Terms );
+						$tax_obj = \get_taxonomy( $tax_slug );
 
-        return $terms;
-    }
+						if ( \wp_count_terms( $tax_slug ) ) {
+							\wp_dropdown_categories(
+								array(
+									'show_option_all' => Translate::translate( 'Show All ' . $tax_obj->label ),
+									'taxonomy'        => $tax_slug,
+									'name'            => $tax_obj->name,
+									'orderby'         => 'name',
+									'selected'        => Filter::get_var( $tax_slug ),
+									'hierarchical'    => $tax_obj->hierarchical,
+									'show_count'      => false,
+									'hide_empty'      => true
+								)
+							);
+						}
+					}
+				}
+			}
+		}
 
-    /**
-     * set post_id varibale
-     *
-     * @param integer $post_id post id
-     *
-     * @return \SilverWp\Taxonomy\TaxonomyAbstract
-     * @access public
-     */
-    public function setPostId( $post_id ) {
-        $this->post_id = $post_id;
+		/**
+		 * Add taxonomy slug to query for filter by taxonomy
+		 *
+		 * @global string $pagenow current page
+		 *
+		 * @param object  $query   Wp_query instance
+		 *
+		 * @access public
+		 * @return void
+		 * @todo   wtf is this?
+		 */
+		public function addFilter2QueryList( $query ) {
+			return ;
+			global $pagenow;
+			$post_type  = $this->getPostType();
+			$taxonomy   = $this->getName( 'category' );
+			$query_vars = &$query->query_vars;
+			if ( $pagenow == 'edit.php' && isset( $query_vars['post_type'] )
+			     && $query_vars['post_type'] == $post_type
+			     && isset( $query_vars[ $taxonomy ] )
+			     && is_numeric( $query_vars[ $taxonomy ] )
+			     && $query_vars[ $taxonomy ] != 0
+			) {
+				$term                    = get_term_by( 'id',
+					$query_vars[ $taxonomy ], $taxonomy );
+				$query_vars[ $taxonomy ] = $term->slug;
+			}
+		}
 
-        return $this;
-    }
+		/**
+		 * Replace default meta box in edit/add view of Post Types
+		 *
+		 * @param $taxonomy_name
+		 * @param $args
+		 *
+		 * @access private
+		 */
+		private function changeDefaultMetaBox( $taxonomy_name, $args ) {
+			$custom_tax_mb = new \Taxonomy_Single_Term( $taxonomy_name, $this->getPostsTypesNames(), $args[ 'control_type' ] );
+			foreach ( $args as $name => $value ) {
+				$custom_tax_mb->set( $name, $value );
+			}
+		}
 
-    /**
-     * get post id
-     *
-     * @return integer|null value of post_id variable
-     * @access public
-     */
-    public function getPostId() {
-        return $this->post_id;
-    }
+		/**
+		 * Return all post types names registered with taxonomy
+		 *
+		 * @return array
+		 * @access private
+		 */
+		private function getPostsTypesNames() {
+			$post_type_name = array();
+			foreach ( $this->getPostsTypesHandler() as $post_type ) {
+				$post_type_name[] = $post_type->getName();
+			}
 
-    /**
-     * check if taxonomy $name is registered
-     *
-     * @param string $name taxonomy name
-     *
-     * @return boolean
-     * @access public
-     */
-    public function isRegistered( $name ) {
-        if ( \in_array( $this->getName( $name ), $this->taxonomy_name ) ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * get query args for get post by taxonomy id
-     *
-     * @param array|integer $tax_ids array with taxonomy id or if only one
-     *
-     * @return array
-     * @access public
-     */
-    public function getCategoryQueryArgs( $tax_ids ) {
-        $args[ 'tax_query' ] = array(
-            array(
-                'taxonomy' => $this->getName( 'category' ),
-                'field'    => 'term_id',
-                'terms'    => $tax_ids,
-            )
-        );
-
-        return $args;
-    }
-
-    /**
-     * Add teaxonomy slug to query for filter by taxonomy
-     *
-     * @global string $pagenow current page
-     *
-     * @param object  $query WP_Query instance
-     *
-     * @access public
-     * @return void
-     */
-	public function addFilter2QueryList( \WP_Query $query ) {
-		global $pagenow;
-		$post_type  = $this->getPostType();
-		//TODO its works only wen category tax is registered
-		//TODO method getName return array with all registerd taxonomies
-		$taxonomy   = $this->getName( 'category' );
-		$query_vars = &$query->query_vars;
-
-		if ( $pagenow == 'edit.php'
-		     && isset( $query_vars['post_type'] )
-		     && $query_vars['post_type'] == $post_type
-		     && isset( $query_vars[ $taxonomy ] )
-		     && is_numeric( $query_vars[ $taxonomy ] )
-		     && $query_vars[ $taxonomy ] != 0
-		) {
-			$term = get_term_by(
-				'id',
-				$query_vars[ $taxonomy ],
-				$taxonomy
-			);
-			$query_vars[ $taxonomy ] = $term->slug;
+			return $post_type_name;
 		}
 	}
 }
