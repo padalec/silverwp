@@ -16,14 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/Form/Element/Checkbox.php $
-  Last committed: $Revision: 2184 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: Checkbox.php 2184 2015-01-21 12:20:08Z padalec $
- */
 namespace SilverWp\ShortCode\Vc\Control;
+
+use SilverWp\Translate;
 
 if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Checkbox' ) ) {
 
@@ -34,10 +29,23 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Checkbox' ) ) {
      * @package SilverWp
      * @subpackage ShortCode\Vc\Control
      * @author Michal Kalkowski <michal at dynamite-studio.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Id: Checkbox.php 2184 2015-01-21 12:20:08Z padalec $
+     * @copyright SilverSite.pl 2015
+     * @version 1.2
      */
     class Checkbox extends ControlMultiAbstract {
         protected $type = 'checkbox';
+
+	    public function __construct( $name ) {
+			parent::__construct( $name );
+		    //Fix for compatiblity with other checbox controls (add value = 1)
+		    $this->setOptions(
+			    array(
+				    array(
+					    'label' => Translate::translate( 'Yes' ),
+					    'value' => 1,
+				    )
+			    )
+			);
+	    }
     }
 } 
