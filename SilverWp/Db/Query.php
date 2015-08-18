@@ -10,6 +10,7 @@
 namespace SilverWp\Db;
 
 use SilverWp\Debug;
+use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\RecursiveArray;
 use SilverWp\PostType\PostTypeAbstract;
@@ -18,7 +19,7 @@ use SilverWpAddons\Ajax\PostLike;
 if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 
 	/**
-	 * Db query
+	 * Class extends to WP_Query
 	 *
 	 * @author        Michal Kalkowski <michal at silversite.pl>
 	 * @version       0.1
@@ -40,7 +41,7 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @var string
 		 * @access private
 		 */
-		private $meta_box_id;
+		private $meta_box_id = 'post';
 
 		/**
 		 * Class constructor
@@ -80,6 +81,78 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Set meta box id
+		 *
+		 * @param string $meta_box_id
+		 *
+		 * @return $this
+		 * @access pubic
+		 */
+		public function setMetaBoxId( $meta_box_id ) {
+			$this->meta_box_id = $meta_box_id;
+
+			return $this;
+		}
+
+		/**
+		 * Set query args to WP_Query
+		 *
+		 * @param array $query_args
+		 *
+		 * @access public
+		 * @return $this
+		 */
+		public function setArgs( array $query_args ) {
+			foreach ( $query_args as $name => $value ) {
+				$this->set( $name, $value );
+			}
+
+			return $this;
+		}
+
+		/**
+		 * Set limit post on one page
+		 *
+		 * @param int $limit
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setLimit( $limit ) {
+			$this->max_num_pages = (int) $limit;
+
+			return $this;
+		}
+
+		/**
+		 * Set offset (current page)
+		 *
+		 * @param int $offset
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setOffset( $offset ) {
+			$this->set( 'offset', $offset );
+
+			return $this;
+		}
+
+		/**
+		 * Get likes count
+		 *
+		 * @return mixed
+		 * @access public
+		 */
+		public function getLikesCount() {
+			$post_like  = PostLike::getInstance();
+			$like_count = $post_like->getPostLikeCount( $this->getPostId() );
+
+			return $like_count;
+		}
+
+
+		/**
 		 * Get Post Id
 		 *
 		 * @return int
@@ -100,52 +173,17 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		}
 
 		/**
-		 * Set meta box id
+		 * Get post short description
 		 *
-		 * @param string $meta_box_id
-		 *
-		 * @return $this
-		 * @access pubic
-		 */
-		public function setMetaBoxId( $meta_box_id ) {
-			$this->meta_box_id = $meta_box_id;
-
-			return $this;
-		}
-
-		public function setLimit( $limit ) {
-			$this->max_num_pages = (int) $limit;
-
-			return $this;
-		}
-
-		public function setOffset( $offset ) {
-			$this->set( 'offset', $offset );
-			$this->parse_query_vars();
-			return $this;
-		}
-
-		/**
-		 * Set query args to WP_Query
-		 *
-		 * @param array $query_args
-		 *
+		 * @return string
 		 * @access public
-		 * @return $this
 		 */
-		public function setArgs( array $query_args ) {
-			foreach ( $query_args as $name => $value ) {
-				$this->set( $name, $value );
+		public function getShortDescription() {
+			if ( strpos( $this->post->post_content, '<!--more-->' ) !== false) {
+				return get_the_content( '' );
+			} else {
+				return get_the_excerpt();
 			}
-
-			return $this;
-		}
-
-		public function getLikesCount() {
-			$post_like  = PostLike::getInstance();
-			$like_count = $post_like->getPostLikeCount( $this->getPostId() );
-
-			return $like_count;
 		}
 
 		/**
