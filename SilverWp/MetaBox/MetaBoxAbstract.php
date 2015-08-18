@@ -296,7 +296,7 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
 	     * @return string
 	     * @access public
 	     */
-	    public function getMetaBoxId() {
+	    public function getId() {
 		    return $this->id;
 	    }
         /**
