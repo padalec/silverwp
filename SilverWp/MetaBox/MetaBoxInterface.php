@@ -32,15 +32,6 @@ namespace SilverWp\MetaBox;
 interface MetaBoxInterface
 {
     /**
-     * get single meta box
-     * 
-     * @param string $name meta box name
-     * @param boolean $remove_first
-     * @return mixed meta box value
-     * @access public
-     */
-    public function getSingle($name, $remove_first = true);
-    /**
      * get all meta box for single post type
      * @access public
      * @return array array with all meta boxes
@@ -53,10 +44,6 @@ interface MetaBoxInterface
      * @access public
      */
     public function setId($id);
-    /**
-     * init meta box and setsup
-     */
-    public function init();
     /**
      * Add columns to edit screen
      *

@@ -55,6 +55,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
          */
         protected $controls = array();
 
+	    protected $query_args = array();
         /**
          *
          * Class constructor
@@ -316,7 +317,13 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
             return $this;
         }
 
-        /**
+	    public function addQueryArg( $name, $value ) {
+		    $this->query_args[ $name ] = $value;
+
+		    return $this;
+	    }
+
+	    /**
          * Render view
          *
          * @param array  $attributes
@@ -338,6 +345,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
             } else {
                 $view = new ViewAbstract( $this->settings );
             }
+	        $view->setQueryArgs( $this->query_args );
             $output = $view->output( $attributes, $content );
 
             return $output;
