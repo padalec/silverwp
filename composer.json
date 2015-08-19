@@ -14,7 +14,6 @@
     "issues": "https://github.com/silversite/silverwp/issues"
   },
   "keywords": [
-    "gim",
     "roots",
     "sage",
     "wordpress",
@@ -35,7 +34,8 @@
       "vendor/evanto/auto-updates/class-pixelentity-theme-update.php",
       "vendor/pluswp/wp-scss/bootstrap-for-theme.php",
       "vendor/aristath/kirki/kirki.php",
-      "vendor/Taxonomy_Single_Term/class.taxonomy-single-term.php"
+      "vendor/Taxonomy_Single_Term/class.taxonomy-single-term.php",
+      "vendor/scribu/posts-to-posts/posts-to-posts.php"
     ],
     "psr-4": {
       "SilverWp\\": "SilverWp/"
