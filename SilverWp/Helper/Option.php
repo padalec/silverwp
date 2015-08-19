@@ -37,7 +37,7 @@ class Option {
      * @param mixed $value
      * @return array
      */
-    public static function set_deafult_option( &$option, $index, $value ) 
+    public static function set_default_option( &$option, $index, $value )
     {
         if( ! array_key_exists( $index, (array)$option ) ) {
             return;

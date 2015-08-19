@@ -522,6 +522,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
      *
      * @return array
      * @todo move this method to SilverWp\Db\Query
+     * @depraced
      */
     public function getQueryData( $limit = 5, $paginator = false, array $query_args = array() ) {
         $return    = array();
