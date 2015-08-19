@@ -213,16 +213,17 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 
 			$post_type_objects = $this->getPostsTypesNames();
 
-			foreach ( $this->taxonomies as $taxonomy_name => $args ) {
-				//register taxonomy
-				register_taxonomy( $taxonomy_name, $post_type_objects, $args );
+			foreach ( $this->taxonomies as $short_name => $args ) {
 				//add taxonomy to Post Type
 				foreach ( $post_type_objects as $post_type_object ) {
+					$taxonomy_name = $post_type_object . '_' . $short_name;
+					//register taxonomy
+					register_taxonomy( $taxonomy_name, $post_type_object, $args );
 					register_taxonomy_for_object_type( $taxonomy_name, $post_type_object );
-				}
-				//if taxonomy have custom_meta_box args replace default MB for custom
-				if ( isset( $args['custom_meta_box'] ) && ! empty( $args[ 'custom_meta_box' ] ) ) {
-					$this->changeDefaultMetaBox($taxonomy_name, $args[ 'custom_meta_box' ]);
+					//if taxonomy have custom_meta_box args replace default MB for custom
+					if ( isset( $args['custom_meta_box'] ) && ! empty( $args[ 'custom_meta_box' ] ) ) {
+						$this->changeDefaultMetaBox( $taxonomy_name, $args[ 'custom_meta_box' ] );
+					}
 				}
 			}
 		}

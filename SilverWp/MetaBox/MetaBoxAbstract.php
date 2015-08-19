@@ -34,7 +34,7 @@ use SilverWp\Translate;
 use SilverWp\Video;
 use VP_Metabox;
 
-if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
+if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
     /**
      * Abstract Meta Boxes based on meta-box plugin
      *
@@ -150,7 +150,16 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
          * @access private
          */
         private $enter_title_hear;
-        /**
+
+	    /**
+	     * Set Post Title as required
+	     *
+	     * @var bool
+	     * @access protected
+	     */
+	    protected $title_required = true;
+
+	    /**
          *
          * Class constructor
          *
@@ -164,7 +173,12 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                 // the safest hook to use, since Vafpress Framework may exists in Theme or Plugin
                 add_action( 'after_setup_theme', array( $this, 'init' ), 20 );
                 add_filter( 'enter_title_here', array( $this, 'changeDefaultTitleLabel' ) );
-                $parent_class = get_called_class();
+
+	            if ( $this->title_required ) {
+	                add_action( 'admin_footer', array( $this, 'forcePostTitle' ) );
+	            }
+
+	            $parent_class = get_called_class();
                 if (
                     $this->isImplemented( $parent_class, 'SilverWp\MetaBox\RemoveInterface' )
                 ) {
@@ -173,6 +187,45 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
             }
         }
 
+	    /**
+	     * Set post title as required
+	     *
+	     * @access public
+	     */
+		public function forcePostTitle()
+		{
+			global $typenow;
+
+			if ( in_array( $typenow, $this->post_type ) ) {
+				if ( isset( $this->enter_title_hear ) ) {
+					$error_message = Translate::translate(
+						'Field %s is required and can not be empty.',
+						$this->enter_title_hear
+					);
+				} else {
+					$error_message = Translate::translate(
+						'Field %s is required and can not be empty.',
+						'Post Title'
+					);
+				}
+				echo "<script type='text/javascript'>\n";
+				echo "
+			        jQuery('#publish').click(function(){
+						var testervar = jQuery('[id^=\"title\"]')
+						.find('#title');
+						if (testervar.val().length < 1)
+						{
+							jQuery('[id^=\"title\"]').css('background', 'red');
+							setTimeout(function () {jQuery('#ajax-loading').css('visibility', 'hidden');}, 100);
+							alert('" . $error_message . "');
+							setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
+							return false;
+						}
+			        });
+			    ";
+				echo "</script>\n";
+			}
+		}
         /**
          *
          * Set unique id
@@ -590,13 +643,13 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                         }
                         break;
                     // Display categories in the column view
-                    case $this->id . '_category':
+                    case $this->id:
                         if ( $this->getPostTypeClass()->isTaxonomyRegistered() && $this->getPostTypeClass()->getTaxonomy()->isRegistered( 'category' ) ) {
-                            $category_list = \get_the_term_list( $post_id, $this->id . '_category', '', ', ', '' );
+                            $category_list = \get_the_term_list( $post_id, $this->id, '', ', ', '' );
 
                             if ( \is_wp_error( $category_list ) ) {
                                 throw new Exception(
-                                    $category_list->get_error_message() . ': ' . $this->id . '_category'
+                                    $category_list->get_error_message() . ': ' . $this->id
                                 );
                             }
                             if ( $category_list ) {
@@ -607,13 +660,13 @@ if (! class_exists('SilverWp\MetaBox\MetaBoxAbstract')) {
                         }
                         break;
                     // Display the tags in the column view
-                    case $this->id . '_tag':
+                    case $this->id:
                         if ( $this->getPostTypeClass()->isTaxonomyRegistered() && $this->getPostTypeClass()->getTaxonomy()->isRegistered( 'tag' ) ) {
-                            $tag_list = \get_the_term_list( $post_id, $this->id . '_tag', '', ', ', '' );
+                            $tag_list = \get_the_term_list( $post_id, $this->id, '', ', ', '' );
 
                             if ( \is_wp_error( $tag_list ) ) {
                                 throw new Exception(
-                                    $tag_list->get_error_message() . ': ' . $this->id . '_tag'
+                                    $tag_list->get_error_message() . ': ' . $this->id
                                 );
                             }
 
