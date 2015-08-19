@@ -26,6 +26,7 @@
 namespace SilverWp\PostRelationship;
 
 use SilverWp\Debug;
+use SilverWp\PostType\PostTypeAbstract;
 use SilverWp\SingletonAbstract;
 use SilverWp\Exception;
 use SilverWp\Translate;
@@ -54,6 +55,7 @@ if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
          */
         public function __construct( $name ) {
             $this->setName( $name );
+	        add_action( 'p2p_init', array( $this, 'register' ) );
         }
 
         public function setName( $name ) {
@@ -75,7 +77,7 @@ if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
                     $this->settings[ 'to' ][ ] = $type->getName();
                 }
             } else {
-                if ( SingletonAbstract::isImplemented( $post_type, 'SilverWp\PostType\PostTypeInterface' ) ) {
+                if ( $post_type instanceof PostTypeAbstract ) {
                     $this->settings[ 'to' ] = $post_type->getName();
                 } else {
                     throw new Exception(
@@ -89,6 +91,7 @@ if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
 
         public function setFields( array $fields ) {
             $this->settings['fields'] = $fields;
+
             return $this;
         }
         /**
@@ -115,12 +118,7 @@ if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
             return $this;
         }
 
-        public function run() {
-            add_action( 'p2p_init', array( $this, 'connections' ) );
-
-        }
-
-        public function connections() {
+        public function register() {
             if ( function_exists( 'p2p_register_connection_type' ) ) {
                 p2p_register_connection_type( $this->settings );
             } else {
@@ -135,5 +133,23 @@ if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
         public function getSettings() {
             return $this->settings;
         }
+
+	    public function __set( $name, $value ) {
+		    $this->settings[ $name ] = $value;
+
+		    return $this;
+	    }
+
+	    public function setFromLabel( $name, $text ) {
+		    $this->settings['from_labels'][ $name ] = $text;
+
+		    return $this;
+	    }
+
+	    public function setToLabel( $name, $text ) {
+		    $this->settings['to_labels'][ $name ] = $text;
+
+		    return $this;
+	    }
     }
 }
