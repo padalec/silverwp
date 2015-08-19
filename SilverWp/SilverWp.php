@@ -158,8 +158,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
 	        $vp->add_directories( 'views', ABSPATH . 'Views' );
 	        $vp->add_directories( 'views', VP_VIEWS_DIR );
 
-	        FileSystem::getInstance()->addDirectory( 'views', $views );
-
         }
     }
 }
