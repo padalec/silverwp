@@ -18,10 +18,10 @@
  */
 namespace SilverWp\Customizer;
 
-use SilverWp\CoreInterface;
 use SilverWp\CssTemplate\Sass;
 use SilverWp\FileSystem;
 use SilverWp\Helper\File;
+use SilverWp\Interfaces\Core;
 use SilverWp\Less;
 use SilverWp\SingletonAbstract;
 use SilverWp\Customizer\Panel\PanelInterface;
@@ -42,7 +42,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 	 * @abstract
 	 */
 	abstract class CustomizerAbstract extends SingletonAbstract
-		implements CustomizerInterface, CoreInterface {
+		implements CustomizerInterface, Core {
 		/**
 		 * Kirki string translation
 		 *
