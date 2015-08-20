@@ -16,25 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/Form/Element/Radio.php $
- Last committed: $Revision: 2184 $
- Last changed by: $Author: padalec $
- Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
- ID: $Id: Radio.php 2184 2015-01-21 12:20:08Z padalec $
-*/
-namespace SilverWp\ShortCode\Vc\Form\Element;
+namespace SilverWp\ShortCode\Vc\Control;
 
 /**
+ * Radio control for VC
  *
  * @category WordPress
  * @package SilverWp
  * @subpackage
  * @author Michal Kalkowski <michal at dynamite-studio.pl>
- * @copyright Dynamite-Studio.pl 2014
- * @version $Id: Radio.php 2184 2015-01-21 12:20:08Z padalec $
+ * @copyright SilverSite.pl (c) 2015
+ * @version 0.1
+ * @TODO Not Implemented
  */
-if ( ! class_exists( '\SilverWp\ShortCode\Vc\Form\Element\Radio' ) ) {
+if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control' ) ) {
 
     class Radio extends ElementMultiAbstract implements NewElementInterface {
         protected $type = 'radio';

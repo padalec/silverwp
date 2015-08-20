@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
- /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ShortCode/Form/Element/Textarea.php $
-  Last committed: $Revision: 2184 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: Textarea.php 2184 2015-01-21 12:20:08Z padalec $
- */
 namespace SilverWp\ShortCode\Vc\Control;
 
 if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\TextArea' ) ) {
@@ -34,11 +27,45 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\TextArea' ) ) {
      * @package SilverWp
      * @subpackage ShortCode\Vc\Control
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl 2014
-     * @version $Id: Textarea.php 2184 2015-01-21 12:20:08Z padalec $
+     * @copyright SilverSite.pl 2015
+     * @version 0.2
      */
 
     class TextArea extends ControlMultiAbstract {
         protected $type = 'textarea';
+
+	    /**
+	     * Visual composer have some extra textarea field
+	     * Like exploded_textarea so hear we can define
+	     * prepend value of type
+	     *
+	     * @param string $pre_type - exploded
+	     *
+	     * @return $this
+	     * @access public
+	     * @since 0.2
+	     */
+	    public function setPreType( $pre_type ) {
+		    $this->type = $pre_type . $this->type;
+
+		    return $this;
+	    }
+
+	    /**
+	     * Visual composer have some extra textarea field
+	     * Like textarea_raw_html so hear we can define
+	     * append value of type
+	     *
+	     * @param string $pre_type - raw_html or safe
+	     *
+	     * @return $this
+	     * @access public
+	     * @since 0.2
+	     */
+	    public function setPosType( $pos_type ) {
+		    $this->type = $this->type . $pos_type;
+
+		    return $this;
+	    }
     }
 } 
