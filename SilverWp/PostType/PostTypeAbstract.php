@@ -769,7 +769,7 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
 
     /**
      *
-     * set thumbnail size returned in getQueryMethod
+     * Set thumbnail size returned in getQueryMethod
      *
      * @param mixed $thumbnail_size string or array
      *
@@ -782,7 +782,16 @@ abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInt
         return $this;
     }
 
-    public function addRelationship( $name, $to = null ) {
+	/**
+	 * Add relationship between to post type
+	 *
+	 * @param string                $name unique relationship name
+	 * @param null|PostTypeAbstract $to post type class
+	 *
+	 * @return Relationship
+	 * @access public
+	 */
+    public function addRelationship( $name, PostTypeAbstract $to = null ) {
         try {
             $connection = new Relationship( $name );
             $connection->setFrom( $this->getName() );

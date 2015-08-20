@@ -134,6 +134,6 @@ class VP_QuickEditForm extends \VP_Metabox
      */
     public function enqueueScripts()
     {
-        \wp_enqueue_script('vp-quickeditform', get_template_directory_uri() . '/assets/js/silverwp-admin.js');
+        //\wp_enqueue_script('vp-quickeditform', get_template_directory_uri() . '/assets/js/silverwp-admin.js');
     }
 }
