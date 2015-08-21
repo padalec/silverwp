@@ -11,4 +11,5 @@ return array(
     $vendorDir . '/pluswp/wp-scss/bootstrap-for-theme.php',
     $vendorDir . '/aristath/kirki/kirki.php',
     $vendorDir . '/Taxonomy_Single_Term/class.taxonomy-single-term.php',
+    $vendorDir . '/scribu/posts-to-posts/posts-to-posts.php',
 );

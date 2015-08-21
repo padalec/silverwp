@@ -18,6 +18,8 @@
  */
 namespace SilverWp;
 
+use SilverWp\Interfaces\Plugin;
+
 if ( ! class_exists( 'SilverWp' ) ) {
 
     /**
@@ -109,11 +111,11 @@ if ( ! class_exists( 'SilverWp' ) ) {
         /**
          * If framework will be used in plugin this method register necessary hooks
          *
-         * @param \SilverWp\PluginInterface $plugin_class main plugin class
+         * @param \SilverWp\Interfaces\Plugin $plugin_class main plugin class
          *
          * @access public
          */
-        public function isPlugin( PluginInterface $plugin_class ) {
+        public function isPlugin( Plugin $plugin_class ) {
 
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
             $plugin_file = $plugin_class->getPluginName() . '/' . $plugin_class->getPluginName() . '.php';
@@ -157,8 +159,6 @@ if ( ! class_exists( 'SilverWp' ) ) {
 	        $vp->add_directories( 'views', $views );
 	        $vp->add_directories( 'views', ABSPATH . 'Views' );
 	        $vp->add_directories( 'views', VP_VIEWS_DIR );
-
-	        FileSystem::getInstance()->addDirectory( 'views', $views );
 
         }
     }
