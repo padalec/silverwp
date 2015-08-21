@@ -18,9 +18,9 @@
  */
 namespace SilverWp\Taxonomy;
 
-use SilverWp\CoreInterface;
+use SilverWp\Interfaces\Core;
+use SilverWp\Interfaces\PostType;
 use SilverWp\Helper\Filter;
-use SilverWp\PostInterface;
 use SilverWp\PostType\PostTypeInterface;
 use SilverWp\SingletonAbstract;
 use SilverWp\Translate;
@@ -39,7 +39,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 	 * @copyright (c) 2009 - 2015, SilverSite.pl
 	 */
 	abstract class TaxonomyAbstract extends SingletonAbstract
-		implements TaxonomyInterface, PostInterface, CoreInterface {
+		implements TaxonomyInterface, PostType, Core {
 
 		/**
 		 * Handler for post type class
@@ -216,7 +216,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			foreach ( $this->taxonomies as $short_name => $args ) {
 				//add taxonomy to Post Type
 				foreach ( $post_type_objects as $post_type_object ) {
-					$taxonomy_name = $post_type_object . '_' . $short_name;
+					$taxonomy_name = strtolower($post_type_object . '_' . $short_name);
 					//register taxonomy
 					register_taxonomy( $taxonomy_name, $post_type_object, $args );
 					register_taxonomy_for_object_type( $taxonomy_name, $post_type_object );
