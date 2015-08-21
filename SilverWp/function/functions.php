@@ -1,10 +1,4 @@
 <?php
-namespace SilverWp;
-
-use SilverWp\Customizer\CustomizerAbstract;
-use SilverWp\Helper\Option;
-use SilverWp\Helper\Paginator\Pager;
-
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -22,20 +16,33 @@ use SilverWp\Helper\Paginator\Pager;
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+namespace SilverWp;
+
+use SilverWp\Customizer\CustomizerAbstract;
+use SilverWp\Helper\Option;
+use SilverWp\Pager\Pager;
+
 if ( ! function_exists( '\SilverWp\pager' ) ) {
 	/**
 	 * Generate url for pagination
 	 *
-	 * @param int $total_posts
+	 * @param int $total_pages
 	 * @param int $current_page
 	 *
 	 * @return array
 	 * @since 0.1
+	 * @author Michal Kalkowski <michal at silversite.pl>
 	 */
-	function pager( $total_posts, $current_page ) {
-		$pager = new Pager();
-		$pager->setMaxNumPages( $current_page );
-		$pager->setTotalPosts( $total_posts );
+	function pager( $total_pages, $current_page ) {
+		$pager = new Pager( $total_pages, $current_page );
+		$pager->setPrevArrow( '<i class="icon-left-dir"></i>' );
+		$pager->setNextArrow( '<i class="icon-right-dir"></i>' );
+		$pager->setDotsClass( 'page-dots' );
+		$pager->setTagBeforeHref( '<li>' );
+		$pager->setTagAfterHref( '</li>' );
+		$pager->setNextHrefClass( 'next page-arrow' );
+		$pager->setPrevHrefClass( 'prev page-arrow' );
+		$pager->show_all = false;
 		$links = $pager->getLinks();
 
 		return $links;
@@ -51,6 +58,7 @@ if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 	 * @return string
 	 * @access public
 	 * @since 0.2
+	 * @author Michal Kalkowski <michal at silversite.pl>
 	 */
 	function get_customizer_option( $option_name ) {
 		return CustomizerAbstract::getOption( $option_name );
@@ -86,6 +94,7 @@ if ( ! function_exists( '\SilverWp\get_template_part' ) ) {
 	 * @return string
 	 * @access public
 	 * @since 0.2
+	 * @author Michal Kalkowski <michal at silversite.pl>
 	 */
 	function get_template_part( $template_name, array $params = array() ) {
 		extract( $params );
