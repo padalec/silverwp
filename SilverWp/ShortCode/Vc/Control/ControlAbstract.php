@@ -16,20 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\ShortCode\Vc\Control;
 
 use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
 use SilverWp\SingletonAbstract;
 
-if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\ControlAbstract' ) ) {
+if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\ControlAbstract' ) ) {
 
     /**
      *
@@ -76,18 +69,27 @@ if ( ! class_exists( 'SilverWp\ShortCode\Vc\Control\ControlAbstract' ) ) {
          */
         public function setDependency() {
             $args = func_get_args();
-            if ( is_object( $args[ 0 ] )
-                 && SingletonAbstract::isImplemented( $args[ 0 ], '\SilverWp\Helper\Control\ControlInterface' )
-            ) {
+	        if ( is_object( $args[ 0 ] ) && $args[ 0 ] instanceof ControlAbstract ) {
                 $dependency[ 'element' ] = $args[ 0 ]->getName();
             } elseif ( is_string( $args[ 0 ] ) ) {
                 $dependency[ 'element' ] = $args[ 0 ];
+            } else {
+	            throw new \InvalidArgumentException(
+		            'First argument should be name of field or implements \SilverWp\Helper\Control\ControlInterface'
+	            );
             }
-            $dependency = array(
-                'value'     => $args[ 1 ],
-                'not_empty' => isset( $args[ 2 ] ) ? $args[ 2 ] : false,
-            );
 
+	        if ( ! isset( $args[ 1 ] ) ) {
+		        throw new \InvalidArgumentException(
+					'Arrgument value is required'
+		        );
+	        }
+
+	        $dependency[ 'value' ] = $args[ 1 ];
+			//TODO wtf is this?
+	        if ( isset( $args[ 2 ] ) ) {
+				$dependency[ 'not_empty' ] = $args[ 2 ];
+			}
             if ( isset( $args[ 3 ] ) ) {
                 $dependency[ 'callback' ] = $args[ 3 ];
             }

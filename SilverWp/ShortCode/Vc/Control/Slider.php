@@ -19,6 +19,7 @@
 
 namespace SilverWp\ShortCode\Vc\Control;
 
+use SilverWp\Debug;
 use SilverWp\FileSystem;
 
 if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Slider' ) ) {
@@ -42,10 +43,10 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Slider' ) ) {
          * @access private
          */
         public function adminEnqueueStyle() {
-            $css_uri = FileSystem::getDirectory('css_uri');
-            wp_enqueue_style(
+	        $assets_uri = FileSystem::getDirectory( 'assets_uri' );
+	        wp_enqueue_style(
                 'jQueryUi',
-                $css_uri . 'css/jqueryui/themes/smoothness/jquery-ui-1.9.2.custom.min.css'
+	            $assets_uri . 'css/admin/jqueryui/smoothness/jquery-ui-1.9.2.custom.min.css'
             );
         }
 
@@ -56,7 +57,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\Slider' ) ) {
          * @access string
          */
         protected function getJsScript() {
-            return FileSystem::getDirectory('js_uri') . 'admin.js';
+            return FileSystem::getDirectory( 'assets_uri' ) . 'js/admin/vc_slider.js';
         }
 
         /**

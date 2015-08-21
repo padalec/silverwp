@@ -18,14 +18,12 @@
  */
 namespace SilverWp\MetaBox;
 
-use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
-use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\Option;
 use SilverWp\Helper\RecursiveArray;
-use SilverWp\Helper\Thumbnail;
 use SilverWp\Helper\UtlArray;
+use SilverWp\Interfaces\PostType;
 use SilverWp\Oembed;
 use SilverWp\PostInterface;
 use SilverWp\PostType\PostTypeInterface;
@@ -46,7 +44,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
      * @link http://www.deluxeblogtips.com/meta-box/
      * @copyright (c) 2014, Michal Kalkowski
      */
-    abstract class MetaBoxAbstract extends SingletonAbstract implements MetaBoxInterface, PostInterface {
+    abstract class MetaBoxAbstract extends SingletonAbstract implements MetaBoxInterface, PostType {
 
         /**
          *
