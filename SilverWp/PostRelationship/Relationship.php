@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
- Repository path: $HeadURL: $
- Last committed: $Revision: $
- Last changed by: $Author: $
- Last changed date: $Date: $
- ID: $Id: $
-*/
 namespace SilverWp\PostRelationship;
 
 use SilverWp\Debug;
@@ -33,123 +26,208 @@ use SilverWp\Translate;
 
 if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
 
-    /**
-     *
-     * Create relationship between two or more post types
-     *
-     * @category WordPress
-     * @package SilverWp
-     * @subpackage Schedule
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Revision:$
-     */
-    class Relationship {
+	/**
+	 *
+	 * Create relationship between two or more post types
+	 *
+	 * @category   WordPress
+	 * @package    SilverWp
+	 * @subpackage Schedule
+	 * @author     Michal Kalkowski <michal at silversite.pl>
+	 * @copyright  Dynamite-Studio.pl & silversite.pl 2015
+	 * @version    $Revision:$
+	 */
+	class Relationship {
 
-        protected $settings = array();
+		/**
+		 *
+		 * @var array
+		 * @access protected
+		 */
+		protected $settings = array();
 
-        /**
-         * @access protected
-         *
-         * @param $name
-         */
-        public function __construct( $name ) {
-            $this->setName( $name );
-	        add_action( 'p2p_init', array( $this, 'register' ) );
-        }
+		/**
+		 * Class constructor
+		 * Create posts relationship
+		 *
+		 * @access protected
+		 *
+		 * @param string $name post 2 post relationship unique name
+		 */
+		public function __construct( $name ) {
+			$this->setName( $name );
+			add_action( 'p2p_init', array( $this, 'register' ) );
+		}
 
-        public function setName( $name ) {
-            $this->settings[ 'name' ] = $name;
+		/**
+		 * Set relationship name
+		 *
+		 * @param string $name unique name
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setName( $name ) {
+			$this->settings['name'] = $name;
 
-            return $this;
-        }
+			return $this;
+		}
 
-        public function setFrom( $post_type_name ) {
-            $this->settings[ 'from' ] = $post_type_name;
+		/**
+		 * Set relation From with post type
+		 *
+		 * @param string|PostTypeAbstract $post_type
+		 *
+		 * @return $this
+		 * @throws Exception
+		 *
+		 * @access public
+		 */
+		public function setFrom( $post_type ) {
+			if ( is_string( $post_type ) ) {
+				$this->settings[ 'from' ] = $post_type;
+			}else if ( $post_type instanceof PostTypeAbstract ) {
+				$this->settings[ 'from' ] = $post_type->getName();
+			} else {
+				throw new Exception(
+					Translate::translate( 'The argument $post_type isn\'t instance of \SilverWp\PostType\PostTypeAbstract' )
+				);
+			}
 
-            return $this;
-        }
+			return $this;
+		}
 
-        public function setTo( $post_type ) {
+		/**
+		 * Set relation To with post type
+		 *
+		 * @param PostTypeAbstract $post_type
+		 *
+		 * @return $this
+		 * @throws Exception
+		 *
+		 * @access public
+		 */
+		public function setTo( PostTypeAbstract $post_type ) {
+			if ( $post_type instanceof PostTypeAbstract ) {
+				$this->settings['to'] = $post_type->getName();
+			} else {
+				throw new Exception(
+					Translate::translate( 'The param $post_type isn\'t instance of \SilverWp\PostType\PostTypeAbstract' )
+				);
+			}
 
-            if ( is_array( $post_type ) ) {
-                foreach ( $post_type as $type ) {
-                    $this->settings[ 'to' ][ ] = $type->getName();
-                }
-            } else {
-                if ( $post_type instanceof PostTypeAbstract ) {
-                    $this->settings[ 'to' ] = $post_type->getName();
-                } else {
-                    throw new Exception(
-                        Translate::translate( 'The param $post_type isn\'t instance of \SilverWp\PostType\PostTypeInterface' )
-                    );
-                }
-            }
+			return $this;
+		}
 
-            return $this;
-        }
+		/**
+		 *
+		 * @param array $fields
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setFields( array $fields ) {
+			$this->settings['fields'] = $fields;
 
-        public function setFields( array $fields ) {
-            $this->settings['fields'] = $fields;
+			return $this;
+		}
 
-            return $this;
-        }
-        /**
-         * When registering a connection type, you can control if and
-         * where the connections metabox shows up in the admin.
-         *
-         * @param string $show Possible values for the 'show' param:
-         *                      'any' - show admin box everywhere (default)
-         *                      'from' - show the admin column only on the 'from' end
-         *                      'to' - show the admin column only on the 'to' end
-         *                      false - don't show admin box at all
-         * @param string $context Possible values for the 'context' param:
-         *                          'side' - show admin box in the right column
-         *                          'advanced' - show the admin box under the main content editor
-         *
-         * @access public
-         * @return $this
-         */
-        public function setAdminBox( $show, $context ) {
-            $this->settings[ 'admin_box' ] = array(
-                'show'    => $show,
-                'context' => $context
-            );
-            return $this;
-        }
+		/**
+		 * When registering a connection type, you can control if and
+		 * where the connections metabox shows up in the admin.
+		 *
+		 * @param string $show      Possible values for the 'show' param:
+		 *                          'any' - show admin box everywhere (default)
+		 *                          'from' - show the admin column only on the 'from' end
+		 *                          'to' - show the admin column only on the 'to' end
+		 *                          false - don't show admin box at all
+		 * @param string $context   Possible values for the 'context' param:
+		 *                          'side' - show admin box in the right column
+		 *                          'advanced' - show the admin box under the main content editor
+		 *
+		 * @access public
+		 * @return $this
+		 */
+		public function setAdminBox( $show, $context ) {
+			$this->settings['admin_box'] = array(
+				'show'    => $show,
+				'context' => $context
+			);
 
-        public function register() {
-            if ( function_exists( 'p2p_register_connection_type' ) ) {
-                p2p_register_connection_type( $this->settings );
-            } else {
-                throw new Exception(
-                    Translate::translate(
-                        'Post 2 post plugin isn\'t activate. To create post type relationship plugin post 2 post is required.'
-                    )
-                );
-            }
-        }
+			return $this;
+		}
 
-        public function getSettings() {
-            return $this->settings;
-        }
+		/**
+		 * Magic method to set up settings parameters
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function __set( $name, $value ) {
+			$this->settings[ $name ] = $value;
 
-	    public function __set( $name, $value ) {
-		    $this->settings[ $name ] = $value;
+			return $this;
+		}
 
-		    return $this;
-	    }
+		/**
+		 * Set labels to relationship from
+		 *
+		 * @param string $name
+		 * @param string $text
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setFromLabel( $name, $text ) {
+			$this->settings['from_labels'][ $name ] = $text;
 
-	    public function setFromLabel( $name, $text ) {
-		    $this->settings['from_labels'][ $name ] = $text;
+			return $this;
+		}
 
-		    return $this;
-	    }
+		/**
+		 * Set labels to relationship to
+		 *
+		 * @param string $name
+		 * @param string $text
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setToLabel( $name, $text ) {
+			$this->settings['to_labels'][ $name ] = $text;
 
-	    public function setToLabel( $name, $text ) {
-		    $this->settings['to_labels'][ $name ] = $text;
+			return $this;
+		}
 
-		    return $this;
-	    }
-    }
+		/**
+		 * Get all settings
+		 *
+		 * @return array
+		 * @access public
+		 */
+		public function getSettings() {
+			return $this->settings;
+		}
+
+		/**
+		 * Register Posts relationship
+		 *
+		 * @throws Exception
+		 * @access public
+		 */
+		public function register() {
+			if ( function_exists( 'p2p_register_connection_type' ) ) {
+				p2p_register_connection_type( $this->settings );
+			} else {
+				throw new Exception(
+					Translate::translate(
+						'Post 2 post plugin isn\'t activate. To create post type relationship plugin post 2 post is required.'
+					)
+				);
+			}
+		}
+	}
 }

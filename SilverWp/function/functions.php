@@ -59,3 +59,23 @@ if ( ! function_exists( '\SilverWp\get_theme_option' ) ) {
         return \SilverWp\Helper\Option::get_theme_option( $option_name );
     }
 }
+
+if ( ! function_exists( '\SilverWp\get_template_part' ) ) {
+
+	/**
+	 * Load template part with parameters
+	 *
+	 * @param string $template_name template name
+	 * @param array $params - associative array with
+	 *                      variable_name => variable_value
+	 *                      then in template willbe avilable $variable_name
+	 *
+	 * @return string
+	 * @access public
+	 */
+	function get_template_part( $template_name, array $params = array() ) {
+		extract( $params );
+
+		return include( locate_template( "$template_name.php" ) );
+	}
+}
