@@ -1,8 +1,9 @@
 <?php
 namespace SilverWp;
 
-use \SilverWp\Customizer\CustomizerAbstract;
-use \SilverWp\Helper\Paginator\Pager;
+use SilverWp\Customizer\CustomizerAbstract;
+use SilverWp\Helper\Option;
+use SilverWp\Helper\Paginator\Pager;
 
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
@@ -22,6 +23,15 @@ use \SilverWp\Helper\Paginator\Pager;
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 if ( ! function_exists( '\SilverWp\pager' ) ) {
+	/**
+	 * Generate url for pagination
+	 *
+	 * @param int $total_posts
+	 * @param int $current_page
+	 *
+	 * @return array
+	 * @since 0.1
+	 */
 	function pager( $total_posts, $current_page ) {
 		$pager = new Pager();
 		$pager->setMaxNumPages( $current_page );
@@ -40,6 +50,7 @@ if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 	 *
 	 * @return string
 	 * @access public
+	 * @since 0.2
 	 */
 	function get_customizer_option( $option_name ) {
 		return CustomizerAbstract::getOption( $option_name );
@@ -48,15 +59,17 @@ if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 
 if ( ! function_exists( '\SilverWp\get_theme_option' ) ) {
     /**
-     * Short cut to CustomizerAbstract::getOption()
+     * Short cut to SilverWp\Helper\Option::get_theme_option()
      *
      * @param string $option_name
      *
      * @return string
      * @access public
+     * @author Marcin Dobroszek <marcin at silversite.pl>
+     * @since 0.2
      */
     function get_theme_option( $option_name ) {
-        return \SilverWp\Helper\Option::get_theme_option( $option_name );
+        return Option::get_theme_option( $option_name );
     }
 }
 
@@ -68,10 +81,11 @@ if ( ! function_exists( '\SilverWp\get_template_part' ) ) {
 	 * @param string $template_name template name
 	 * @param array $params - associative array with
 	 *                      variable_name => variable_value
-	 *                      then in template willbe avilable $variable_name
+	 *                      then in template will be available $variable_name
 	 *
 	 * @return string
 	 * @access public
+	 * @since 0.2
 	 */
 	function get_template_part( $template_name, array $params = array() ) {
 		extract( $params );
