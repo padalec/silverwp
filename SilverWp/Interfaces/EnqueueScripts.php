@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -17,27 +18,26 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Core.php $
-  Last committed: $Revision: 2182 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:00:49 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: Core.php 2182 2015-01-21 12:00:49Z padalec $
- */
+namespace SilverWp\Interfaces;
 
-namespace SilverWp;
-
-
-/**
- * Base core class interface
- *
- * @category WordPress
- * @package SilverWp
- * @author Michal Kalkowski <michal at dynamite-studio.pl>
- * @copyright Dynamite-Studio.pl 2014
- * @version 0.1
- */
-interface CoreInterface
-{
-    public function init();
-} 
+if ( ! interface_exists( '\SilverWp\Interfaces\EnqueueScripts' ) ) {
+    /**
+     *
+     * Interface for enqueue scripts
+     *
+     * @category  WordPress
+     * @package   SilverWp
+     * @author    Michal Kalkowski <michal at silversite.pl>
+     * @copyright SilverSite.pl (c) 2015
+     * @version   0.2
+     */
+    interface EnqueueScripts {
+	    /**
+	     * Enqueue scripts js or css
+	     *
+	     * @return void
+	     * @access public
+	     */
+        public function enqueueScripts();
+    }
+}

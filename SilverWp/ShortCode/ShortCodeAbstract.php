@@ -18,8 +18,10 @@
  */
 namespace SilverWp\ShortCode;
 
+use SilverWp\Debug;
 use SilverWp\Exception;
 use SilverWp\FileSystem;
+use SilverWp\SingletonAbstract;
 use SilverWp\Translate;
 use SilverWp\View;
 
@@ -59,8 +61,12 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
          * @access protected
          */
         public function __construct() {
-            if ( \is_null( $this->tag_base ) ) {
-                throw new Exception( Translate::translate( 'Property $tag_base is required and can\'t be empty' ) );
+	        //if class implemetns SilverWp\Interfaces\EnqueueScripts enqueue scripts
+	        if ( SingletonAbstract::isImplemented( get_called_class(), 'SilverWp\Interfaces\EnqueueScripts' ) ) {
+		        add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+	        }
+	        if ( \is_null( $this->tag_base ) ) {
+                throw new Exception( Translate::translate( 'Property %s is required and can\'t be empty.', get_called_class() .'::tag_base' ) );
             }
             $this->register();
         }
