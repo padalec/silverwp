@@ -45,3 +45,17 @@ if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 		return CustomizerAbstract::getOption( $option_name );
 	}
 }
+
+if ( ! function_exists( '\SilverWp\get_theme_option' ) ) {
+    /**
+     * Short cut to CustomizerAbstract::getOption()
+     *
+     * @param string $option_name
+     *
+     * @return string
+     * @access public
+     */
+    function get_theme_option( $option_name ) {
+        return \SilverWp\Helper\Option::get_theme_option( $option_name );
+    }
+}
