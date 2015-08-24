@@ -20,34 +20,6 @@ namespace SilverWp;
 
 use SilverWp\Customizer\CustomizerAbstract;
 use SilverWp\Helper\Option;
-use SilverWp\Pager\Pager;
-
-if ( ! function_exists( '\SilverWp\pager' ) ) {
-	/**
-	 * Generate url for pagination
-	 *
-	 * @param int $total_pages
-	 * @param int $current_page
-	 *
-	 * @return array
-	 * @since 0.1
-	 * @author Michal Kalkowski <michal at silversite.pl>
-	 */
-	function pager( $total_pages, $current_page ) {
-		$pager = new Pager( $total_pages, $current_page );
-		$pager->setPrevArrow( '<i class="icon-left-dir"></i>' );
-		$pager->setNextArrow( '<i class="icon-right-dir"></i>' );
-		$pager->setDotsClass( 'page-dots' );
-		$pager->setTagBeforeHref( '<li>' );
-		$pager->setTagAfterHref( '</li>' );
-		$pager->setNextHrefClass( 'next page-arrow' );
-		$pager->setPrevHrefClass( 'prev page-arrow' );
-		$pager->show_all = false;
-		$links = $pager->getLinks();
-
-		return $links;
-	}
-}
 
 if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 	/**
