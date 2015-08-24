@@ -441,7 +441,20 @@ if ( ! class_exists( 'SilverWp\Pager\Pager' ) ) {
 		 * @access public
 		 */
 		public function __toString() {
-			return implode( $this->getLinks() );
+
+            $returnArray = array();
+
+            if ($this->current_page === 1) { // first page
+                $returnArray[] = $this->tag_before_href . '<span class="' . $this->prev_href_class . ' disable">' . $this->prev_arrow . '</span>' . $this->tag_after_href;
+            }
+
+            $returnArray[] = implode( $this->getLinks() );
+
+            if ($this->current_page == $this->total_pages) { // last page
+                $returnArray[] = $this->tag_before_href . '<span class="' . $this->next_href_class . ' disable">' . $this->next_arrow . '</span>' . $this->tag_after_href;
+            }
+
+			return implode($returnArray);
 		}
 	}
 }
