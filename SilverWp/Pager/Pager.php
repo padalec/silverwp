@@ -18,6 +18,8 @@
  */
 namespace SilverWp\Pager;
 
+use SilverWp\Debug;
+
 if ( ! class_exists( 'SilverWp\Pager\Pager' ) ) {
 	/**
 	 * Pager
@@ -355,10 +357,26 @@ if ( ! class_exists( 'SilverWp\Pager\Pager' ) ) {
 			$pager  = array();
 			$urls   = \paginate_links( $params );
 
-			foreach ( $urls as $url ) {
-				$url     = $this->changeDefaultCss( $url );
-				$pager[] = $this->tag_before_href . $url
-				           . $this->tag_after_href;
+			foreach ( $urls as $key => $url ) {
+				$url = $this->changeDefaultCss( $url );
+
+				$pager[] = $this->tag_before_href . $url . $this->tag_after_href;
+			}
+
+			if ( $this->current_page == 1 ) { // first page
+				$page  = $this->tag_before_href . '<span class="';
+				$page .= $this->prev_href_class . ' disable">';
+				$page .= $this->prev_arrow . '</span>';
+				$page .= $this->tag_after_href;
+				array_unshift( $pager, $page );
+			}
+
+			if ( $this->current_page == $this->total_pages ) { // last page
+				$page  = $this->tag_before_href . '<span class="';
+				$page .= $this->next_href_class . ' disable">';
+				$page .= $this->next_arrow . '</span>';
+				$page .= $this->tag_after_href;
+				array_push( $pager, $page );
 			}
 
 			return $pager;
@@ -441,20 +459,7 @@ if ( ! class_exists( 'SilverWp\Pager\Pager' ) ) {
 		 * @access public
 		 */
 		public function __toString() {
-
-            $returnArray = array();
-
-            if ($this->current_page === 1) { // first page
-                $returnArray[] = $this->tag_before_href . '<span class="' . $this->prev_href_class . ' disable">' . $this->prev_arrow . '</span>' . $this->tag_after_href;
-            }
-
-            $returnArray[] = implode( $this->getLinks() );
-
-            if ($this->current_page == $this->total_pages) { // last page
-                $returnArray[] = $this->tag_before_href . '<span class="' . $this->next_href_class . ' disable">' . $this->next_arrow . '</span>' . $this->tag_after_href;
-            }
-
-			return implode($returnArray);
+			return implode( $this->getLinks() );
 		}
 	}
 }
