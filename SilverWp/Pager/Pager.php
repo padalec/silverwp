@@ -433,5 +433,15 @@ if ( ! class_exists( 'SilverWp\Pager\Pager' ) ) {
 
 			return $url;
 		}
+
+		/**
+		 * Convert object to string (display links)
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function __toString() {
+			return implode( $this->getLinks() );
+		}
 	}
 }

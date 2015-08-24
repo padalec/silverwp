@@ -172,5 +172,13 @@ if ( ! interface_exists( 'SilverWp\Pager\PagerInterface' ) ) {
 		 * @access public
 		 */
 		public function getNextArrow();
+
+		/**
+		 * Convert object to string (display links)
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function __toString();
 	}
 }
