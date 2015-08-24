@@ -24,7 +24,6 @@ use SilverWp\Ajax\PostLike;
 use SilverWp\Interfaces\Core;
 use SilverWp\Db\Query;
 use SilverWp\Helper\Option;
-use SilverWp\Helper\Paginator\Pager;
 use SilverWp\Helper\RecursiveArray;
 use SilverWp\Helper\UtlArray;
 use SilverWp\MetaBox\Exception as MetaBoxException;
@@ -46,6 +45,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 	 * @subpackage    PostType
 	 * @copyright     2009 - 2014, (c) SilverSite.pl
 	 * @tutorial http://blog.teamtreehouse.com/create-your-first-wordpress-custom-post-type
+	 * @TODO Refactor!!
 	 */
 	abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInterface, Core {
 		/**
@@ -395,8 +395,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 */
 		protected function register() {
 			$args = array(
-				'labels'              => \wp_parse_args( $this->labels,
-					$this->getDefaultLabels() ),
+				'labels'              => \wp_parse_args( $this->labels, $this->getDefaultLabels() ),
 				'public'              => $this->public,
 				'publicly_queryable'  => true,
 				'show_ui'             => true,
@@ -405,10 +404,11 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 				//'menu_icon'       => '',
 				'supports'            => $this->supports,
 				'capability_type'     => $this->capability_type,
+				// Permalinks format
 				'rewrite'             => array(
 					'slug'       => $this->name,
 					'with_front' => false
-				), // Permalinks format
+				),
 				'menu_position'       => $this->menu_position,
 				'hierarchical'        => false,
 				'has_archive'         => $this->has_archive,

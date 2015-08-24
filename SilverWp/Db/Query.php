@@ -13,6 +13,7 @@ use SilverWp\Debug;
 use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\RecursiveArray;
+use SilverWp\Helper\Thumbnail;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWpAddons\Ajax\PostLike;
 
@@ -31,11 +32,13 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 	class Query extends \WP_Query {
 
 		/**
+		 * Post type class handler or
+		 * if string valide post type name. Default: post
 		 *
 		 * @var object|string
 		 * @access private
 		 */
-		private $post_type;
+		private $post_type = 'post';
 
 		/**
 		 * @var string
@@ -47,14 +50,16 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * Class constructor
 		 *
 		 * @param array|string $query_args
+		 *
 		 * @access public
 		 */
-		public function __construct( $query_args ) {
-			if ( isset( $query_args[ 'post_type' ] ) ) {
-				$this->setPostType( $query_args[ 'post_type' ] );
+		public function __construct( $query_args = null ) {
+			if ( isset( $query_args['post_type'] ) ) {
+				$this->setPostType( $query_args['post_type'] );
+				unset( $query_args['post_type'] );
 			}
-			if ( isset( $query_args[ 'meta_box_id' ] ) ) {
-				$this->setPostType( $query_args[ 'meta_box_id' ] );
+			if ( isset( $query_args['meta_box_id'] ) ) {
+				$this->setMetaBoxId( $query_args['meta_box_id'] );
 			}
 			parent::__construct( $query_args );
 		}
@@ -71,11 +76,11 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 			if ( $post_type instanceof PostTypeAbstract ) {
 				$this->post_type = $post_type;
 				$name            = $this->post_type->getName();
+				$this->setMetaBoxId( $this->post_type->getMetaBox()->getId() );
 			} else {
 				$name = $post_type;
 			}
 			$this->set( 'post_type', $name );
-			$this->parse_query_vars();
 
 			return $this;
 		}
@@ -95,6 +100,20 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Set post id (this is required in single view)
+		 *
+		 * @param int $post_id
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setPostId( $post_id ) {
+			$this->set( 'p', $post_id );
+
+			return $this;
+		}
+
+		/**
 		 * Set query args to WP_Query
 		 *
 		 * @param array $query_args
@@ -102,10 +121,11 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @access public
 		 * @return $this
 		 */
-		public function setArgs( array $query_args ) {
+		public function setQueryArgs( array $query_args ) {
 			foreach ( $query_args as $name => $value ) {
 				$this->set( $name, $value );
 			}
+			$this->query( $this->query_vars );
 
 			return $this;
 		}
@@ -179,7 +199,9 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function getShortDescription() {
-			if ( strpos( $this->post->post_content, '<!--more-->' ) !== false) {
+			if ( strpos( $this->post->post_content, '<!--more-->' )
+			     !== false
+			) {
 				return get_the_content( '' );
 			} else {
 				return get_the_excerpt();
@@ -187,9 +209,29 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Get post description
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getDescription() {
+			return $this->post->post_content;
+		}
+
+		/**
+		 * Get post title
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getTitle() {
+			return $this->post->post_title;
+		}
+
+		/**
 		 * Get single meta box by name
 		 *
-		 * @param string $field_name meta box field name
+		 * @param string $field_name   meta box field name
 		 *
 		 * @param bool   $remove_first remove first element
 		 *
@@ -197,9 +239,10 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function getMetaBox( $field_name, $remove_first = true ) {
-			$post_id  = $this->getPostId();
+			$post_id = $this->getPostId();
 
-			$meta_box = MetaBox::getPostMeta( $this->meta_box_id, $field_name, $post_id, $remove_first );
+			$meta_box = MetaBox::getPostMeta( $this->meta_box_id, $field_name,
+				$post_id, $remove_first );
 
 			if ( is_array( $meta_box ) ) {
 				$meta_box = RecursiveArray::removeEmpty( $meta_box );
@@ -221,18 +264,18 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 			$return  = array();
 			switch ( $date_format ) {
 				case 'full':
-					$return[ 'date' ]    = \get_the_date( '', $post_id );
-					$return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-					$return[ 'hour' ]    = \get_the_time( '', $post_id );
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['weekday'] = \get_the_date( 'l', $post_id );
+					$return['hour']    = \get_the_time( '', $post_id );
 					break;
 				case 'date':
-					$return[ 'date' ]    = \get_the_date( '', $post_id );
-					$return[ 'weekday' ] = \get_the_date( 'l', $post_id );
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['weekday'] = \get_the_date( 'l', $post_id );
 					break;
 				default:
-					$return[ 'date' ]    = \get_the_date( '', $post_id );
-					$return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-					$return[ 'hour' ]    = \get_the_time( '', $post_id );
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['weekday'] = \get_the_date( 'l', $post_id );
+					$return['hour']    = \get_the_time( '', $post_id );
 					break;
 			}
 
@@ -269,25 +312,28 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 *
 		 * @return array
 		 */
-		public function getGallery( $size = 'thumbnail' ) {
-			$images  = array();
+		public function getGallery( $name = 'gallery', $size = 'thumbnail' ) {
+			$images = array();
 
-			$gallery = $this->getMetaBox( 'gallery_section', false );
+			$gallery = $this->getMetaBox( $name, false );
 			if ( $gallery && count( $gallery ) ) {
 				foreach ( $gallery as $key => $gallery_item ) {
-					if ( ! is_null( $gallery_item['image'] ) && $gallery_item['image'] != '' ) {
+					if ( ! is_null( $gallery_item['image'] )
+					     && '' != $gallery_item['image']
+					) {
 
-						$gallery_item['attachment_id'] = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
-						$image_html         = \wp_get_attachment_image( $gallery_item['attachment_id'], $size );
+						$attachment_id = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
+						$image_html = wp_get_attachment_image( $attachment_id, $size );
 
-						$images[ $key ]  = array(
-							'attachment_id' => $gallery_item['attachment_id'],
+						$images[ $key ] = array(
+							'attachment_id' => $attachment_id,
 							'image_url'     => $gallery_item['image'],
 							'image_html'    => $image_html,
 						);
 					}
 				}
 			}
+
 			return $images;
 		}
 
@@ -319,8 +365,9 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 				} catch ( \SilverWp\Exception $ex ) {
 					echo Message::alert( $ex->getMessage(), 'alert-danger' );
 					if ( WP_DEBUG ) {
-						Debug::dumpPrint($ex->getTraceAsString(), 'Stack trace:');
-						Debug::dumpPrint($ex->getTrace(), 'Full stack:');
+						Debug::dumpPrint( $ex->getTraceAsString(),
+							'Stack trace:' );
+						Debug::dumpPrint( $ex->getTrace(), 'Full stack:' );
 					}
 				}
 			}
