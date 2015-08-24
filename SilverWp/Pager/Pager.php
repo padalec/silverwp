@@ -170,7 +170,7 @@ if ( ! class_exists( 'SilverWp\Pager\Pager' ) ) {
 		 * @access public
 		 */
 		public function setNextArrow( $prev_arrow ) {
-			$this->prev_arrow = $prev_arrow;
+			$this->next_arrow = $prev_arrow;
 
 			return $this;
 		}
