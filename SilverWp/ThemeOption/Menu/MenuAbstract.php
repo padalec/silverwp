@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
  *
@@ -18,16 +17,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/ThemeOption/Menu/MenuAbstract.php $
-  Last committed: $Revision: 2568 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-03-13 15:28:41 +0100 (Pt, 13 mar 2015) $
-  ID: $Id: MenuAbstract.php 2568 2015-03-13 14:28:41Z padalec $
- */
-
 namespace SilverWp\ThemeOption\Menu;
 
+use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
 use SilverWp\Helper\Form\ThemeOption;
 use SilverWp\ThemeOption\Exception;
@@ -49,7 +41,16 @@ if ( ! class_exists( 'SilverWp\ThemeOption\Menu\MenuAbstract' ) ) {
      */
     abstract class MenuAbstract implements MenuInterface {
 
-        /**
+	    /**
+	     * Display settings array
+	     *
+	     * @var bool
+	     * @access protcted
+	     * @since 0.2
+	     */
+	    protected $debug = false;
+
+	    /**
          *
          * Array with all menu settings
          *
@@ -183,6 +184,9 @@ if ( ! class_exists( 'SilverWp\ThemeOption\Menu\MenuAbstract' ) ) {
          * @access public
          */
         public function getSettings() {
+	        if ( $this->debug ) {
+		        Debug::dump($this->settings);
+	        }
             return $this->settings;
         }
     }

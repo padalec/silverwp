@@ -411,7 +411,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 				),
 				'menu_position'       => $this->menu_position,
 				'hierarchical'        => false,
-				'has_archive'         => $this->has_archive,
+				'has_archive'         => $this->has_archive,//icl_translate( 'wpml_custom', 'wpml_custom_' . $this->name, $this->name )
 			);
 			\register_post_type( $this->name, $args );
 			\flush_rewrite_rules();

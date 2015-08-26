@@ -18,6 +18,7 @@
  */
 namespace SilverWp\MetaBox;
 
+use SilverWp\Debug;
 use SilverWp\Helper\Control\ControlInterface;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\Option;
@@ -156,6 +157,15 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 	     * @access protected
 	     */
 	    protected $title_required = true;
+
+	    /**
+	     * Display settings array
+	     *
+	     * @var bool
+	     * @access protected
+	     * @since 0.2
+	     */
+	    protected $debug = false;
 
 	    /**
          *
@@ -320,8 +330,8 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
                 }
 
                 $meta_box = $this->getMetaBox();
-                //silverwp_debug_array($meta_box);
-                $data = array(
+
+	            $data = array(
                     'id'          => MetaBox::getKeyName( $this->id ),
                     'types'       => $this->post_type,
                     'title'       => Translate::translate( $this->title ),
@@ -329,9 +339,14 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
                     'is_dev_mode' => self::DEV_MODE,
                     'template'    => $meta_box,
                 );
+
                 if ( isset( $this->context ) && ! is_null( $this->context ) ) {
                     $data['context'] = $this->context;
                 }
+
+	            if ( $this->debug ) {
+		            Debug::dumpPrint( $data );
+	            }
 
 	            new VP_Metabox( $data );
                 $this->manageColumns();
