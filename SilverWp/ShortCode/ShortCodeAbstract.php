@@ -61,14 +61,22 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
          * @access protected
          */
         public function __construct() {
-	        //if class implemetns SilverWp\Interfaces\EnqueueScripts enqueue scripts
-	        if ( SingletonAbstract::isImplemented( get_called_class(), 'SilverWp\Interfaces\EnqueueScripts' ) ) {
+	        $child_class = get_called_class();
+
+	        if ( \is_null( $this->tag_base ) ) {
+                throw new Exception( Translate::translate( 'Property %s is required and can\'t be empty.', $child_class .'::tag_base' ) );
+            }
+			//if class implemetns SilverWp\Interfaces\EnqueueScripts enqueue scripts
+	        if ( SingletonAbstract::isImplemented( $child_class, 'SilverWp\Interfaces\EnqueueScripts' ) ) {
 		        add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 	        }
-	        if ( \is_null( $this->tag_base ) ) {
-                throw new Exception( Translate::translate( 'Property %s is required and can\'t be empty.', get_called_class() .'::tag_base' ) );
-            }
-            $this->register();
+
+			if ( SingletonAbstract::isImplemented( $child_class, 'SilverWp\ShortCode\SaveOccurencesInterface' ) ) {
+		        //save short code occurennces in posts
+				add_action( 'save_post', array( $this, 'saveOccurrencesPostsIds' ), 10, 1 );
+	        }
+
+	        $this->register();
         }
 
         /**
@@ -131,5 +139,49 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
         private function register() {
             \add_shortcode( $this->tag_base, array( $this, 'content' ) );
         }
+
+	    /**
+	     * Save all posts ids where google map short code occurrences
+	     *
+	     * @param int $post_id
+	     * @access public
+	     */
+	    public function saveOccurrencesPostsIds( $post_id ) {
+		    if ( wp_is_post_revision( $post_id )) {
+			    return;
+		    }
+		    $post_type = get_post_type( $post_id );
+		    $id_array = $this->findOccurrences( $this->tag_base, $post_type );
+		    if ( false === add_option( $this->tag_base, $id_array ) ) {
+			    update_option( $this->tag_base, $id_array );
+		    }
+	    }
+
+	    /**
+	     * Find all post id where short code occurrence
+	     *
+	     * @param sting  $short_code short code tag base
+	     * @param string $post_type post type name
+	     *
+	     * @return array
+	     * @access protected
+	     * @since  0.2
+	     */
+	    protected function findOccurrences( $short_code, $post_type ) {
+		    $found_ids    = array();
+		    $args         = array(
+			    'post_type'      => $post_type,
+			    'post_status'    => 'publish',
+			    'posts_per_page' => - 1,
+		    );
+		    $query_result = new \WP_Query( $args );
+		    foreach ( $query_result->posts as $post ) {
+			    if ( false !== strpos( $post->post_content, $short_code ) ) {
+				    $found_ids[] = $post->ID;
+			    }
+		    }
+
+		    return $found_ids;
+	    }
     }
 }
