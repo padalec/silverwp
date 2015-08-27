@@ -65,6 +65,40 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Set current pager page
+		 *
+		 * @param int $current_page
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setCurrentPagedPage( $current_page ) {
+			$this->set( 'paged', (int) $current_page );
+
+			return $this;
+		}
+
+		/**
+		 * Add Filter by taxonomy
+		 *
+		 * @param string     $taxonomy_name
+		 * @param string|int $term
+		 * @param string     $field
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addTaxonomyFilter( $taxonomy_name, $term, $field = 'term_id' ) {
+			$this->tax_query[] = array(
+				'taxonomy' => $taxonomy_name,
+				'field'    => $field,
+				'terms'    => $term,
+			);
+
+			return $this;
+		}
+
+		/**
 		 * Set Custom Post Type class handler
 		 *
 		 * @param string|PostTypeAbstract $post_type

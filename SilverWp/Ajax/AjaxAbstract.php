@@ -302,7 +302,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 			$view_file = $this->name;
 		}
 		try {
-			$view = View::getInstance()->load( 'Ajax/' . $view_file, $data );
+			$view = View::getInstance()->load( 'ajax/' . $view_file, $data );
 			//some servers don't display content with out echo
 			echo $view;
 			//fix display 0
