@@ -56,7 +56,7 @@ class View extends SingletonAbstract {
 	 * @access public
 	 */
 	public function load( $file, $data = array(), $extension = 'php' ) {
-		$view_path = FileSystem::getDirectory( 'views' );
+		$view_path = FileSystem::getDirectory( 'ssvp_views' );
 		$view_file = $view_path . $file . '.' . $extension;
 
 		if ( ! file_exists( $view_file ) ) {
