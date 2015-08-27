@@ -21,6 +21,7 @@
 namespace SilverWp\PostType;
 
 use SilverWp\Ajax\PostLike;
+use SilverWp\Debug;
 use SilverWp\Exception;
 use SilverWp\Interfaces\Core;
 use SilverWp\Db\Query;
@@ -147,6 +148,11 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		protected $args = array();
 
 		/**
+		 * @var bool
+		 */
+		protected $debug = false;
+
+		/**
 		 *
 		 * Class constructor
 		 *
@@ -168,6 +174,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 *
 		 * @abstract
 		 * @access protected
+		 * @see https://codex.wordpress.org/Function_Reference/register_post_type#Parameters
 		 */
 		abstract protected function setUp();
 
@@ -184,19 +191,32 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 					Translate::translate( 'Property %s is required and can\'t be empty.', $parent_class .'::name' )
 				);
 			}
+			//set up default arguments
+			$this->publicly_queryable  = true;
+			//display in admin menu
+			$this->show_ui             = true;
+			$this->query_var           = true;
+			$this->exclude_from_search = false;
+			$this->labels = wp_parse_args( $this->args['labels'], $this->getDefaultLabels() );
+			// Permalinks format
+			$this->rewrite = array(
+				'slug'       => $this->name,
+				'with_front' => false
+			);
+			//set up post type
+			$this->setUp();
+
 			$default_args = array(
-				'labels'              => wp_parse_args( $this->args['labels'], $this->getDefaultLabels() ),
-				'supports'            => $this->supports,
-				'capability_type'     => $this->capability_type,
-				// Permalinks format
-				'rewrite'             => array(
-					'slug'       => $this->name,
-					'with_front' => false
-				),
+				'supports' => $this->supports,
 			);
 			$this->args = wp_parse_args( $this->args, $default_args );
-			register_post_type( $this->name, $this->args );
+			$post_type = register_post_type( $this->name, $this->args );
 			flush_rewrite_rules();
+			//debug
+			if ( $this->debug ) {
+				Debug::dumpPrint( $this->args, $this->name );
+				Debug::dumpPrint( $post_type );
+			}
 		}
 
 		/**

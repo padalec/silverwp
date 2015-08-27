@@ -309,22 +309,22 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		 *
 		 * @access public
 		 * @return void
-		 * @todo   wtf is this?
+		 * @TODO Fix fatal error getName method
 		 */
 		public function addFilter2QueryList( $query ) {
-			return ;
+			return;
 			global $pagenow;
-			$post_type  = $this->getPostType();
+			$post_type  = get_post_type();
 			$taxonomy   = $this->getName( 'category' );
 			$query_vars = &$query->query_vars;
-			if ( $pagenow == 'edit.php' && isset( $query_vars['post_type'] )
+			if ( $pagenow == 'edit.php'
+			     && isset( $query_vars['post_type'] )
 			     && $query_vars['post_type'] == $post_type
 			     && isset( $query_vars[ $taxonomy ] )
 			     && is_numeric( $query_vars[ $taxonomy ] )
 			     && $query_vars[ $taxonomy ] != 0
 			) {
-				$term                    = get_term_by( 'id',
-					$query_vars[ $taxonomy ], $taxonomy );
+				$term  = get_term_by( 'id', $query_vars[ $taxonomy ], $taxonomy );
 				$query_vars[ $taxonomy ] = $term->slug;
 			}
 		}

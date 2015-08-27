@@ -79,7 +79,7 @@ if ( ! class_exists( 'SilverWp' ) ) {
             || define( 'SILVERWP_META_BOX_DEV', false );
 
             defined( 'SILVERWP_THEME_OPTIONS_DEV' )
-            || define( 'SILVERWP_THEME_OPTIONS_DEV', true );
+            || define( 'SILVERWP_THEME_OPTIONS_DEV', false );
 
             defined( 'SILVERWP_LIBS_PATH' )
             || define( 'SILVERWP_LIBS_PATH', SILVERWP_DIR . 'libs/' );
