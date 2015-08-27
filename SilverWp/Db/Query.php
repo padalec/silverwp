@@ -334,6 +334,43 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Get all post terms
+		 *
+		 * @param string $taxonomy_name
+		 *
+		 * @return bool|false|string|\WP_Error
+		 * @access public
+		 * @since 0.3
+		 */
+		public function getTerms( $taxonomy_name ) {
+
+			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
+				return get_the_term_list( $this->getPostId(), $taxonomy_name );
+			}
+
+			return false;
+		}
+
+		/**
+		 * Get current paged page
+		 *
+		 * @return int
+		 * @access public
+		 * @since 0.3
+		 */
+		public function getCurrentPagedPage() {
+			$current_page = 1;
+
+			if ( get_query_var( 'paged' ) ) {
+				$current_page = get_query_var( 'paged' );
+			} else if ( get_query_var( 'page' ) ) {
+				$current_page = get_query_var( 'page' );
+			}
+
+			return $current_page;
+		}
+
+		/**
 		 *
 		 * Get features list
 		 *
