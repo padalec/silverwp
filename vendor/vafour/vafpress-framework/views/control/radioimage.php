@@ -11,7 +11,9 @@ foreach ( $items as $item ):
 			$checked = true;
 		} else if( $item->value == $default ) {
 			$checked = true;
-		}
+        } else {
+            $checked = false;
+        }
 		?>
 		<input type="radio" <?php if ( $checked ) {
 			echo 'checked';

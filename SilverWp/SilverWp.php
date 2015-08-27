@@ -146,20 +146,22 @@ if ( ! class_exists( 'SilverWp' ) ) {
         private function vpFix() {
 	        \VP_AutoLoader::remove_directories( VP_CLASSES_DIR, VP_NAMESPACE );
 
-	        $classes = SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR
-	                   . 'classes' . DIRECTORY_SEPARATOR;
+	        $classes = SILVERWP_LIBS_PATH . 'ssvafpress/classes/';
+
 	        \VP_AutoLoader::add_directories( $classes, VP_NAMESPACE );
 	        \VP_AutoLoader::add_directories( VP_CLASSES_DIR, VP_NAMESPACE );
 	        \VP_AutoLoader::register();
 
 	        $vp = \VP_FileSystem::instance();
 	        $vp->remove_directories( 'views' );
-	        $views = SILVERWP_LIBS_PATH . 'ssvafpress' . DIRECTORY_SEPARATOR
-	                 . 'views';
+
+	        $views = SILVERWP_LIBS_PATH . 'ssvafpress/views';
+
 	        $vp->add_directories( 'views', $views );
 	        $vp->add_directories( 'views', ABSPATH . 'Views' );
 	        $vp->add_directories( 'views', VP_VIEWS_DIR );
 
+	        FileSystem::getInstance()->addDirectory( 'ssvp_views', $views );
         }
     }
 }
