@@ -25,11 +25,11 @@ if ( ! interface_exists( '\SilverWp\PostType\PostTypeInterface' ) ) {
 	 * Post Type interface
 	 *
 	 * @author        Michal Kalkowski <michal at silversite.pl>
-	 * @version       $Id: PostTypeInterface.php 2184 2015-01-21 12:20:08Z padalec $
+	 * @version       0.3
 	 * @category      WordPress
 	 * @package       SilverWp
 	 * @subpackage    PostType
-	 * @copyright (c) 2009 - 2014, SilverSite.pl
+	 * @copyright     SilverSite.pl (c) 2015
 	 */
 	interface PostTypeInterface {
 		/**
@@ -86,29 +86,5 @@ if ( ! interface_exists( '\SilverWp\PostType\PostTypeInterface' ) ) {
 		 * @access public
 		 */
 		public function isTaxonomyRegistered();
-
-		/**
-		 * Check the post type have thumbnail
-		 *
-		 * @return boolean
-		 * @access public
-		 */
-		public function isThumbnail();
-
-		/**
-		 * Check the post type have description
-		 *
-		 * @return boolean
-		 * @access public
-		 */
-		public function isDescription();
-
-		/**
-		 * Check the post type supports title
-		 *
-		 * @return boolean
-		 * @access public
-		 */
-		public function isTitle();
 	}
 }

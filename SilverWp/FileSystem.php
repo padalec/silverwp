@@ -27,11 +27,15 @@ if ( ! class_exists( '\SilverWp\FileSystem' ) ) {
      * @package SilverWp
      * @subpackage SilverWp
      * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
+     * @copyright silversite.pl 2015
      * @version $Revision:$
      */
     class FileSystem extends SingletonAbstract {
-
+        /**
+         *
+         * @var array
+         * @access private
+         */
         private $dirs = array();
 
         /**
