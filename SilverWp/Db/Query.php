@@ -312,9 +312,16 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 					$return['weekday'] = \get_the_date( 'l', $post_id );
 					$return['hour']    = \get_the_time( '', $post_id );
 					break;
-				case 'date':
+				case 'date_weekday':
 					$return['date']    = \get_the_date( '', $post_id );
 					$return['weekday'] = \get_the_date( 'l', $post_id );
+					break;
+				case 'date':
+					$return['date']    = \get_the_date( '', $post_id );
+					break;
+				case 'date_time':
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['time']    = \get_the_time( '', $post_id );
 					break;
 				default:
 					$return['date']    = \get_the_date( '', $post_id );
