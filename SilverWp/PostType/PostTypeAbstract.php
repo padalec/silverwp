@@ -40,6 +40,12 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 	/**
 	 * Abstract Post Type
 	 *
+	 * @property array labels
+	 * @property bool  exclude_from_search
+	 * @property bool  query_var
+	 * @property bool  show_ui
+	 * @property array rewrite
+	 *
 	 * @author        Michal Kalkowski <michal at silversite.pl>
 	 * @version       0.3
 	 * @category      WordPress
@@ -179,7 +185,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		abstract protected function setUp();
 
 		/**
-		 * Initialize and register Custom Post Type
+		 * Initialize class and register Custom Post Type
 		 *
 		 * @access public
 		 * @throws \SilverWp\PostType\Exception
@@ -191,8 +197,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 					Translate::translate( 'Property %s is required and can\'t be empty.', $parent_class .'::name' )
 				);
 			}
-			//set up default arguments
-			$this->publicly_queryable  = true;
+			//setup default args
 			//display in admin menu
 			$this->show_ui             = true;
 			$this->query_var           = true;
