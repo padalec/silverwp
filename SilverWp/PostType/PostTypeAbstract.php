@@ -59,6 +59,25 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 
 		/**
 		 *
+		 * An alias for calling add_post_type_support() directly. As of 3.5,
+		 * boolean false can be passed as value instead of an array to prevent
+		 * default (title and editor) behavior.
+		 * Default: title and editor
+		 * 'title'
+		 * 'editor' (content)
+		 * 'author'
+		 * 'thumbnail' (featured image, current theme must also support post-thumbnails)
+		 * 'excerpt'
+		 * 'trackbacks'
+		 * 'custom-fields'
+		 * 'comments' (also will see comment count balloon on edit screen)
+		 * 'revisions' (will store revisions)
+		 * 'page-attributes' (menu order, hierarchical must be true to show Parent option)
+		 * 'post-formats' add post formats, see Post Formats
+		 *
+		 * Note: When you use custom post type that use thumbnails remember to check that the
+		 * theme also supports thumbnails or use add_theme_support function.
+		 *
 		 * @var array
 		 * @access protected
 		 */
@@ -84,31 +103,6 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 * @access protected
 		 */
 		protected $public = true;
-
-		/**
-		 *
-		 * The string to use to build the read, edit,
-		 * and delete capabilities. May be passed as an array to allow for
-		 * alternative plurals when using this argument as a base to construct
-		 * the capabilities, e.g. array('story', 'stories') the first array
-		 * element will be used for the singular capabilities and the second
-		 * array element for the plural capabilities, this is instead of the
-		 * auto generated version if no array is given which would be "storys".
-		 * By default the capability_type is used as a base to construct
-		 * capabilities. It seems that `map_meta_cap` needs to be set to true,
-		 * to make this work.
-		 * Default: "post"
-		 * Some of the capability types that can be used (probably not exhaustive list):
-		 * post (default)
-		 * page
-		 * These built-in types cannot be used:
-		 * attachment
-		 * mediapage
-		 *
-		 * @var string|array
-		 * @access protected
-		 */
-		protected $capability_type = 'post';
 
 		/**
 		 *
@@ -159,7 +153,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 * @access protected
 		 */
 		protected function __construct() {
-			if (in_array('thumbnail', $this->supports)) {
+			if ( in_array( 'thumbnail', $this->supports ) ) {
 				// Thumbnail support for portfolio posts
 				add_theme_support( 'post-thumbnails', array( $this->name ) );
 			}
@@ -169,7 +163,8 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 
 		/**
 		 *
-		 * Set up Custom Post type
+		 * Set up Custom Post Type. In this method will be set up labels and all
+		 * register_post_type function arguments
 		 *
 		 * @abstract
 		 * @access protected
