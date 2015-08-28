@@ -26,6 +26,7 @@
 
 namespace SilverWp\Sidebar\Widget;
 
+use SilverWp\FileSystem;
 use SilverWp\Translate;
 use SilverWp\View;
 use WPH_Widget;
@@ -210,24 +211,27 @@ abstract class WidgetAbstract extends WPH_Widget
             throw new Exception(Translate::translate('Field '.$key['type'].' doesn\'t exists.'));
         }
     }
-    
-    /**
-     * render view
-     *
-     * @param array $data data passed too view
-     * @return string
-     * @access protected
-     */
-    protected function render(array $data, $view_file = null)
-    {
-        if (\is_null($view_file)) {
-            $view_file = $this->id_base;
-        }
-        try {
-            $view = View::getInstance()->load('Widget/' . $view_file, $data);
-            echo $view;
-        } catch (Exception $ex) {
-            echo $ex->displayAdminNotice($ex->getMessage());
-        }
-    }
+
+	/**
+	 * Render widget view
+	 *
+	 * @param array $data data passed too view
+	 * @param null  $view_file
+	 *
+	 * @return string
+	 * @access protected
+	 */
+	protected function render( array $data, $view_file = null ) {
+		if ( \is_null( $view_file ) ) {
+			$view_file = $this->id_base;
+		}
+		try {
+			$views_path = FileSystem::getDirectory( 'views' );
+			$view       = View::getInstance()->load( $views_path . 'widget/'
+			                                         . $view_file, $data );
+			echo $view;
+		} catch ( Exception $ex ) {
+			echo $ex->displayAdminNotice( $ex->getMessage() );
+		}
+	}
 }

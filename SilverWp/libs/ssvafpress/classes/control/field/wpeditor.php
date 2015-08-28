@@ -57,8 +57,11 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
         $this->_setup_data();
         $this->add_data('is_compact', $is_compact);
         $this->add_data('is_media_button', $this->is_media_button);
-        $content = \SilverWp\View::getInstance()->load('control/wpeditor', $this->get_data());
-        return $content;
+
+	    $view_path = FileSystem::getDirectory( 'ssvp_views' );
+	    $content = \SilverWp\View::getInstance()->load( $view_path . 'control/wpeditor', $this->get_data());
+
+	    return $content;
     }
 
     public function set_value($_value)
