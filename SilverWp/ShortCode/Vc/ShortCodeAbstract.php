@@ -475,11 +475,12 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ShortCodeAbstract' ) ) {
             return $this;
         }
 
-	    /**
-	     * @param $controls
-	     *
-	     * @access public
-	     */
+		/**
+		 * @param $controls
+		 *
+		 * @access public
+		 * @return $this
+		 */
 	    public function setControls( $controls ) {
 		    $this->settings[ 'controls' ] = $controls;
 

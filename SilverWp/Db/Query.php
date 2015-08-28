@@ -1,10 +1,20 @@
 <?php
 /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Db/Query.php $
-  Last committed: $Revision: 1572 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2014-10-02 13:22:19 +0200 (Cz, 02 paź 2014) $
-  ID: $Id: Query.php 1572 2014-10-02 11:22:19Z padalec $
+ * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 namespace SilverWp\Db;
@@ -17,13 +27,13 @@ use SilverWp\Helper\Thumbnail;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWpAddons\Ajax\PostLike;
 
-if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
+if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 
 	/**
 	 * Class extends to WP_Query
 	 *
 	 * @author        Michal Kalkowski <michal at silversite.pl>
-	 * @version       0.1
+	 * @version       0.3
 	 * @category      WordPress
 	 * @package       Db
 	 * @copyright     2015 (c) SilverSite.pl
@@ -33,7 +43,7 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 
 		/**
 		 * Post type class handler or
-		 * if string valide post type name. Default: post
+		 * if string validate post type name. Default: post
 		 *
 		 * @var object|string
 		 * @access private
@@ -302,9 +312,16 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 					$return['weekday'] = \get_the_date( 'l', $post_id );
 					$return['hour']    = \get_the_time( '', $post_id );
 					break;
-				case 'date':
+				case 'date_weekday':
 					$return['date']    = \get_the_date( '', $post_id );
 					$return['weekday'] = \get_the_date( 'l', $post_id );
+					break;
+				case 'date':
+					$return['date']    = \get_the_date( '', $post_id );
+					break;
+				case 'date_time':
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['time']    = \get_the_time( '', $post_id );
 					break;
 				default:
 					$return['date']    = \get_the_date( '', $post_id );
@@ -314,6 +331,43 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 			}
 
 			return $return;
+		}
+
+		/**
+		 * Get all post terms
+		 *
+		 * @param string $taxonomy_name
+		 *
+		 * @return bool|false|string|\WP_Error
+		 * @access public
+		 * @since 0.3
+		 */
+		public function getTerms( $taxonomy_name ) {
+
+			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
+				return get_the_term_list( $this->getPostId(), $taxonomy_name );
+			}
+
+			return false;
+		}
+
+		/**
+		 * Get current paged page
+		 *
+		 * @return int
+		 * @access public
+		 * @since 0.3
+		 */
+		public function getCurrentPagedPage() {
+			$current_page = 1;
+
+			if ( get_query_var( 'paged' ) ) {
+				$current_page = get_query_var( 'paged' );
+			} else if ( get_query_var( 'page' ) ) {
+				$current_page = get_query_var( 'page' );
+			}
+
+			return $current_page;
 		}
 
 		/**
@@ -342,6 +396,7 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 *
 		 * Gallery list
 		 *
+		 * @param string       $name
 		 * @param string|array $size thumbnail image size
 		 *
 		 * @return array
@@ -408,5 +463,50 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 
 			return $file_data;
 		}
+
+		/**
+		 * Check the post type have thumbnail
+		 *
+		 * @return boolean
+		 * @access public
+		 * @since 0.3
+		 */
+		public function isThumbnail() {
+			$post_id = $this->getPostId();
+			if ( in_array( 'thumbnail', $this->post_type->getSupport() )
+			     && \has_post_thumbnail( $post_id )
+			) {
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 * Check the post type have description
+		 *
+		 * @return boolean
+		 * @access public
+		 * @since 0.3
+		 */
+		public function isDescription() {
+			$editor = \in_array( 'editor', $this->post_type->getSupport() );
+
+			return $editor;
+		}
+
+		/**
+		 * Check the post type supports title
+		 *
+		 * @return boolean
+		 * @access public
+		 * @since 0.3
+		 */
+		public function isTitle() {
+			$is_title = \in_array( 'title', $this->post_type->getSupport() );
+
+			return $is_title;
+		}
+
 	}
 }

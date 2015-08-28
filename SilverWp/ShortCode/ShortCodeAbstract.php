@@ -122,7 +122,8 @@ if ( ! class_exists( 'SilverWp\ShortCode\ShortCodeAbstract' ) ) {
             }
 
             try {
-	            $view = View::getInstance()->load( 'shortcodes/' . $view_file, $data );
+	            $view_path = FileSystem::getDirectory( 'sc_templates' );
+	            $view = View::getInstance()->load( $view_path . $view_file, $data );
 
                 return $view;
             } catch ( Exception $ex ) {

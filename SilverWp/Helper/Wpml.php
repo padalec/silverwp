@@ -26,33 +26,37 @@
  */
 
 namespace SilverWp\Helper;
+use SilverWp\FileSystem;
+use SilverWp\View;
 
 /**
  * some heler funciton for Wpml plugin
  *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: Wpml.php 2184 2015-01-21 12:20:08Z padalec $
- * @category WordPress
- * @package SilverWp
- * @subpackage Helper
+ * @author        Michal Kalkowski <michal at silversite.pl>
+ * @version       $Id: Wpml.php 2184 2015-01-21 12:20:08Z padalec $
+ * @category      WordPress
+ * @package       SilverWp
+ * @subpackage    Helper
  * @copyright (c) 2009 - 2014, SilverSite.pl
  */
-class Wpml
-{
-    /**
-     * wpml lang switcher
-     * @static
-     * @access public
-     * @return string
-     */
-    public static function langSwitcher()
-    {
-        if (\function_exists('icl_get_languages')) {
-            $languages = \icl_get_languages('skip_missing=1&orderby=code&order=ASC&link_empty_to=str');
-            $View = \SilverWp\View::getInstance();
-            $content = $View->load('Helper/lang-symbol-switcher', array( 'data' => $languages ));
-            return $content;
-        }
-        return false;
-    }
+class Wpml {
+	/**
+	 * wpml lang switcher
+	 *
+	 * @static
+	 * @access public
+	 * @return string
+	 */
+	public static function langSwitcher() {
+		if ( \function_exists( 'icl_get_languages' ) ) {
+			$languages = \icl_get_languages( 'skip_missing=1&orderby=code&order=ASC&link_empty_to=str' );
+			$view_path = FileSystem::getDirectory('views');
+			$view    = View::getInstance();
+			$content = $view->load( $view_path . 'helper/lang-symbol-switcher', array( 'data' => $languages ) );
+
+			return $content;
+		}
+
+		return false;
+	}
 }

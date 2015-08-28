@@ -9,7 +9,7 @@ $value = \html_entity_decode($value, ENT_COMPAT, 'UTF-8');
 if (\has_filter('the_editor_content')) {
     $value = \apply_filters('the_editor_content', $value);
 } else {
-    $value = \wp_richedit_pre($value);
+    $value = \format_for_editor($value);
 }
 ?>
 <div class="customEditor">

@@ -94,14 +94,18 @@ class Social {
     public static function getIcons() {
         $icons     = array();
         $icons_tmp = \silverwp_get_social_icon();
-        $settings  = Option::get_theme_option( 'social_bookmark', true );
+        $settings  = Option::get_theme_option( 'social_accounts', true );
 
         foreach ( $icons_tmp as $icon ) {
-            $key = \sanitize_title( $icon[ 'label' ] );
-            if ( isset( $settings[ $key ] ) && $settings[ $key ][ 'url' ] != '' ) {
-                $icons[ $key ]           = $settings[ $key ];
-                $icons[ $key ][ 'icon' ] = $icon[ 'value' ];
-            }
+	        $key = \sanitize_title( $icon['label'] );
+	        if ( isset( $settings[ $key ] )
+	             && $settings[ $key ]['url'] != ''
+	        ) {
+		        $icons[ $key ]          = $settings[ $key ];
+		        $icons[ $key ]['icon']  = $icon['value'];
+		        $icons[ $key ]['slug']  = $key;
+		        $icons[ $key ]['label'] = $icon['label'];
+	        }
         }
         //sort array by order field
         UtlArray::array_sort_by_column( $icons, 'order', \SORT_ASC );
