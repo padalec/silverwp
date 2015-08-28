@@ -7,12 +7,11 @@ foreach ( $items as $item ):
 	?>
 	<label>
 		<?php
+		$checked = false;
 		if ( ! is_null( $value ) && $item->value == $value ) {
 			$checked = true;
-		} else if( $item->value == $default ) {
+		} else if( is_null( $value ) && $item->value == $default ) {
 			$checked = true;
-        } else {
-            $checked = false;
         }
 		?>
 		<input type="radio" <?php if ( $checked ) {
