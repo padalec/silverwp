@@ -24,10 +24,6 @@ use SilverWp\Ajax\PostLike;
 use SilverWp\Debug;
 use SilverWp\Exception;
 use SilverWp\Interfaces\Core;
-use SilverWp\Db\Query;
-use SilverWp\Helper\Option;
-use SilverWp\Helper\RecursiveArray;
-use SilverWp\Helper\UtlArray;
 use SilverWp\MetaBox\Exception as MetaBoxException;
 use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostRelationship\Relationship;
@@ -40,7 +36,6 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 	/**
 	 * Abstract Post Type
 	 *
-	 * @property array labels
 	 * @property bool  exclude_from_search
 	 * @property bool  query_var
 	 * @property bool  show_ui
@@ -55,9 +50,10 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 	 * @tutorial http://blog.teamtreehouse.com/create-your-first-wordpress-custom-post-type
 	 */
 	abstract class PostTypeAbstract extends SingletonAbstract implements PostTypeInterface, Core {
+
 		/**
 		 *
-		 * name required
+		 * Custom Post Type name (required)
 		 *
 		 * @var string
 		 * @access protected
@@ -154,7 +150,16 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		protected $args = array();
 
 		/**
+		 *
+		 * @var array
+		 * @access protected
+		 */
+		protected $labels = array();
+
+		/**
+		 *
 		 * @var bool
+		 * @access protected
 		 */
 		protected $debug = false;
 
@@ -202,7 +207,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 			$this->show_ui             = true;
 			$this->query_var           = true;
 			$this->exclude_from_search = false;
-			$this->labels = wp_parse_args( $this->args['labels'], $this->getDefaultLabels() );
+
 			// Permalinks format
 			$this->rewrite = array(
 				'slug'       => $this->name,
@@ -212,6 +217,8 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 			$this->setUp();
 
 			$default_args = array(
+				'labels'   => wp_parse_args( $this->labels, $this->getDefaultLabels() ),
+				'public'   => $this->public,
 				'supports' => $this->supports,
 			);
 			$this->args = wp_parse_args( $this->args, $default_args );
