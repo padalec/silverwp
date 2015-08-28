@@ -18,7 +18,6 @@
  */
 namespace SilverWp\Sidebar\Widget;
 
-use SilverWp\FileSystem;
 use SilverWp\Translate;
 use SilverWp\View;
 use WPH_Widget;
@@ -113,137 +112,9 @@ abstract class WidgetAbstract extends WPH_Widget {
 		           . '<br/>';
 		$categories = get_categories( 'hide_empty=0' );
 
-        /* Run method */
-        if (\method_exists($this, $field_method)) {
 		$option = '';
 		foreach ( $categories as $cat ) {
-            return $p . $this->$field_method($key) . '</p>';
 			$option .= '<label><input type="checkbox" id="'
-<<<<<<< .mine
-        } else {
-            throw new Exception(Translate::translate('Field '.$key['type'].' doesn\'t exists.'));
-        }
-    }
-
-	/**
-	 * Render widget view
-	 *
-	 * @param array $data data passed too view
-	 * @param null  $view_file
-	 *
-	 * @return string
-	 * @access protected
-	 */
-	protected function render( array $data, $view_file = null ) {
-		if ( \is_null( $view_file ) ) {
-			$view_file = $this->id_base;
-		}
-		try {
-			$views_path = FileSystem::getDirectory( 'views' );
-			$view       = View::getInstance()->load( $views_path . 'widget/'
-			                                         . $view_file, $data );
-			echo $view;
-		} catch ( Exception $ex ) {
-			echo $ex->displayAdminNotice( $ex->getMessage() );
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 			           . esc_attr( $key['_id'] ) . '" ';
 			$option .= 'name="' . esc_attr( $key['_name'] ) . '[]"';
 			if ( isset( $key['value'] ) && is_array( $key['value'] )
@@ -367,5 +238,4 @@ abstract class WidgetAbstract extends WPH_Widget {
 			echo $ex->displayAdminNotice( $ex->getMessage() );
 		}
 	}
->>>>>>> .theirs
 }
