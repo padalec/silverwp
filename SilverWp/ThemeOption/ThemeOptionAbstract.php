@@ -28,6 +28,7 @@ namespace SilverWp\ThemeOption;
 
 use SilverWp\Debug;
 use SilverWp\FileSystem;
+use SilverWp\SilverWp;
 use SilverWp\SingletonAbstract;
 use SilverWp\ThemeOption\Menu\MenuAbstract;
 use SilverWp\ThemeOption\ThemeOptionInterface;
@@ -66,11 +67,8 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 	 * @var array
 	 * @access protected
 	 */
-	protected $labels
-		= array(
-			'page_title' => 'SilverWp Theme Options',
-			'menu_label' => 'Theme Options',
-		);
+	protected $labels = array();
+
 	/**
 	 * slug in admin menu
 	 *
@@ -78,6 +76,7 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 	 * @access protected
 	 */
 	protected $menu_slug = 'theme_options';
+
 	/**
 	 *
 	 * Parent menu slug string (reference) or supply array
@@ -132,6 +131,7 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 	 * @var string
 	 */
 	protected $parent_slug = array();
+
 	/**
 	 *
 	 * @var array
@@ -140,38 +140,28 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 	private $menu = array();
 
 	/**
+	 * @var bool
+	 */
+	protected $debug = false;
+
+	/**
 	 *
 	 * Start up class constructor
 	 *
 	 * @access public
 	 */
 	protected function __construct() {
-		$this->setLabels();
 		add_action( 'after_setup_theme', array( $this, 'init' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'addCss' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 	}
 
 	/**
 	 * add custom css file
 	 */
-	public function addCss() {
-		$css_uri = $this->getCssUri();
-		wp_register_style( 'theme_options', $css_uri . 'theme_options.css',
-			array( 'vp-option' ), SILVERWP_VER );
+	public function enqueueScripts() {
+		$css_uri = FileSystem::getDirectory('css_uri');
+		wp_register_style( 'theme_options', $css_uri . 'theme_options.css', array( 'vp-option' ), SILVERWP_VER );
 		wp_enqueue_style( 'theme_options' );
-	}
-
-	/**
-	 *
-	 * Get URI to assets folder
-	 *
-	 * @return string
-	 * @access public
-	 */
-	public function getCssUri() {
-		$file_system = FileSystem::getInstance();
-
-		return $file_system->getDirectories( 'css_uri' );
 	}
 
 	/**
@@ -181,11 +171,11 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 	 * @access public
 	 */
 	public function init() {
-		$option = array(
+		$this->setUp();
+		$settings = array(
 			'is_dev_mode'           => self::DEV_MODE,
 			'option_key'            => THEME_OPTION_PREFIX,
-			'page_slug'             => SILVERWP_THEME_TEXT_DOMAIN . '-'
-			                           . $this->menu_slug,
+			'page_slug'             => SILVERWP_THEME_TEXT_DOMAIN . '-' . $this->menu_slug,
 			'template'              => $this->getTemplate(),
 			//'menu_page'             => $this->getMenuPage(),
 			'use_auto_group_naming' => $this->use_auto_group_naming,
@@ -195,17 +185,11 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 			'page_title'            => $this->labels['page_title'],
 			'menu_label'            => $this->labels['menu_label'],
 		);
-		new VP_Option( $option );
+		if ($this->debug) {
+			Debug::dumpPrint($settings);
+		}
+		new VP_Option( $settings );
 	}
-
-	/**
-	 *
-	 * Set labels
-	 *
-	 * @abstract
-	 * @since 0.2
-	 */
-	abstract protected function setLabels();
 
 	/**
 	 *
@@ -215,6 +199,15 @@ abstract class ThemeOptionAbstract extends SingletonAbstract
 	 * @return void
 	 * @access protected
 	 * @since  0.3
+	 */
+	abstract protected function setUp();
+
+	/**
+	 * Create Theme Options menus and sub menu
+	 *
+	 * @return void
+	 * @access public
+	 * @since 0.1
 	 */
 	abstract protected function createOptions();
 

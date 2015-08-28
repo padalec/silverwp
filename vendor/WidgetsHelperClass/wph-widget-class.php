@@ -51,6 +51,7 @@ if ( ! class_exists( 'WPH_Widget' ) )
             $this->options = array( 'classname' => $this->slug, 'description' => $description );                        
             if ( ! empty( $options ) ) $this->options = array_merge( $this->options, $options );
             // call WP_Widget to create the widget
+	        \SilverWp\Debug::dumpPrint($args);
             parent::__construct( $this->slug, $label, $this->options );
 
         }

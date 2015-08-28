@@ -35,7 +35,8 @@
       "vendor/pluswp/wp-scss/bootstrap-for-theme.php",
       "vendor/aristath/kirki/kirki.php",
       "vendor/Taxonomy_Single_Term/class.taxonomy-single-term.php",
-      "vendor/scribu/posts-to-posts/posts-to-posts.php"
+      "vendor/scribu/posts-to-posts/posts-to-posts.php",
+      "vendor/WidgetsHelperClass/wph-widget-class.php"
     ],
     "psr-4": {
       "SilverWp\\": "SilverWp/"
