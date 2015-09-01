@@ -212,6 +212,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 	protected function getRequestData(
 		$name, $filter_options = FILTER_DEFAULT, $default = null
 	) {
+        $request = null;
 		if ( $this->isGet( $name ) ) {
 			$request = Filter::get_var( $name, $filter_options, $default );
 		} elseif ( $this->isPost( $name ) ) {
