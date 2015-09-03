@@ -1,18 +1,10 @@
 <?php
 
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Helper/String.php $
-  Last committed: $Revision: 2184 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: String.php 2184 2015-01-21 12:20:08Z padalec $
- */
-
 /**
  * Strings helpers
  *
  * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: String.php 2184 2015-01-21 12:20:08Z padalec $
+ * @version 0.4
  * @category WordPress
  * @package SilverWp
  * @subpackage Helper
@@ -31,49 +23,8 @@ class String {
                     \array_map( 'stripslashes_deep', $value ) : 
                         \stripslashes( $value );
     }
-    /**
-     * alias to esc_html function
-     * @param string $text
-     * @return string
-     */
-    public static function esc_html( $text ) {
-        return \esc_html( $text );
-    }
-    /**
-     * alias to esc_attr function
-     * @param string $text
-     * @return string
-     */
-    public static function esc_attr( $text ) {
-        return \esc_attr( $text );
-    }
-    /**
-     * 
-     * @param string $text
-     * @return string
-     */
-    public static function esc_attr__( $text ){
-        return \esc_attr__( $text, \THEME_CONTEXT );
-    }
-    /**
-     * 
-     * Sanitize a string from user input or from the db. 
-     * Checks for invalid UTF-8, Convert single < characters to entity, 
-     * strip all tags, remove line breaks, tabs and extra white space, 
-     * strip octets.
-     * 
-     * alias to sanitize_text_field
-     * 
-     * @link http://codex.wordpress.org/Function_Reference/sanitize_text_field
-     * @param string $str
-     * @return string
-     * 
-     */
-    public static function sanitize_text_field( $str )
-    {
-        return sanitize_text_field( $str );
-    }
-    /**
+
+	/**
      * 
      * replace part of a string from array
      * 
@@ -81,11 +32,48 @@ class String {
      * @param type $subject string to replaced
      * @return string
      */
-    public static function str_replace_from_array( array $array_in, $subject ){
-        return str_replace( 
-                array_keys( $array_in )
-                ,array_values( $array_in )
-                ,$subject 
-            );
-    }
+	public static function str_replace_from_array( array $array_in, $subject ) {
+		$string = str_replace( array_keys( $array_in ), array_values( $array_in ), $subject );
+
+		return $string;
+	}
+	/**
+	 *
+	 * Search file content and get all class names in array
+	 *
+	 * @link http://stackoverflow.com/questions/7153000/get-class-name-from-file
+	 * @param string $file full path to file with file name
+	 *
+	 * @return array array with founded classes
+	 * @static
+	 * @access public
+	 * @since 0.4
+	 */
+	public static function getClassNameFromFile( $file ) {
+		$php_code	 = \file_get_contents( $file );
+		$classes	 = array();
+		$namespace	 = '';
+		$tokens		 = \token_get_all( $php_code );
+		$count		 = \count( $tokens );
+
+		for ( $i = 0; $i < $count; $i ++ ) {
+			if ( $tokens[ $i ][ 0 ] === T_NAMESPACE ) {
+				for ( $j = $i + 1; $j < $count; $j++ ) {
+					if ( $tokens[ $j ][ 0 ] === T_STRING ) {
+						$namespace .= '\\' . $tokens[ $j ][ 1 ];
+					} elseif ( $tokens[ $j ] === '{' || $tokens[ $j ] === ';' ) {
+						break;
+					}
+				}
+			}
+			if ( $tokens[ $i ][ 0 ] === T_CLASS ) {
+				for ( $j = $i + 1; $j < $count; $j++ ) {
+					if ( $tokens[ $j ] === '{' ) {
+						$classes[] = $namespace . '\\' . $tokens[ $i + 2 ][ 1 ];
+					}
+				}
+			}
+		}
+		return \array_unique( $classes );
+	}
 }
