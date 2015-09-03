@@ -22,6 +22,9 @@ use SilverWp\Customizer\CustomizerAbstract;
 use SilverWp\File\FileException;
 use SilverWp\File\File;
 use SilverWp\Helper\Option;
+use SilverWp\Helper\Thumbnail;
+use SilverWp\Helper\Control\SidebarPosition;
+use Roots\Sage\Config;
 
 if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
 	/**
@@ -80,4 +83,64 @@ if ( ! function_exists( '\SilverWp\get_template_part' ) ) {
 			$ex->catchException();
 		}
 	}
+}
+
+if ( ! function_exists( '\SilverWp\get_attachment_image_from_url' ) ) {
+
+    /**
+     * Returns an HTML image element representing an attachment file.
+     *
+     * @param string $image_file_url - URL of media
+     * @param string $size - size name of image
+     *
+     * @return string
+     * @access public
+     * @author Marcin Dobroszek <marcin at silversite.pl>
+     */
+    function get_attachment_image_from_url( $image_file_url, $size = 'thumbnail' ) {
+        $attachmentId = Thumbnail::getAttachmentIdFromUrl( $image_file_url );
+        return wp_get_attachment_image( $attachmentId, $size );
+    }
+}
+
+if ( ! function_exists( '\SilverWp\get_image_size' ) ) {
+
+    /**
+     * Returns name of image size.
+     *
+     * @param int $col_num - number of grid columns
+     * @param string $format - normal size (thumbnail) or wide image (featured or single view) - "thumbnail" / "featured"
+     *
+     * @return string
+     * @access public
+     * @author Marcin Dobroszek <marcin at silversite.pl>
+     */
+    function get_image_size( $col_num, $format = 'thumbnail' ) {
+        $hasSidebar = Config\display_sidebar() && SidebarPosition::isDisplayed(); // aside
+
+        if ( $hasSidebar ) { // content with Sidebar
+            if ( $format === 'thumbnail' ) { // single column width
+                switch ($col_num) {
+                    case 1: return 'grid-66'; // 2/3 width of container
+                    case 2: return 'grid-33'; // 1/3 width of container
+                    case 3: return 'thumbnail';
+                }
+            }
+            else { // featured box or single view - double or triple column width
+                return 'grid-66'; // 2/3 width of container  /  full width of Main content
+            }
+        }
+        else { // content without sidebar
+            if ( $format === 'thumbnail' ) { // single column width
+                switch ($col_num) {
+                    case 1: return 'full-container'; // full width of container
+                    case 2: return 'half-container'; // 1/2 width of container
+                    case 3: return 'grid-33'; // 1/3 width of container
+                }
+            }
+            else { // featured box or single view - double or triple column width
+                return 'full-container'; // full width of container  /  full width of Main content
+            }
+        }
+    }
 }

@@ -212,6 +212,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 	protected function getRequestData(
 		$name, $filter_options = FILTER_DEFAULT, $default = null
 	) {
+        $request = null;
 		if ( $this->isGet( $name ) ) {
 			$request = Filter::get_var( $name, $filter_options, $default );
 		} elseif ( $this->isPost( $name ) ) {
@@ -302,8 +303,8 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 			$view_file = $this->name;
 		}
 		try {
-			$view_path = FileSystem::getDirectory('view');
-			$view = View::getInstance()->load( 'ajax/' . $view_file, $data );
+			$view_path = FileSystem::getDirectory( 'views' );
+			$view = View::getInstance()->load( $view_path . 'ajax/' . $view_file, $data );
 			//some servers don't display content with out echo
 			echo $view;
 			//fix display 0

@@ -52,22 +52,23 @@ class Thumbnail {
 
     /**
      *
-     * set image size
+     * Set image size
      *
-     * @param string $file path to file with image sizes array
+     * @param string|array $file path to file with image
+     *                           sizes array or array with image sizes
      *
      * @access public
      * @return void
      */
-    public function setImageSize( $file = null ) {
+    public function setImageSize( $image_size ) {
         // Thumbnail support for portfolio posts
         if ( \function_exists( 'add_theme_support' ) ) {
 
-            if ( \is_null( $file ) ) {
-                $image_sizes = require APPS_PATH . 'config/image.php';
-            } else {
-                $image_sizes = require $file;
-            }
+	        if ( is_string( $image_size ) && file_exists( $image_size ) ) {
+		        $image_sizes = include $image_size;
+	        } else if ( is_array( $image_size ) ) {
+		        $image_sizes = $image_size;
+	        }
 
             \add_theme_support( 'post-thumbnails' );
 
