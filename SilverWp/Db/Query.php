@@ -99,10 +99,12 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function addTaxonomyFilter( $taxonomy_name, $term, $field = 'term_id' ) {
-			$this->tax_query[] = array(
-				'taxonomy' => $taxonomy_name,
-				'field'    => $field,
-				'terms'    => $term,
+			$this->set( 'tax_query',
+				array(
+					'taxonomy' => $taxonomy_name,
+					'field'    => $field,
+					'terms'    => $term,
+				)
 			);
 
 			return $this;
@@ -342,10 +344,16 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 * @since 0.3
 		 */
-		public function getTerms( $taxonomy_name ) {
+		public function getTerms( $taxonomy_name, $before = '', $sep = ', ', $after = '' ) {
 
 			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
-				return get_the_term_list( $this->getPostId(), $taxonomy_name );
+				return get_the_term_list(
+					$this->getPostId()
+					, $taxonomy_name
+					, $before
+					, $sep
+					, $after
+				);
 			}
 
 			return false;

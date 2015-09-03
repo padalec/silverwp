@@ -19,6 +19,8 @@
 namespace SilverWp;
 
 use SilverWp\Customizer\CustomizerAbstract;
+use SilverWp\File\FileException;
+use SilverWp\File\File;
 use SilverWp\Helper\Option;
 
 if ( ! function_exists( '\SilverWp\get_customizer_option' ) ) {
@@ -69,8 +71,13 @@ if ( ! function_exists( '\SilverWp\get_template_part' ) ) {
 	 * @author Michal Kalkowski <michal at silversite.pl>
 	 */
 	function get_template_part( $template_name, array $params = array() ) {
-		extract( $params );
-
-		return include( locate_template( "$template_name.php" ) );
+		try {
+			if ( File::exists( TEMPLATEPATH . $template_name ) ) {
+				extract( $params );
+				return include( locate_template( "$template_name.php" ) );
+			}
+		} catch ( FileException $ex ) {
+			$ex->catchException();
+		}
 	}
 }
