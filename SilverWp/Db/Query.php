@@ -99,10 +99,12 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function addTaxonomyFilter( $taxonomy_name, $term, $field = 'term_id' ) {
-			$this->tax_query[] = array(
-				'taxonomy' => $taxonomy_name,
-				'field'    => $field,
-				'terms'    => $term,
+			$this->set( 'tax_query',
+				array(
+					'taxonomy' => $taxonomy_name,
+					'field'    => $field,
+					'terms'    => $term,
+				)
 			);
 
 			return $this;
@@ -239,14 +241,14 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		/**
 		 * Get post short description
 		 *
+		 * @param string $read_more_text
+		 *
 		 * @return string
 		 * @access public
 		 */
-		public function getShortDescription() {
-			if ( strpos( $this->post->post_content, '<!--more-->' )
-			     !== false
-			) {
-				return get_the_content( '' );
+		public function getShortDescription( $read_more_text = null ) {
+			if ( strpos( $this->post->post_content, '<!--more-->' ) !== false ) {
+				return get_the_content( $read_more_text );
 			} else {
 				return get_the_excerpt();
 			}
@@ -342,10 +344,16 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 * @since 0.3
 		 */
-		public function getTerms( $taxonomy_name ) {
+		public function getTerms( $taxonomy_name, $before = '', $sep = ', ', $after = '' ) {
 
 			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
-				return get_the_term_list( $this->getPostId(), $taxonomy_name );
+				return get_the_term_list(
+					$this->getPostId()
+					, $taxonomy_name
+					, $before
+					, $sep
+					, $after
+				);
 			}
 
 			return false;
@@ -370,6 +378,15 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			return $current_page;
 		}
 
+		/**
+		 * Get list of related posts
+		 *
+		 * @return object WP_Query
+		 * @access public
+		 */
+		public function getRelatedPosts() {
+			return $this->post_type->getRelationship()->getRelatedPosts();
+		}
 		/**
 		 *
 		 * Get features list

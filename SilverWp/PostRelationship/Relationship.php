@@ -212,6 +212,11 @@ if ( ! class_exists( '\SilverWp\PostRelationship\Relationship' ) ) {
 			return $this->settings;
 		}
 
+		public function getRelatedPosts() {
+			$related = p2p_type( $this->settings['name'] )->get_related( get_queried_object() );
+
+			return $related;
+		}
 		/**
 		 * Register Posts relationship
 		 *

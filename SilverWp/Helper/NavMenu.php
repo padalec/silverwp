@@ -26,6 +26,7 @@
  */
 namespace SilverWp\Helper;
 
+use SilverWp\Debug;
 use SilverWp\Helper\Page;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWp\SingletonAbstract;
@@ -82,20 +83,22 @@ class NavMenu extends SingletonAbstract {
             $css_classes = \array_filter( $css_classes, array( $this, 'removeActiveClass' ) );
             //get all registered custom post type templates
             foreach ( $custom_post_type as $post_type ) {
-
-                if ( $post_type === get_post_type() ) {
+				if ( $post_type === get_post_type() ) {
                     $searching_slug = array();
 
                     $templates = PostTypeAbstract::getTemplates( $post_type );
-                    $pages     = Page::getPageByTemplate( $templates );
 
-                    foreach ( $pages as $page ) {
-                        $slag              = sanitize_title( $page->post_title );
-                        $searching_slug[ ] = 'menu-' . $slag;
-                    }
+	                if ( ! is_null( $templates ) ) {
+	                    $pages = Page::getPageByTemplate( $templates );
 
-                    if ( array_intersect( $searching_slug, $css_classes ) ) {
-                        $css_classes[ ] = 'active';
+	                    foreach ( $pages as $page ) {
+		                    $slag             = sanitize_title( $page->post_title );
+		                    $searching_slug[] = 'menu-' . $slag;
+	                    }
+
+	                    if ( array_intersect( $searching_slug, $css_classes ) ) {
+		                    $css_classes[] = 'active';
+	                    }
                     }
 
                 }

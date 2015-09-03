@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Helper/Social.php $
-  Last committed: $Revision: 2358 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-02-06 12:44:28 +0100 (Pt, 06 lut 2015) $
-  ID: $Id: Social.php 2358 2015-02-06 11:44:28Z padalec $
- */
 
 namespace SilverWp\Helper;
 

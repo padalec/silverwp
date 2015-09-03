@@ -164,6 +164,14 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		protected $debug = false;
 
 		/**
+		 * Relationship class handler
+		 *
+		 * @var null|Relationship
+		 * @access private
+		 */
+		private $relationship = null;
+
+		/**
 		 *
 		 * Class constructor
 		 *
@@ -290,18 +298,21 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 */
 		public function addRelationship( $name, PostTypeAbstract $to = null ) {
 			try {
-				$connection = new Relationship( $name );
-				$connection->setFrom( $this->getName() );
+				$this->relationship = new Relationship( $name );
+				$this->relationship->setFrom( $this->getName() );
 				if ( ! is_null( $to ) ) {
-					$connection->setTo( $to );
+					$this->relationship->setTo( $to );
 				}
 
-				return $connection;
+				return $this->relationship;
 			} catch ( Exception $ex ) {
 				echo $ex->displayAdminNotice();
 			}
 		}
 
+		public function getRelationship() {
+			return $this->relationship;
+		}
 		/**
 		 * Get meta box object handle
 		 *
@@ -323,10 +334,11 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 * @access public
 		 */
 		public static function getTemplates( $post_type = null ) {
-			$template = \is_null( $post_type ) ? self::$page_templates
-				: self::$page_templates[ $post_type ];
-
-			return $template;
+			if ( is_null( $post_type ) ) {
+				return self::$page_templates;
+			} elseif ( isset( self::$page_templates[ $post_type ] ) ) {
+				return self::$page_templates[ $post_type ];
+			}
 		}
 
 		/**
