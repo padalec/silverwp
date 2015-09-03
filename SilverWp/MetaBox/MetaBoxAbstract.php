@@ -421,6 +421,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
          *
          * @return array
          * @access public
+         * @deprecated 0.4
          */
         public function getAll() {
             $this->isSetPostId();

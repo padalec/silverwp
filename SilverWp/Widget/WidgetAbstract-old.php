@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-namespace SilverWp\Sidebar\Widget;
+namespace SilverWp\Widget;
 
 use SilverWp\Translate;
 use SilverWp\View;
@@ -33,7 +33,7 @@ use WPH_Widget;
  * @link          https://github.com/sksmatt/WordPress-Widgets-Helper-Class/blob/master/wph-widget-class.php
  * @copyright (c) 2009 - 2014, SilverSite.pl
  */
-abstract class WidgetAbstract extends WPH_Widget {
+abstract class WidgetAbstractOld extends WPH_Widget {
 	public function createWidget( $args ) {
 		parent::create_widget( $args );
 		add_action( 'save_post', array( &$this, 'flushWidgetCache' ) );
