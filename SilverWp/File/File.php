@@ -83,29 +83,31 @@ class File {
 	 *
 	 * @param string $file_path full pat to file (including file name)
 	 *
+	 * @param string $extension file extension default php
+	 *
 	 * @return bool
 	 * @throws FileException
 	 * @throws IOException
 	 * @static
 	 * @access public
 	 */
-	public static function exists( $file_path ) {
-
-		if ( ! file_exists( $file_path ) ) {
-			throw new FileException( 'File doesn\'t exists!' );
+	public static function exists( $file_path, $extension = 'php' ) {
+		$file = $file_path . '.' . $extension;
+		if ( ! file_exists( $file ) ) {
+			throw new FileException( "File $file does not exists!" );
 		}
 
-		if ( ! is_readable( $file_path ) ) {
-			throw new IOException('File is not readable!');
+		if ( ! is_readable( $file ) ) {
+			throw new IOException( "File $file is not readable!" );
 		}
 
-		$fp = fopen( $file_path, 'r', true );
+		$fp = fopen( $file, 'r', true );
 		if ( is_resource( $fp ) ) {
 			fclose( $fp );
 
 			return true;
 		} else {
-			throw new FileException( 'Can\'t open file!' );
+			throw new FileException( "File $file cannot be opened!" );
 		}
 
 	}
