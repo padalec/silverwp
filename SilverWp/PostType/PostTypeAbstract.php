@@ -383,11 +383,11 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 */
 		public function registerMetaBox( MetaBoxInterface $meta_box ) {
 			try {
+
 				$this->meta_box_handler = $meta_box;
 				$meta_box->setId( $this->name );
-				$meta_box->setPostType( array( $this->name ) );
-				$child_class = \get_called_class();
-				$meta_box->setPostTypeClass( $child_class::getInstance() );
+				$meta_box->addPostType( $this->name );
+
 			} catch ( MetaBoxException $ex ) {
 				echo $ex->displayAdminNotice();
 			}
@@ -403,9 +403,10 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 */
 		public function registerTaxonomy( TaxonomyInterface $taxonomy ) {
 			try {
-				$this->taxonomy_handler = $taxonomy;
 
+				$this->taxonomy_handler = $taxonomy;
 				$taxonomy->setPostTypeHandler( $this );
+
 			} catch ( TaxonomyException $ex ) {
 				echo $ex->displayAdminNotice();
 			}

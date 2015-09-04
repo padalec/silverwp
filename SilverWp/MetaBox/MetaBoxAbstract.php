@@ -24,6 +24,7 @@ use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\Option;
 use SilverWp\Helper\RecursiveArray;
 use SilverWp\Helper\UtlArray;
+use SilverWp\Interfaces\Core;
 use SilverWp\Interfaces\PostType;
 use SilverWp\Oembed;
 use SilverWp\PostInterface;
@@ -34,18 +35,25 @@ use SilverWp\Video;
 use VP_Metabox;
 
 if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
-    /**
-     * Abstract Meta Boxes based on meta-box plugin
-     *
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @version $Id: MetaBoxAbstract.php 2559 2015-03-12 13:01:04Z padalec $
-     * @category WordPress
-     * @package SilverWp
-     * @subpackage MetaBox
-     * @link http://www.deluxeblogtips.com/meta-box/
-     * @copyright (c) 2014, Michal Kalkowski
-     */
-    abstract class MetaBoxAbstract extends SingletonAbstract implements MetaBoxInterface, PostType {
+
+	/**
+	 * Abstract Meta Boxes based on meta-box plugin
+	 *
+	 * @property string types
+	 *
+	 * @author        Michal Kalkowski <michal at silversite.pl>
+	 * @version       0.5
+	 * @category      WordPress
+	 * @package       SilverWp
+	 * @subpackage    MetaBox
+	 * @link          http://www.deluxeblogtips.com/meta-box/
+	 * @copyright     2015 (c) SilverSite.pl
+	 * @TODO          implement methods setColumns and columnDisplay
+	 *       http://wpengineer.com/display-post-thumbnail-post-page-overview
+	 *       http://wptheming.com/2010/07/column-edit-pages/
+	 */
+	abstract class MetaBoxAbstract extends SingletonAbstract
+		implements MetaBoxInterface, Core {
 
         /**
          *
@@ -55,76 +63,52 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
          * Database and take the default value set in your meta_boxes instead.
          * Default to FALSE.
          *
-         * @global boolean
+         * @const boolean
          */
         const DEV_MODE = SILVERWP_META_BOX_DEV;
 
+		/**
+		 * Meta Key prefix
+		 * @const
+		 */
+		const PREFIX = THEME_OPTION_PREFIX;
+
         /**
          *
-         * Unique ID for the metabox, required.
+         * Unique ID for the meta box, required.
          * this is the same lik in post meta $this->name
          *
          * @var string
          */
         protected $id;
 
-        /**
-         *
-         * Display title in the metabox header, required.
-         *
-         * @var string
-         */
-        protected $title;
+		/**
+		 * Attributes array
+		 *
+		 * @var array
+		 * @access private
+		 */
+		private $attributes = array();
 
         /**
          *
-         * meta box priority: low, medium, high
-         *
-         * @var string
-         */
-        protected $priority = 'high';
-
-        /**
-         *
-         * Array meta_boxes or path to array meta_boxes file, required.
-         *
-         * @var mixed
-         */
-        protected $meta_box = null;
-
-        /**
-         *
-         * Where this meta box have to be displayed
+         * Handle all our meta box form controls
          *
          * @var array
+         * @access protected
          */
-        protected $post_type = array();
+        protected $controls = array();
 
-        /**
-         * Meta box show on right
-         * sidebar in admin panel
-         *
-         * @var string side
-         */
-        protected $context = null;
+		/**
+		 *
+		 * Handle meta boxes controls then we can filtered in WP_Query
+		 *
+		 * @var array
+		 * @access protected
+		 */
+		protected $filter_controls = array();
 
-        /**
-         * Post id
-         *
-         * @var integer
-         * @access private
-         */
-        private $post_id = null;
-
-        /**
-         * Post type class handler
-         *
-         * @var object
-         * @access private
-         */
-        private $post_type_class = null;
-
-        /**
+		/**
          * List of columns that should be
          * exclude from edit table
          *
@@ -148,7 +132,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
          * @var string
          * @access private
          */
-        private $enter_title_hear;
+        private $enter_title_hear_label;
 
 	    /**
 	     * Set Post Title as required
@@ -167,6 +151,14 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 	     */
 	    protected $debug = false;
 
+		/**
+		 * Post types names wen meta boxes will be registered
+		 *
+		 * @var string
+		 * @access protected
+		 */
+		protected $post_types = array();
+
 	    /**
          *
          * Class constructor
@@ -174,16 +166,23 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
          * @access protected
          */
         protected function __construct() {
-            //set up labels
-            $this->setTitle();
             //only in admin area register meta boxes
             if ( \is_admin() ) {
                 // the safest hook to use, since Vafpress Framework may exists in Theme or Plugin
                 add_action( 'after_setup_theme', array( $this, 'init' ), 20 );
-                add_filter( 'enter_title_here', array( $this, 'changeDefaultTitleLabel' ) );
+                add_filter( 'enter_title_here', array( $this, 'changeEnterTitleHearLabel' ) );
+
+	            // Adds columns in the admin view for thumbnail and taxonomies
+	            $child_class = get_called_class();
+	            if ( method_exists( $child_class, 'setColumns' )
+	                 && method_exists( $child_class, 'setColumns' )
+	            ) {
+		            \add_filter( 'manage_' . $this->id . '_posts_columns', array( $this, 'setColumns' ), 10, 1 );
+		            \add_action( 'manage_posts_custom_column', array( $this, 'columnDisplay' ), 10, 2 );
+	            }
 
 	            if ( $this->title_required ) {
-	                add_action( 'admin_footer', array( $this, 'forcePostTitle' ) );
+	                add_action( 'admin_footer', array( $this, 'forceTitle' ) );
 	            }
 
 	            $parent_class = get_called_class();
@@ -195,20 +194,315 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
             }
         }
 
-	    /**
-	     * Set post title as required
+		/**
+		 * Add attribute to attributes array
+		 *
+		 * @param string $name
+		 * @param mixed $value
+		 *
+		 * @access public
+		 * @since 0.5
+		 */
+		public function __set( $name, $value ) {
+			$this->attributes[ $name ] = $value;
+		}
+
+		/**
+		 *
+		 * Set post types
+		 *
+		 * @param array $post_types
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setPostTypes( array $post_types ) {
+			$this->post_types = $post_types;
+
+			return $this;
+		}
+
+		/**
+		 * Add new post type to post types array
+		 *
+		 * @param string $post_type
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addPostType( $post_type ) {
+			$this->post_types[] = $post_type;
+
+			return $this;
+		}
+
+		/**
+		 *
+		 * If need change default label of meta
+		 * box enter title hear just put new label to this method
+		 *
+		 * @param string $title
+		 *
+		 * @return $this
+		 * @access public
+		 * @since 0.4
+		 */
+		public function setEnterTitleHearLabel( $title ) {
+			$this->enter_title_hear_label = $title;
+
+			return $this;
+		}
+
+		/**
+		 *
+		 * Set unique id
+		 *
+		 * @param string $id
+		 *
+		 * @access public
+		 * @return $this
+		 */
+		public function setId( $id ) {
+			$this->id = self::PREFIX . '_' . $id;
+
+			return $this;
+		}
+
+		/**
+		 *
+		 * Add new meta box controls
+		 *
+		 * @param \SilverWp\Helper\Control\ControlInterface $control
+		 *
+		 * @return $this
+		 * @access public
+		 * @since 0.5
+		 */
+		public function addControl( ControlInterface $control ) {
+			$this->controls[ ] = $control;
+
+			return $this;
+		}
+
+		/**
+		 *
+		 * Add new meta box control then we can
+		 * filtered by this in meta_query in WP_Query
+		 *
+		 * @param \SilverWp\Helper\Control\ControlInterface $control
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addFilterControl( ControlInterface $control ) {
+			$this->controls[ ] = $control;
+			$this->filter_controls[] = $control;
+
+			return $this;
+		}
+
+		/**
+		 * Get all registered settings
+		 *
+		 * @return array
+		 * @access public
+		 */
+		public function getAttributes() {
+			return $this->attributes;
+		}
+
+		/**
+	     * Get unique meta box ID
 	     *
+	     * @return string
 	     * @access public
 	     */
-		public function forcePostTitle()
-		{
+	    public function getId() {
+		    return $this->id;
+	    }
+
+		/**
+		 *
+		 * Get the registered meta boxes
+		 *
+		 * @param bool $to_array if true all controls will be
+		 *                       flat to ich settings array
+		 *
+		 * @return array|\SilverWp\Helper\Control\ControlInterface[]
+		 * @access public
+		 */
+        public function getControls( $to_array = false ) {
+            $controls = array();
+	        if ( $to_array ) {
+		        foreach ( $this->controls as $control ) {
+			        $controls[] = $control->getSettings();
+		        }
+
+		        return $controls;
+	        }
+
+	        return $this->controls;
+        }
+
+		/**
+		 * Get single meta box by name
+		 *
+		 * @param int    $post_id
+		 * @param string $control_name valid meta box name
+		 * @param bool   $remove_first remove first element
+		 *
+		 * @return array|boolean
+		 *
+		 * @access   public
+		 */
+		public function get( $post_id, $control_name, $remove_first = true ) {
+			$post_meta = get_post_meta( $post_id, $this->id, true );
+
+			if ( $post_meta && RecursiveArray::searchKey( $control_name, $post_meta ) ) {
+
+				$meta_boxes = RecursiveArray::searchRecursive( $post_meta, $control_name );
+
+				if ( \count( $meta_boxes ) == 1 && \is_array( $meta_boxes ) && $remove_first ) {
+					return $meta_boxes[ 0 ];
+				}
+
+				if ( is_array( $meta_boxes ) ) {
+					$meta_boxes = RecursiveArray::removeEmpty( $meta_boxes );
+				}
+
+				return $meta_boxes;
+
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 *
+		 * Register meta box to post type
+		 *
+		 * @access public
+		 * @return void
+		 * @throws Exception
+		 */
+		public function init() {
+			try {
+				if ( \is_null( $this->id ) ) {
+					$child_class = get_called_class();
+					throw new Exception(
+						Translate::translate(
+							'Class property %s is required and can\'t be empty.'
+							, $child_class . '::id'
+						)
+					);
+				}
+
+				$this->setUp();
+
+				if ( count( $this->filter_controls ) ) {
+					add_action( 'save_post', array( $this, 'saveFilterMeta' ), 10, 1 );
+				}
+
+				$default_attributes = array(
+					'id'          => $this->id,
+					'is_dev_mode' => self::DEV_MODE,
+					'template'    => $this->getControls( true ),
+					'priority'    => 'high',
+				);
+
+				$this->types = $this->post_types;
+
+				$this->attributes = wp_parse_args( $this->attributes, $default_attributes );
+
+				if ( $this->debug ) {
+					Debug::dumpPrint( $this->attributes );
+					Debug::dumpPrint( $this->filter_controls );
+				}
+
+				new VP_Metabox( $this->attributes );
+
+			} catch ( Exception $ex ) {
+				$ex->displayAdminNotice();
+			}
+		}
+
+        /**
+         *
+         * In this method we set up our meta boxes and all other settings
+         *
+         * @access protected
+         * @abstract
+         */
+        abstract protected function setUp();
+
+		/**
+		 *
+		 * All meta boxes registered by VP are serialized so we can't
+		 * filter this method register meta boxes for filter by meta
+		 * box key => value in WP_Query
+		 *
+		 * @param int $post_id
+		 *
+		 * @access public
+		 * @todo add some $_POST filters and nonce?
+		 */
+		public function saveFilterMeta( $post_id ) {
+			foreach ( $this->filter_controls as $control ) {
+				// Sanitize the user input.
+				$post_value = $_POST[ $this->getId() ][ $control->getName() ];
+				//todo change this is not universal
+				//todo maybe get value from control class?
+				if ( is_array( $post_value ) ) {
+					$post_value = $post_value[ 0 ];
+				}
+				$value = sanitize_text_field( $post_value );
+				// Update the meta field.
+				update_post_meta( $post_id, $control->getName(), $value );
+			}
+		}
+
+        /**
+         * Change default label in meta box enter title hear
+         *
+         * @param string $title
+         *
+         * @return string
+         * @access public
+         */
+        public function changeEnterTitleHearLabel( $title ) {
+            if ( isset( $this->enter_title_hear_label ) ) {
+                $screen = get_current_screen();
+	            if ( in_array( $screen->post_type, $this->post_types ) ) {
+                    $title = $this->enter_title_hear_label;
+                }
+            }
+            return $title;
+        }
+
+        /**
+         * Remove meta boxes from admin page
+         *
+         * @access public
+         */
+		public function removeMetaBoxes() {
+			foreach ( $this->remove() as $value ) {
+				remove_meta_box( $value['id'], $value['page'], $value['context'] );
+			}
+		}
+
+		/**
+		 * Set post title as required
+		 *
+		 * @access public
+		 */
+		public function forceTitle() {
 			global $typenow;
 
-			if ( in_array( $typenow, $this->post_type ) ) {
-				if ( isset( $this->enter_title_hear ) ) {
+			if ( in_array( $typenow, $this->post_types ) ) {
+				if ( isset( $this->enter_title_hear_label ) ) {
 					$error_message = Translate::translate(
 						'Field %s is required and can not be empty.',
-						$this->enter_title_hear
+						$this->enter_title_hear_label
 					);
 				} else {
 					$error_message = Translate::translate(
@@ -234,500 +528,5 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				echo "</script>\n";
 			}
 		}
-        /**
-         *
-         * Set unique id
-         *
-         * @param string $id
-         *
-         * @access public
-         * @return object
-         */
-        public function setId( $id ) {
-            $this->id = $id;
-
-            return $this;
-        }
-
-        /**
-         * Set the post id
-         *
-         * @param integer $post_id post id
-         *
-         * @return MetaBoxAbstract
-         * @access public
-         */
-        public function setPostId( $post_id ) {
-            $this->post_id = (int) $post_id;
-
-            return $this;
-        }
-
-        /**
-         * Get post id
-         *
-         * @return integer
-         * @access public
-         */
-        public function getPostId() {
-            return $this->post_id;
-        }
-
-        /**
-         *
-         * Set post type when meta box have to be displayed
-         *
-         * @param array $post_type list of post types
-         *
-         * @return $this
-         */
-        public function setPostType( array $post_type ) {
-            $this->post_type = \array_unique( \array_merge( $this->post_type, $post_type ) );
-
-            return $this;
-        }
-
-        /**
-         * Set post type class
-         *
-         * @param PostTypeInterface $post_type_class
-         *
-         * @return $this
-         * @access public
-         */
-        public function setPostTypeClass( PostTypeInterface $post_type_class ) {
-            $this->post_type_class = $post_type_class;
-
-            return $this;
-        }
-
-        /**
-         * Get post type main class
-         *
-         * @return object
-         * @access public
-         */
-        public function getPostTypeClass() {
-            return $this->post_type_class;
-        }
-
-        /**
-         *
-         * Register meta box to post type
-         *
-         * @access public
-         * @return void
-         * @throws Exception
-         */
-        public function init() {
-            try {
-                if ( \is_null( $this->id ) ) {
-                    throw new Exception( Translate::translate( '$id variable is required and can\'t be emapty.' ) );
-                }
-
-                if ( \is_null( $this->title ) ) {
-                    throw new Exception( Translate::translate( '$title variable is required and can\'t be emapty.' ) );
-                }
-
-                $meta_box = $this->getMetaBox();
-
-	            $data = array(
-                    'id'          => MetaBox::getKeyName( $this->id ),
-                    'types'       => $this->post_type,
-                    'title'       => Translate::translate( $this->title ),
-                    'priority'    => $this->priority,
-                    'is_dev_mode' => self::DEV_MODE,
-                    'template'    => $meta_box,
-                );
-
-                if ( isset( $this->context ) && ! is_null( $this->context ) ) {
-                    $data['context'] = $this->context;
-                }
-
-	            if ( $this->debug ) {
-		            Debug::dumpPrint( $data );
-	            }
-
-	            new VP_Metabox( $data );
-                $this->manageColumns();
-
-            } catch ( Exception $ex ) {
-                $ex->displayAdminNotice();
-            }
-        }
-
-	    /**
-	     * Get unique meta box ID
-	     *
-	     * @return string
-	     * @access public
-	     */
-	    public function getId() {
-		    return $this->id;
-	    }
-        /**
-         *
-         * Get the registered meta boxes
-         *
-         * @return array
-         * @throws Exception
-         * @access public
-         */
-        public function getMetaBox() {
-            $this->createMetaBox();
-            return $this->meta_box;
-        }
-
-        /**
-         *
-         * Add new meta box controls
-         *
-         * @param \SilverWp\Helper\Control\ControlInterface $meta_box
-         *
-         * @return $this
-         * @access public
-         */
-        public function addMetaBox( ControlInterface $meta_box ) {
-            $this->meta_box[ ] = $meta_box->getSettings();
-
-            return $this;
-        }
-
-        /**
-         * Get single meta box by name
-         *
-         * @param string $name meta box name
-         *
-         * @param bool   $remove_first remove first element
-         *
-         * @return mixed
-         * @throws Exception
-         * @access public
-         */
-        public function getSingle( $name, $remove_first = true ) {
-            $this->isSetPostId();
-            $post_id  = $this->post_id;
-            $meta_box = MetaBox::getPostMeta( $this->id, $name, $post_id, $remove_first );
-
-            if ( is_array( $meta_box ) ) {
-                $meta_box = RecursiveArray::removeEmpty( $meta_box );
-            }
-
-            return $meta_box;
-        }
-
-        /**
-         * Get all meta boxes for current post_id
-         *
-         * @return array
-         * @access public
-         */
-        public function getAll() {
-            $this->isSetPostId();
-            $post_id    = $this->post_id;
-            $meta_boxes = \get_post_meta( $post_id, MetaBox::getKeyName( $this->id ), true );
-            if ( isset( $meta_boxes[0] ) && \count( $meta_boxes ) == 1 ) {
-                return $meta_boxes[0];
-            }
-
-            return $meta_boxes;
-        }
-
-        /**
-         *
-         * Create new meta box too post tye
-         *
-         * @access protected
-         * @abstract
-         */
-        abstract protected function createMetaBox();
-
-        /**
-         * This method is used to set title ($this->title)
-         * variable and should by registered in all post types
-         *
-         * @access protected
-         */
-        protected function setTitle() {
-            $this->title = Translate::translate( 'Settings' );
-        }
-
-        /**
-         *
-         * Check is images in array
-         *
-         * @param array $array_in
-         *
-         * @return boolean
-         */
-        private function isGallery( array $array_in ) {
-            $images     = UtlArray::array_remove_empty(
-                RecursiveArray::searchRecursive( $array_in, 'image' )
-            );
-            $is_gallery = ( count( $images ) > 0 ) ? true : false;
-
-            return $is_gallery;
-        }
-
-
-        /**
-         *
-         * Check the variable post_id is set and is not null
-         * throw exception if not
-         *
-         * @throws \SilverWp\MetaBox\Exception
-         * @access private
-         */
-        private function isSetPostId() {
-            if ( isset( $this->post_id ) && \is_null( $this->post_id ) ) {
-                $child_class = \get_called_class();
-                throw new Exception( Translate::translate( 'Variable %s::post_id is not sets.', $child_class ) );
-            }
-        }
-
-        /**
-         *
-         * Display data in columns in edit Screen
-         * this was moved from PostTypeAbstract class
-         *
-         * @param int $columns
-         *
-         * @link http://wpengineer.com/display-post-thumbnail-post-page-overview
-         * @access public
-         */
-        public function columnDisplay( $columns, $post_id ) {
-            try {
-                switch ( $columns ) {
-                    case $this->id . '_thumbnail':
-                        // Display the featured image in the column view if possible
-                        if ( \has_post_thumbnail( $post_id ) ) {
-                            \the_post_thumbnail( $this->column_image_size );
-                        } else {
-                            echo Translate::translate( 'None' );
-                        }
-                        break;
-                    // Display categories in the column view
-                    case $this->id:
-                        if ( $this->getPostTypeClass()->isTaxonomyRegistered() && $this->getPostTypeClass()->getTaxonomy()->isRegistered( 'category' ) ) {
-                            $category_list = \get_the_term_list( $post_id, $this->id, '', ', ', '' );
-
-                            if ( \is_wp_error( $category_list ) ) {
-                                throw new Exception(
-                                    $category_list->get_error_message() . ': ' . $this->id
-                                );
-                            }
-                            if ( $category_list ) {
-                                echo $category_list;
-                            } else {
-                                echo Translate::translate( 'None' );
-                            }
-                        }
-                        break;
-                    // Display the tags in the column view
-                    case $this->id:
-                        if ( $this->getPostTypeClass()->isTaxonomyRegistered() && $this->getPostTypeClass()->getTaxonomy()->isRegistered( 'tag' ) ) {
-                            $tag_list = \get_the_term_list( $post_id, $this->id, '', ', ', '' );
-
-                            if ( \is_wp_error( $tag_list ) ) {
-                                throw new Exception(
-                                    $tag_list->get_error_message() . ': ' . $this->id
-                                );
-                            }
-
-                            if ( $tag_list ) {
-                                echo $tag_list;
-                            } else {
-                                echo Translate::translate( 'None' );
-                            }
-                        }
-                        break;
-                    /* Just break out of the switch statement for everything else. */
-                    default:
-                        break;
-                }
-            } catch ( Exception $ex ) {
-                echo $ex->displayAdminNotice();
-            }
-        }
-
-        /**
-         * Add columns to edit screen
-         *
-         * @link http://wptheming.com/2010/07/column-edit-pages/
-         * @access public
-         * @return array
-         */
-        public function setColumns( $columns ) {
-            $unique_cols   = array( 'category', 'thumbnail', 'tag' );
-            $columns_list = $this->getEditColumns();
-            foreach ( $columns_list as $key => $value ) {
-
-                if ( \in_array( $key, $unique_cols ) ) {
-                    $key = $this->id . '_' . $key;
-                }
-
-                if ( isset( $value['label'] ) ) {
-                    $columns[ $key ] = $value['label'];
-                } elseif ( isset( $value['html'] ) ) {
-                    $columns[ $key ] = $value['html'];
-                }
-            }
-
-            return $columns;
-        }
-
-        /**
-         *
-         * get list of edit columns displayed in lists of Post Type
-         *
-         *
-         * list of columns displayed in dashboard list. Example
-         * array(
-         *       'cb' => array(
-         *           'html' => '<input type="checkbox" />',
-         *       ),
-         *       'title' => array(
-         *           'label' => 'Title',
-         *       ),
-         *       'category' => array(
-         *            'label' => 'Categories',
-         *       ),
-         *       'thumbnail' => array(
-         *           'label' => 'Thumbnail',
-         *       ),
-         *       'tag' => array(
-         *           'label' => 'Tags',
-         *      ),
-         *      'date' => array(
-         *          'label' => 'Date',
-         *      ),
-         *      'author' => array(
-         *          'label' => 'Author',
-         *      ),
-         *  );
-         *
-         * @access protected
-         * @return array
-         */
-        protected function getEditColumns() {
-            $columns_default = array(
-                'cb'                     => array(
-                    'html' => '<input type="checkbox" />',
-                ),
-                'title'                  => array(
-                    'label' => Translate::translate( 'Title' ),
-                ),
-                'thumbnail'              => array(
-                    'label' => Translate::translate( 'Thumbnail' ),
-                ),
-                'author'                 => array(
-                    'label' => Translate::translate( 'Author' ),
-                ),
-                'date'                   => array(
-                    'label' => Translate::translate( 'Date' ),
-                ),
-                'category'               => array(
-                    'label' => Translate::translate( 'Categories' ),
-                ),
-                'tag'                    => array(
-                    'label' => Translate::translate( 'Tags' ),
-                ),
-                'silverwp_custom_column' => array(
-                    'label' => '',
-                )
-            );
-            $columns         = UtlArray::array_remove_part( $columns_default, $this->exclude_columns );
-
-            return $columns;
-        }
-
-        /**
-         * add hook for table displayed in "show all" post type
-         *
-         * @access private
-         * @return void
-         */
-        private function manageColumns() {
-            // Adds columns in the admin view for thumbnail and taxonomies
-            \add_filter( 'manage_' . $this->id . '_posts_columns', array( $this, 'setColumns' ), 10, 1 );
-            \add_action( 'manage_posts_custom_column', array( $this, 'columnDisplay' ), 10, 2 );
-        }
-
-        /**
-         *
-         * If need change default label of meta
-         * box enter title hear just put new label to this method
-         *
-         * @param string $title
-         *
-         * @return $this
-         * @access public
-         */
-        public function setEnterTitleHearLabel( $title ) {
-            $this->enter_title_hear = $title;
-
-            return $this;
-        }
-
-        /**
-         * Change default label in meta box enter title hear
-         *
-         * @param string $title
-         *
-         * @return string
-         * @access public
-         */
-        public function changeDefaultTitleLabel( $title ) {
-            if ( isset( $this->enter_title_hear ) ) {
-                $screen = get_current_screen();
-                if ( $this->getPostTypeClass()->getName() === $screen->post_type ) {
-                    $title = $this->enter_title_hear;
-                }
-            }
-            return $title;
-        }
-
-        /**
-         * Remove meta boxes fromr admin page
-         *
-         * @access public
-         */
-        public function removeMetaBoxes() {
-            foreach($this->remove() as $value) {
-                remove_meta_box( $value['id'], $value['page'], $value['context'] );
-            }
-        }
-
-	    /**
-	     * Get sidebar position
-	     *
-	     * @return string|bool
-	     * @access public
-	     */
-	    public function getSidebarPosition() {
-		    //Fix for tag page and all post type where don't have config from meta box
-		    if ( \is_home() || \is_tag() || \is_date() || \is_archive() ) {
-			    $this->post_id = Option::get_option( 'page_for_posts' );
-		    }
-
-		    $sidebar_code = $this->getSingle( 'sidebar' );
-
-		    switch ( $sidebar_code ) {
-			    case '0':
-				    $sidebar_position = false;
-				    break;
-			    case '1':
-				    $sidebar_position = 'left';
-				    break;
-			    case '2':
-				    $sidebar_position = 'right';
-				    break;
-			    default:
-				    $sidebar_position = false; // default position
-		    }
-
-		    return $sidebar_position;
-	    }
     }
-
 }

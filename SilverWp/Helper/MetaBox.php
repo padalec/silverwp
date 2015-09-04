@@ -30,6 +30,7 @@ use SilverWp\FileSystem;
  * @package SilverWp
  * @subpackage Helper
  * @copyright (c) 2014, SilverSite.pl
+ * @deprecated 0.5
  */
 class MetaBox {
     /**

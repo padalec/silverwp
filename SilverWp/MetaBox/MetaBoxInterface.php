@@ -20,56 +20,94 @@
 
 namespace SilverWp\MetaBox;
 
-/**
- * meta box interface
- *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: MetaBoxInterface.php 2184 2015-01-21 12:20:08Z padalec $
- * @category WordPress
- * @package SilverWp
- * @subpackage MetaBox
- */
-interface MetaBoxInterface
-{
-    /**
-     * get all meta box for single post type
-     * @access public
-     * @return array array with all meta boxes
-     */
-    public function getAll();
-    /**
-     * set meta box uniqe id
-     * 
-     * @param string $id post type name
-     * @access public
-     */
-    public function setId($id);
-    /**
-     * Add columns to edit screen
-     *
-     * @link http://wptheming.com/2010/07/column-edit-pages/
-     * @access public
-     * @return array
-     */
-    public function setColumns($columns);
-    /**
-     *
-     * display data in columns in edit Screen
-     *
-     * @param int $columns
-     * @link http://wpengineer.com/display-post-thumbnail-post-page-overview
-     * @access public
-     * @return void
-     */
-    public function columnDisplay($columns, $post_id);
-    
-    /**
-     *
-     * Add count to "Right Now" Admin Dashboard Widget
-     *
-     * @access public
-     * @return void
-     * @deprecated since version 1.8
-     */
-    //public function addCounts();
+if ( ! interface_exists( 'SilverWp\MetaBox\MetaBoxInterface' ) ) {
+
+	/**
+	 * Meta box interface
+	 *
+	 * @author     Michal Kalkowski <michal at silversite.pl>
+	 * @version    0.5
+	 * @category   WordPress
+	 * @package    SilverWp
+	 * @subpackage MetaBox
+	 */
+	interface MetaBoxInterface {
+
+		/**
+		 * set meta box unique id
+		 *
+		 * @param string $id post type name
+		 *
+		 * @access public
+		 */
+		public function setId( $id );
+
+		/**
+		 *
+		 * If need change default label of meta
+		 * box enter title hear just put new label to this method
+		 *
+		 * @param string $title
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setEnterTitleHearLabel( $title );
+
+		/**
+		 *
+		 * Set post types
+		 *
+		 * @param array $post_types
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setPostTypes( array $post_types );
+
+		/**
+		 * Add new post type to post types array
+		 *
+		 * @param string $post_type
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addPostType( $post_type );
+
+
+		public function getAttributes();
+
+		public function getId();
+
+		/**
+		 *
+		 * Get the registered meta boxes
+		 *
+		 * @param bool $to_array if true all controls will be
+		 *                       flat to ich settings array
+		 *
+		 * @return array|\SilverWp\Helper\Control\ControlInterface[]
+		 * @access public
+		 */
+		public function getControls( $to_array = false );
+
+		/**
+		 * Remove meta boxes from admin dashboard
+		 *
+		 * @access public
+		 */
+		public function removeMetaBoxes();
+
+		/**
+		 * Change default label in meta box enter title hear
+		 *
+		 * @param string $title
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function changeEnterTitleHearLabel( $title );
+
+	}
 }

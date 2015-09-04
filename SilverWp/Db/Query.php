@@ -21,8 +21,6 @@ namespace SilverWp\Db;
 
 use SilverWp\Debug;
 use SilverWp\Helper\Message;
-use SilverWp\Helper\MetaBox;
-use SilverWp\Helper\RecursiveArray;
 use SilverWp\Helper\Thumbnail;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWpAddons\Ajax\PostLike;
@@ -99,12 +97,10 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function addTaxonomyFilter( $taxonomy_name, $term, $field = 'term_id' ) {
-			$this->set( 'tax_query',
-				array(
-					'taxonomy' => $taxonomy_name,
-					'field'    => $field,
-					'terms'    => $term,
-				)
+			$this->query_vars[ 'tax_query' ][] = array(
+				'taxonomy' => $taxonomy_name,
+				'field'    => $field,
+				'terms'    => $term,
 			);
 
 			return $this;
@@ -122,10 +118,13 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			if ( $post_type instanceof PostTypeAbstract ) {
 				$this->post_type = $post_type;
 				$name            = $this->post_type->getName();
-				$this->setMetaBoxId( $this->post_type->getMetaBox()->getId() );
+				if ( $this->post_type->isMetaBoxRegistered() ) {
+					$this->setMetaBoxId( $this->post_type->getMetaBox()->getId() );
+				}
 			} else {
 				$name = $post_type;
 			}
+
 			$this->set( 'post_type', $name );
 
 			return $this;
@@ -141,7 +140,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 */
 		public function setMetaBoxId( $meta_box_id ) {
 			$this->meta_box_id = $meta_box_id;
-
+			$this->query_vars[ 'meta_key' ] = $meta_box_id;
 			return $this;
 		}
 
@@ -171,7 +170,6 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			foreach ( $query_args as $name => $value ) {
 				$this->set( $name, $value );
 			}
-			$this->query( $this->query_vars );
 
 			return $this;
 		}
@@ -185,7 +183,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function setLimit( $limit ) {
-			$this->max_num_pages = (int) $limit;
+			$this->set( 'posts_on_page', (int) $limit );
 
 			return $this;
 		}
@@ -200,6 +198,46 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 */
 		public function setOffset( $offset ) {
 			$this->set( 'offset', $offset );
+
+			return $this;
+		}
+
+		/**
+		 * Set filter by meta box
+		 *
+		 * @param string  $key valid meta box key name
+		 * @param mixed $value value of meta box key
+		 * @param string $compare
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setMetaBoxFilter( $key, $value, $compare = '==' ) {
+			$this->query_vars[ 'meta_query' ][] = array(
+				'meta_key'     => $key,
+				'meta_value'   => $value,
+				'meta_compare' => $compare
+			);
+
+			return $this;
+		}
+
+		/**
+		 * Add filter by meta box
+		 *
+		 * @param string  $key valid meta box key name
+		 * @param mixed $value value of meta box key
+		 * @param string $compare
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addMetaBoxFilter( $key, $value, $compare = '==' ) {
+			$this->query_vars[ 'meta_query' ][] = array(
+				'meta_key'     => $key,
+				'meta_value'   => $value,
+				'meta_compare' => $compare
+			);
 
 			return $this;
 		}
@@ -277,23 +315,19 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		/**
 		 * Get single meta box by name
 		 *
-		 * @param string $field_name   meta box field name
+		 * @param string $control_name meta box form control name
 		 *
 		 * @param bool   $remove_first remove first element
 		 *
 		 * @return string|array|boolean
 		 * @access public
 		 */
-		public function getMetaBox( $field_name, $remove_first = true ) {
+		public function getMetaBox( $control_name, $remove_first = true ) {
 			$post_id = $this->getPostId();
 
-			$meta_box = MetaBox::getPostMeta( $this->meta_box_id, $field_name,
-				$post_id, $remove_first );
-
-			if ( is_array( $meta_box ) ) {
-				$meta_box = RecursiveArray::removeEmpty( $meta_box );
-			}
-
+			$meta_box = $this->post_type
+							->getMetaBox()
+			                ->get( $post_id, $control_name, $remove_first = true );
 			return $meta_box;
 		}
 
@@ -340,9 +374,13 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 *
 		 * @param string $taxonomy_name
 		 *
+		 * @param string $before
+		 * @param string $sep
+		 * @param string $after
+		 *
 		 * @return bool|false|string|\WP_Error
 		 * @access public
-		 * @since 0.3
+		 * @since  0.3
 		 */
 		public function getTerms( $taxonomy_name, $before = '', $sep = ', ', $after = '' ) {
 
