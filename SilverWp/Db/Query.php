@@ -185,7 +185,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function setLimit( $limit ) {
-			$this->max_num_pages = (int) $limit;
+			$this->set( 'posts_per_page', (int) $limit );
 
 			return $this;
 		}

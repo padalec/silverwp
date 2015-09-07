@@ -18,7 +18,10 @@
  */
 namespace SilverWp;
 
+use SilverWp\Helper\String;
 use SilverWp\Interfaces\Plugin;
+use SilverWp\Widget\Exception;
+use SilverWp\Widget\WidgetInterface;
 
 if ( ! class_exists( 'SilverWp' ) ) {
 
@@ -39,9 +42,17 @@ if ( ! class_exists( 'SilverWp' ) ) {
          * @var string
          * @access protected
          */
-        protected $version = '0.1';
+        protected $version = '0.3';
 
-        /**
+	    /**
+	     * Widgets class handler
+	     *
+	     * @var array
+	     * @access protected
+	     */
+	    protected $widgets = array();
+
+	    /**
          *
          * Class constructor
          *
@@ -50,8 +61,47 @@ if ( ! class_exists( 'SilverWp' ) ) {
         protected function __construct() {
             $this->constant();
             $this->includeCore();
+	        add_action( 'widgets_init', array( $this, 'registerWidgets' ) );
         }
 
+	    /**
+	     * Set widgets classes
+	     *
+	     * @param array $widgets_classes
+	     *
+	     * @return $this
+	     * @throws Exception
+	     * @access public
+	     */
+	    public function setWidgets( array $widgets_classes ) {
+
+			foreach ( $widgets_classes as $widget_class ) {
+				if ( ! $this->isImplemented( $widget_class, 'SilverWp\Widget\WidgetInterface' ) ) {
+					throw new Exception(
+						Translate::translate(
+							'Class %s is not valid widget class. Widget class have to implement SilverWp\Widget\WidgetInterface interface.'
+						)
+					);
+				}
+			}
+			$this->widgets = $widgets_classes;
+
+			return $this;
+		}
+
+	    /**
+	     * Register new widget class
+	     *
+	     * @param WidgetInterface $widget_class
+	     *
+	     * @return $this
+	     * @access public
+	     */
+	    public function addWidget( $widget_class ) {
+		    $this->widgets[] = $widget_class;
+
+		    return $this;
+	    }
         /**
          *
          * Constants
@@ -163,5 +213,35 @@ if ( ! class_exists( 'SilverWp' ) ) {
 
 	        FileSystem::getInstance()->addDirectory( 'ssvp_views', $views );
         }
+
+	    /**
+	     * Register widgets
+	     *
+	     * @access public
+	     */
+	    public function registerWidgets() {
+		    if ( isset( $this->widgets ) && count( $this->widgets ) ) {
+			    foreach ( $this->widgets as $widget ) {
+				    register_widget( $widget );
+			    }
+		    }
+	    }
+
+	    public function autoRegisterWidgets() {
+		    $widget_path = FileSystem::getDirectory( 'widgets_path' );
+		    $files_list  = File::get_file_list( $widget_path );
+		    foreach ( $files_list as $file ) {
+			    if ( $file != '.' && $file != '..' ) {
+				    $class_file = $widget_path . DIRECTORY_SEPARATOR . $file;
+				    $classes    = String::getClassNameFromFile( $class_file );
+				    foreach ( $classes as $class ) {
+					    if ( class_exists( $class ) ) {
+						    \register_widget( $class );
+					    }
+				    }
+			    }
+		    }
+	    }
+
     }
 }
