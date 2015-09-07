@@ -36,7 +36,7 @@ if ( ! class_exists( '\SilverWp\Customizer\Control\Fontello' ) ) {
 	 * @version    $Revision:$
 	 * @see        https://github.com/aristath/kirki/wiki/select2
 	 */
-	class Fontello extends Select2 {
+	class Fontello extends Select {
 		/**
 		 * Class constructor
 		 *

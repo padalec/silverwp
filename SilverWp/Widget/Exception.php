@@ -16,33 +16,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Helper/Paginator/PaginatorInterface.php $
-  Last committed: $Revision: 2310 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-02-02 16:02:04 +0100 (Pn, 02 lut 2015) $
-  ID: $Id: PaginatorInterface.php 2310 2015-02-02 15:02:04Z padalec $
- */
-
-namespace SilverWp\Helper\Paginator;
+namespace SilverWp\Widget;
 
 /**
- * Paginator Interface
+ * Widgets Exceptions
  *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: PaginatorInterface.php 2310 2015-02-02 15:02:04Z padalec $
- * @category WordPress
- * @package SilverWp
- * @subpackage Helper
+ * @author        Michal Kalkowski <michal at silversite.pl>
+ * @version       0.4
+ * @category      WordPress
+ * @package       SilverWp
+ * @subpackage    Sidebar
  * @copyright (c) 2009 - 2014, SilverSite.pl
  */
-interface PaginatorInterface {
-    public function setTotalPosts( $total_page );
 
-    public function setMaxNumPages( $current_page );
-
-    public function getLinks();
-
-    public function getTotalPosts();
+class Exception extends \SilverWp\Exception {
 }

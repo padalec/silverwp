@@ -46,7 +46,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\TextArea' ) ) {
 	     * @since 0.2
 	     */
 	    public function setPreType( $pre_type ) {
-		    $this->type = $pre_type . $this->type;
+		    $this->setting[ 'type' ] = $pre_type . '_' . $this->type;
 
 		    return $this;
 	    }
@@ -63,7 +63,7 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\Control\TextArea' ) ) {
 	     * @since 0.2
 	     */
 	    public function setPosType( $pos_type ) {
-		    $this->type = $this->type . $pos_type;
+		    $this->setting[ 'type' ] = $this->type . '_' . $pos_type;
 
 		    return $this;
 	    }

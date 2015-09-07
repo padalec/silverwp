@@ -27,18 +27,18 @@ use SilverWp\Translate;
 
 if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
 
-    /**
-     *
-     * Control with sidebar position to choice
-     *
-     * @category WordPress
-     * @package SilverWp
-     * @subpackage Helper\Control
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright SilverSite.pl 2015
-     * @version $Revision:$
-     */
-    class SidebarPosition extends RadioImage {
+	/**
+	 *
+	 * Control with sidebar position to choice
+	 *
+	 * @category   WordPress
+	 * @package    SilverWp
+	 * @subpackage Helper\Control
+	 * @author     Michal Kalkowski <michal at silversite.pl>
+	 * @copyright  SilverSite.pl 2015
+	 * @version    $Revision:$
+	 */
+	class SidebarPosition extends RadioImage {
 
         /**
          *
@@ -50,28 +50,31 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
         public function __construct( $name = 'sidebar' ) {
             parent::__construct( $name );
 
-            $images_uri = FileSystem::getDirectory( 'images_uri' );
+			$images_uri = FileSystem::getDirectory( 'images_uri' );
 
-            $sidebar_positions = array(
-                array(
-                    'value' => 0,
-                    'label' => Translate::translate( 'None' ),
-                    'img'   => $images_uri . 'admin/sidebar/icon_0_sidebar_off.png',
-                ),
-                array(
-                    'value' => 1,
-                    'label' => Translate::translate( 'Left sidebar' ),
-                    'img'   => $images_uri . 'admin/sidebar/icon_1_sidebar_off.png',
-                ),
-                array(
-                    'value' => 2,
-                    'label' => Translate::translate( 'Right sidebar' ),
-                    'img'   => $images_uri . 'admin/sidebar/icon_2_sidebar_off.png',
-                ),
-            );
+			$sidebar_positions = array(
+				array(
+					'value' => 0,
+					'label' => Translate::translate( 'None' ),
+					'img'   => $images_uri
+					           . 'admin/sidebar/icon_0_sidebar_off.png',
+				),
+				array(
+					'value' => 1,
+					'label' => Translate::translate( 'Left sidebar' ),
+					'img'   => $images_uri
+					           . 'admin/sidebar/icon_1_sidebar_off.png',
+				),
+				array(
+					'value' => 2,
+					'label' => Translate::translate( 'Right sidebar' ),
+					'img'   => $images_uri
+					           . 'admin/sidebar/icon_2_sidebar_off.png',
+				),
+			);
 
-            $this->setOptions( $sidebar_positions );
-        }
+			$this->setOptions( $sidebar_positions );
+		}
 
         /**
          *
@@ -83,9 +86,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
          */
         public static function isDisplayed() {
             //fix Ticket #220
-            if ( ( is_search() && is_home() ) || is_tag() || is_date()
-                 || is_archive()
-            ) {
+            if ( ( is_search() && is_home() ) || is_tag() || is_date() || is_archive() ) {
                 $post_id   = Option::get_option( 'page_for_posts' );
                 $post_type = 'page';
             } else {
@@ -95,11 +96,22 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
                     ? $page_object->post_type : 'posts';
             }
 
-            $sidebar = MetaBox::isSidebar( $post_type, $post_id );
+			$sidebar = MetaBox::isSidebar( $post_type, $post_id );
 
-            $display = apply_filters( 'sage/display_sidebar', $sidebar );
+			if ( ( is_search()
+			       || is_author()
+			       || is_tag()
+			       || is_date()
+			       || is_archive()
+			     )
+			     && Option::get_theme_option( 'blogposts_sidebar' ) != '0'
+			) {
+				$sidebar = true;
+			}
 
-            return $display;
-        }
-    }
+			$display = apply_filters( 'sage/display_sidebar', $sidebar );
+
+			return $display;
+		}
+	}
 }

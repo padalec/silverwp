@@ -16,13 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Helper/Social.php $
-  Last committed: $Revision: 2358 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-02-06 12:44:28 +0100 (Pt, 06 lut 2015) $
-  ID: $Id: Social.php 2358 2015-02-06 11:44:28Z padalec $
- */
 
 namespace SilverWp\Helper;
 
@@ -94,14 +87,18 @@ class Social {
     public static function getIcons() {
         $icons     = array();
         $icons_tmp = \silverwp_get_social_icon();
-        $settings  = Option::get_theme_option( 'social_bookmark', true );
+        $settings  = Option::get_theme_option( 'social_accounts', true );
 
         foreach ( $icons_tmp as $icon ) {
-            $key = \sanitize_title( $icon[ 'label' ] );
-            if ( isset( $settings[ $key ] ) && $settings[ $key ][ 'url' ] != '' ) {
-                $icons[ $key ]           = $settings[ $key ];
-                $icons[ $key ][ 'icon' ] = $icon[ 'value' ];
-            }
+	        $key = \sanitize_title( $icon['label'] );
+	        if ( isset( $settings[ $key ] )
+	             && $settings[ $key ]['url'] != ''
+	        ) {
+		        $icons[ $key ]          = $settings[ $key ];
+		        $icons[ $key ]['icon']  = $icon['value'];
+		        $icons[ $key ]['slug']  = $key;
+		        $icons[ $key ]['label'] = $icon['label'];
+	        }
         }
         //sort array by order field
         UtlArray::array_sort_by_column( $icons, 'order', \SORT_ASC );

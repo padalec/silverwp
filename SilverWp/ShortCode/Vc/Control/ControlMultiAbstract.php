@@ -123,5 +123,6 @@ if ( ! class_exists( '\SilverWp\ShortCode\Vc\ControlMultiAbstract' ) ) {
 
             return $default;
         }
+
     }
 }

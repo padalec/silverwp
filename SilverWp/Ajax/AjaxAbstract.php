@@ -19,6 +19,7 @@
 namespace SilverWp\Ajax;
 
 use SilverWp\Ajax\Exception;
+use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\Filter;
 use SilverWp\SilverWp;
@@ -41,7 +42,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 
 	/**
 	 *
-	 * ajax js file
+	 * Ajax JS file
 	 *
 	 * @var string
 	 * @access protected
@@ -50,7 +51,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 
 	/**
 	 *
-	 * ajax js script handle name
+	 * Ajax JS script handle name
 	 *
 	 * @var string
 	 * @access protected
@@ -58,7 +59,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 	protected $ajax_handler = 'SilverWpAjax';
 
 	/**
-	 * ajax response function name
+	 * Ajax response function name
 	 *
 	 * @var string
 	 * @access protected
@@ -92,8 +93,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 		\add_action( 'wp_enqueue_scripts', array( $this, 'scriptsLocalize' ) );
 
 		# Guests:
-		\add_action( "wp_ajax_nopriv_{$this->name}",
-			array( $this, 'ajaxResponse' ) );
+		\add_action( "wp_ajax_nopriv_{$this->name}", array( $this, 'ajaxResponse' ) );
 		# Logged in users:
 		//TODO add iterface and method ajaxPrivResponse
 		\add_action( "wp_ajax_{$this->name}", array( $this, 'ajaxResponse' ) );
@@ -155,7 +155,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 
 	/**
 	 *
-	 * Localize and add params to ajax js
+	 * Localize and add params to AJAX JS
 	 *
 	 * @access public
 	 * @return void
@@ -212,6 +212,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 	protected function getRequestData(
 		$name, $filter_options = FILTER_DEFAULT, $default = null
 	) {
+        $request = null;
 		if ( $this->isGet( $name ) ) {
 			$request = Filter::get_var( $name, $filter_options, $default );
 		} elseif ( $this->isPost( $name ) ) {
@@ -302,7 +303,8 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 			$view_file = $this->name;
 		}
 		try {
-			$view = View::getInstance()->load( 'Ajax/' . $view_file, $data );
+			$view_path = FileSystem::getDirectory( 'views' );
+			$view = View::getInstance()->load( $view_path . 'ajax/' . $view_file, $data );
 			//some servers don't display content with out echo
 			echo $view;
 			//fix display 0

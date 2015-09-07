@@ -149,7 +149,7 @@ class MetaBox {
             foreach ( $matches as $match ) {
                 $icons[ ] = array(
                     'value' => $match[ 1 ],
-                    'label' => $match[ 1 ],
+                    'label' => str_replace( $name . '-', '', $match[ 1 ] ),
                 );
             }
             \set_transient( $transient_name, $icons, 60 * 60 * 24 );

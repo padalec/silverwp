@@ -25,6 +25,7 @@
   ID: $Id: Exception.php 2182 2015-01-21 12:00:49Z padalec $
  */
 namespace SilverWp;
+use SilverWp\Helper\Message;
 
 /**
  * Exception handler
@@ -80,9 +81,9 @@ class Exception extends \Exception {
         if ( is_admin() ) {
             echo $this->displayAdminNotice();
         } else {
-            echo $this->getMessage();
+	        echo Message::alert( $this->getMessage(), 'alert-error' );
             if ( WP_DEBUG ) {
-                \SilverWp\Debug::dump( $this->getTrace() );
+                \SilverWp\Debug::dumpPrint( $this->getTrace() );
             }
         }
     }

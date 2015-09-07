@@ -20,85 +20,71 @@ namespace SilverWp\PostType;
 
 use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\Taxonomy\TaxonomyInterface;
+if ( ! interface_exists( '\SilverWp\PostType\PostTypeInterface' ) ) {
+	/**
+	 * Post Type interface
+	 *
+	 * @author        Michal Kalkowski <michal at silversite.pl>
+	 * @version       0.3
+	 * @category      WordPress
+	 * @package       SilverWp
+	 * @subpackage    PostType
+	 * @copyright     SilverSite.pl (c) 2015
+	 */
+	interface PostTypeInterface {
+		/**
+		 * register meta box too Post Type
+		 *
+		 * @param \SilverWp\MetaBox\MetaBoxInterface $meta_box
+		 *
+		 * @access public
+		 * @return void
+		 */
+		public function registerMetaBox( MetaBoxInterface $meta_box );
 
-/**
- * Post Type interface
- *
- * @author Michal Kalkowski <michal at silversite.pl>
- * @version $Id: PostTypeInterface.php 2184 2015-01-21 12:20:08Z padalec $
- * @category WordPress
- * @package SilverWp
- * @subpackage PostType
- * @copyright (c) 2009 - 2014, SilverSite.pl
- */
-interface PostTypeInterface
-{
-    /**
-     * register meta box too Post Type
-     *
-     * @param \SilverWp\MetaBox\MetaBoxInterface $meta_box
-     * @access public
-     * @return void
-     */
-    public function registerMetaBox(MetaBoxInterface $meta_box);
-    /**
-     *
-     * add a taxonomies to Post Type
-     *
-     * @param TaxonomyInterface $taxonomy
-     * @access public
-     */
-    public function registerTaxonomy(TaxonomyInterface $taxonomy);
-    /**
-     *
-     * add post type template
-     *
-     * @param mixed $template_name array or string
-     * @access public
-     */
-    public function addTemplates($template_name);
-    /**
-     *
-     * get post type name
-     *
-     * @return string
-     * @access public
-     */
-    public function getName();
-    
-    /**
-     * check if the meta box class was registered
-     * 
-     * @return boolean
-     * @access public
-     */
-    public function isMetaBoxRegistered();
-    /**
-     * check if the taxonowy was registered
-     * 
-     * @return boolean
-     * @access public
-     */
-    public function isTaxonomyRegistered();
-    /**
-     * check the post type have thumbnail
-     * 
-     * @return boolean
-     * @access public
-     */
-    public function isThumbnail();
-    /**
-     * check the post type have description
-     * 
-     * @return boolean
-     * @access public
-     */
-    public function isDescription();
-    /**
-     * chaeck the post type supports title
-     * 
-     * @return boolean
-     * @access public
-     */
-    public function isTitle();
+		/**
+		 *
+		 * add a taxonomies to Post Type
+		 *
+		 * @param TaxonomyInterface $taxonomy
+		 *
+		 * @access public
+		 */
+		public function registerTaxonomy( TaxonomyInterface $taxonomy );
+
+		/**
+		 *
+		 * Add post type template
+		 *
+		 * @param string $template_name array or string
+		 *
+		 * @access public
+		 */
+		public function addTemplates( $template_name );
+
+		/**
+		 *
+		 * Get post type name
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getName();
+
+		/**
+		 * Check if the meta box class was registered
+		 *
+		 * @return boolean
+		 * @access public
+		 */
+		public function isMetaBoxRegistered();
+
+		/**
+		 * Check if the taxonomy was registered
+		 *
+		 * @return boolean
+		 * @access public
+		 */
+		public function isTaxonomyRegistered();
+	}
 }

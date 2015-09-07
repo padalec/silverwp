@@ -1,10 +1,20 @@
 <?php
 /*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Db/Query.php $
-  Last committed: $Revision: 1572 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2014-10-02 13:22:19 +0200 (Cz, 02 paź 2014) $
-  ID: $Id: Query.php 1572 2014-10-02 11:22:19Z padalec $
+ * Copyright (C) 2014 Michal Kalkowski <michal at silversite.pl>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 namespace SilverWp\Db;
@@ -13,16 +23,17 @@ use SilverWp\Debug;
 use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\RecursiveArray;
+use SilverWp\Helper\Thumbnail;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWpAddons\Ajax\PostLike;
 
-if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
+if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 
 	/**
 	 * Class extends to WP_Query
 	 *
 	 * @author        Michal Kalkowski <michal at silversite.pl>
-	 * @version       0.1
+	 * @version       0.3
 	 * @category      WordPress
 	 * @package       Db
 	 * @copyright     2015 (c) SilverSite.pl
@@ -31,11 +42,13 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 	class Query extends \WP_Query {
 
 		/**
+		 * Post type class handler or
+		 * if string validate post type name. Default: post
 		 *
 		 * @var object|string
 		 * @access private
 		 */
-		private $post_type;
+		private $post_type = 'post';
 
 		/**
 		 * @var string
@@ -47,16 +60,54 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * Class constructor
 		 *
 		 * @param array|string $query_args
+		 *
 		 * @access public
 		 */
-		public function __construct( $query_args ) {
-			if ( isset( $query_args[ 'post_type' ] ) ) {
-				$this->setPostType( $query_args[ 'post_type' ] );
+		public function __construct( $query_args = null ) {
+			if ( isset( $query_args['post_type'] ) ) {
+				$this->setPostType( $query_args['post_type'] );
+				unset( $query_args['post_type'] );
 			}
-			if ( isset( $query_args[ 'meta_box_id' ] ) ) {
-				$this->setPostType( $query_args[ 'meta_box_id' ] );
+			if ( isset( $query_args['meta_box_id'] ) ) {
+				$this->setMetaBoxId( $query_args['meta_box_id'] );
 			}
 			parent::__construct( $query_args );
+		}
+
+		/**
+		 * Set current pager page
+		 *
+		 * @param int $current_page
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setCurrentPagedPage( $current_page ) {
+			$this->set( 'paged', (int) $current_page );
+
+			return $this;
+		}
+
+		/**
+		 * Add Filter by taxonomy
+		 *
+		 * @param string     $taxonomy_name
+		 * @param string|int $term
+		 * @param string     $field
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addTaxonomyFilter( $taxonomy_name, $term, $field = 'term_id' ) {
+			$this->set( 'tax_query',
+				array(
+					'taxonomy' => $taxonomy_name,
+					'field'    => $field,
+					'terms'    => $term,
+				)
+			);
+
+			return $this;
 		}
 
 		/**
@@ -71,11 +122,11 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 			if ( $post_type instanceof PostTypeAbstract ) {
 				$this->post_type = $post_type;
 				$name            = $this->post_type->getName();
+				$this->setMetaBoxId( $this->post_type->getMetaBox()->getId() );
 			} else {
 				$name = $post_type;
 			}
 			$this->set( 'post_type', $name );
-			$this->parse_query_vars();
 
 			return $this;
 		}
@@ -95,6 +146,20 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Set post id (this is required in single view)
+		 *
+		 * @param int $post_id
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setPostId( $post_id ) {
+			$this->set( 'p', $post_id );
+
+			return $this;
+		}
+
+		/**
 		 * Set query args to WP_Query
 		 *
 		 * @param array $query_args
@@ -102,10 +167,11 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @access public
 		 * @return $this
 		 */
-		public function setArgs( array $query_args ) {
+		public function setQueryArgs( array $query_args ) {
 			foreach ( $query_args as $name => $value ) {
 				$this->set( $name, $value );
 			}
+			$this->query( $this->query_vars );
 
 			return $this;
 		}
@@ -119,7 +185,7 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function setLimit( $limit ) {
-			$this->max_num_pages = (int) $limit;
+			$this->set( 'posts_per_page', (int) $limit );
 
 			return $this;
 		}
@@ -175,21 +241,43 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		/**
 		 * Get post short description
 		 *
+		 * @param string $read_more_text
+		 *
 		 * @return string
 		 * @access public
 		 */
-		public function getShortDescription() {
-			if ( strpos( $this->post->post_content, '<!--more-->' ) !== false) {
-				return get_the_content( '' );
+		public function getShortDescription( $read_more_text = null ) {
+			if ( strpos( $this->post->post_content, '<!--more-->' ) !== false ) {
+				return get_the_content( $read_more_text );
 			} else {
 				return get_the_excerpt();
 			}
 		}
 
 		/**
+		 * Get post description
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getDescription() {
+			return $this->post->post_content;
+		}
+
+		/**
+		 * Get post title
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getTitle() {
+			return $this->post->post_title;
+		}
+
+		/**
 		 * Get single meta box by name
 		 *
-		 * @param string $field_name meta box field name
+		 * @param string $field_name   meta box field name
 		 *
 		 * @param bool   $remove_first remove first element
 		 *
@@ -197,9 +285,10 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function getMetaBox( $field_name, $remove_first = true ) {
-			$post_id  = $this->getPostId();
+			$post_id = $this->getPostId();
 
-			$meta_box = MetaBox::getPostMeta( $this->meta_box_id, $field_name, $post_id, $remove_first );
+			$meta_box = MetaBox::getPostMeta( $this->meta_box_id, $field_name,
+				$post_id, $remove_first );
 
 			if ( is_array( $meta_box ) ) {
 				$meta_box = RecursiveArray::removeEmpty( $meta_box );
@@ -221,24 +310,83 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 			$return  = array();
 			switch ( $date_format ) {
 				case 'full':
-					$return[ 'date' ]    = \get_the_date( '', $post_id );
-					$return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-					$return[ 'hour' ]    = \get_the_time( '', $post_id );
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['weekday'] = \get_the_date( 'l', $post_id );
+					$return['hour']    = \get_the_time( '', $post_id );
+					break;
+				case 'date_weekday':
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['weekday'] = \get_the_date( 'l', $post_id );
 					break;
 				case 'date':
-					$return[ 'date' ]    = \get_the_date( '', $post_id );
-					$return[ 'weekday' ] = \get_the_date( 'l', $post_id );
+					$return['date']    = \get_the_date( '', $post_id );
+					break;
+				case 'date_time':
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['time']    = \get_the_time( '', $post_id );
 					break;
 				default:
-					$return[ 'date' ]    = \get_the_date( '', $post_id );
-					$return[ 'weekday' ] = \get_the_date( 'l', $post_id );
-					$return[ 'hour' ]    = \get_the_time( '', $post_id );
+					$return['date']    = \get_the_date( '', $post_id );
+					$return['weekday'] = \get_the_date( 'l', $post_id );
+					$return['hour']    = \get_the_time( '', $post_id );
 					break;
 			}
 
 			return $return;
 		}
 
+		/**
+		 * Get all post terms
+		 *
+		 * @param string $taxonomy_name
+		 *
+		 * @return bool|false|string|\WP_Error
+		 * @access public
+		 * @since 0.3
+		 */
+		public function getTerms( $taxonomy_name, $before = '', $sep = ', ', $after = '' ) {
+
+			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
+				return get_the_term_list(
+					$this->getPostId()
+					, $taxonomy_name
+					, $before
+					, $sep
+					, $after
+				);
+			}
+
+			return false;
+		}
+
+		/**
+		 * Get current paged page
+		 *
+		 * @return int
+		 * @access public
+		 * @since 0.3
+		 */
+		public function getCurrentPagedPage() {
+			$current_page = 1;
+
+			if ( get_query_var( 'paged' ) ) {
+				$current_page = get_query_var( 'paged' );
+			} else if ( get_query_var( 'page' ) ) {
+				$current_page = get_query_var( 'page' );
+			}
+
+			return $current_page;
+		}
+
+		/**
+		 * Get list of related posts
+		 *
+		 * @return object WP_Query
+		 * @access public
+		 */
+		public function getRelatedPosts() {
+			return $this->post_type->getRelationship()->getRelatedPosts();
+		}
 		/**
 		 *
 		 * Get features list
@@ -265,29 +413,33 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 		 *
 		 * Gallery list
 		 *
+		 * @param string       $name
 		 * @param string|array $size thumbnail image size
 		 *
 		 * @return array
 		 */
-		public function getGallery( $size = 'thumbnail' ) {
-			$images  = array();
+		public function getGallery( $name = 'gallery', $size = 'thumbnail' ) {
+			$images = array();
 
-			$gallery = $this->getMetaBox( 'gallery_section', false );
+			$gallery = $this->getMetaBox( $name, false );
 			if ( $gallery && count( $gallery ) ) {
 				foreach ( $gallery as $key => $gallery_item ) {
-					if ( ! is_null( $gallery_item['image'] ) && $gallery_item['image'] != '' ) {
+					if ( ! is_null( $gallery_item['image'] )
+					     && '' != $gallery_item['image']
+					) {
 
-						$gallery_item['attachment_id'] = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
-						$image_html         = \wp_get_attachment_image( $gallery_item['attachment_id'], $size );
+						$attachment_id = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
+						$image_html = wp_get_attachment_image( $attachment_id, $size );
 
-						$images[ $key ]  = array(
-							'attachment_id' => $gallery_item['attachment_id'],
+						$images[ $key ] = array(
+							'attachment_id' => $attachment_id,
 							'image_url'     => $gallery_item['image'],
 							'image_html'    => $image_html,
 						);
 					}
 				}
 			}
+
 			return $images;
 		}
 
@@ -319,13 +471,59 @@ if ( ! class_exists( '\SilverWp\Db\Query' ) ) {
 				} catch ( \SilverWp\Exception $ex ) {
 					echo Message::alert( $ex->getMessage(), 'alert-danger' );
 					if ( WP_DEBUG ) {
-						Debug::dumpPrint($ex->getTraceAsString(), 'Stack trace:');
-						Debug::dumpPrint($ex->getTrace(), 'Full stack:');
+						Debug::dumpPrint( $ex->getTraceAsString(),
+							'Stack trace:' );
+						Debug::dumpPrint( $ex->getTrace(), 'Full stack:' );
 					}
 				}
 			}
 
 			return $file_data;
 		}
+
+		/**
+		 * Check the post type have thumbnail
+		 *
+		 * @return boolean
+		 * @access public
+		 * @since 0.3
+		 */
+		public function isThumbnail() {
+			$post_id = $this->getPostId();
+			if ( in_array( 'thumbnail', $this->post_type->getSupport() )
+			     && \has_post_thumbnail( $post_id )
+			) {
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 * Check the post type have description
+		 *
+		 * @return boolean
+		 * @access public
+		 * @since 0.3
+		 */
+		public function isDescription() {
+			$editor = \in_array( 'editor', $this->post_type->getSupport() );
+
+			return $editor;
+		}
+
+		/**
+		 * Check the post type supports title
+		 *
+		 * @return boolean
+		 * @access public
+		 * @since 0.3
+		 */
+		public function isTitle() {
+			$is_title = \in_array( 'title', $this->post_type->getSupport() );
+
+			return $is_title;
+		}
+
 	}
 }
