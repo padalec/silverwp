@@ -86,9 +86,7 @@ if ( ! class_exists( 'SilverWp\Helper\Control\SidebarPosition' ) ) {
          */
         public static function isDisplayed() {
             //fix Ticket #220
-            if ( ( is_search() && is_home() ) || is_tag() || is_date()
-                 || is_archive()
-            ) {
+            if ( ( is_search() && is_home() ) || is_tag() || is_date() || is_archive() ) {
                 $post_id   = Option::get_option( 'page_for_posts' );
                 $post_type = 'page';
             } else {

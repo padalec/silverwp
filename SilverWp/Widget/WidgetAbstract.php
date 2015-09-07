@@ -141,9 +141,15 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 				$make = \VP_Util_Reflection::field_class_from_type( $attributes['type'] );
 				$field        = call_user_func( "$make::withArray", $attributes );
 				$default      = $field->get_default();
-				if ( isset( $instance[ $control->getName() ] ) || is_null( $instance[ $control->getName() ] ) ) {
+				//@todo rebuild this!!!
+				if ( $attributes['type'] == 'checkbox'
+				     && ( isset( $instance[ $control->getName() ] )
+				          || is_null( $instance[ $control->getName() ] ) )
+				) {
 					$value = is_null( $instance[ $control->getName() ] ) ? '' : $instance[ $control->getName() ];
 					$field->set_value( $value );
+				} else if( isset( $instance[ $control->getName() ] ) && ! empty( $instance[ $control->getName() ] ) ) {
+					$field->set_value( $instance[ $control->getName() ] );
 				} else if ( ! is_null( $default ) ) {
 					$field->set_value( $default );
 				}
