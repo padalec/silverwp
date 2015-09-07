@@ -51,7 +51,6 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
 		 *
 		 * Get class instance
 		 *
-		 * @return object
 		 * @static
 		 * @access public
 		 * @final
@@ -59,7 +58,7 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
 		final public static function getInstance() {
 			$class = \get_called_class();
 			if ( ! isset( static::$instance[ $class ] ) ) {
-				static::$instance[ $class ] = new $class();
+				static::$instance[ $class ] = new static();
 			}
 
 			return static::$instance[ $class ];
@@ -95,5 +94,13 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
 
 			return $implements;
 		}
+
+		/**
+		 * Block cloning object
+		 *
+		 * @access private
+		 * @final
+		 */
+		final private function __clone(){}
 	}
 }

@@ -30,6 +30,7 @@ use SilverWp\Oembed;
 use SilverWp\PostInterface;
 use SilverWp\PostType\PostTypeInterface;
 use SilverWp\SingletonAbstract;
+use SilverWp\Taxonomy\TaxonomyInterface;
 use SilverWp\Translate;
 use SilverWp\Video;
 use VP_Metabox;
@@ -160,15 +161,6 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		protected $post_types = array();
 
 		/**
-		 * Array with taxonomies names to display in edit page admin dashboard
-		 *
-		 * @var array
-		 * @access protected
-		 * @since 0.5
-		 */
-		protected $taxonomy_columns_display = array();
-
-	    /**
          *
          * Class constructor
          *
@@ -179,6 +171,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
             if ( \is_admin() ) {
                 // the safest hook to use, since Vafpress Framework may exists in Theme or Plugin
                 add_action( 'after_setup_theme', array( $this, 'init' ), 20 );
+
                 add_filter( 'enter_title_here', array( $this, 'changeEnterTitleHearLabel' ) );
 
 	            if ( $this->title_required ) {
@@ -191,7 +184,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
                 ) {
                     add_action( 'admin_menu', array( $this, 'removeMetaBoxes' ) );
                 }
-            }
+	        }
         }
 
 		/**
@@ -420,6 +413,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				}
 
 				new VP_Metabox( $this->attributes );
+
 				$this->manageColumns();
 
 			} catch ( Exception $ex ) {
@@ -529,17 +523,21 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				echo "</script>\n";
 			}
 		}
+
 		/**
 		 * Manage custom columns in edit screen
 		 *
 		 * @access private
+		 * @todo move to CustomColumn class
 		 */
 		private function manageColumns() {
-			// Adds columns in the admin view for thumbnail and taxonomies
-			foreach ( $this->post_types as $post_type ) {
-				add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'setColumns' ), 10, 1 );
+			if ( is_admin() ) {
+				// Adds columns in the admin view for thumbnail and taxonomies
+				foreach ( $this->post_types as $post_type ) {
+					add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'setColumnsLabels' ), 10, 1 );
+					add_action( 'manage_' . $post_type . '_posts_custom_column', array( $this, 'customColumns' ), 10, 2 );
+				}
 			}
-			add_action( 'manage_posts_custom_column', array( $this, 'customColumns' ), 10, 2 );
 		}
 
 		/**
@@ -551,12 +549,12 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 * @param array $columns
 		 *
 		 * @return array
+		 * @todo move to CustomColumn class
 		 */
-		public function setColumns( $columns ) {
-			$unique_cols   = array( 'category', 'thumbnail', 'tag' );
+		public function setColumnsLabels( $columns ) {
+			$unique_cols   = array( 'category', 'tag' );
 			$columns_list = $this->getEditColumns();
 			foreach ( $columns_list as $key => $value ) {
-
 				if ( \in_array( $key, $unique_cols ) ) {
 					$key = $this->id . '_' . $key;
 				}
@@ -579,35 +577,21 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 * @param int    $post_id
 		 *
 		 * @access public
+		 * @since 0.5
+		 * @todo move to CustomColumn class
 		 */
 		public function customColumns( $column, $post_id ) {
 			try {
-				if ( $column == $this->id . '_thumbnail' ) {
+//				todo move to meta box
+				if ( $column == 'thumbnail' ) {
 					// Display the featured image in the column view if possible
 					if ( \has_post_thumbnail( $post_id ) ) {
 						\the_post_thumbnail( $this->column_image_size );
 					} else {
 						echo Translate::translate( 'None' );
 					}
-				} else {
-					// Display taxonomies in the column view
-					foreach ( $this->taxonomy_columns_display as $taxonomy_name ) {
-						if ( has_term( '', $taxonomy_name, $post_id ) ) {
-							$terms_list = get_the_term_list( $post_id, $taxonomy_name, '', ', ', '' );
-
-							if ( is_wp_error( $terms_list ) ) {
-								throw new Exception(
-									$terms_list->get_error_message() . ': ' . $taxonomy_name
-								);
-							}
-							if ( $terms_list ) {
-								echo $terms_list;
-							} else {
-								echo Translate::translate( 'None' );
-							}
-						}
-					}
 				}
+
 			} catch ( Exception $ex ) {
 				echo $ex->displayAdminNotice();
 			}
@@ -645,6 +629,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 *
 		 * @access protected
 		 * @return array
+		 * @todo move to CustomColumn class
 		 */
 		protected function getEditColumns() {
 			$columns_default = array(
@@ -663,18 +648,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				'date'                   => array(
 					'label' => Translate::translate( 'Date' ),
 				),
-				'category'               => array(
-					'label' => Translate::translate( 'Categories' ),
-				),
-				'tag'                    => array(
-					'label' => Translate::translate( 'Tags' ),
-				),
 			);
-
-			foreach ( $this->taxonomy_columns_display as $taxonomy ) {
-				$tax = get_taxonomy( $taxonomy );
-				$columns_default[ $tax->name ][ 'label' ] = $tax->labels->name;
-			}
 
 			$columns = UtlArray::array_remove_part( $columns_default, $this->exclude_columns );
 
