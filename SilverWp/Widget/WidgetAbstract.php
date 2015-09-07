@@ -161,6 +161,9 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 						<?php
 						echo $field->render( true );
 						?>
+						<span>
+							<?php \VP_Util_Text::print_if_exists( $field->get_description(), '<div class="description">%s</div>' );?>
+						</span>
 					</label>
 				</div>
 				<?php
