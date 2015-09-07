@@ -23,6 +23,7 @@ namespace SilverWp\Widget;
 use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\Control\ControlInterface;
+use SilverWp\View;
 use SilverWp\Widget\WidgetInterface;
 
 if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
