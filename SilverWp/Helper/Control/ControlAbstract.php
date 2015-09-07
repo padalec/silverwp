@@ -159,9 +159,10 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
          * @access public
          */
         public function getSettings() {
-	        if ($this->debug) {
-		        Debug::dumpPrint($this->debug);
+	        if ( $this->debug ) {
+		        Debug::dumpPrint( $this->debug );
 	        }
+
             return $this->setting;
         }
 
@@ -295,5 +296,39 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
 
             return $this;
         }
+
+	    /**
+	     * Set control HTML attribute
+	     *
+	     * @param array $attributes an associative array with:
+	     *                                array(
+	     *                                  attribute_name => attribute_value
+	     *                                  ...more attributes
+	     *                                ),
+	     *
+	     *
+	     *
+	     * @return $this
+	     * @access public
+	     */
+	    public function setHtmlAttributes( array $attributes ) {
+		    $this->setting[ 'html_attributes' ] = $attributes;
+		    return $this;
+	    }
+
+	    /**
+	     * Add control HTML attribute to attributes array
+	     *
+	     * @param $name
+	     * @param $value
+	     *
+	     * @return $this
+	     * @access public
+	     */
+	    public function addHtmlAttribute( $name, $value ) {
+		    $this->setting[ 'html_attributes' ][ $name ] = $value;
+
+		    return $this;
+	    }
     }
 }

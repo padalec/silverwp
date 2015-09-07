@@ -54,6 +54,29 @@ class VP_View
 		return ob_get_clean();
 	}
 
+	/**
+	 * Get field HTML attribyutes
+	 *
+	 * @param bool|true $to_string convert array to string
+	 *
+	 * @return array|string
+	 * @access public
+	 * @author Michal Kalkowski <michal at silversite.pl>
+	 */
+	public function flat_attributes( array $attributes_array ) {
+		$attributes_data = array_map(
+			function ( $name, $value ) {
+				return $name . ' = "' . $value . '"';
+			}
+			, array_keys( $attributes_array )
+			, array_values( $attributes_array )
+		);
+
+		$attributes = implode( ' ', $attributes_data );
+
+		return $attributes;
+
+	}
 }
 
 /**

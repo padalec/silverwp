@@ -18,8 +18,6 @@
  */
 namespace SilverWp\Helper\Control;
 
-use SilverWp\Debug;
-
 if ( ! class_exists( '\SilverWp\Helper\Control\CategoriesCheckboxes' ) ) {
 
 	/**
@@ -32,13 +30,13 @@ if ( ! class_exists( '\SilverWp\Helper\Control\CategoriesCheckboxes' ) ) {
 	 * @copyright  SilverSite.pl (c) 2015
 	 * @version    0.4
 	 */
-	class CategoriesCheckboxes extends MultiControlAbstract {
-		protected $type = 'checkbox';
+	class CategoriesCheckboxes extends Checkbox {
 
 		public function __construct( $name ) {
 			parent::__construct( $name );
+			$this->setMulti( true );
 			$categories = get_categories();
-			foreach ($categories as $category) {
+			foreach ( $categories as $category ) {
 				$this->addOption( $category->term_id, $category->name );
 			}
 		}

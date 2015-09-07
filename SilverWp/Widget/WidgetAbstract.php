@@ -41,71 +41,132 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 	abstract class WidgetAbstract extends \WP_Widget
 		implements WidgetInterface {
 
+		/**
+		 * Form controls
+		 * @var array
+		 * @access protected
+		 */
 		protected $controls = array();
+
+		/**
+		 * If true display all widget params
+		 * @var bool
+		 * @access protected
+		 */
 		protected $debug = false;
 
+		/**
+		 * Default widget title label
+		 * @var string
+		 * @access private
+		 */
+		private $default_title = '';
+
+		/**
+		 * Class constructor
+		 *
+		 * @see WP_Widget::__construct()
+		 *
+		 * @param null   $id_base
+		 * @param string $name
+		 * @param array  $widget_options
+		 * @param array  $control_options
+		 *
+		 * @access public
+		 */
 		public function __construct( $id_base = null, $name, array $widget_options = array(), array $control_options = array() ) {
 			parent::__construct( $id_base, $name, $widget_options, $control_options);
-			add_action( 'init', array( $this, 'register_fields' ) );
+			add_action( 'widget_init', array( $this, 'registerFields' ) );
 		}
 
-		public function addControl(ControlInterface $control) {
+		/**
+		 * Set default title label
+		 *
+		 * @param string $label i18c translation string
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function setDefaultTitleLabel( $label ) {
+			$this->default_title = $label;
+
+			return $this;
+		}
+		/**
+		 * Add form field control
+		 *
+		 * @param ControlInterface $control
+		 *
+		 * @return $this
+		 * @access public
+		 * @since 0.4
+		 */
+		public function addControl( ControlInterface $control ) {
 			$this->controls[] = $control;
 
 			return $this;
 		}
 
-		public function register_fields() {
+		/**
+		 * Register VP fields
+		 *
+		 * @access public
+		 */
+		public function registerFields() {
 			$loader      = \VP_WP_Loader::instance();
-			$field_types = $this->get_field_types();
+			$field_types = $this->getControlsType();
 			if ( $this->debug ) {
 				Debug::dumpPrint( $field_types );
 			}
 			$loader->add_types( $field_types, 'widgets' );
 		}
 
+		/**
+		 * Output the settings update form.
+		 *
+		 * @see WP_Widget::form
+		 * @param array $instance Current settings.
+		 *
+		 * @access public
+		 * @return string
+		 */
 		public function form( $instance ) {
-			Debug::dumpPrint($instance);
 			foreach ( $this->controls as $control ) {
-				$attr = $control->getSettings();
-				$field_name = $attr['name'];
-				// create the object
-				$make = \VP_Util_Reflection::field_class_from_type( $attr['type'] );
-				$field        = call_user_func( "$make::withArray", $attr );
+				$control->addHtmlAttribute( 'id', $this->get_field_id( $control->getName() ) );
+				$control->addHtmlAttribute( 'class', 'widefat' );
+				$attributes = $control->getSettings();
+				$attributes[ 'name' ] = $this->get_field_name( $control->getName() );
+
+				// create field object
+				$make = \VP_Util_Reflection::field_class_from_type( $attributes['type'] );
+				$field        = call_user_func( "$make::withArray", $attributes );
 				$default      = $field->get_default();
-				if ( ! is_null( $default ) ) {
+				if ( isset( $instance[ $control->getName() ] ) || is_null( $instance[ $control->getName() ] ) ) {
+					$value = is_null( $instance[ $control->getName() ] ) ? '' : $instance[ $control->getName() ];
+					$field->set_value( $value );
+				} else if ( ! is_null( $default ) ) {
 					$field->set_value( $default );
-				} else {
-					$field->set_value( $instance[ $field_name ] );
 				}
 				?>
-
-				<?php if ( $attr['type'] !== 'notebox' ): ?>
-					<div class="vp-sc-field vp-<?php echo $attr['type']; ?>"
-					     data-vp-type="vp-<?php echo $attr['type']; ?>">
-						<div class="label">
-							<label><?php echo $attr['label']; ?></label>
-						</div>
-						<div class="field">
-							<div class="input"><?php echo $field->render( true ); ?></div>
-						</div>
-					</div>
-				<?php else: ?>
-					<?php $status = isset( $attr['status'] )
-						? $attr['status'] : 'normal'; ?>
-					<div
-						class="vp-sc-field vp-<?php echo $attr['type']; ?> note-<?php echo $status; ?>"
-						data-vp-type="vp-<?php echo $attr['type']; ?>">
-						<?php echo $field->render( true ); ?>
-					</div>
-				<?php endif; ?>
-
+				<div>
+					<label for="<?php echo $this->get_field_id( $field->get_name() ); ?>">
+						<?php echo $field->get_label(); ?>
+						<?php
+						echo $field->render( true );
+						?>
+					</label>
+				</div>
 				<?php
 			}
-
 		}
 
-		private function get_field_types() {
+		/**
+		 * Get all registered controls type
+		 *
+		 * @return array
+		 * @access private
+		 */
+		private function getControlsType() {
 			$types = array();
 
 			if ( ! function_exists( 'inner_build' ) ) {
@@ -129,18 +190,28 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 			return $types;
 		}
 
+		/**
+		 * Update a particular instance.
+		 *
+		 * This function should check that $new_instance is set correctly. The newly-calculated
+		 * value of `$instance` should be returned. If false is returned, the instance won't be
+		 * saved/updated.
+		 *
+		 * @since 0.4
+		 * @access public
+		 *
+		 * @param array $new_instance New settings for this instance as input by the user via
+		 *                            {@see WP_Widget::form()}.
+		 * @param array $old_instance Old settings for this instance.
+		 *
+		 * @return array Settings to save or bool false to cancel saving.
+		 */
 		public function update( $new_instance, $old_instance ) {
 			$instance = array();
-			$instance[ 'number' ] = 10;
-			Debug::dumpPrint($new_instance);
 			foreach ( $this->controls as $control ) {
-				if (! empty( $new_instance[ $control->getName() ] )) {
-					$instance[ $control->getName() ] = $new_instance[ $control->getName() ];
-				} else {
-					$instance[ $control->getName() ] = $old_instance[$control->getName() ];
-				}
+				$instance[ $control->getName() ] = $new_instance[ $control->getName() ];
 			}
-			Debug::dumpPrint($instance);
+
 			return $instance;
 		}
 
@@ -152,13 +223,14 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 		 * @access public
 		 */
 		public function widget( $args, $instance ) {
-			$title = empty( $instance['title'] ) ? Translate::translate( 'Recent Posts with Image' ) : $instance['title'];
+			$title = empty( $instance['title'] ) ? $this->default_title : $instance['title'];
 			apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
 			$this->render(
 				array(
 					'args'     => $args,
 					'instance' => $instance,
+					'this'     => $this
 				)
 			);
 		}
