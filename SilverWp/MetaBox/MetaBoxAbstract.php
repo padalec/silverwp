@@ -159,6 +159,15 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 */
 		protected $post_types = array();
 
+		/**
+		 * Array with taxonomies names to display in edit page admin dashboard
+		 *
+		 * @var array
+		 * @access protected
+		 * @since 0.5
+		 */
+		protected $taxonomy_columns_display = array();
+
 	    /**
          *
          * Class constructor
@@ -171,15 +180,6 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
                 // the safest hook to use, since Vafpress Framework may exists in Theme or Plugin
                 add_action( 'after_setup_theme', array( $this, 'init' ), 20 );
                 add_filter( 'enter_title_here', array( $this, 'changeEnterTitleHearLabel' ) );
-
-	            // Adds columns in the admin view for thumbnail and taxonomies
-	            $child_class = get_called_class();
-	            if ( method_exists( $child_class, 'setColumns' )
-	                 && method_exists( $child_class, 'setColumns' )
-	            ) {
-		            \add_filter( 'manage_' . $this->id . '_posts_columns', array( $this, 'setColumns' ), 10, 1 );
-		            \add_action( 'manage_posts_custom_column', array( $this, 'columnDisplay' ), 10, 2 );
-	            }
 
 	            if ( $this->title_required ) {
 	                add_action( 'admin_footer', array( $this, 'forceTitle' ) );
@@ -420,6 +420,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				}
 
 				new VP_Metabox( $this->attributes );
+				$this->manageColumns();
 
 			} catch ( Exception $ex ) {
 				$ex->displayAdminNotice();
@@ -527,6 +528,157 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 			    ";
 				echo "</script>\n";
 			}
+		}
+		/**
+		 * Manage custom columns in edit screen
+		 *
+		 * @access private
+		 */
+		private function manageColumns() {
+			// Adds columns in the admin view for thumbnail and taxonomies
+			foreach ( $this->post_types as $post_type ) {
+				add_filter( 'manage_' . $post_type . '_posts_columns', array( $this, 'setColumns' ), 10, 1 );
+			}
+			add_action( 'manage_posts_custom_column', array( $this, 'customColumns' ), 10, 2 );
+		}
+
+		/**
+		 * Add columns labels to edit screen
+		 *
+		 * @link   http://wptheming.com/2010/07/column-edit-pages/
+		 * @access public
+		 *
+		 * @param array $columns
+		 *
+		 * @return array
+		 */
+		public function setColumns( $columns ) {
+			$unique_cols   = array( 'category', 'thumbnail', 'tag' );
+			$columns_list = $this->getEditColumns();
+			foreach ( $columns_list as $key => $value ) {
+
+				if ( \in_array( $key, $unique_cols ) ) {
+					$key = $this->id . '_' . $key;
+				}
+
+				if ( isset( $value['label'] ) ) {
+					$columns[ $key ] = $value['label'];
+				} elseif ( isset( $value['html'] ) ) {
+					$columns[ $key ] = $value['html'];
+				}
+			}
+
+			return $columns;
+		}
+
+		/**
+		 *
+		 * Add custom columns in edit screen
+		 *
+		 * @param string $column column name
+		 * @param int    $post_id
+		 *
+		 * @access public
+		 */
+		public function customColumns( $column, $post_id ) {
+			try {
+				if ( $column == $this->id . '_thumbnail' ) {
+					// Display the featured image in the column view if possible
+					if ( \has_post_thumbnail( $post_id ) ) {
+						\the_post_thumbnail( $this->column_image_size );
+					} else {
+						echo Translate::translate( 'None' );
+					}
+				} else {
+					// Display taxonomies in the column view
+					foreach ( $this->taxonomy_columns_display as $taxonomy_name ) {
+						if ( has_term( '', $taxonomy_name, $post_id ) ) {
+							$terms_list = get_the_term_list( $post_id, $taxonomy_name, '', ', ', '' );
+
+							if ( is_wp_error( $terms_list ) ) {
+								throw new Exception(
+									$terms_list->get_error_message() . ': ' . $taxonomy_name
+								);
+							}
+							if ( $terms_list ) {
+								echo $terms_list;
+							} else {
+								echo Translate::translate( 'None' );
+							}
+						}
+					}
+				}
+			} catch ( Exception $ex ) {
+				echo $ex->displayAdminNotice();
+			}
+		}
+
+		/**
+		 *
+		 * get list of edit columns displayed in lists of Post Type
+		 *
+		 *
+		 * list of columns displayed in dashboard list. Example
+		 * array(
+		 *       'cb' => array(
+		 *           'html' => '<input type="checkbox" />',
+		 *       ),
+		 *       'title' => array(
+		 *           'label' => 'Title',
+		 *       ),
+		 *       'category' => array(
+		 *            'label' => 'Categories',
+		 *       ),
+		 *       'thumbnail' => array(
+		 *           'label' => 'Thumbnail',
+		 *       ),
+		 *       'tag' => array(
+		 *           'label' => 'Tags',
+		 *      ),
+		 *      'date' => array(
+		 *          'label' => 'Date',
+		 *      ),
+		 *      'author' => array(
+		 *          'label' => 'Author',
+		 *      ),
+		 *  );
+		 *
+		 * @access protected
+		 * @return array
+		 */
+		protected function getEditColumns() {
+			$columns_default = array(
+				'cb'                     => array(
+					'html' => '<input type="checkbox" />',
+				),
+				'title'                  => array(
+					'label' => Translate::translate( 'Title' ),
+				),
+				'thumbnail'              => array(
+					'label' => Translate::translate( 'Thumbnail' ),
+				),
+				'author'                 => array(
+					'label' => Translate::translate( 'Author' ),
+				),
+				'date'                   => array(
+					'label' => Translate::translate( 'Date' ),
+				),
+				'category'               => array(
+					'label' => Translate::translate( 'Categories' ),
+				),
+				'tag'                    => array(
+					'label' => Translate::translate( 'Tags' ),
+				),
+			);
+
+			foreach ( $this->taxonomy_columns_display as $taxonomy ) {
+				$tax = get_taxonomy( $taxonomy );
+				$columns_default[ $tax->name ][ 'label' ] = $tax->labels->name;
+			}
+
+			$columns = UtlArray::array_remove_part( $columns_default, $this->exclude_columns );
+
+			return $columns;
 		}
     }
 }
