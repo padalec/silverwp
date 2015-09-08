@@ -439,9 +439,36 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 * @param int $post_id
 		 *
 		 * @access public
-		 * @todo add some $_POST filters and nonce?
+		 * @todo   add some $_POST filters
+		 * @return int
 		 */
 		public function saveFilterMeta( $post_id ) {
+			//check is not autosave
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return $post_id;
+			}
+			//verify nonce
+			$nonce_name = $this->getId() . '_nonce';
+			if ( ! isset( $_POST[ $nonce_name ] )
+			     || ! wp_verify_nonce( $_POST[ $nonce_name ], $this->getId() )
+			) {
+				return $post_id;
+			}
+			//check current post type
+			if ( ! in_array( $_POST['post_type'], $this->post_types ) ) {
+				return $post_id;
+			}
+			// check user permissions
+			if ( $_POST['post_type'] == 'page' ) {
+				if ( ! current_user_can( 'edit_page', $post_id ) ) {
+					return $post_id;
+				}
+			} else {
+				if ( ! current_user_can( 'edit_post', $post_id ) ) {
+					return $post_id;
+				}
+			}
+
 			foreach ( $this->filter_controls as $control ) {
 				// Sanitize the user input.
 				$post_value = $_POST[ $this->getId() ][ $control->getName() ];
@@ -454,6 +481,8 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				// Update the meta field.
 				update_post_meta( $post_id, $control->getName(), $value );
 			}
+
+			return $post_id;
 		}
 
         /**
