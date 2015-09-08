@@ -25,6 +25,7 @@ use SilverWp\Debug;
 use SilverWp\Exception;
 use SilverWp\Interfaces\Core;
 use SilverWp\MetaBox\Exception as MetaBoxException;
+use SilverWp\MetaBox\MetaBoxAbstract;
 use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostRelationship\Relationship;
 use SilverWp\SingletonAbstract;
@@ -311,7 +312,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		/**
 		 * Get meta box object handle
 		 *
-		 * @return object
+		 * @return MetaBoxAbstract
 		 * @access public
 		 */
 		public function getMetaBox() {

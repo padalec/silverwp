@@ -54,6 +54,7 @@ if ( ! class_exists( '\SilverWp\SingletonAbstract' ) ) {
 		 * @static
 		 * @access public
 		 * @final
+		 * @return static::$instance[ $class ]
 		 */
 		final public static function getInstance() {
 			$class = \get_called_class();

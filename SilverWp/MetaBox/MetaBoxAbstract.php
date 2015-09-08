@@ -256,7 +256,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 * @return $this
 		 */
 		public function setId( $id ) {
-			$this->id = self::PREFIX . '_' . $id;
+			$this->id = $id;
 
 			return $this;
 		}
@@ -311,7 +311,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 	     * @access public
 	     */
 	    public function getId() {
-		    return $this->id;
+		    return self::PREFIX . '_' . $this->id;
 	    }
 
 		/**
@@ -397,7 +397,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				}
 
 				$default_attributes = array(
-					'id'          => $this->id,
+					'id'          => $this->getId(),
 					'is_dev_mode' => self::DEV_MODE,
 					'template'    => $this->getControls( true ),
 					'priority'    => 'high',
@@ -408,8 +408,8 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 				$this->attributes = wp_parse_args( $this->attributes, $default_attributes );
 
 				if ( $this->debug ) {
-					Debug::dumpPrint( $this->attributes );
-					Debug::dumpPrint( $this->filter_controls );
+					Debug::dumpPrint( $this->attributes, 'attributes' );
+					Debug::dumpPrint( $this->filter_controls, 'filter_controls' );
 				}
 
 				new VP_Metabox( $this->attributes );
@@ -611,7 +611,6 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 */
 		public function customColumns( $column, $post_id ) {
 			try {
-//				todo move to meta box
 				if ( $column == 'thumbnail' ) {
 					// Display the featured image in the column view if possible
 					if ( \has_post_thumbnail( $post_id ) ) {

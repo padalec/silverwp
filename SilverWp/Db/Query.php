@@ -22,7 +22,10 @@ namespace SilverWp\Db;
 use SilverWp\Debug;
 use SilverWp\Helper\Message;
 use SilverWp\Helper\Thumbnail;
+use SilverWp\MetaBox\MetaBoxAbstract;
+use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostType\PostTypeAbstract;
+use SilverWp\PostType\PostTypeInterface;
 use SilverWpAddons\Ajax\PostLike;
 
 if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
@@ -43,16 +46,16 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * Post type class handler or
 		 * if string validate post type name. Default: post
 		 *
-		 * @var object|string
+		 * @var PostTypeAbstract|string
 		 * @access private
 		 */
 		private $post_type = 'post';
 
 		/**
-		 * @var string
+		 * @var string|MetaBoxAbstract
 		 * @access private
 		 */
-		private $meta_box_id = 'post';
+		private $meta_box = 'post';
 
 		/**
 		 * Class constructor
@@ -62,12 +65,14 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function __construct( $query_args = null ) {
-			if ( isset( $query_args['post_type'] ) ) {
+			if ( isset( $query_args['post_type'] )
+			     && $query_args['post_type'] instanceof PostTypeInterface
+			) {
 				$this->setPostType( $query_args['post_type'] );
 				unset( $query_args['post_type'] );
 			}
-			if ( isset( $query_args['meta_box_id'] ) ) {
-				$this->setMetaBoxId( $query_args['meta_box_id'] );
+			if ( isset( $query_args['meta_box'] ) ) {
+				$this->setMetaBox( $query_args['meta_box'] );
 			}
 			parent::__construct( $query_args );
 		}
@@ -121,7 +126,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 				$this->post_type = $post_type;
 				$name            = $this->post_type->getName();
 				if ( $this->post_type->isMetaBoxRegistered() ) {
-					$this->setMetaBoxId( $this->post_type->getMetaBox()->getId() );
+					$this->setMetaBox( $this->post_type->getMetaBox() );
 				}
 			} else {
 				$name = $post_type;
@@ -135,14 +140,20 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		/**
 		 * Set meta box id
 		 *
-		 * @param string $meta_box_id
+		 * @param string|MetaBoxInterface $meta_box
 		 *
 		 * @return $this
 		 * @access pubic
 		 */
-		public function setMetaBoxId( $meta_box_id ) {
-			$this->meta_box_id = $meta_box_id;
-			$this->query_vars[ 'meta_key' ] = $meta_box_id;
+		public function setMetaBox( $meta_box ) {
+			if ( $meta_box instanceof MetaBoxInterface ) {
+				$this->meta_box = $meta_box;
+				$meta_key = $meta_box->getId();
+			}else {
+				$meta_key = $meta_box;
+			}
+			$this->query_vars[ 'meta_key' ] = $meta_key;
+
 			return $this;
 		}
 
@@ -327,10 +338,8 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 */
 		public function getMetaBox( $control_name, $remove_first = true ) {
 			$post_id = $this->getPostId();
+			$meta_box = $this->meta_box->get( $post_id, $control_name, $remove_first );
 
-			$meta_box = $this->post_type
-							->getMetaBox()
-			                ->get( $post_id, $control_name, $remove_first = true );
 			return $meta_box;
 		}
 
@@ -566,5 +575,31 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			return $is_title;
 		}
 
+		/**
+		 * Get sidebar position
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSidebarPosition() {
+			//Fix for tag page and all post type where don't have config from meta box
+			if ( \is_home() || \is_tag() || \is_date() || \is_archive() ) {
+				$post_id = Option::get_option( 'page_for_posts' );
+				$this->setPostId( $post_id );
+			}
+			$sidebar_code = $this->getMetaBox( 'sidebar' );
+			switch ( $sidebar_code ) {
+				case '1':
+					$sidebar_position = 'left';
+					break;
+				case '2':
+					$sidebar_position = 'right';
+					break;
+				default:
+					$sidebar_position = 'right'; // default position
+			}
+
+			return $sidebar_position;
+		}
 	}
 }
