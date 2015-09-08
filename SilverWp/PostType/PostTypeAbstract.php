@@ -261,12 +261,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 * @access public
 		 */
 		public function addTemplates( $template_name ) {
-			if ( \is_array( $template_name ) ) {
-				self::$page_templates[ $this->name ]
-					= \array_merge( self::$page_templates, $template_name );
-			} else {
-				self::$page_templates[ $this->name ] = $template_name;
-			}
+			self::$page_templates[ $this->name ][] = $template_name;
 		}
 
 		/**
