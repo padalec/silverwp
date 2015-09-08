@@ -1,6 +1,6 @@
 <?php
 
-class VP_Control_Field_TextBox extends VP_Control_Field {
+class VP_Control_Field_Number extends VP_Control_Field {
 
 	public function __construct() {
 		parent::__construct();
@@ -24,7 +24,7 @@ class VP_Control_Field_TextBox extends VP_Control_Field {
 		$this->add_data( 'is_compact', $is_compact );
 
 		return VP_View::instance()
-		              ->load( 'control/textbox', $this->get_data() );
+		              ->load( 'control/number', $this->get_data() );
 	}
 
 }

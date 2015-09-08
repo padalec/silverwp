@@ -64,7 +64,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
          * Database and take the default value set in your meta_boxes instead.
          * Default to FALSE.
          *
-         * @const boolean
+         * @global boolean
          */
         const DEV_MODE = SILVERWP_META_BOX_DEV;
 

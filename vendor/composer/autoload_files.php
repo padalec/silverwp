@@ -12,5 +12,4 @@ return array(
     $vendorDir . '/aristath/kirki/kirki.php',
     $vendorDir . '/Taxonomy_Single_Term/class.taxonomy-single-term.php',
     $vendorDir . '/scribu/posts-to-posts/posts-to-posts.php',
-    $vendorDir . '/WidgetsHelperClass/wph-widget-class.php',
 );

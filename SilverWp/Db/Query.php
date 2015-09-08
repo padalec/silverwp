@@ -97,10 +97,12 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function addTaxonomyFilter( $taxonomy_name, $term, $field = 'term_id' ) {
-			$this->query_vars[ 'tax_query' ][] = array(
-				'taxonomy' => $taxonomy_name,
-				'field'    => $field,
-				'terms'    => $term,
+			$this->set( 'tax_query',
+				array(
+					'taxonomy' => $taxonomy_name,
+					'field'    => $field,
+					'terms'    => $term,
+				)
 			);
 
 			return $this;
@@ -170,6 +172,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			foreach ( $query_args as $name => $value ) {
 				$this->set( $name, $value );
 			}
+			$this->query( $this->query_vars );
 
 			return $this;
 		}
@@ -183,7 +186,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function setLimit( $limit ) {
-			$this->set( 'posts_on_page', (int) $limit );
+			$this->set( 'posts_per_page', (int) $limit );
 
 			return $this;
 		}

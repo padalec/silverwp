@@ -98,5 +98,20 @@ if ( ! class_exists( 'SilverWp\Helper\Control\MultiControlAbstract' ) ) {
                 unset( $this->setting[ 'items' ][ $key ] );
             }
         }
+
+
+	    /**
+	     * Set controll as multiselectable (add [] to name)
+	     *
+	     * @param boolean $is_multi true/false
+	     *
+	     * @access public
+	     * @since  0.4
+	     */
+	    public function setMulti( $is_multi ) {
+		    $this->setting['multi'] = (boolean) $is_multi;
+
+		    return $this;
+	    }
     }
 }

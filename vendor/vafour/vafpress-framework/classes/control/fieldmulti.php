@@ -19,6 +19,11 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	 */
 	protected function _basic_make($arr)
 	{
+		//add [] to name if control are assigned to multi
+		if ( isset( $arr['multi'] ) && $arr['multi'] ) {
+			$arr['name'] = $arr['name'] . '[]';
+		}
+
 		parent::_basic_make($arr);
 
 		if (!empty($arr['items']))
