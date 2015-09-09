@@ -349,7 +349,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 		 * @access   public
 		 */
 		public function get( $post_id, $control_name, $remove_first = true ) {
-			$post_meta = get_post_meta( $post_id, $this->id, true );
+			$post_meta = get_post_meta( $post_id, $this->getId(), true );
 
 			if ( $post_meta && RecursiveArray::searchKey( $control_name, $post_meta ) ) {
 
