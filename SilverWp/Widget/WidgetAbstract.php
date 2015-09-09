@@ -132,7 +132,7 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 			if ( $this->debug ) {
 				Debug::dumpPrint( $this->controls );
 			}
-			Debug::dumpPrint( $this->controls );
+
 			foreach ( $this->controls as $control ) {
 				$control->addHtmlAttribute( 'id', $this->get_field_id( $control->getName() ) );
 				$control->addHtmlAttribute( 'class', 'widefat' );
