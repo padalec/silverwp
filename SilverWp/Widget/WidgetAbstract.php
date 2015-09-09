@@ -156,7 +156,7 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 					$field->set_value( $default );
 				}
 				?>
-				<div>
+				<p>
 					<label for="<?php echo $this->get_field_id( $field->get_name() ); ?>">
 						<?php echo $field->get_label(); ?>
 						<?php
@@ -164,7 +164,7 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 						?>
 						<?php \VP_Util_Text::print_if_exists( $field->get_description(), '<div class="description">%s</div>' );?>
 					</label>
-				</div>
+				</p>
 				<?php
 			}
 		}
