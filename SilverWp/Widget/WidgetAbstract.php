@@ -116,9 +116,6 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 		public function registerFields() {
 			$loader      = \VP_WP_Loader::instance();
 			$field_types = $this->getControlsType();
-			if ( $this->debug ) {
-				Debug::dumpPrint( $field_types );
-			}
 			$loader->add_types( $field_types, 'widgets' );
 		}
 
@@ -132,6 +129,10 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 		 * @return string
 		 */
 		public function form( $instance ) {
+			if ( $this->debug ) {
+				Debug::dumpPrint( $this->controls );
+			}
+			Debug::dumpPrint( $this->controls );
 			foreach ( $this->controls as $control ) {
 				$control->addHtmlAttribute( 'id', $this->get_field_id( $control->getName() ) );
 				$control->addHtmlAttribute( 'class', 'widefat' );
@@ -161,9 +162,7 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 						<?php
 						echo $field->render( true );
 						?>
-						<span>
-							<?php \VP_Util_Text::print_if_exists( $field->get_description(), '<div class="description">%s</div>' );?>
-						</span>
+						<?php \VP_Util_Text::print_if_exists( $field->get_description(), '<div class="description">%s</div>' );?>
 					</label>
 				</div>
 				<?php
