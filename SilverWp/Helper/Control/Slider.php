@@ -21,17 +21,17 @@ namespace SilverWp\Helper\Control;
 
 if ( ! class_exists( 'SilverWp\Helper\Control\Slider' ) ) {
 
-    /**
-     * Control slider
-     *
-     * @category WordPress
-     * @package SilverWp
-     * @subpackage Helper\Control
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @copyright Dynamite-Studio.pl & silversite.pl 2015
-     * @version $Revision:$
-     */
-    class Slider extends MultiControlAbstract {
+	/**
+	 * Control slider
+	 *
+	 * @category   WordPress
+	 * @package    SilverWp
+	 * @subpackage Helper\Control
+	 * @author     Michal Kalkowski <michal at silversite.pl>
+	 * @copyright  SilverSite.pl (c) 2015
+	 * @version    0.5
+	 */
+	class Slider extends MultiControlAbstract {
         protected $type = 'slider';
 
         /**

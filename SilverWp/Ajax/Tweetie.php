@@ -19,79 +19,90 @@
 namespace SilverWp\Ajax;
 
 use SilverWp\Helper\Option;
-use TwitterOAuth;
+use Abraham\TwitterOAuth\TwitterOAuth;
 
-if ( class_exists( '\TwitterOAuth' ) && ! class_exists( '\SilverWp\Tweetie' ) ) {
-    /**
-     * Tweeter post
-     *
-     * @author Michal Kalkowski <michal at silversite.pl>
-     * @version $revision:$
-     * @category WordPress
-     * @package SilverWp
-     * @subpackage Ajax
-     * @copyright (c) Silversite.pl 2015
-     */
-    class Tweetie extends AjaxAbstract {
-        protected $name = 'tweetie';
-        protected $ajax_js_file = 'plugins/tweetie/tweetie.min.js';
-        protected $ajax_handler = 'TweetieAjax';
+if ( class_exists( '\Abraham\TwitterOAuth\TwitterOAuth' )
+     && ! class_exists( '\SilverWp\Tweetie' )
+) {
+	/**
+	 * Tweeter post
+	 *
+	 * @author        Michal Kalkowski <michal at silversite.pl>
+	 * @version       0.5
+	 * @category      WordPress
+	 * @package       SilverWp
+	 * @subpackage    Ajax
+	 * @copyright (c) Silversite.pl 2015
+	 */
+	class Tweetie extends AjaxAbstract {
+		protected $name = 'tweetie';
+		protected $ajax_js_file = 'main.js';
+		protected $ajax_handler = 'sage_js';
 
-        /**
-         *
-         * connect with Tweetier API
-         *
-         * @todo config class froma all Theme Options
-         * @return \SilverWp\Ajax\TwitterOAuth
-         */
-        private function connect() {
-            $cons_key     = Option::get_theme_option( 'plugin_social_key[twitter]' );
-            $cons_secret  = Option::get_theme_option( 'plugin_social_secret[twitter]' );
-            $oauth_token  = Option::get_theme_option( 'plugin_social_access_token[twitter]' );
-            $oauth_secret = Option::get_theme_option( 'plugin_social_access_secret[twitter]' );
-            $connection   = new TwitterOAuth( $cons_key, $cons_secret, $oauth_token, $oauth_secret );
+		/**
+		 *
+		 * Connect with Tweeter API
+		 *
+		 * @return \SilverWp\Ajax\TwitterOAuth
+		 */
+		private function connect() {
+			$cons_key    = Option::get_theme_option( 'twitter_oauth_key' );
+			$cons_secret = Option::get_theme_option( 'twitter_oauth_secret' );
+			$token  = Option::get_theme_option( 'twitter_oauth_access_token' );
+			$secret = Option::get_theme_option( 'twitter_oauth_access_secret' );
+			$connection  = new TwitterOAuth( $cons_key, $cons_secret, $token, $secret );
 
-            return $connection;
-        }
+			return $connection;
+		}
 
-        public function ajaxResponse() {
-            $username        = $this->getRequestData( 'username', FILTER_SANITIZE_SPECIAL_CHARS );
-            $number          = $this->getRequestData( 'count', FILTER_SANITIZE_NUMBER_INT );
-            $exclude_replies = $this->getRequestData( 'exclude_replies', FILTER_SANITIZE_SPECIAL_CHARS );
-            $list_slug       = $this->getRequestData( 'list_slug', FILTER_SANITIZE_SPECIAL_CHARS );
-            $hashtag         = $this->getRequestData( 'hashtag', FILTER_SANITIZE_SPECIAL_CHARS );
+		/**
+		 * Ajax response
+		 *
+		 * @access public
+		 */
+		public function ajaxResponse() {
+			$username        = $this->getRequestData( 'username',
+				FILTER_SANITIZE_SPECIAL_CHARS );
+			$number          = $this->getRequestData( 'count',
+				FILTER_SANITIZE_NUMBER_INT );
+			$exclude_replies = $this->getRequestData( 'exclude_replies',
+				FILTER_SANITIZE_SPECIAL_CHARS );
+			$list_slug       = $this->getRequestData( 'list_slug',
+				FILTER_SANITIZE_SPECIAL_CHARS );
+			$hashtag         = $this->getRequestData( 'hashtag',
+				FILTER_SANITIZE_SPECIAL_CHARS );
 
-            $Tweets = $this->connect();
-            // Get Tweets
-            if ( ! empty( $list_slug ) ) {
-                $params = array(
-                    'owner_screenname' => $username,
-                    'slug'             => $list_slug,
-                    'per_page'         => $number
-                );
+			$connection = $this->connect();
+			// Get Tweets
+			if ( ! empty( $list_slug ) ) {
+				$params = array(
+					'owner_screenname' => $username,
+					'slug'             => $list_slug,
+					'per_page'         => $number
+				);
 
-                $url = '/lists/statuses';
+				$url = '/lists/statuses';
 
-            } elseif ( $hashtag ) {
-                $params = array(
-                    'count' => $number,
-                    'q'     => '#' . $hashtag
-                );
+			} elseif ( $hashtag ) {
+				$params = array(
+					'count' => $number,
+					'q'     => '#' . $hashtag
+				);
 
-                $url = '/search/tweets';
+				$url = '/search/tweets';
 
-            } else {
-                $params = array(
-                    'count'           => $number,
-                    'exclude_replies' => $exclude_replies,
-                    'screenname'      => $username
-                );
+			} else {
+				$params = array(
+					'count'           => $number,
+					'exclude_replies' => $exclude_replies,
+					'screenname'      => $username
+				);
 
-                $url = '/statuses/user_timeline';
-            }
+				$url = '/statuses/user_timeline';
+			}
 
-            $tweets = $Tweets->get( $url, $params );
-            $this->responseJson( $tweets );
-        }
-    }
+			$tweets = $connection->get( $url, $params );
+			$this->responseJson( $tweets );
+		}
+	}
 }

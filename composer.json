@@ -26,7 +26,8 @@
     "php": ">=5.3",
     "aristath/kirki": "1.*",
     "leafo/scssphp": "^0.1.8",
-    "pluswp/wp-scss": "@stable"
+    "pluswp/wp-scss": "@stable",
+    "abraham/twitteroauth": "^0.6.0"
   },
   "autoload": {
     "files": [

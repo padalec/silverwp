@@ -85,7 +85,7 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 		if ( \is_null( $this->name ) ) {
 			throw new Exception( Translate::translate( 'Variable name is requaied and can\'t be empty.' ) );
 		}
-		if ( ! empty( $this->ajax_js_file ) ) {
+		if ( ! is_null( $this->ajax_js_file ) ) {
 			\add_action( 'wp_loaded', array( $this, 'scriptsRegister' ) );
 		}
 		# Could as well be: wp_enqueue_scripts or login_enqueue_scripts
@@ -162,13 +162,13 @@ abstract class AjaxAbstract extends SingletonAbstract implements AjaxInterface {
 	 * @access public
 	 */
 	public function scriptsLocalize() {
-		$this->nonce = \wp_create_nonce( $this->getNonceName() );
-		\wp_localize_script(
+		$this->nonce = wp_create_nonce( $this->getNonceName() );
+		return wp_localize_script(
 			$this->ajax_handler,
 			$this->name,
 			array(
 				'nonce'  => $this->nonce,
-				'url'    => \admin_url( 'admin-ajax.php' ),
+				'url'    => admin_url( 'admin-ajax.php' ),
 				'action' => $this->name
 			)
 		);
