@@ -36,9 +36,14 @@ if ( ! class_exists( '\SilverWp\Helper\Control\CategoriesCheckboxes' ) ) {
 			parent::__construct( $name );
 			$this->setMulti( true );
 			$categories = get_categories();
+			$options = array();
 			foreach ( $categories as $category ) {
-				$this->addOption( $category->term_id, $category->name );
+				$options[] = array(
+					'label' => $category->name . '<br />',
+				    'value' => $category->term_id
+				);
 			}
+			$this->setOptions( $options );
 		}
 	}
 }

@@ -38,7 +38,7 @@ if ( ! class_exists( '\SilverWp\Helper\Control\Checkbox' ) ) {
 
 		public function __construct( $name ) {
 			parent::__construct( $name );
-			$this->addOption( '1', Translate::translate( 'yes' ) );
+			$this->addOption( '1', '' );
 		}
 	}
 }
