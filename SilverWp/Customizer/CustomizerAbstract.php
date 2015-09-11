@@ -19,6 +19,7 @@
 namespace SilverWp\Customizer;
 
 use SilverWp\CssTemplate\Sass;
+use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\File;
 use SilverWp\Interfaces\Core;
@@ -164,6 +165,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 		 */
 		protected static $id;
 
+		protected $debug = false;
 		/**
 		 * Class constructor
 		 *
@@ -175,7 +177,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 101 );
 			add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 102 );
-			//add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
+			add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
 			add_action( 'kirki/config', array( $this, 'init' ) );
 
 			$this->config();
@@ -372,12 +374,16 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 					          = FileSystem::getDirectory( 'css_template_uri' );
 
 					$sass = Sass::getInstance();
-					$sass->setUploadDir( $css_path );
-					$sass->setUploadUrl( $css_uri );
+					$sass->setUploadDir( $css_path . 'generated' );
+					$sass->setUploadUrl( $css_uri . 'generated' );
 
 					$variables                             = $this->getVariablesFromControls();
 					$variables['stylesheet_directory_uri'] = $css_uri;
 					$variables['template_directory_uri']   = $template_uri;
+
+					if ( $this->debug ) {
+						Debug::dumpPrint( $variables );
+					}
 
 					$sass->setVariables( $variables );
 					$sass->registerFallback();
@@ -399,43 +405,23 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 				$css_path = FileSystem::getDirectory( 'css_path' );
 				$css_uri  = FileSystem::getDirectory( 'css_uri' );
 
-				Less::$remove_random = true;
-				$less                = Less::getInstance();
-				$less->setUploadDir( $css_path );
-				$less->setUploadUrl( $css_uri );
-				$less_variable = $this->getVariablesFromControls();
-				$less->setVariables( $less_variable );
-				$less->compileCss();
-				$this->deleteTmp();
+				$template                = Sass::getInstance();
+				$template->setUploadDir( $css_path );
+				$template->setUploadUrl( $css_uri );
+				$variable = $this->getVariablesFromControls();
+
+				if ( $this->debug ) {
+					Debug::dumpPrint( $variable );
+				}
+
+				$template->setVariables( $variable );
+				$template->compileCss();
+				$template->deleteTmp();
 
 			} catch ( Exception $ex ) {
 				$ex->catchException();
 			}
 		}
-
-		/**
-		 *
-		 * Reset less variable
-		 *
-		 * @static
-		 * @access public
-		 */
-		public static function resetLessVariable() {
-			self::$variables = array();
-		}
-
-		/**
-		 * Get all registered less variable
-		 *
-		 * @return array
-		 * @access public
-		 */
-		public function getLessVariable() {
-			$this->getVariablesFromControls();
-
-			return self::$variables;
-		}
-
 		/**
 		 *
 		 * Add new less variable
@@ -494,8 +480,10 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 		 * @access private
 		 */
 		private function deleteCssTmp() {
+			$css_path = FileSystem::getDirectory( 'css_path' );
+
 			$files = File::get_file_list(
-				$this->getAssetsPath() . 'css/generated'
+				$css_path . 'generated'
 				, array()
 				, false
 				, true
