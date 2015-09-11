@@ -18,6 +18,8 @@
  */
 namespace SilverWp\Customizer\Control;
 
+use SilverWp\Debug;
+
 if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 
 	/**
@@ -35,12 +37,11 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 		public function __construct( $control_name ) {
 			parent::__construct( $control_name );
 			//set up drop-down options for fonts
-			$system_fonts = array();
-			if ( function_exists( 'silverwp_get_system_fonts' ) ) {
-				$system_fonts = array_flip( silverwp_get_system_fonts() );
+			$fonts_tmp =  silverwp_get_font_family();
+			$fonts = array();
+			foreach ($fonts_tmp as $value) {
+				$fonts[ $value['value'] ] = $value['label'];
 			}
-			$gwf = \Kirki_Fonts::get_font_choices();
-			$fonts = array_merge( $system_fonts, $gwf );
 			$this->setOptions( $fonts );
 		}
 	}
