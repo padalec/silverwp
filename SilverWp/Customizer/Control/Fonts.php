@@ -18,7 +18,8 @@
  */
 namespace SilverWp\Customizer\Control;
 
-use SilverWp\Debug;
+use SilverWp\Helper\Gwf;
+use SilverWp\Interfaces\EnqueueScripts;
 
 if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 
@@ -33,16 +34,31 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 	 * @copyright  SilverSite.pl (c) 2015
 	 * @version    0.1
 	 */
-	class Fonts extends Select {
+	class Fonts extends Select implements EnqueueScripts{
 		public function __construct( $control_name ) {
 			parent::__construct( $control_name );
 			//set up drop-down options for fonts
 			$fonts_tmp =  silverwp_get_font_family();
 			$fonts = array();
-			foreach ($fonts_tmp as $value) {
-				$fonts[ $value['value'] ] = $value['label'];
+			foreach ( $fonts_tmp as $value ) {
+				$fonts[ Gwf::addQuote( $value['value'] ) ] = $value['label'];
 			}
 			$this->setOptions( $fonts );
+		}
+
+		/**
+		 * Enqueue scripts js or css
+		 *
+		 * @return void
+		 * @access public
+		 */
+		public function enqueueScripts() {
+			$font = $this->getValue();
+
+			if ( \Kirki_Fonts::is_google_font( $font ) ) {
+				$font_uri = \Kirki_Fonts::get_google_font_uri( array( $font ) );
+				wp_enqueue_style( 'googlefonts', $font_uri );
+			}
 		}
 	}
 }
