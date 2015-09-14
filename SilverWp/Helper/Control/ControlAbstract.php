@@ -76,8 +76,8 @@ if ( ! class_exists( 'SilverWp\Helper\Control\ControlAbstract' ) ) {
 
             $this->setting[ 'type' ] = $this->type;
 
-	        if ( method_exists( $this, 'enqueueAssets' ) && is_admin() ) {
-		        add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAssets' ) );
+	        if ( method_exists( $this, 'enqueueScripts' ) ) {
+		        add_action( 'wp_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 	        }
 	        if ( method_exists( $this, 'enqueueAssets' ) && is_admin() ) {
                 add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAssets' ) );

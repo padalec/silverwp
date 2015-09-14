@@ -211,8 +211,7 @@ if ( ! class_exists( 'SilverWp\CssTemplate\CssTemplateAbstract' ) ) {
 		 * @access public
 		 * @static
 		 */
-		public static function addStylesheetsTemplate( $handle, array $params
-		) {
+		public static function addStylesheetsTemplate( $handle, array $params ) {
 			self::$stylesheets_templates[ $handle ] = $params;
 		}
 

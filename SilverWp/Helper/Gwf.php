@@ -69,7 +69,7 @@ class Gwf extends \VP_Site_GoogleWebFont
     /**
      * singleton object instance
      *
-     * @return object Gwf class instance
+     * @return self::$instance
      * @static
      * @access public
      */
@@ -150,4 +150,28 @@ class Gwf extends \VP_Site_GoogleWebFont
         $links = \reset($list_links);
         return $links;
     }
+
+	/**
+	 * Add single quote to font name with space
+	 *
+	 * @param string $fonts_family
+	 *
+	 * @return string
+	 * @static
+	 * @access public
+	 */
+	public static function addQuote( $fonts_family ) {
+		$fonts     = array();
+		$fonts_tmp = explode( ',', $fonts_family );
+		foreach ( $fonts_tmp as $font ) {
+			if ( str_word_count( $font ) > 1 && strpos( $font, '\'' ) === false ) {
+				$fonts[] = '\'' . stripslashes( $font ) . '\'';
+			} else {
+				$fonts[] = stripslashes( $font );
+			}
+		}
+		$font_string = implode( ',', $fonts );
+
+		return $font_string;
+	}
 }
