@@ -112,4 +112,29 @@ class Page {
 
 		return $page_id;
 	}
+
+	/**
+	 * Get page id by template name (include language)
+	 *
+	 * @param array|string $template_name
+	 *
+	 * @return bool|mixed|null|string
+	 * @access public
+	 * @static
+	 */
+	public static function getIdByTemplate( $template_name ) {
+		$template_name = is_array( $template_name )
+			? $template_name
+			: array( $template_name );
+
+		$page = Page::getPageByTemplate( $template_name );
+
+		if ( function_exists( 'icl_object_id' ) ) {
+			$page_id = icl_object_id( $page[0]->ID, 'page', true, ICL_LANGUAGE_CODE );
+		} else {
+			$page_id = $page[0]->ID;
+		}
+
+		return $page_id;
+	}
 }
