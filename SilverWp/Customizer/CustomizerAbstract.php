@@ -38,8 +38,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 	 * @package    SilverWp
 	 * @subpackage Customizer
 	 * @author     Michal Kalkowski <michal at silversite.pl>
-	 * @copyright  Dynamite-Studio.pl & silversite.pl 2015
-	 * @version    $Revision:$
+	 * @copyright  SilverSite.pl 2015
+	 * @version    0.5
 	 * @abstract
 	 */
 	abstract class CustomizerAbstract extends SingletonAbstract
@@ -165,7 +165,13 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 		 */
 		protected static $id;
 
+		/**
+		 * Debugging
+		 *
+		 * @var bool
+		 */
 		protected $debug = false;
+
 		/**
 		 * Class constructor
 		 *

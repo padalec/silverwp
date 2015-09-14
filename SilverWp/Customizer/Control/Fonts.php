@@ -34,7 +34,9 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 	 * @copyright  SilverSite.pl (c) 2015
 	 * @version    0.1
 	 */
-	class Fonts extends Select implements EnqueueScripts{
+	class Fonts extends Select implements EnqueueScripts {
+		protected $filters = false;
+
 		public function __construct( $control_name ) {
 			parent::__construct( $control_name );
 			//set up drop-down options for fonts
