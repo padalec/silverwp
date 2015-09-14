@@ -146,14 +146,13 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          * @access public
          */
         public function getValue() {
-
-            $value =  \Kirki::get_option( CustomizerAbstract::getId(), $this->getName());
-	        //todo add filters from ZF2
-	        if ( $this->filters ) {
-				return htmlspecialchars_decode( $value, ENT_NOQUOTES );
-			} else {
-				return $value;
-			}
+			$value =  \Kirki::get_option( CustomizerAbstract::getId(), $this->getName());
+			//todo add filters from ZF2
+	        $value = htmlspecialchars_decode( $value, ENT_NOQUOTES );
+	        if ( strpos( $value, '&#039;' ) !== false ) {
+		        $value = str_replace( '&#039;', '\'', $value );
+	        }
+	        return $value;
         }
 
 	    /**

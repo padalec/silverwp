@@ -35,7 +35,6 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 	 * @version    0.1
 	 */
 	class Fonts extends Select implements EnqueueScripts {
-		protected $filters = false;
 
 		public function __construct( $control_name ) {
 			parent::__construct( $control_name );
@@ -44,6 +43,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 			$fonts = array();
 			foreach ( $fonts_tmp as $value ) {
 				$fonts[ Gwf::addQuote( $value['value'] ) ] = $value['label'];
+				//$fonts[ $value['value'] ] = $value['label'];
 			}
 			$this->setOptions( $fonts );
 		}
