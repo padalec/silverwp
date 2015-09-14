@@ -35,52 +35,12 @@ class Nested extends Formatter
     }
 
     /**
-     * Adjust the depths of all children, depth first
-     *
-     * @param \stdClass $block
-     */
-    public function adjustAllChildren($block)
-    {
-        // flatten empty nested blocks
-        $children = array();
-        foreach ($block->children as $i => $child) {
-            if (empty($child->lines) && empty($child->children)) {
-                if (isset($block->children[$i + 1])) {
-                    $block->children[$i + 1]->depth = $child->depth;
-                }
-                continue;
-            }
-            $children[] = $child;
-        }
-
-        $count = count($children);
-        for ($i = 0; $i < $count; $i++) {
-            $depth = $children[$i]->depth;
-            $j = $i + 1;
-            if (isset($children[$j]) && $depth < $children[$j]->depth) {
-                $childDepth = $children[$j]->depth;
-                for (; $j < $count; $j++) {
-                    if ($depth < $children[$j]->depth && $childDepth >= $children[$j]->depth) {
-                        $children[$j]->depth = $depth + 1;
-                    }
-                }
-            }
-        }
-
-        $block->children = $children;
-
-        // make relative to parent
-        foreach ($block->children as $child) {
-            $this->adjustAllChildren($child);
-            $child->depth = $child->depth - $block->depth;
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
-    protected function blockLines($inner, $block)
+    protected function blockLines($block)
     {
+        $inner = $this->indentStr($block->depth - 1);
+
         $glue = $this->break . $inner;
 
         foreach ($block->lines as $index => $line) {
@@ -99,23 +59,32 @@ class Nested extends Formatter
     /**
      * {@inheritdoc}
      */
+    protected function blockSelectors($block)
+    {
+        $inner = $this->indentStr($block->depth - 1);
+
+        echo $inner
+            . implode($this->tagSeparator, $block->selectors)
+            . $this->open . $this->break;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function block($block)
     {
-        if ($block->type == 'root') {
+        if ($block->type === 'root') {
             $this->adjustAllChildren($block);
         }
 
-        $inner = $pre = $this->indentStr($block->depth - 1);
         if (! empty($block->selectors)) {
-            echo $pre .
-                implode($this->tagSeparator, $block->selectors) .
-                $this->open . $this->break;
+            $this->blockSelectors($block);
+
             $this->indentLevel++;
-            $inner = $this->indentStr($block->depth - 1);
         }
 
         if (! empty($block->lines)) {
-            $this->blockLines($inner, $block);
+            $this->blockLines($block);
         }
 
         foreach ($block->children as $i => $child) {
@@ -126,7 +95,8 @@ class Nested extends Formatter
 
                 if (isset($block->children[$i + 1])) {
                     $next = $block->children[$i + 1];
-                    if ($next->depth == max($block->depth, 1) && $child->depth >= $next->depth) {
+
+                    if ($next->depth === max($block->depth, 1) && $child->depth >= $next->depth) {
                         echo $this->break;
                     }
                 }
@@ -135,11 +105,61 @@ class Nested extends Formatter
 
         if (! empty($block->selectors)) {
             $this->indentLevel--;
+
             echo $this->close;
         }
 
-        if ($block->type == 'root') {
+        if ($block->type === 'root') {
             echo $this->break;
+        }
+    }
+
+    /**
+     * Adjust the depths of all children, depth first
+     *
+     * @param \stdClass $block
+     */
+    private function adjustAllChildren($block)
+    {
+        // flatten empty nested blocks
+        $children = array();
+
+        foreach ($block->children as $i => $child) {
+            if (empty($child->lines) && empty($child->children)) {
+                if (isset($block->children[$i + 1])) {
+                    $block->children[$i + 1]->depth = $child->depth;
+                }
+
+                continue;
+            }
+
+            $children[] = $child;
+        }
+
+        $count = count($children);
+
+        for ($i = 0; $i < $count; $i++) {
+            $depth = $children[$i]->depth;
+            $j = $i + 1;
+
+            if (isset($children[$j]) && $depth < $children[$j]->depth) {
+                $childDepth = $children[$j]->depth;
+
+                for (; $j < $count; $j++) {
+                    if ($depth < $children[$j]->depth && $childDepth >= $children[$j]->depth) {
+                        $children[$j]->depth = $depth + 1;
+                    }
+                }
+            }
+        }
+
+        $block->children = $children;
+
+        // make relative to parent
+        foreach ($block->children as $child) {
+            $this->adjustAllChildren($child);
+
+            $child->depth = $child->depth - $block->depth;
         }
     }
 }
