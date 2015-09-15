@@ -129,9 +129,6 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 		 * @return string
 		 */
 		public function form( $instance ) {
-			if ( $this->debug ) {
-				Debug::dumpPrint( $this->controls );
-			}
 
 			foreach ( $this->controls as $control ) {
 				$control->addHtmlAttribute( 'id', $this->get_field_id( $control->getName() ) );
@@ -144,11 +141,8 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 				$field        = call_user_func( "$make::withArray", $attributes );
 				$default      = $field->get_default();
 				//@todo rebuild this!!!
-				if ( $attributes['type'] == 'checkbox'
-				     && ( isset( $instance[ $control->getName() ] )
-				          || is_null( $instance[ $control->getName() ] ) )
-				) {
-					$value = is_null( $instance[ $control->getName() ] ) ? '' : $instance[ $control->getName() ];
+				if ( $attributes['type'] == 'checkbox' ) {
+                    $value = isset( $instance[ $control->getName() ] ) ? $instance[ $control->getName() ] : '';
 					$field->set_value( $value );
 				} else if( isset( $instance[ $control->getName() ] ) && ! empty( $instance[ $control->getName() ] ) ) {
 					$field->set_value( $instance[ $control->getName() ] );
