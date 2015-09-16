@@ -536,7 +536,8 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		}
 
 		/**
-		 * This method
+		 * This method add possibility to create single post view in taxonomy
+		 *
 		 * @param string $single_template
 		 *
 		 * @return string
