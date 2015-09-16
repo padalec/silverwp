@@ -90,6 +90,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			// Allows filtering of posts by taxonomy in the admin view
 			add_action( 'restrict_manage_posts', array( $this, 'filterAdminPostsTypeList' ) );
 			add_filter( 'parse_query', array( $this, 'addFilter2QueryList' ), 10, 1 );
+			add_filter( 'single_template', array( $this, 'getSingleTemplate' ), 10, 1 ) ;
 		}
 
 		/**
@@ -533,6 +534,47 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 
 			return $columns;
 		}
-	}
 
+		/**
+		 * This method add possibility to create single post view in taxonomy
+		 *
+		 * @param string $single_template
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSingleTemplate( $single_template ) {
+			$post_types = $this->getPostsTypesNames();
+			if ( in_array( get_post_type(), $post_types ) ) {
+				$path = get_template_directory();
+				foreach ( $this->taxonomies as $taxonomy => $args ) {
+					if ( isset( $args['custom_single_view'] )
+					     && $args['custom_single_view']
+					) {
+						if ( isset( $args['rewrite'] )
+						     && isset( $args['slug'] )
+						) {
+							$template_file = $path . '/single-' . $args['slug'] . '.php';
+							if ( file_exists( $template_file ) ) {
+								$single_template = $template_file;
+							}
+						} else {
+							$terms = get_the_terms( get_the_ID(), $taxonomy );
+							if ( $terms && ! is_wp_error( $terms ) ) {
+								//Make a foreach because $terms is an array but it supposed to be only one term
+								foreach ( $terms as $term ) {
+									$template_file = $path . '/single-' . $term->slug . '.php';
+									if ( file_exists( $template_file ) ) {
+										$single_template = $template_file;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return $single_template;
+		}
+	}
 }
