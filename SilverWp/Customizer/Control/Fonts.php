@@ -34,7 +34,8 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 	 * @copyright  SilverSite.pl (c) 2015
 	 * @version    0.1
 	 */
-	class Fonts extends Select implements EnqueueScripts{
+	class Fonts extends Select implements EnqueueScripts {
+
 		public function __construct( $control_name ) {
 			parent::__construct( $control_name );
 			//set up drop-down options for fonts
@@ -42,6 +43,7 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\Fonts' ) ) {
 			$fonts = array();
 			foreach ( $fonts_tmp as $value ) {
 				$fonts[ Gwf::addQuote( $value['value'] ) ] = $value['label'];
+				//$fonts[ $value['value'] ] = $value['label'];
 			}
 			$this->setOptions( $fonts );
 		}

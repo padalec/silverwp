@@ -38,8 +38,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 	 * @package    SilverWp
 	 * @subpackage Customizer
 	 * @author     Michal Kalkowski <michal at silversite.pl>
-	 * @copyright  Dynamite-Studio.pl & silversite.pl 2015
-	 * @version    $Revision:$
+	 * @copyright  SilverSite.pl 2015
+	 * @version    0.5
 	 * @abstract
 	 */
 	abstract class CustomizerAbstract extends SingletonAbstract
@@ -165,14 +165,20 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 		 */
 		protected static $id;
 
+		/**
+		 * Debugging
+		 *
+		 * @var bool
+		 */
 		protected $debug = false;
+
 		/**
 		 * Class constructor
 		 *
 		 * @access protected
 		 */
 		protected function __construct() {
-
+			ini_set( 'max_execution_time', 300 );
 			$this->initStrings();
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 101 );
@@ -415,8 +421,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 				}
 
 				$template->setVariables( $variable );
-				$template->compileCss();
-				$template->deleteTmp();
+				$template->registerFallback();
+				$template->deleteCssTmp();
 
 			} catch ( Exception $ex ) {
 				$ex->catchException();
@@ -506,7 +512,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 			$customizer_id = CustomizerAbstract::getId();
 			$value = \Kirki::get_option( $customizer_id, $option_name );
 
-			return htmlspecialchars_decode( $value );
+			return htmlspecialchars_decode( $value, ENT_NOQUOTES );
 		}
 	}
 }
