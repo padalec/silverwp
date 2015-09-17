@@ -86,6 +86,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function setCurrentPagedPage( $current_page ) {
+			$this->is_paged = true;
 			$this->set( 'paged', (int) $current_page );
 
 			return $this;
@@ -324,6 +325,16 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 */
 		public function getTitle() {
 			return $this->post->post_title;
+		}
+
+		/**
+		 * Get post type class handler or name
+		 *
+		 * @return PostTypeAbstract|string
+		 * @access public
+		 */
+		public function getPostType() {
+			return $this->post_type;
 		}
 
 		/**
