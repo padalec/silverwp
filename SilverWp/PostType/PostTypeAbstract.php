@@ -30,6 +30,7 @@ use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostRelationship\Relationship;
 use SilverWp\SingletonAbstract;
 use SilverWp\Taxonomy\Exception as TaxonomyException;
+use SilverWp\Taxonomy\TaxonomyAbstract;
 use SilverWp\Taxonomy\TaxonomyInterface;
 use SilverWp\Translate;
 
@@ -352,7 +353,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 *
 		 * Get taxonomy class handler
 		 *
-		 * @return object
+		 * @return TaxonomyAbstract
 		 * @access public
 		 */
 		public function getTaxonomy() {

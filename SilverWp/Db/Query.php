@@ -392,14 +392,15 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 *
 		 * @return bool|false|string|\WP_Error
 		 * @access public
-		 * @since  0.3
+		 * @since  0.4
 		 */
 		public function getTerms( $taxonomy_name, $before = '', $sep = ', ', $after = '' ) {
-
-			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
+			$taxonomy = $this->post_type->getTaxonomy();
+			if ( $taxonomy->isRegistered( $taxonomy_name ) ) {
+				$tax = $taxonomy->get( $taxonomy_name );
 				return get_the_term_list(
 					$this->getPostId()
-					, $taxonomy_name
+					, $tax['full_name']
 					, $before
 					, $sep
 					, $after

@@ -19,6 +19,7 @@
 namespace SilverWp\Taxonomy;
 
 use SilverWp\Debug;
+use SilverWp\Helper\RecursiveArray;
 use SilverWp\Helper\UtlArray;
 use SilverWp\Interfaces\Core;
 use SilverWp\Interfaces\PostType;
@@ -107,6 +108,8 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			foreach ( $post_type_objects as $post_type_name ) {
 				$taxonomy_name = $this->getName( $post_type_name, $short_name );
 				$this->taxonomies[ $taxonomy_name ] = $args;
+				$this->taxonomies[ $taxonomy_name ]['short_name'] = $short_name;
+				$this->taxonomies[ $taxonomy_name ]['full_name'] = $taxonomy_name;
 			}
 
 			return $this;
@@ -225,12 +228,19 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		 * @access public
 		 */
 		public function get( $taxonomy_name = null ) {
-			if ( ! is_null( $taxonomy_name )
-			     && isset( $this->taxonomies[ $taxonomy_name ] )
-			) {
-				return $this->taxonomies[ $taxonomy_name ];
+			if ( ! is_null( $taxonomy_name ) ) {
+				if ( isset( $this->taxonomies[ $taxonomy_name ] ) ) {
+					return $this->taxonomies[ $taxonomy_name ];
+				} else {
+					//maybe is short name?
+					$key = RecursiveArray::search( $this->taxonomies, $taxonomy_name );
+					if ( $key !== false ) {
+						return $this->taxonomies[ $key ];
+					} else {
+						return false;
+					}
+				}
 			}
-
 			return $this->taxonomies;
 		}
 
@@ -261,14 +271,13 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		/**
 		 * Check if taxonomy $taxonomy_name is registered
 		 *
-		 * @param string $short_name taxonomy name
+		 * @param string $name taxonomy name (full or short)
 		 *
 		 * @return boolean
 		 * @access public
 		 */
-		public function isRegistered( $short_name ) {
-			$taxonomy_name = $this->getName( $short_name );
-			if ( isset( $this->taxonomies[ $taxonomy_name ] ) ) {
+		public function isRegistered( $name ) {
+			if ( $this->get( $name ) !== false ) {
 				return true;
 			}
 
@@ -433,14 +442,6 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		public function customColumns( $column, $post_id ) {
 			try {
 //				todo move to meta box
-//              if ( $column == $this->id . '_thumbnail' ) {
-//					// Display the featured image in the column view if possible
-//					if ( \has_post_thumbnail( $post_id ) ) {
-//						\the_post_thumbnail( $this->column_image_size );
-//					} else {
-//						echo Translate::translate( 'None' );
-//					}
-//				}
 				// Display taxonomies in the column view
 				foreach ( $this->taxonomies as $taxonomy_name => $args ) {
 					if ( isset( $args['display_column'] ) && $args['display_column'] && $column == $taxonomy_name) {
