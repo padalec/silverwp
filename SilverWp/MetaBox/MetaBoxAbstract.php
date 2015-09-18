@@ -19,10 +19,13 @@
 namespace SilverWp\MetaBox;
 
 use SilverWp\Debug;
+use SilverWp\Exception;
 use SilverWp\Helper\Control\ControlInterface;
+use SilverWp\Helper\Message;
 use SilverWp\Helper\MetaBox;
 use SilverWp\Helper\Option;
 use SilverWp\Helper\RecursiveArray;
+use SilverWp\Helper\Thumbnail;
 use SilverWp\Helper\UtlArray;
 use SilverWp\Interfaces\Core;
 use SilverWp\Interfaces\PostType;
@@ -627,7 +630,7 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 
 		/**
 		 *
-		 * get list of edit columns displayed in lists of Post Type
+		 * Get list of edit columns displayed in lists of Post Type
 		 *
 		 *
 		 * list of columns displayed in dashboard list. Example
@@ -682,5 +685,152 @@ if ( ! class_exists( 'SilverWp\MetaBox\MetaBoxAbstract' ) ) {
 
 			return $columns;
 		}
-    }
+
+		/**
+		 * Get image meta box
+		 *
+		 * @param integer      $post_id
+		 * @param string       $meta_name     meta box field name
+		 * @param array|string $size          Optional. Registered image size or flat array of height and width
+		 *                                    dimensions. Default 'thumbnail'.
+		 *
+		 * @return string HTML img element or empty string on failure.
+		 * @access public
+		 */
+		public function getThumbnail( $post_id, $meta_name, $size = 'thumbnail' ) {
+			$image_url     = $this->get( $post_id, $meta_name );
+			$attachment_id = Thumbnail::getAttachmentIdFromUrl( $image_url );
+			$image_html    = wp_get_attachment_image( $attachment_id, $size );
+
+			return $image_html;
+		}
+
+		/**
+		 *
+		 * Get features list
+		 *
+		 * @param integer $post_id
+		 * @param string  $meta_name
+		 *
+		 * @return array
+		 * @access public
+		 */
+		public function getFeatures( $post_id, $meta_name = 'features' ) {
+			$return   = array();
+			$features = $this->get( $post_id, $meta_name, true );
+
+			if ( $features ) {
+				foreach ( $features['feature'] as $key => $value ) {
+					if ( $value['name'] != '' ) {
+						$return[ $key ] = $value;
+					}
+				}
+			}
+
+			return $return;
+		}
+
+		/**
+		 *
+		 * Gallery list
+		 *
+		 * @param integer      $post_id
+		 * @param string       $meta_name Optional. Default: 'gallery'
+		 * @param string|array $size      thumbnail image size
+		 *
+		 * @return array
+		 */
+		public function getGallery( $post_id, $meta_name = 'gallery', $size = 'thumbnail' ) {
+			$images = array();
+
+			$gallery = $this->get( $post_id, $meta_name, false );
+			if ( $gallery && count( $gallery ) ) {
+				foreach ( $gallery as $key => $gallery_item ) {
+					if ( ! is_null( $gallery_item['image'] )
+					     && '' != $gallery_item['image']
+					) {
+
+						$attachment_id = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
+						$image_html = wp_get_attachment_image( $attachment_id, $size );
+
+						$images[ $key ] = array(
+							'attachment_id' => $attachment_id,
+							'image_url'     => $gallery_item['image'],
+							'image_html'    => $image_html,
+						);
+					}
+				}
+			}
+
+			return $images;
+		}
+
+		/**
+		 * Get video data
+		 *
+		 * @param integer $post_id
+		 * @param string  $key_name field key name
+		 *
+		 * @return array
+		 */
+		public function getMedia( $post_id, $key_name = 'video' ) {
+			$file_data = array();
+
+			$meta_box = $this->get( $post_id, $key_name );
+
+			$video_url = false;
+			if ( isset( $meta_box['video_url'] ) && $meta_box['video_url'] ) {
+				$video_url = $meta_box['video_url'];
+			}
+
+			if ( $video_url ) {
+				try {
+					$oEmbed = new Oembed( $video_url );
+
+					$file_data['provider_name'] = $oEmbed->provider_name;
+					$file_data['file_url']      = $video_url;
+					$file_data['thumbnail_url'] = $oEmbed->getThumbnailUrl();
+
+				} catch ( Exception $ex ) {
+					echo Message::alert( $ex->getMessage(), 'alert-danger' );
+					if ( WP_DEBUG ) {
+						Debug::dumpPrint( $ex->getTraceAsString(), 'Stack trace:' );
+						Debug::dumpPrint( $ex->getTrace(), 'Full stack:' );
+					}
+				}
+			}
+
+			return $file_data;
+		}
+
+		/**
+		 * Get sidebar position
+		 *
+		 * @param integer $post_id
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSidebarPosition( $post_id ) {
+			//Fix for tag page and all post type where don't have config from meta box
+			if ( is_home() || is_tag() || is_date() || is_archive() ) {
+				$post_id = Option::get_option( 'page_for_posts' );
+			}
+
+			$sidebar_code = $this->get( $post_id, 'sidebar' );
+
+			switch ( $sidebar_code ) {
+				case '1':
+					$sidebar_position = 'left';
+					break;
+				case '2':
+					$sidebar_position = 'right';
+					break;
+				default:
+					$sidebar_position = 'right'; // default position
+			}
+
+			return $sidebar_position;
+		}
+	}
 }

@@ -449,99 +449,6 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		public function getRelatedPosts() {
 			return $this->post_type->getRelationship()->getRelatedPosts();
 		}
-		/**
-		 *
-		 * Get features list
-		 *
-		 * @return array
-		 * @access public
-		 */
-		public function getFeatures() {
-			$return_array = array();
-			$features     = $this->getMetaBox( 'features', true );
-
-			if ( $features ) {
-				foreach ( $features['feature'] as $key => $value ) {
-					if ( $value['name'] != '' ) {
-						$return_array[ $key ] = $value;
-					}
-				}
-			}
-
-			return $return_array;
-		}
-
-		/**
-		 *
-		 * Gallery list
-		 *
-		 * @param string       $name
-		 * @param string|array $size thumbnail image size
-		 *
-		 * @return array
-		 */
-		public function getGallery( $name = 'gallery', $size = 'thumbnail' ) {
-			$images = array();
-
-			$gallery = $this->getMetaBox( $name, false );
-			if ( $gallery && count( $gallery ) ) {
-				foreach ( $gallery as $key => $gallery_item ) {
-					if ( ! is_null( $gallery_item['image'] )
-					     && '' != $gallery_item['image']
-					) {
-
-						$attachment_id = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
-						$image_html = wp_get_attachment_image( $attachment_id, $size );
-
-						$images[ $key ] = array(
-							'attachment_id' => $attachment_id,
-							'image_url'     => $gallery_item['image'],
-							'image_html'    => $image_html,
-						);
-					}
-				}
-			}
-
-			return $images;
-		}
-
-		/**
-		 * Get video data
-		 *
-		 * @param string $key_name field key name
-		 *
-		 * @return array
-		 */
-		public function getMedia( $key_name = 'video' ) {
-			$file_data = array();
-
-			$meta_box = $this->getMetaBox( $key_name );
-
-			$video_url = false;
-			if ( isset( $meta_box['video_url'] ) && $meta_box['video_url'] ) {
-				$video_url = $meta_box['video_url'];
-			}
-
-			if ( $video_url ) {
-				try {
-					$oEmbed = new Oembed( $video_url );
-
-					$file_data['provider_name'] = $oEmbed->provider_name;
-					$file_data['file_url']      = $video_url;
-					$file_data['thumbnail_url'] = $oEmbed->getThumbnailUrl();
-
-				} catch ( \SilverWp\Exception $ex ) {
-					echo Message::alert( $ex->getMessage(), 'alert-danger' );
-					if ( WP_DEBUG ) {
-						Debug::dumpPrint( $ex->getTraceAsString(),
-							'Stack trace:' );
-						Debug::dumpPrint( $ex->getTrace(), 'Full stack:' );
-					}
-				}
-			}
-
-			return $file_data;
-		}
 
 		/**
 		 * Check the post type have thumbnail
@@ -588,30 +495,17 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		}
 
 		/**
-		 * Get sidebar position
+		 * Shortcut to MetaBoxAbstract::getThumbnail()
+		 *
+		 * @param string       $meta_name
+		 * @param string|array $size
 		 *
 		 * @return string
 		 * @access public
 		 */
-		public function getSidebarPosition() {
-			//Fix for tag page and all post type where don't have config from meta box
-			if ( \is_home() || \is_tag() || \is_date() || \is_archive() ) {
-				$post_id = Option::get_option( 'page_for_posts' );
-				$this->setPostId( $post_id );
-			}
-			$sidebar_code = $this->getMetaBox( 'sidebar' );
-			switch ( $sidebar_code ) {
-				case '1':
-					$sidebar_position = 'left';
-					break;
-				case '2':
-					$sidebar_position = 'right';
-					break;
-				default:
-					$sidebar_position = 'right'; // default position
-			}
-
-			return $sidebar_position;
+		public function getThumbnail( $meta_name, $size ='thumbnail' ) {
+			return $this->meta_box
+				->getThumbnail( $this->getPostId(), $meta_name, $size );
 		}
 	}
 }
