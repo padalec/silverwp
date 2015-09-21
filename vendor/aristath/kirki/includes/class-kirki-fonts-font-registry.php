@@ -97,7 +97,7 @@ class Kirki_Fonts_Font_Registry {
 		if ( empty( $family ) ) {
 			return '';
 		} else {
-			$request = str_replace( ' ', '+', '//fonts.googleapis.com/css?family='.implode( '|', $family ) );
+			$request = str_replace( ' ', '+', '//fonts.googleapis.com/css?family='.implode( '%7C', $family ) );
 		}
 
 		// load the font weight
@@ -144,6 +144,13 @@ class Kirki_Fonts_Font_Registry {
 			'latin'        => $i18n['latin'],
 			'latin-ext'    => $i18n['latin-ext'],
 			'vietnamese'   => $i18n['vietnamese'],
+			'hebrew'       => $i18n['hebrew'],
+			'arabic'       => $i18n['arabic'],
+			'bengali'      => $i18n['bengali'],
+			'gujarati'     => $i18n['gujarati'],
+			'tamil'        => $i18n['tamil'],
+			'telugu'       => $i18n['telugu'],
+			'thai'         => $i18n['thai'],
 		);
 
 	}
@@ -202,7 +209,7 @@ class Kirki_Fonts_Font_Registry {
 				),
 				'sans-serif' => array(
 					'label'  => $i18n['sans-serif'],
-					'stack'  => '"Helvetica Neue",Helvetica,Arial,sans-serif',
+					'stack'  => 'Helvetica,Arial,sans-serif',
 				),
 				'monospace' => array(
 					'label' => $i18n['monospace'],
@@ -273,7 +280,9 @@ class Kirki_Fonts_Font_Registry {
 
 		if ( null == $this->google_fonts ) {
 
-			$json = $wp_filesystem->get_contents( KIRKI_PATH.'/assets/json/webfonts.json' );
+			//$json = $wp_filesystem->get_contents( KIRKI_PATH.'/assets/json/webfonts.json' );
+			//fix notcie add by padalec
+			$json = file_get_contents( KIRKI_PATH.'/assets/json/webfonts.json' );
 			// Get the list of fonts from our json file and convert to an array
 			$fonts = json_decode( $json, true );
 

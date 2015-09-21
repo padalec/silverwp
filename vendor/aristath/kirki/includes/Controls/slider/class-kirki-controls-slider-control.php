@@ -28,47 +28,46 @@ class Kirki_Controls_Slider_Control extends WP_Customize_Control {
 
 	public function enqueue() {
 
-		wp_enqueue_script( 'jquery-ui' );
-		wp_enqueue_script( 'jquery-ui-slider' );
-		wp_enqueue_style( 'kirki-slider', trailingslashit( kirki_url() ).'includes/controls/slider/style.css' );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			wp_enqueue_style( 'kirki-slider', trailingslashit( kirki_url() ) . 'includes/controls/slider/style.css' );
+		}
+		wp_enqueue_script( 'kirki-slider', trailingslashit( kirki_url() ) . 'includes/controls/slider/script.js', array( 'jquery' ) );
 
 	}
 
-	public function render_content() { ?>
+	public function to_json() {
+		parent::to_json();
+		$this->json['value']   = $this->value();
+		$this->json['choices'] = $this->choices;
+		$this->json['link']    = $this->get_link();
+		$this->json['default'] = $this->setting->default;
+
+		$this->json['choices']['min']  = ( isset( $this->choices['min'] ) ) ? $this->choices['min'] : '0';
+		$this->json['choices']['max']  = ( isset( $this->choices['max'] ) ) ? $this->choices['max'] : '100';
+		$this->json['choices']['step'] = ( isset( $this->choices['step'] ) ) ? $this->choices['step'] : '1';
+	}
+
+	public function content_template() { ?>
 		<label>
-
-			<span class="customize-control-title">
-				<?php echo esc_attr( $this->label ); ?>
-				<?php if ( ! empty( $this->description ) ) : ?>
-					<?php // The description has already been sanitized in the Fields class, no need to re-sanitize it. ?>
-					<span class="description customize-control-description"><?php echo $this->description; ?></span>
-				<?php endif; ?>
-			</span>
-
-			<input type="text" class="kirki-slider" id="input_<?php echo $this->id; ?>" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
-
+			<# if ( data.label ) { #>
+				<span class="customize-control-title">{{{ data.label }}}</span>
+			<# } #>
+			<# if ( data.description ) { #>
+				<span class="description customize-control-description">{{{ data.description }}}</span>
+			<# } #>
+			<div class="wrapper">
+				<input type="range" min="{{ data.choices['min'] }}" max="{{ data.choices['max'] }}" step="{{ data.choices['step'] }}" value="{{ data.value }}" {{{ data.link }}} data-reset_value="{{ data.default }}" />
+				<div class="kirki_range_value">
+					<span class="value">{{ data.value }}</span>
+					<# if ( data.choices['suffix'] ) { #>
+						{{ data.choices['suffix'] }}
+					<# } #>
+				</div>
+				<div class="kirki-slider-reset">
+					<span class="dashicons dashicons-image-rotate"></span>
+				</div>
+			</div>
 		</label>
-
-		<div id="slider_<?php echo $this->id; ?>" class="ss-slider"></div>
-		<script>
-		jQuery(document).ready(function($) {
-			$( '[id="slider_<?php echo $this->id; ?>"]' ).slider({
-					value : <?php echo esc_attr( $this->value() ); ?>,
-					min   : <?php echo $this->choices['min']; ?>,
-					max   : <?php echo $this->choices['max']; ?>,
-					step  : <?php echo $this->choices['step']; ?>,
-					slide : function( event, ui ) { $( '[id="input_<?php echo $this->id; ?>"]' ).val(ui.value).keyup(); }
-			});
-			$( '[id="input_<?php echo $this->id; ?>"]' ).val( $( '[id="slider_<?php echo $this->id; ?>"]' ).slider( "value" ) );
-
-			$( '[id="input_<?php echo $this->id; ?>"]' ).change(function() {
-				$( '[id="slider_<?php echo $this->id; ?>"]' ).slider({
-					value : $( this ).val()
-				});
-			});
-
-		});
-		</script>
 		<?php
 
 	}

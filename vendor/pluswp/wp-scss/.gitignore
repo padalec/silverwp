@@ -1,6 +1,0 @@
-.DS_Store
-.svn
-.idea
-
-composer.lock
-/vendor/

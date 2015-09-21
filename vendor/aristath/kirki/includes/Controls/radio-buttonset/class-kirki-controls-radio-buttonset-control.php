@@ -24,37 +24,36 @@ class Kirki_Controls_Radio_Buttonset_Control extends WP_Customize_Control {
 	public $type = 'radio-buttonset';
 
 	public function enqueue() {
-		wp_enqueue_script( 'jquery-ui-button' );
-		wp_enqueue_style( 'kirki-radio-buttonset', trailingslashit( kirki_url() ).'includes/controls/radio-buttonset/style.css' );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			wp_enqueue_style( 'kirki-radio-buttonset', trailingslashit( kirki_url() ) . 'includes/controls/radio-buttonset/style.css' );
+		}
+		wp_enqueue_script( 'kirki-radio-buttonset', trailingslashit( kirki_url() ) . 'includes/controls/radio-buttonset/script.js', array( 'jquery' ) );
 	}
 
-	public function render_content() {
+	public function to_json() {
+		parent::to_json();
+		$this->json['id']      = $this->id;
+		$this->json['choices'] = $this->choices;
+		$this->json['link']    = $this->get_link();
+		$this->json['value']   = $this->value();
+	}
 
-		if ( empty( $this->choices ) ) {
-			return;
-		}
-
-		$name = '_customize-radio-'.$this->id;
-
-		?>
-		<span class="customize-control-title">
-			<?php echo esc_attr( $this->label ); ?>
-			<?php if ( ! empty( $this->description ) ) : ?>
-				<?php // The description has already been sanitized in the Fields class, no need to re-sanitize it. ?>
-				<span class="description customize-control-description"><?php echo $this->description; ?></span>
-			<?php endif; ?>
-		</span>
-
+	public function content_template() { ?>
+		<# if ( data.label ) { #>
+			<span class="customize-control-title">{{{ data.label }}}</span>
+		<# } #>
+		<# if ( data.description ) { #>
+			<span class="description customize-control-description">{{{ data.description }}}</span>
+		<# } #>
 		<div id="input_<?php echo $this->id; ?>" class="buttonset">
-			<?php foreach ( $this->choices as $value => $label ) : ?>
-				<input type="radio" value="<?php echo esc_attr( $value ); ?>" name="<?php echo esc_attr( $name ); ?>" id="<?php echo $this->id.esc_attr( $value ); ?>" <?php $this->link(); checked( $this->value(), $value ); ?>>
-					<label for="<?php echo $this->id.esc_attr( $value ); ?>">
-						<?php echo esc_html( $label ); ?>
+			<# for ( key in data.choices ) { #>
+				<input class="switch-input" type="radio" value="{{ key }}" name="_customize-radio-{{{ data.id }}}" id="{{ data.id }}{{ key }}" {{{ data.link }}}<# if ( key === data.value ) { #> checked="checked" <# } #>>
+					<label class="switch-label switch-label-<# if ( key === data.value ) { #>on <# } else { #>off<# } #>" for="{{ data.id }}{{ key }}">
+						{{ data.choices[ key ] }}
 					</label>
 				</input>
-			<?php endforeach; ?>
+			<# } #>
 		</div>
-		<script>jQuery(document).ready(function($) { $( '[id="input_<?php echo $this->id; ?>"]' ).buttonset(); });</script>
 		<?php
 	}
 

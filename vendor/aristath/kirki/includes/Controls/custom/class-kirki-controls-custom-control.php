@@ -26,15 +26,19 @@ class Kirki_Controls_Custom_Control extends WP_Customize_Control {
 
 	public $type = 'custom';
 
-	public function render_content() { ?>
+	public function to_json() {
+		parent::to_json();
+		$this->json['value'] = $this->value();
+	}
+
+	public function content_template() { ?>
 		<label>
-			<span class="customize-control-title">
-				<?php echo esc_attr( $this->label ); ?>
-				<?php if ( ! empty( $this->description ) ) : ?>
-					<?php // The description has already been sanitized in the Fields class, no need to re-sanitize it. ?>
-					<span class="description customize-control-description"><?php echo $this->description; ?></span>
-				<?php endif; ?>
-			</span>
+			<# if ( data.label ) { #>
+				<span class="customize-control-title">{{{ data.label }}}</span>
+			<# } #>
+			<# if ( data.description ) { #>
+				<span class="description customize-control-description">{{{ data.description }}}</span>
+			<# } #>
 			<?php
 				/**
 				 * The value is defined by the developer in the field configuration as 'default'.
@@ -44,7 +48,7 @@ class Kirki_Controls_Custom_Control extends WP_Customize_Control {
 				 * If that happens, they can change whatever they want anyways. This field is not a concern.
 				 */
 			?>
-			<?php echo $this->value(); ?>
+			{{{ data.value }}}
 		</label>
 		<?php
 

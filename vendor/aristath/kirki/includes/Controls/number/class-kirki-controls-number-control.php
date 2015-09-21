@@ -26,44 +26,48 @@ class Kirki_Controls_Number_Control extends WP_Customize_Control {
 
 	public $type = 'number';
 
+	public function to_json() {
+		parent::to_json();
+		$this->json['value'] = $this->value();
+		$this->json['choices'] = $this->choices;
+		$this->json['link'] = $this->get_link();
+	}
+
 	public function enqueue() {
 
-		wp_enqueue_script( 'formstone', trailingslashit( kirki_url() ).'includes/controls/number/formstone-core.js', array( 'jquery' ) );
-		wp_enqueue_script( 'formstone-number', trailingslashit( kirki_url() ).'includes/controls/number/formstone-number.js', array( 'jquery', 'formstone' ) );
-		wp_enqueue_style( 'kirki-number', trailingslashit( kirki_url() ).'includes/controls/number/style.css' );
+		wp_enqueue_script( 'formstone', trailingslashit( kirki_url() ) . 'includes/controls/number/formstone-core.js', array( 'jquery' ) );
+		wp_enqueue_script( 'formstone-number', trailingslashit( kirki_url() ) . 'includes/controls/number/formstone-number.js', array( 'jquery', 'formstone' ) );
+		wp_enqueue_script( 'kirki-number', trailingslashit( kirki_url() ) . 'includes/controls/number/script.js', array( 'jquery', 'formstone', 'formstone-number' ) );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			wp_enqueue_style( 'kirki-number', trailingslashit( kirki_url() ) . 'includes/controls/number/style.css' );
+		}
 
 	}
 
-	public function render_content() {
-
-		if ( ! empty( $this->choices ) ) {
-			$min  = ( isset( $this->choices['min'] ) ) ? ' min="'.esc_attr( $this->choices['min'] ).'"' : '';
-			$max  = ( isset( $this->choices['max'] ) ) ? ' max="'.esc_attr( $this->choices['max'] ).'"' : '';
-			$step = ( isset( $this->choices['step'] ) ) ? ' step="'.esc_attr( $this->choices['step'] ).'"' : '';
-		} else {
-			$min  = '';
-			$max  = '';
-			$step = '';
-		}
+	public function content_template() {
 		?>
-
-		<label class="customizer-text">
-			<span class="customize-control-title">
-				<?php echo esc_attr( $this->label ); ?>
-				<?php if ( ! empty( $this->description ) ) : ?>
-					<?php // The description has already been sanitized in the Fields class, no need to re-sanitize it. ?>
-					<span class="description customize-control-description"><?php echo $this->description; ?></span>
-				<?php endif; ?>
-			</span>
-			<input type="number"<?php echo $min.$max.$step; ?> <?php $this->link(); ?> value="<?php echo intval( $this->value() ); ?>"/>
+		<label>
+			<# if ( data.label ) { #>
+				<span class="customize-control-title">{{{ data.label }}}</span>
+			<# } #>
+			<# if ( data.description ) { #>
+				<span class="description customize-control-description">{{{ data.description }}}</span>
+			<# } #>
+			<div class="customize-control-content">
+				<input type="number" {{{ data.link }}} value="{{ data.value }}"
+					<# if ( data.choices['min'] ) { #>
+						min="{{ data.choices['min'] }}"
+					<# } #>
+					<# if ( data.choices['max'] ) { #>
+						max="{{ data.choices['max'] }}"
+					<# } #>
+					<# if ( data.choices['step'] ) { #>
+						step="{{ data.choices['step'] }}"
+					<# } #>
+				/>
+			</div>
 		</label>
-		<script>
-			jQuery(document).ready(function($) {
-				"use strict";
-				$( "#customize-control-<?php echo $this->id; ?> input[type='number']").number();
-			});
-		</script>
-
 		<?php
 	}
+
 }

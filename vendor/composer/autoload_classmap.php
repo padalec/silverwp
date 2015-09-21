@@ -6,11 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'lessc' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
-    'lessc_formatter_classic' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
-    'lessc_formatter_compressed' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
-    'lessc_formatter_lessjs' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
-    'lessc_parser' => $vendorDir . '/leafo/lessphp/lessc.inc.php',
     'scss_formatter' => $vendorDir . '/leafo/scssphp/classmap.php',
     'scss_formatter_compressed' => $vendorDir . '/leafo/scssphp/classmap.php',
     'scss_formatter_crunched' => $vendorDir . '/leafo/scssphp/classmap.php',
