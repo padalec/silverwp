@@ -507,5 +507,18 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			return $this->meta_box
 				->getThumbnail( $this->getPostId(), $meta_name, $size );
 		}
+
+		/**
+		 * Get post sidebar position
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSidebarPosition() {
+			$post_id = $this->getPostId();
+			$sidebar = $this->meta_box->getSidebarPosition($post_id);
+			return $sidebar;
+
+		}
 	}
 }
