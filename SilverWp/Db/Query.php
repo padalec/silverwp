@@ -258,20 +258,6 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		}
 
 		/**
-		 * Get likes count
-		 *
-		 * @return mixed
-		 * @access public
-		 */
-		public function getLikesCount() {
-			$post_like  = PostLike::getInstance();
-			$like_count = $post_like->getPostLikeCount( $this->getPostId() );
-
-			return $like_count;
-		}
-
-
-		/**
 		 * Get Post Id
 		 *
 		 * @return int
@@ -517,8 +503,8 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		public function getSidebarPosition() {
 			$post_id = $this->getPostId();
 			$sidebar = $this->meta_box->getSidebarPosition($post_id);
-			return $sidebar;
 
+			return $sidebar;
 		}
 	}
 }
