@@ -19,14 +19,10 @@
 
 namespace SilverWp\Db;
 
-use SilverWp\Debug;
-use SilverWp\Helper\Message;
-use SilverWp\Helper\Thumbnail;
 use SilverWp\MetaBox\MetaBoxAbstract;
 use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWp\PostType\PostTypeInterface;
-use SilverWpAddons\Ajax\PostLike;
 
 if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 
