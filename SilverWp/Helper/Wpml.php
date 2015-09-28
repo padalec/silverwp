@@ -17,14 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-/*
-  Repository path: $HeadURL: https://svn.nq.pl/wordpress/branches/dynamite/igniter/wp-content/themes/igniter/lib/SilverWp/Helper/Wpml.php $
-  Last committed: $Revision: 2184 $
-  Last changed by: $Author: padalec $
-  Last changed date: $Date: 2015-01-21 13:20:08 +0100 (Śr, 21 sty 2015) $
-  ID: $Id: Wpml.php 2184 2015-01-21 12:20:08Z padalec $
- */
-
 namespace SilverWp\Helper;
 use SilverWp\FileSystem;
 use SilverWp\View;
@@ -33,26 +25,31 @@ use SilverWp\View;
  * some heler funciton for Wpml plugin
  *
  * @author        Michal Kalkowski <michal at silversite.pl>
- * @version       $Id: Wpml.php 2184 2015-01-21 12:20:08Z padalec $
+ * @version       0.5
  * @category      WordPress
  * @package       SilverWp
  * @subpackage    Helper
- * @copyright (c) 2009 - 2014, SilverSite.pl
+ * @copyright     2009 - 2015 (c) SilverSite.pl
  */
 class Wpml {
 	/**
-	 * wpml lang switcher
+	 * WPML lang switcher
 	 *
 	 * @static
 	 * @access public
+	 *
+	 * @param string $view_file
+	 *
 	 * @return string
+	 * @throws \SilverWp\Exception
 	 */
-	public static function langSwitcher() {
-		if ( \function_exists( 'icl_get_languages' ) ) {
-			$languages = \icl_get_languages( 'skip_missing=1&orderby=code&order=ASC&link_empty_to=str' );
-			$view_path = FileSystem::getDirectory('views');
-			$view    = View::getInstance();
-			$content = $view->load( $view_path . 'helper/lang-symbol-switcher', array( 'data' => $languages ) );
+	public static function langSwitcher( $view_file = 'lang-symbol-switcher' ) {
+		if ( function_exists( 'icl_get_languages' ) ) {
+			$args      = 'skip_missing=1&orderby=code&order=ASC&link_empty_to=str';
+			$languages = icl_get_languages( $args );
+			$view_path = FileSystem::getDirectory( 'views' );
+			$view      = View::getInstance();
+			$content = $view->load( $view_path . $view_file, array( 'data' => $languages ) );
 
 			return $content;
 		}

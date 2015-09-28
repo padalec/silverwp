@@ -502,5 +502,15 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 
 			return $sidebar;
 		}
+
+		/**
+		 * Don't know why orginal reset_postdata() doesn't work.
+		 *
+		 * @access public
+		 * @link https://codex.wordpress.org/Class_Reference/WP_Query#Multiple_Loops
+		 */
+		public function reset_postdata() {
+			wp_reset_postdata();
+		}
 	}
 }
