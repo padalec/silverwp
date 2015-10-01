@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     $vendorDir . '/vafour/vafpress-framework/bootstrap.php',
     $vendorDir . '/evanto/auto-updates/class-pixelentity-theme-update.php',
-    $vendorDir . '/pluswp/wp-scss/bootstrap-for-theme.php',
+    $vendorDir . '/silversite/wp-scss/bootstrap-for-theme.php',
     $vendorDir . '/aristath/kirki/kirki.php',
     $vendorDir . '/Taxonomy_Single_Term/class.taxonomy-single-term.php',
     $vendorDir . '/scribu/posts-to-posts/posts-to-posts.php',

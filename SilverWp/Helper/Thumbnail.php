@@ -44,22 +44,21 @@ class Thumbnail {
 
 	/**
 	 *
-	 * Set image size
+	 * Set image sizes
 	 *
-	 * @param string|array $file path to file with image
-	 *                           sizes array or array with image sizes
+	 * @param array|string $image_sizes path to file with
+	 *                                  image sizes array or
+	 *                                  array with sizes
 	 *
 	 * @access public
 	 * @return void
 	 */
-	public function setImageSize( $image_size ) {
+	public function setImageSize( $image_sizes ) {
 		// Thumbnail support for portfolio posts
 		if ( \function_exists( 'add_theme_support' ) ) {
 
-			if ( is_string( $image_size ) && file_exists( $image_size ) ) {
-				$image_sizes = include $image_size;
-			} else if ( is_array( $image_size ) ) {
-				$image_sizes = $image_size;
+			if ( ! is_array( $image_sizes ) && file_exists( $image_sizes ) ) {
+				$image_sizes = require $image_sizes;
 			}
 
 			\add_theme_support( 'post-thumbnails' );
@@ -79,7 +78,7 @@ class Thumbnail {
 
 	/**
 	 *
-	 * replace defualt image size based in setings->media
+	 * Replace default image size based in settings->media
 	 *
 	 * @param array $image_sizes array with all image size
 	 *

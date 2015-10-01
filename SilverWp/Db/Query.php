@@ -19,14 +19,10 @@
 
 namespace SilverWp\Db;
 
-use SilverWp\Debug;
-use SilverWp\Helper\Message;
-use SilverWp\Helper\Thumbnail;
 use SilverWp\MetaBox\MetaBoxAbstract;
 use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostType\PostTypeAbstract;
 use SilverWp\PostType\PostTypeInterface;
-use SilverWpAddons\Ajax\PostLike;
 
 if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 
@@ -258,20 +254,6 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		}
 
 		/**
-		 * Get likes count
-		 *
-		 * @return mixed
-		 * @access public
-		 */
-		public function getLikesCount() {
-			$post_like  = PostLike::getInstance();
-			$like_count = $post_like->getPostLikeCount( $this->getPostId() );
-
-			return $like_count;
-		}
-
-
-		/**
 		 * Get Post Id
 		 *
 		 * @return int
@@ -314,7 +296,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function getDescription() {
-			return $this->post->post_content;
+			return do_shortcode( $this->post->post_content );
 		}
 
 		/**
@@ -459,7 +441,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 */
 		public function isThumbnail() {
 			$post_id = $this->getPostId();
-			if ( in_array( 'thumbnail', $this->post_type->getSupport() )
+			if ( in_array( 'thumbnail', $this->post_type->getSupports() )
 			     && \has_post_thumbnail( $post_id )
 			) {
 				return true;
@@ -476,7 +458,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @since 0.3
 		 */
 		public function isDescription() {
-			$editor = \in_array( 'editor', $this->post_type->getSupport() );
+			$editor = \in_array( 'editor', $this->post_type->getSupports() );
 
 			return $editor;
 		}
@@ -489,7 +471,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @since 0.3
 		 */
 		public function isTitle() {
-			$is_title = \in_array( 'title', $this->post_type->getSupport() );
+			$is_title = \in_array( 'title', $this->post_type->getSupports() );
 
 			return $is_title;
 		}
@@ -507,5 +489,19 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			return $this->meta_box
 				->getThumbnail( $this->getPostId(), $meta_name, $size );
 		}
+
+		/**
+		 * Get post sidebar position
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSidebarPosition() {
+			$post_id = $this->getPostId();
+			$sidebar = $this->meta_box->getSidebarPosition($post_id);
+
+			return $sidebar;
+		}
+
 	}
 }
