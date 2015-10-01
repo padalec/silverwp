@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# runs the unit tests and generates a Code Coverage Analysis document: /tmp/p2p-coverage/index.html
+
+rm -rf /tmp/p2p-coverage
+
+vendor/bin/phpunit --coverage-html /tmp/p2p-coverage
+
+echo "open /tmp/p2p-coverage/index.html"
