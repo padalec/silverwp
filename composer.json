@@ -15,10 +15,6 @@
   },
   "repositories": [
     {
-      "type": "composer",
-      "url": "http://wpackagist.org"
-    },
-    {
       "url": "https://github.com/aristath/kirki",
       "type": "git"
     }
@@ -34,7 +30,7 @@
   ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "dev-develop",
+    "aristath/kirki": "dev-master",
     "abraham/twitteroauth": "^0.6.0"
   },
   "autoload": {
