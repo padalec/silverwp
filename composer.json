@@ -24,7 +24,7 @@
   ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "^1.1",
+    "aristath/kirki": "dev-develop",
     "abraham/twitteroauth": "^0.6.0"
   },
   "autoload": {
