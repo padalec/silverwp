@@ -13,6 +13,16 @@
   "support": {
     "issues": "https://github.com/silversite/silverwp/issues"
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wpackagist.org"
+    },
+    {
+      "url": "https://github.com/aristath/kirki",
+      "type": "git"
+    }
+  ],
   "keywords": [
     "roots",
     "sage",
