@@ -314,9 +314,9 @@ if ( ! class_exists( 'SilverWp\Ajax\AjaxAbstract' ) ) {
 				$view      = View::getInstance()->load( $view_path . 'ajax/'
 				                                        . $view_file, $data );
 				//some servers don't display content with out echo
-				echo $view;
+//				echo $view;
 				//fix display 0
-				//return $view;
+				return $view;
 			} catch ( Exception $ex ) {
 				echo $ex->displayAdminNotice( $ex->getMessage() );
 			}

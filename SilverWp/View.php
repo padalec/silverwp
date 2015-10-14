@@ -66,9 +66,9 @@ class View extends SingletonAbstract {
 		if ( AjaxAbstract::isAjax() ) {
 			return include $view_file;
 		} else {
-			\ob_start();
+			ob_start();
 			include $view_file;
-			$content = \ob_get_clean();
+			$content = ob_get_clean();
 
 			return $content;
 		}

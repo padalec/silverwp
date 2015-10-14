@@ -70,9 +70,9 @@ class NavMenu extends SingletonAbstract {
     public function addActive( $css_classes ) {
         $custom_post_type = PostType::get_custom_post_type();
 
-        if ( \is_single() && \is_singular( $custom_post_type ) || \is_tax() ) {
+        if ( is_single() && is_singular( $custom_post_type ) || \is_tax() ) {
             // check - Post is a Custom Post Type
-            $css_classes = \array_filter( $css_classes, array( $this, 'removeActiveClass' ) );
+            $css_classes = array_filter( $css_classes, array( $this, 'removeActiveClass' ) );
             //get all registered custom post type templates
             foreach ( $custom_post_type as $post_type ) {
 				if ( $post_type === get_post_type() ) {
