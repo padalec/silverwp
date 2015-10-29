@@ -84,27 +84,31 @@ class Social {
      * @static
      * @access public
      */
-    public static function getIcons() {
-        $icons     = array();
-        $icons_tmp = \silverwp_get_social_icon();
-        $settings  = Option::get_theme_option( 'social_accounts', true );
+	public static function getIcons() {
+		$icons     = array();
+		if ( function_exists( 'silverwp_get_social_icon' ) ) {
+			$icons_tmp = \silverwp_get_social_icon();
+			$settings  = Option::get_theme_option( 'social_accounts', true );
 
-        foreach ( $icons_tmp as $icon ) {
-	        $key = \sanitize_title( $icon['label'] );
-	        if ( isset( $settings[ $key ] )
-	             && $settings[ $key ]['url'] != ''
-	        ) {
-		        $icons[ $key ]          = $settings[ $key ];
-		        $icons[ $key ]['icon']  = $icon['value'];
-		        $icons[ $key ]['slug']  = $key;
-		        $icons[ $key ]['label'] = $icon['label'];
-	        }
-        }
-        //sort array by order field
-        UtlArray::array_sort_by_column( $icons, 'order', \SORT_ASC );
+			foreach ( $icons_tmp as $icon ) {
+				$key = \sanitize_title( $icon['label'] );
+				if ( isset( $settings[ $key ] )
+				     && isset( $settings[ $key ]['url'] )
+				     && $settings[ $key ]['url'] != ''
+				) {
+					$icons[ $key ]          = $settings[ $key ];
+					$icons[ $key ]['icon']  = $icon['value'];
+					$icons[ $key ]['slug']  = $key;
+					$icons[ $key ]['label'] = $icon['label'];
+				}
+			}
+			//sort array by order field
+			UtlArray::array_sort_by_column( $icons, 'order', \SORT_ASC );
+		}
 
-        return $icons;
-    }
+		return $icons;
+
+	}
 
     /**
      * List of all configured in theme option social accounts
@@ -132,5 +136,32 @@ class Social {
         }
         UtlArray::array_sort_by_column( $social, 'order' );
         return $social;
+    }
+
+    /**
+     * Vertical list of links to social account
+     *
+     * @return array
+     * @static
+     * @access public
+     */
+    public static function getVerticalAccounts() {
+
+        $vertical_plugin = Option::get_theme_option( 'social_plugin', true );
+        $vertical_list = $vertical_list_slug = array();
+        foreach ( $vertical_plugin as $social_slug => $social_bool ) {
+            if ( $social_bool === '1' ) {
+                $vertical_list_slug[] = $social_slug;
+            }
+        }
+
+        $accounts_list = Social::getAccounts();
+        foreach ( $accounts_list as $social ) {
+            if ( in_array( $social['slug'], $vertical_list_slug ) ) {
+                $vertical_list[] = $social;
+            }
+        }
+
+        return $vertical_list;
     }
 }

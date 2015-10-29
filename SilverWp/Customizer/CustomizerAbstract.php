@@ -19,6 +19,7 @@
 namespace SilverWp\Customizer;
 
 use SilverWp\CssTemplate\Sass;
+use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\File;
 use SilverWp\Interfaces\Core;
@@ -37,8 +38,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 	 * @package    SilverWp
 	 * @subpackage Customizer
 	 * @author     Michal Kalkowski <michal at silversite.pl>
-	 * @copyright  Dynamite-Studio.pl & silversite.pl 2015
-	 * @version    $Revision:$
+	 * @copyright  SilverSite.pl 2015
+	 * @version    0.5
 	 * @abstract
 	 */
 	abstract class CustomizerAbstract extends SingletonAbstract
@@ -165,17 +166,24 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 		protected static $id;
 
 		/**
+		 * Debugging
+		 *
+		 * @var bool
+		 */
+		protected $debug = false;
+
+		/**
 		 * Class constructor
 		 *
 		 * @access protected
 		 */
 		protected function __construct() {
-
+			ini_set( 'max_execution_time', 300 );
 			$this->initStrings();
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'generatePreview' ), 101 );
 			add_action( 'customize_preview_init', array( $this, 'generatePreview' ), 102 );
-			//add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
+			add_action( 'customize_save_after', array( $this, 'generateAfterSave' ), 151 );
 			add_action( 'kirki/config', array( $this, 'init' ) );
 
 			$this->config();
@@ -312,8 +320,8 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 				'logo_image'    => $this->logo_image,
 				'description'   => $this->description,
 				'url_path'      => $this->url_path,
-				'color_accent'  => $this->color_accent,
-				'color_back'    => $this->color_back,
+				//'color_accent'  => $this->color_accent,
+				//'color_back'    => $this->color_back,
 				'textdomain'    => Translate::$text_domain,
 				'stylesheet_id' => self::$stylesheet_id,
 				'i18n'          => $this->strings,
@@ -372,12 +380,16 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 					          = FileSystem::getDirectory( 'css_template_uri' );
 
 					$sass = Sass::getInstance();
-					$sass->setUploadDir( $css_path );
-					$sass->setUploadUrl( $css_uri );
+					$sass->setUploadDir( $css_path . 'generated' );
+					$sass->setUploadUrl( $css_uri . 'generated' );
 
 					$variables                             = $this->getVariablesFromControls();
 					$variables['stylesheet_directory_uri'] = $css_uri;
 					$variables['template_directory_uri']   = $template_uri;
+
+					if ( $this->debug ) {
+						Debug::dumpPrint( $variables );
+					}
 
 					$sass->setVariables( $variables );
 					$sass->registerFallback();
@@ -399,43 +411,23 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 				$css_path = FileSystem::getDirectory( 'css_path' );
 				$css_uri  = FileSystem::getDirectory( 'css_uri' );
 
-				Less::$remove_random = true;
-				$less                = Less::getInstance();
-				$less->setUploadDir( $css_path );
-				$less->setUploadUrl( $css_uri );
-				$less_variable = $this->getVariablesFromControls();
-				$less->setVariables( $less_variable );
-				$less->compileCss();
-				$this->deleteTmp();
+				$template                = Sass::getInstance();
+				$template->setUploadDir( $css_path );
+				$template->setUploadUrl( $css_uri );
+				$variable = $this->getVariablesFromControls();
+
+				if ( $this->debug ) {
+					Debug::dumpPrint( $variable );
+				}
+
+				$template->setVariables( $variable );
+				$template->registerFallback();
+				$template->deleteCssTmp();
 
 			} catch ( Exception $ex ) {
 				$ex->catchException();
 			}
 		}
-
-		/**
-		 *
-		 * Reset less variable
-		 *
-		 * @static
-		 * @access public
-		 */
-		public static function resetLessVariable() {
-			self::$variables = array();
-		}
-
-		/**
-		 * Get all registered less variable
-		 *
-		 * @return array
-		 * @access public
-		 */
-		public function getLessVariable() {
-			$this->getVariablesFromControls();
-
-			return self::$variables;
-		}
-
 		/**
 		 *
 		 * Add new less variable
@@ -494,8 +486,10 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 		 * @access private
 		 */
 		private function deleteCssTmp() {
+			$css_path = FileSystem::getDirectory( 'css_path' );
+
 			$files = File::get_file_list(
-				$this->getAssetsPath() . 'css/generated'
+				$css_path . 'generated'
 				, array()
 				, false
 				, true
@@ -518,7 +512,7 @@ if ( ! class_exists( '\SilverWp\Customizer\CustomizerAbstract' ) ) {
 			$customizer_id = CustomizerAbstract::getId();
 			$value = \Kirki::get_option( $customizer_id, $option_name );
 
-			return htmlspecialchars_decode( $value );
+			return htmlspecialchars_decode( $value, ENT_NOQUOTES );
 		}
 	}
 }

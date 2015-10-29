@@ -1,0 +1,18 @@
+{
+    "name": "silverwp/wp-scss",
+    "type": "package",
+    "require": {
+        "leafo/scssphp": "dev-master"
+    },
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "kuus",
+            "email": "kunderikuus@gmail.com"
+        },
+        {
+            "name": "padalec",
+            "email": ""
+        }
+    ]
+}

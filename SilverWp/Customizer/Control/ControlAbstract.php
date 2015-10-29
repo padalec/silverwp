@@ -47,6 +47,14 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          */
         protected $is_template_variable = true;
 
+	    /**
+	     * Value input filters
+	     *
+	     * @todo this should by array with filters ZF2 Filters?
+	     * @var bool
+	     */
+	    protected $filters = true;
+
         /**
          *
          * Class constructor
@@ -136,14 +144,15 @@ if ( ! class_exists( 'SilverWp\Customizer\Control\ControlAbstract' ) ) {
          *
          * @return string
          * @access public
-         * @link http://kirki.org/#getting-the-value-of-a-background-control
          */
         public function getValue() {
-
-//            $value = get_theme_mod( $this->getName(), $this->getDefault() );
-            $value =  \Kirki::get_option( CustomizerAbstract::getId(), $this->getName());
-
-	        return htmlspecialchars_decode( $value );
+			$value =  \Kirki::get_option( CustomizerAbstract::getId(), $this->getName());
+			//todo add filters from ZF2
+	        $value = htmlspecialchars_decode( $value, ENT_NOQUOTES );
+	        if ( strpos( $value, '&#039;' ) !== false ) {
+		        $value = str_replace( '&#039;', '\'', $value );
+	        }
+	        return $value;
         }
 
 	    /**

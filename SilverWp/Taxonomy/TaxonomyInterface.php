@@ -75,16 +75,18 @@ if ( ! interface_exists( '\SilverWp\Taxonomy\TaxonomyInterface' ) ) {
 		 *
 		 * @return $this
 		 * @access public
+		 * @depraced 0.5
 		 */
-		public function setPostId( $post_id );
+		//public function setPostId( $post_id );
 
 		/**
 		 * Get post id
 		 *
 		 * @return integer
 		 * @access public
+		 * @depraced 0.5
 		 */
-		public function getPostId();
+		//public function getPostId();
 
 		/**
 		 * Check the taxonomy $name is registered
@@ -124,5 +126,14 @@ if ( ! interface_exists( '\SilverWp\Taxonomy\TaxonomyInterface' ) ) {
 		 * @access public
 		 */
 		public function getPostsTypesHandler();
+
+		/**
+		 * Get all names of registered taxonomies
+		 *
+		 * @return array
+		 * @access public
+		 * @since 0.5
+		 */
+		public function getNames();
 	}
 }

@@ -19,13 +19,10 @@
 
 namespace SilverWp\Db;
 
-use SilverWp\Debug;
-use SilverWp\Helper\Message;
-use SilverWp\Helper\MetaBox;
-use SilverWp\Helper\RecursiveArray;
-use SilverWp\Helper\Thumbnail;
+use SilverWp\MetaBox\MetaBoxAbstract;
+use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostType\PostTypeAbstract;
-use SilverWpAddons\Ajax\PostLike;
+use SilverWp\PostType\PostTypeInterface;
 
 if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 
@@ -45,16 +42,16 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * Post type class handler or
 		 * if string validate post type name. Default: post
 		 *
-		 * @var object|string
+		 * @var PostTypeAbstract|string
 		 * @access private
 		 */
 		private $post_type = 'post';
 
 		/**
-		 * @var string
+		 * @var string|MetaBoxAbstract
 		 * @access private
 		 */
-		private $meta_box_id = 'post';
+		private $meta_box = 'post';
 
 		/**
 		 * Class constructor
@@ -64,12 +61,14 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function __construct( $query_args = null ) {
-			if ( isset( $query_args['post_type'] ) ) {
+			if ( isset( $query_args['post_type'] )
+			     && $query_args['post_type'] instanceof PostTypeInterface
+			) {
 				$this->setPostType( $query_args['post_type'] );
 				unset( $query_args['post_type'] );
 			}
-			if ( isset( $query_args['meta_box_id'] ) ) {
-				$this->setMetaBoxId( $query_args['meta_box_id'] );
+			if ( isset( $query_args['meta_box'] ) ) {
+				$this->setMetaBox( $query_args['meta_box'] );
 			}
 			parent::__construct( $query_args );
 		}
@@ -83,6 +82,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function setCurrentPagedPage( $current_page ) {
+			$this->is_paged = true;
 			$this->set( 'paged', (int) $current_page );
 
 			return $this;
@@ -122,10 +122,13 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 			if ( $post_type instanceof PostTypeAbstract ) {
 				$this->post_type = $post_type;
 				$name            = $this->post_type->getName();
-				$this->setMetaBoxId( $this->post_type->getMetaBox()->getId() );
+				if ( $this->post_type->isMetaBoxRegistered() ) {
+					$this->setMetaBox( $this->post_type->getMetaBox() );
+				}
 			} else {
 				$name = $post_type;
 			}
+
 			$this->set( 'post_type', $name );
 
 			return $this;
@@ -134,13 +137,19 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		/**
 		 * Set meta box id
 		 *
-		 * @param string $meta_box_id
+		 * @param string|MetaBoxInterface $meta_box
 		 *
 		 * @return $this
 		 * @access pubic
 		 */
-		public function setMetaBoxId( $meta_box_id ) {
-			$this->meta_box_id = $meta_box_id;
+		public function setMetaBox( $meta_box ) {
+			if ( $meta_box instanceof MetaBoxInterface ) {
+				$this->meta_box = $meta_box;
+				$meta_key = $meta_box->getId();
+			}else {
+				$meta_key = $meta_box;
+			}
+			$this->query_vars[ 'meta_key' ] = $meta_key;
 
 			return $this;
 		}
@@ -205,18 +214,44 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		}
 
 		/**
-		 * Get likes count
+		 * Set filter by meta box
 		 *
-		 * @return mixed
+		 * @param string  $key valid meta box key name
+		 * @param mixed $value value of meta box key
+		 * @param string $compare
+		 *
+		 * @return $this
 		 * @access public
 		 */
-		public function getLikesCount() {
-			$post_like  = PostLike::getInstance();
-			$like_count = $post_like->getPostLikeCount( $this->getPostId() );
+		public function setMetaBoxFilter( $key, $value, $compare = '==' ) {
+			$this->query_vars[ 'meta_query' ][] = array(
+				'meta_key'     => $key,
+				'meta_value'   => $value,
+				'meta_compare' => $compare
+			);
 
-			return $like_count;
+			return $this;
 		}
 
+		/**
+		 * Add filter by meta box
+		 *
+		 * @param string  $key valid meta box key name
+		 * @param mixed $value value of meta box key
+		 * @param string $compare
+		 *
+		 * @return $this
+		 * @access public
+		 */
+		public function addMetaBoxFilter( $key, $value, $compare = '==' ) {
+			$this->query_vars[ 'meta_query' ][] = array(
+				'meta_key'     => $key,
+				'meta_value'   => $value,
+				'meta_compare' => $compare
+			);
+
+			return $this;
+		}
 
 		/**
 		 * Get Post Id
@@ -261,7 +296,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @access public
 		 */
 		public function getDescription() {
-			return $this->post->post_content;
+			return do_shortcode( $this->post->post_content );
 		}
 
 		/**
@@ -275,24 +310,28 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		}
 
 		/**
+		 * Get post type class handler or name
+		 *
+		 * @return PostTypeAbstract|string
+		 * @access public
+		 */
+		public function getPostType() {
+			return $this->post_type;
+		}
+
+		/**
 		 * Get single meta box by name
 		 *
-		 * @param string $field_name   meta box field name
+		 * @param string $control_name meta box form control name
 		 *
 		 * @param bool   $remove_first remove first element
 		 *
 		 * @return string|array|boolean
 		 * @access public
 		 */
-		public function getMetaBox( $field_name, $remove_first = true ) {
+		public function getMetaBox( $control_name, $remove_first = true ) {
 			$post_id = $this->getPostId();
-
-			$meta_box = MetaBox::getPostMeta( $this->meta_box_id, $field_name,
-				$post_id, $remove_first );
-
-			if ( is_array( $meta_box ) ) {
-				$meta_box = RecursiveArray::removeEmpty( $meta_box );
-			}
+			$meta_box = $this->meta_box->get( $post_id, $control_name, $remove_first );
 
 			return $meta_box;
 		}
@@ -340,16 +379,21 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 *
 		 * @param string $taxonomy_name
 		 *
+		 * @param string $before
+		 * @param string $sep
+		 * @param string $after
+		 *
 		 * @return bool|false|string|\WP_Error
 		 * @access public
-		 * @since 0.3
+		 * @since  0.4
 		 */
 		public function getTerms( $taxonomy_name, $before = '', $sep = ', ', $after = '' ) {
-
-			if ( $this->post_type->isTaxonomyRegistered( $taxonomy_name ) ) {
+			$taxonomy = $this->post_type->getTaxonomy();
+			if ( $taxonomy->isRegistered( $taxonomy_name ) ) {
+				$tax = $taxonomy->get( $taxonomy_name );
 				return get_the_term_list(
 					$this->getPostId()
-					, $taxonomy_name
+					, $tax['full_name']
 					, $before
 					, $sep
 					, $after
@@ -387,99 +431,6 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		public function getRelatedPosts() {
 			return $this->post_type->getRelationship()->getRelatedPosts();
 		}
-		/**
-		 *
-		 * Get features list
-		 *
-		 * @return array
-		 * @access public
-		 */
-		public function getFeatures() {
-			$return_array = array();
-			$features     = $this->getMetaBox( 'features', true );
-
-			if ( $features ) {
-				foreach ( $features['feature'] as $key => $value ) {
-					if ( $value['name'] != '' ) {
-						$return_array[ $key ] = $value;
-					}
-				}
-			}
-
-			return $return_array;
-		}
-
-		/**
-		 *
-		 * Gallery list
-		 *
-		 * @param string       $name
-		 * @param string|array $size thumbnail image size
-		 *
-		 * @return array
-		 */
-		public function getGallery( $name = 'gallery', $size = 'thumbnail' ) {
-			$images = array();
-
-			$gallery = $this->getMetaBox( $name, false );
-			if ( $gallery && count( $gallery ) ) {
-				foreach ( $gallery as $key => $gallery_item ) {
-					if ( ! is_null( $gallery_item['image'] )
-					     && '' != $gallery_item['image']
-					) {
-
-						$attachment_id = Thumbnail::getAttachmentIdFromUrl( $gallery_item['image'] );
-						$image_html = wp_get_attachment_image( $attachment_id, $size );
-
-						$images[ $key ] = array(
-							'attachment_id' => $attachment_id,
-							'image_url'     => $gallery_item['image'],
-							'image_html'    => $image_html,
-						);
-					}
-				}
-			}
-
-			return $images;
-		}
-
-		/**
-		 * Get video data
-		 *
-		 * @param string $key_name field key name
-		 *
-		 * @return array
-		 */
-		public function getMedia( $key_name = 'video' ) {
-			$file_data = array();
-
-			$meta_box = $this->getMetaBox( $key_name );
-
-			$video_url = false;
-			if ( isset( $meta_box['video_url'] ) && $meta_box['video_url'] ) {
-				$video_url = $meta_box['video_url'];
-			}
-
-			if ( $video_url ) {
-				try {
-					$oEmbed = new Oembed( $video_url );
-
-					$file_data['provider_name'] = $oEmbed->provider_name;
-					$file_data['file_url']      = $video_url;
-					$file_data['thumbnail_url'] = $oEmbed->getThumbnailUrl();
-
-				} catch ( \SilverWp\Exception $ex ) {
-					echo Message::alert( $ex->getMessage(), 'alert-danger' );
-					if ( WP_DEBUG ) {
-						Debug::dumpPrint( $ex->getTraceAsString(),
-							'Stack trace:' );
-						Debug::dumpPrint( $ex->getTrace(), 'Full stack:' );
-					}
-				}
-			}
-
-			return $file_data;
-		}
 
 		/**
 		 * Check the post type have thumbnail
@@ -490,7 +441,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 */
 		public function isThumbnail() {
 			$post_id = $this->getPostId();
-			if ( in_array( 'thumbnail', $this->post_type->getSupport() )
+			if ( in_array( 'thumbnail', $this->post_type->getSupports() )
 			     && \has_post_thumbnail( $post_id )
 			) {
 				return true;
@@ -507,7 +458,7 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @since 0.3
 		 */
 		public function isDescription() {
-			$editor = \in_array( 'editor', $this->post_type->getSupport() );
+			$editor = \in_array( 'editor', $this->post_type->getSupports() );
 
 			return $editor;
 		}
@@ -520,9 +471,36 @@ if ( ! class_exists( 'SilverWp\Db\Query' ) ) {
 		 * @since 0.3
 		 */
 		public function isTitle() {
-			$is_title = \in_array( 'title', $this->post_type->getSupport() );
+			$is_title = \in_array( 'title', $this->post_type->getSupports() );
 
 			return $is_title;
+		}
+
+		/**
+		 * Shortcut to MetaBoxAbstract::getThumbnail()
+		 *
+		 * @param string       $meta_name
+		 * @param string|array $size
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getThumbnail( $meta_name, $size ='thumbnail' ) {
+			return $this->meta_box
+				->getThumbnail( $this->getPostId(), $meta_name, $size );
+		}
+
+		/**
+		 * Get post sidebar position
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSidebarPosition() {
+			$post_id = $this->getPostId();
+			$sidebar = $this->meta_box->getSidebarPosition($post_id);
+
+			return $sidebar;
 		}
 
 	}

@@ -18,6 +18,9 @@
  */
 namespace SilverWp\Taxonomy;
 
+use SilverWp\Debug;
+use SilverWp\Helper\RecursiveArray;
+use SilverWp\Helper\UtlArray;
 use SilverWp\Interfaces\Core;
 use SilverWp\Interfaces\PostType;
 use SilverWp\Helper\Filter;
@@ -39,7 +42,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 	 * @copyright (c) 2009 - 2015, SilverSite.pl
 	 */
 	abstract class TaxonomyAbstract extends SingletonAbstract
-		implements TaxonomyInterface, PostType, Core {
+		implements TaxonomyInterface, Core {
 
 		/**
 		 * Handler for post type class
@@ -67,12 +70,14 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		protected $taxonomies = array();
 
 		/**
-		 * Post id
+		 * List of columns that should be
+		 * exclude from edit table
 		 *
-		 * @var integer
-		 * @access private
+		 * @var array
+		 * @access protected
+		 * @since 0.5
 		 */
-		private $post_id = null;
+		protected $exclude_columns = array();
 
 		/**
 		 *
@@ -86,19 +91,26 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			// Allows filtering of posts by taxonomy in the admin view
 			add_action( 'restrict_manage_posts', array( $this, 'filterAdminPostsTypeList' ) );
 			add_filter( 'parse_query', array( $this, 'addFilter2QueryList' ), 10, 1 );
+			add_filter( 'single_template', array( $this, 'getSingleTemplate' ), 10, 1 ) ;
 		}
 
 		/**
 		 * Add new taxonomy
 		 *
-		 * @param string $taxonomy_name - unique taxonomy name
-		 * @param array  $args          - all taxonomy params @see https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments
+		 * @param string $short_name - unique taxonomy name
+		 * @param array  $args       - all taxonomy params @see https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments
 		 *
 		 * @return $this
 		 * @access public
 		 */
-		public function add( $taxonomy_name, array $args ) {
-			$this->taxonomies[ $taxonomy_name ] = $args;
+		public function add( $short_name, array $args ) {
+			$post_type_objects = $this->getPostsTypesNames();
+			foreach ( $post_type_objects as $post_type_name ) {
+				$taxonomy_name = $this->getName( $post_type_name, $short_name );
+				$this->taxonomies[ $taxonomy_name ] = $args;
+				$this->taxonomies[ $taxonomy_name ]['short_name'] = $short_name;
+				$this->taxonomies[ $taxonomy_name ]['full_name'] = $taxonomy_name;
+			}
 
 			return $this;
 		}
@@ -106,15 +118,17 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		/**
 		 * Change default labels for taxonomy
 		 *
-		 * @param string $taxonomy_name
+		 * @param string $short_name short taxonomy name
 		 * @param array  $labels (@see labels: https://codex.wordpress.org/Function_Reference/register_taxonomy#Arguments)
 		 *
 		 * @return $this
 		 * @access public
 		 */
-		public function setLabels( $taxonomy_name, array $labels ) {
-			$this->taxonomies[ $taxonomy_name ]['labels'] = $labels;
-
+		public function setLabels( $short_name, array $labels ) {
+			foreach ( $this->getPostsTypesNames() as $post_type ) {
+				$taxonomy_name = $this->getName( $post_type, $short_name );
+				$this->taxonomies[ $taxonomy_name ][ 'labels' ] = $labels;
+			}
 			return $this;
 		}
 
@@ -147,30 +161,6 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			$this->posts_types_handler[] = $post_type_class;
 
 			return $this;
-		}
-
-		/**
-		 * Set post id
-		 *
-		 * @param integer $post_id
-		 *
-		 * @return $this
-		 * @access public
-		 */
-		public function setPostId( $post_id ) {
-			$this->post_id = (int) $post_id;
-
-			return $this;
-		}
-
-		/**
-		 * Get post id
-		 *
-		 * @return integer
-		 * @access public
-		 */
-		public function getPostId() {
-			return $this->post_id;
 		}
 
 		/**
@@ -213,19 +203,19 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 
 			$post_type_objects = $this->getPostsTypesNames();
 
-			foreach ( $this->taxonomies as $short_name => $args ) {
+			foreach ( $this->taxonomies as $name => $args ) {
 				//add taxonomy to Post Type
 				foreach ( $post_type_objects as $post_type_object ) {
-					$taxonomy_name = strtolower($post_type_object . '_' . $short_name);
 					//register taxonomy
-					register_taxonomy( $taxonomy_name, $post_type_object, $args );
-					register_taxonomy_for_object_type( $taxonomy_name, $post_type_object );
+					register_taxonomy( $name, $post_type_object, $args );
+					register_taxonomy_for_object_type( $name, $post_type_object );
 					//if taxonomy have custom_meta_box args replace default MB for custom
 					if ( isset( $args['custom_meta_box'] ) && ! empty( $args[ 'custom_meta_box' ] ) ) {
-						$this->changeDefaultMetaBox( $taxonomy_name, $args[ 'custom_meta_box' ] );
+						$this->changeDefaultMetaBox( $name, $args[ 'custom_meta_box' ] );
 					}
 				}
 			}
+			$this->manageColumns();
 		}
 
 		/**
@@ -238,25 +228,56 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 		 * @access public
 		 */
 		public function get( $taxonomy_name = null ) {
-			if ( ! is_null( $taxonomy_name )
-			     && isset( $this->taxonomies[ $taxonomy_name ] )
-			) {
-				return $this->taxonomies[ $taxonomy_name ];
+			if ( ! is_null( $taxonomy_name ) ) {
+				if ( isset( $this->taxonomies[ $taxonomy_name ] ) ) {
+					return $this->taxonomies[ $taxonomy_name ];
+				} else {
+					//maybe is short name?
+					$key = RecursiveArray::search( $this->taxonomies, $taxonomy_name );
+					if ( $key !== false ) {
+						return $this->taxonomies[ $key ];
+					} else {
+						return false;
+					}
+				}
 			}
-
 			return $this->taxonomies;
 		}
 
 		/**
+		 * Get all names of registered taxonomies
+		 *
+		 * @return array
+		 * @access public
+		 */
+		public function getNames() {
+			return array_keys( $this->taxonomies );
+		}
+
+		/**
+		 * Get full taxonomy name combined with post typ name and tax name
+		 *
+		 * @param string $post_type_name
+		 * @param string $short_name
+		 *
+		 * @return string
+		 * @access private
+		 */
+		private function getName( $post_type_name, $short_name ) {
+			$taxonomy_name = strtolower( $post_type_name . '_' . $short_name );
+
+			return $taxonomy_name;
+		}
+		/**
 		 * Check if taxonomy $taxonomy_name is registered
 		 *
-		 * @param string $taxonomy_name taxonomy name
+		 * @param string $name taxonomy name (full or short)
 		 *
 		 * @return boolean
 		 * @access public
 		 */
-		public function isRegistered( $taxonomy_name ) {
-			if ( isset( $this->taxonomies[ $taxonomy_name ] ) ) {
+		public function isRegistered( $name ) {
+			if ( $this->get( $name ) !== false ) {
 				return true;
 			}
 
@@ -315,7 +336,7 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			return;
 			global $pagenow;
 			$post_type  = get_post_type();
-			$taxonomy   = $this->getName( 'category' );
+			$taxonomy   = $this->get( 'category' );
 			$query_vars = &$query->query_vars;
 			if ( $pagenow == 'edit.php'
 			     && isset( $query_vars['post_type'] )
@@ -357,6 +378,204 @@ if ( ! class_exists( '\SilverWp\Taxonomy\TaxonomyAbstract' ) ) {
 			}
 
 			return $post_type_name;
+		}
+
+		/**
+		 * Manage custom columns in edit screen
+		 *
+		 * @access private
+		 */
+		private function manageColumns() {
+			if ( is_admin() ) {
+				// Adds columns in the admin view for thumbnail and taxonomies
+				foreach ( $this->posts_types_handler as $post_type ) {
+					$post_type_name = $post_type->getName();
+					add_filter( 'manage_' . $post_type_name . '_posts_columns', array( $this, 'setColumnsLabels' ), 10, 1 );
+					add_action( 'manage_' . $post_type_name . '_posts_custom_column', array( $this, 'customColumns' ), 10, 2 );
+				}
+			}
+		}
+
+		/**
+		 * Add columns labels to edit screen
+		 *
+		 * @link   http://wptheming.com/2010/07/column-edit-pages/
+		 * @access public
+		 *
+		 * @param array $columns
+		 *
+		 * @return array
+		 */
+		public function setColumnsLabels( $columns ) {
+			$unique_cols   = array( 'category', 'tag' );
+			$columns_list = $this->getEditColumns();
+			foreach ( $columns_list as $key => $value ) {
+				foreach ( $this->taxonomies as $name => $args ) {
+					if ( isset( $args['display_column'] ) && $args['display_column'] ) {
+						if ( \in_array( $key, $unique_cols ) ) {
+							$key = $name . '_' . $key;
+						}
+
+						if ( isset( $value['label'] ) ) {
+							$columns[ $key ] = $value['label'];
+						} elseif ( isset( $value['html'] ) ) {
+							$columns[ $key ] = $value['html'];
+						}
+					}
+				}
+			}
+
+			return $columns;
+		}
+
+		/**
+		 *
+		 * Add custom columns in edit screen
+		 *
+		 * @param string $column column name
+		 * @param int    $post_id
+		 *
+		 * @access public
+		 * @since 0.5
+		 * @todo move to class
+		 */
+		public function customColumns( $column, $post_id ) {
+			try {
+//				todo move to meta box
+				// Display taxonomies in the column view
+				foreach ( $this->taxonomies as $taxonomy_name => $args ) {
+					if ( isset( $args['display_column'] ) && $args['display_column'] && $column == $taxonomy_name) {
+						if ( has_term( '', $taxonomy_name, $post_id ) ) {
+							$terms_list = get_the_term_list( $post_id, $taxonomy_name, '', ', ', '' );
+
+							if ( is_wp_error( $terms_list ) ) {
+								throw new Exception(
+									$terms_list->get_error_message() . ': ' . $taxonomy_name
+								);
+							}
+							if ( $terms_list ) {
+								echo $terms_list;
+							} else {
+								echo Translate::translate( 'None' );
+							}
+						}
+					}
+				}
+
+			} catch ( Exception $ex ) {
+				echo $ex->displayAdminNotice();
+			}
+		}
+
+		/**
+		 *
+		 * get list of edit columns displayed in lists of Post Type
+		 *
+		 *
+		 * list of columns displayed in dashboard list. Example
+		 * array(
+		 *       'cb' => array(
+		 *           'html' => '<input type="checkbox" />',
+		 *       ),
+		 *       'title' => array(
+		 *           'label' => 'Title',
+		 *       ),
+		 *       'category' => array(
+		 *            'label' => 'Categories',
+		 *       ),
+		 *       'thumbnail' => array(
+		 *           'label' => 'Thumbnail',
+		 *       ),
+		 *       'tag' => array(
+		 *           'label' => 'Tags',
+		 *      ),
+		 *      'date' => array(
+		 *          'label' => 'Date',
+		 *      ),
+		 *      'author' => array(
+		 *          'label' => 'Author',
+		 *      ),
+		 *  );
+		 *
+		 * @access protected
+		 * @return array
+		 */
+		protected function getEditColumns() {
+			$columns_default = array(
+				'cb'                     => array(
+					'html' => '<input type="checkbox" />',
+				),
+				'title'                  => array(
+					'label' => Translate::translate( 'Title' ),
+				),
+				'thumbnail'              => array(
+					'label' => Translate::translate( 'Thumbnail' ),
+				),
+				'author'                 => array(
+					'label' => Translate::translate( 'Author' ),
+				),
+				'date'                   => array(
+					'label' => Translate::translate( 'Date' ),
+				),
+				'category'               => array(
+					'label' => Translate::translate( 'Categories' ),
+				),
+				'tag'                    => array(
+					'label' => Translate::translate( 'Tags' ),
+				),
+			);
+
+			foreach ( $this->taxonomies as $name => $args ) {
+				if ( isset( $args[ 'display_column' ] ) && $args[ 'display_column' ] ) {
+					$columns_default[ $name ][ 'label' ] = $args[ 'labels' ][ 'name' ];
+				}
+			}
+
+			$columns = UtlArray::array_remove_part( $columns_default, $this->exclude_columns );
+
+			return $columns;
+		}
+
+		/**
+		 * This method add possibility to create single post view in taxonomy
+		 *
+		 * @param string $single_template
+		 *
+		 * @return string
+		 * @access public
+		 */
+		public function getSingleTemplate( $single_template ) {
+			$post_types = $this->getPostsTypesNames();
+			if ( in_array( get_post_type(), $post_types ) ) {
+				$path = get_template_directory();
+				foreach ( $this->taxonomies as $taxonomy => $args ) {
+					if ( isset( $args['custom_single_view'] )
+					     && $args['custom_single_view']
+					) {
+						if ( isset( $args['rewrite'] )
+						     && isset( $args['slug'] )
+						) {
+							$template_file = $path . '/single-' . $args['slug'] . '.php';
+							if ( file_exists( $template_file ) ) {
+								$single_template = $template_file;
+							}
+						} else {
+							$terms = get_the_terms( get_the_ID(), $taxonomy );
+							if ( $terms && ! is_wp_error( $terms ) ) {
+								//Make a foreach because $terms is an array but it supposed to be only one term
+								foreach ( $terms as $term ) {
+									$template_file = $path . '/single-' . $term->slug . '.php';
+									if ( file_exists( $template_file ) ) {
+										$single_template = $template_file;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return $single_template;
 		}
 	}
 }

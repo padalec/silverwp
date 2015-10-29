@@ -33,7 +33,11 @@ class Kirki_Styles_Customizer {
 	 * Enqueue the stylesheets required.
 	 */
 	public function customizer_styles() {
-		wp_enqueue_style( 'kirki-customizer-css', trailingslashit( kirki_url() ).'assets/css/customizer.css', null, '0.5' );
+		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			wp_enqueue_style( 'kirki-customizer-css', trailingslashit( kirki_url() ).'assets/css/customizer.css', null, Kirki_Toolkit::$version );
+		} else {
+			wp_enqueue_style( 'kirki-customizer-css', trailingslashit( kirki_url() ).'assets/css/production.css', null, Kirki_Toolkit::$version );
+		}
 		wp_add_inline_style( 'kirki-customizer-css', $this->custom_css() );
 	}
 
@@ -75,7 +79,7 @@ class Kirki_Styles_Customizer {
 			WP_Filesystem();
 		}
 
-		$styles  = '';
+		$styles = '';
 		/**
 		 * Include the width CSS if necessary
 		 */
@@ -84,7 +88,7 @@ class Kirki_Styles_Customizer {
 			/**
 			 * Replace width placeholder with actual value
 			 */
-			$styles  = str_replace( 'WIDTH', $config['width'], $styles );
+			$styles = str_replace( 'WIDTH', $config['width'], $styles );
 		}
 
 		/**

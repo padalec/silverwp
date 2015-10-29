@@ -25,10 +25,12 @@ use SilverWp\Debug;
 use SilverWp\Exception;
 use SilverWp\Interfaces\Core;
 use SilverWp\MetaBox\Exception as MetaBoxException;
+use SilverWp\MetaBox\MetaBoxAbstract;
 use SilverWp\MetaBox\MetaBoxInterface;
 use SilverWp\PostRelationship\Relationship;
 use SilverWp\SingletonAbstract;
 use SilverWp\Taxonomy\Exception as TaxonomyException;
+use SilverWp\Taxonomy\TaxonomyAbstract;
 use SilverWp\Taxonomy\TaxonomyInterface;
 use SilverWp\Translate;
 
@@ -261,12 +263,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 * @access public
 		 */
 		public function addTemplates( $template_name ) {
-			if ( \is_array( $template_name ) ) {
-				self::$page_templates[ $this->name ]
-					= \array_merge( self::$page_templates, $template_name );
-			} else {
-				self::$page_templates[ $this->name ] = $template_name;
-			}
+			self::$page_templates[ $this->name ][] = $template_name;
 		}
 
 		/**
@@ -316,7 +313,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		/**
 		 * Get meta box object handle
 		 *
-		 * @return object
+		 * @return MetaBoxAbstract
 		 * @access public
 		 */
 		public function getMetaBox() {
@@ -356,7 +353,7 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 *
 		 * Get taxonomy class handler
 		 *
-		 * @return object
+		 * @return TaxonomyAbstract
 		 * @access public
 		 */
 		public function getTaxonomy() {
@@ -383,11 +380,11 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 */
 		public function registerMetaBox( MetaBoxInterface $meta_box ) {
 			try {
+
 				$this->meta_box_handler = $meta_box;
 				$meta_box->setId( $this->name );
-				$meta_box->setPostType( array( $this->name ) );
-				$child_class = \get_called_class();
-				$meta_box->setPostTypeClass( $child_class::getInstance() );
+				$meta_box->addPostType( $this->name );
+
 			} catch ( MetaBoxException $ex ) {
 				echo $ex->displayAdminNotice();
 			}
@@ -403,9 +400,10 @@ if ( ! class_exists( '\SilverWp\PostType\PostTypeAbstract' ) ) {
 		 */
 		public function registerTaxonomy( TaxonomyInterface $taxonomy ) {
 			try {
-				$this->taxonomy_handler = $taxonomy;
 
+				$this->taxonomy_handler = $taxonomy;
 				$taxonomy->setPostTypeHandler( $this );
+
 			} catch ( TaxonomyException $ex ) {
 				echo $ex->displayAdminNotice();
 			}

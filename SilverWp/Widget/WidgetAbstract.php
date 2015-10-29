@@ -23,6 +23,7 @@ namespace SilverWp\Widget;
 use SilverWp\Debug;
 use SilverWp\FileSystem;
 use SilverWp\Helper\Control\ControlInterface;
+use SilverWp\View;
 use SilverWp\Widget\WidgetInterface;
 
 if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
@@ -115,9 +116,6 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 		public function registerFields() {
 			$loader      = \VP_WP_Loader::instance();
 			$field_types = $this->getControlsType();
-			if ( $this->debug ) {
-				Debug::dumpPrint( $field_types );
-			}
 			$loader->add_types( $field_types, 'widgets' );
 		}
 
@@ -131,6 +129,7 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 		 * @return string
 		 */
 		public function form( $instance ) {
+
 			foreach ( $this->controls as $control ) {
 				$control->addHtmlAttribute( 'id', $this->get_field_id( $control->getName() ) );
 				$control->addHtmlAttribute( 'class', 'widefat' );
@@ -142,11 +141,8 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 				$field        = call_user_func( "$make::withArray", $attributes );
 				$default      = $field->get_default();
 				//@todo rebuild this!!!
-				if ( $attributes['type'] == 'checkbox'
-				     && ( isset( $instance[ $control->getName() ] )
-				          || is_null( $instance[ $control->getName() ] ) )
-				) {
-					$value = is_null( $instance[ $control->getName() ] ) ? '' : $instance[ $control->getName() ];
+				if ( $attributes['type'] == 'checkbox' ) {
+                    $value = isset( $instance[ $control->getName() ] ) ? $instance[ $control->getName() ] : '';
 					$field->set_value( $value );
 				} else if( isset( $instance[ $control->getName() ] ) && ! empty( $instance[ $control->getName() ] ) ) {
 					$field->set_value( $instance[ $control->getName() ] );
@@ -154,14 +150,15 @@ if ( ! class_exists( '\SilverWp\Widget\WidgetAbstract' ) ) {
 					$field->set_value( $default );
 				}
 				?>
-				<div>
+				<p>
 					<label for="<?php echo $this->get_field_id( $field->get_name() ); ?>">
 						<?php echo $field->get_label(); ?>
 						<?php
 						echo $field->render( true );
 						?>
+						<?php \VP_Util_Text::print_if_exists( $field->get_description(), '<div class="description">%s</div>' );?>
 					</label>
-				</div>
+				</p>
 				<?php
 			}
 		}

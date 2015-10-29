@@ -78,9 +78,9 @@ class RecursiveArray {
                 }
 
             } catch ( InvalidArgumentException $exc ) {
-                $error = $exc->getMessage();
+	            $error = $exc->getMessage();
                 $error .= $exc->getTraceAsString();
-                silverwp_debug_array( $error );
+                echo $error;
             }
         }
 

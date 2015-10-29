@@ -81,7 +81,7 @@ if ( ! class_exists( '\SilverWp\CssTemplate\Sass' ) ) {
 
                 $variable = $this->variables;
                 $WPScssPlugin->setVariables( $variable );
-
+	            $WPScssPlugin->getCompiler()->setFormatter('scss_formatter_compressed');
                 if ( ! wp_style_is( $handle, 'registered' ) ) {
 
                     wp_register_style( $handle, $src, $dep, $ver, $media );

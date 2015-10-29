@@ -211,8 +211,7 @@ if ( ! class_exists( 'SilverWp\CssTemplate\CssTemplateAbstract' ) ) {
 		 * @access public
 		 * @static
 		 */
-		public static function addStylesheetsTemplate( $handle, array $params
-		) {
+		public static function addStylesheetsTemplate( $handle, array $params ) {
 			self::$stylesheets_templates[ $handle ] = $params;
 		}
 
@@ -228,7 +227,7 @@ if ( ! class_exists( 'SilverWp\CssTemplate\CssTemplateAbstract' ) ) {
 		 */
 		public function filterTargetPath( $target_path ) {
 			$target_path_array = explode( DIRECTORY_SEPARATOR, $target_path );
-			$css_file          = end( $target_path_array );
+			$css_file          = str_replace( '_customizer', '', end( $target_path_array ) );
 
 			$css_file = str_replace( '-%s', '', $css_file );
 			$css_file = preg_replace( '/\.css{1,}/', '', $css_file ) . '.css';
