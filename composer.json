@@ -30,7 +30,6 @@
   ],
   "require": {
     "php": ">=5.3",
-    "aristath/kirki": "dev-master",
     "abraham/twitteroauth": "^0.6.0"
   },
   "autoload": {
