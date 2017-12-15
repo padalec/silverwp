@@ -92,7 +92,7 @@ class MetaBox {
             if ( \preg_match( '/^' . THEME_OPTION_PREFIX . $prefix . '/', $key, $result ) ) {
                 $index = \preg_replace( '/^' . THEME_OPTION_PREFIX . '_/', '', $key );
                 // Sanitize the user input.
-                $option[ $index ] = String::sanitize_text_field( $value );
+                $option[ $index ] = StringOperation::sanitize_text_field( $value );
             }
         }
 

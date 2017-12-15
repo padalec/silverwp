@@ -72,7 +72,7 @@ class Social {
                 $provider_on = Option::get_theme_option( $option_key );
                 if ( $provider_on == '1' ) {
                     $buttons[ $key ]                = $provider;
-                    $buttons[ $key ][ 'share_url' ] = String::str_replace_from_array(
+                    $buttons[ $key ][ 'share_url' ] = StringOperation::str_replace_from_array(
                         $share_params,
                         $provider[ 'share_url' ]
                     );
