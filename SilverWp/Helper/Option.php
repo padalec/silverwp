@@ -136,7 +136,7 @@ class Option {
     public static function option_sort_by_order( $array_in, $fields = array(), $order_field = 'order' ){
         $array_out = array(); 
         foreach ( $array_in as $name => $label ){
-            $name = String::sanitize_text_field( $name );
+            $name = StringOperation::sanitize_text_field( $name );
             foreach( $fields as $key => $field ){
                 if ( '' != ( $order = self::get_theme_option( $order_field . '[' . $name . ']' ) ) ){
                     
